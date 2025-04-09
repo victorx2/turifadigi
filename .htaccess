@@ -1,0 +1,14 @@
+# .htaccess adicional para /config
+<Files ~ "\.(env|config|json|lock)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Protección adicional
+Options -Indexes
+ServerSignature Off
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]
