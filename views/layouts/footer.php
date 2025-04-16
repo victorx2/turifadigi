@@ -75,37 +75,37 @@
             <ul class="footer-widget__Gallery-list list-unstyled clearfix">
               <li>
                 <div class="footer-widget__Gallery-img">
-                  <img src="assets/img/project/footer-widget-Gallery-img-1.jpg" alt="">
+                  <img src="assets/images/project/footer-widget-Gallery-img-1.jpg" loading="lazy" alt="">
                   <a href="#"><span class="fab fa-instagram"></span></a>
                 </div>
               </li>
               <li>
                 <div class="footer-widget__Gallery-img">
-                  <img src="assets/img/project/footer-widget-Gallery-img-2.jpg" alt="">
+                  <img src="assets/images/project/footer-widget-Gallery-img-2.jpg" loading="lazy" alt="">
                   <a href="#"><span class="fab fa-instagram"></span></a>
                 </div>
               </li>
               <li>
                 <div class="footer-widget__Gallery-img">
-                  <img src="assets/img/project/footer-widget-Gallery-img-3.jpg" alt="">
+                  <img src="assets/images/project/footer-widget-Gallery-img-3.jpg" loading="lazy" alt="">
                   <a href="#"><span class="fab fa-instagram"></span></a>
                 </div>
               </li>
               <li>
                 <div class="footer-widget__Gallery-img">
-                  <img src="assets/img/project/footer-widget-Gallery-img-4.jpg" alt="">
+                  <img src="assets/images/project/footer-widget-Gallery-img-4.jpg" loading="lazy" alt="">
                   <a href="#"><span class="fab fa-instagram"></span></a>
                 </div>
               </li>
               <li>
                 <div class="footer-widget__Gallery-img">
-                  <img src="assets/img/project/footer-widget-Gallery-img-5.jpg" alt="">
+                  <img src="assets/images/project/footer-widget-Gallery-img-5.jpg" loading="lazy" alt="">
                   <a href="#"><span class="fab fa-instagram"></span></a>
                 </div>
               </li>
               <li>
                 <div class="footer-widget__Gallery-img">
-                  <img src="assets/img/project/footer-widget-Gallery-img-6.jpg" alt="">
+                  <img src="assets/images/project/footer-widget-Gallery-img-6.jpg" loading="lazy" alt="">
                   <a href="#"><span class="fab fa-instagram"></span></a>
                 </div>
               </li>
@@ -200,10 +200,35 @@
 <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="icon-right-arrow"></i></a>
 
 
+<!-- Scripts CDN con fallback -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  if (typeof jQuery === 'undefined') {
+    document.write('<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery/jquery-3.6.0.min.js"><\/script>')
+  }
+</script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  if (typeof bootstrap === 'undefined') {
+    document.write('<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>')
+  }
+</script>
 
-<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery/jquery-3.6.0.min.js"></script>
-<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.0.0/swiper-bundle.min.js"></script>
+
+<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/swiper/swiper.min.js"></script>
+<!--
+ <script>
+  if (typeof Swiper === 'undefined') {
+    document.write('<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/swiper/swiper.min.js"><\/script>')
+  }
+</script>
+-->
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<!-- Scripts locales personalizados -->
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jarallax/jarallax.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-appear/jquery.appear.min.js"></script>
@@ -211,17 +236,22 @@
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-validate/jquery.validate.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/odometer/odometer.min.js"></script>
-<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/swiper/swiper.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/wnumb/wNumb.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/wow/wow.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/isotope/isotope.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/owl-carousel/owl.carousel.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
-<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.js"></script>
+<script>
+  if (typeof jQuery.ui === 'undefined') {
+    document.write('<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.js"><\/script>')
+  }
+</script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/nice-select/jquery.nice-select.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/marque/marquee.min.js"></script>
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/countdown/countdown.min.js"></script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- template js -->
 <script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/js/header.js"></script>

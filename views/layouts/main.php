@@ -143,7 +143,7 @@
                 <div class="services-one__single">
                     <div class="services-one__img-box">
                         <div class="services-one__img">
-                            <img src="assets/img/services/services-1-1.jpg" alt="">
+                            <img src="assets/img/services/services-1-1.jpg" loading="lazy" alt="">
                         </div>
                     </div>
                     <div class="services-one__content-wrap">
@@ -238,7 +238,7 @@
             <div class="col-xl-5">
                 <div class="about-one__left wow fadeInLeft" data-wow-delay="100ms">
                     <div class="about-one__img">
-                        <img src="assets/img/resources/about-one-img-1.jpg" alt="">
+                        <img src="assets/img/resources/about-one-img-1.jpg" loading="lazy" alt="">
                     </div>
                 </div>
             </div>
@@ -310,7 +310,7 @@
                 <div class="team-one__single">
                     <div class="team-one__img-box">
                         <div class="team-one__img">
-                            <img src="assets/img/team/team-1-1.jpg" alt="">
+                            <img src="assets/img/team/team-1-1.jpg" loading="lazy" alt="">
                         </div>
                     </div>
                     <div class="team-one__content-inner">
@@ -534,7 +534,7 @@
                             <span class="icon-coding"></span>
                         </div>
                         <h3 class="process-one__title">Web Development</h3>
-                        <p class="process-one__text">There’re many variation of
+                        <p class="process-one__text">There're many variation of
                             passage of avilale.</p>
                         <div class="process-one__count"></div>
                     </div>
@@ -553,7 +553,7 @@
                             <span class="icon-curve"></span>
                         </div>
                         <h3 class="process-one__title">Industry Design</h3>
-                        <p class="process-one__text">There’re many variation of
+                        <p class="process-one__text">There're many variation of
                             passage of avilale.</p>
                         <div class="process-one__count"></div>
                     </div>
@@ -572,7 +572,7 @@
                             <span class="icon-like"></span>
                         </div>
                         <h3 class="process-one__title">Satisfied Design</h3>
-                        <p class="process-one__text">There’re many variation of
+                        <p class="process-one__text">There're many variation of
                             passage of avilale.</p>
                         <div class="process-one__count"></div>
                     </div>
@@ -591,7 +591,7 @@
                             <span class="icon-bullhorn"></span>
                         </div>
                         <h3 class="process-one__title">Digital Strategy</h3>
-                        <p class="process-one__text">There’re many variation of
+                        <p class="process-one__text">There're many variation of
                             passage of avilale.</p>
                         <div class="process-one__count"></div>
                     </div>
@@ -684,7 +684,7 @@
                         </div>
                         <span class="section-title__tagline">Our Testimonials</span>
                     </div>
-                    <h2 class="section-title__title">What they’re talking
+                    <h2 class="section-title__title">What they're talking
                         <br> about us
                     </h2>
                 </div>
@@ -698,15 +698,12 @@
                                     <div class="col-xl-7">
                                         <div class="testimonial-one__left">
                                             <div class="testimonial-one__img-box">
-                                                <img src="assets/img/testimonial/testimonial-one-img-1.jpg"
-                                                    alt="">
+                                                <img src="assets/img/testimonial/testimonial-one-img-1.jpg" loading="lazy" alt="">
                                                 <div class="testimonial-one__shape-1">
-                                                    <img src="assets/img/shapes/testimonial-one-shape-1.png"
-                                                        alt="">
+                                                    <img src="assets/img/shapes/testimonial-one-shape-1.png" loading="lazy" alt="">
                                                 </div>
                                                 <div class="testimonial-one__shape-2">
-                                                    <img src="assets/img/shapes/testimonial-one-shape-2.png"
-                                                        alt="">
+                                                    <img src="assets/img/shapes/testimonial-one-shape-2.png" loading="lazy" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -716,8 +713,7 @@
                                             <div class="testimonial-one__single">
                                                 <div class="testimonial-one__client-info-box">
                                                     <div class="testimonial-one__client-img">
-                                                        <img src="assets/img/testimonial/testimonial-1-1.jpg"
-                                                            alt="">
+                                                        <img src="assets/img/testimonial/testimonial-1-1.jpg" loading="lazy" alt="">
                                                     </div>
                                                     <div class="testimonial-one__client-content">
                                                         <h5 class="testimonial-one__client-name">Kendra Pual
@@ -745,15 +741,12 @@
                                     <div class="col-xl-7">
                                         <div class="testimonial-one__left">
                                             <div class="testimonial-one__img-box">
-                                                <img src="assets/img/testimonial/testimonial-one-img-1.jpg"
-                                                    alt="">
+                                                <img src="assets/img/testimonial/testimonial-one-img-1.jpg" loading="lazy" alt="">
                                                 <div class="testimonial-one__shape-1">
-                                                    <img src="assets/img/shapes/testimonial-one-shape-1.png"
-                                                        alt="">
+                                                    <img src="assets/img/shapes/testimonial-one-shape-1.png" loading="lazy" alt="">
                                                 </div>
                                                 <div class="testimonial-one__shape-2">
-                                                    <img src="assets/img/shapes/testimonial-one-shape-2.png"
-                                                        alt="">
+                                                    <img src="assets/img/shapes/testimonial-one-shape-2.png" loading="lazy" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -763,8 +756,7 @@
                                             <div class="testimonial-one__single">
                                                 <div class="testimonial-one__client-info-box">
                                                     <div class="testimonial-one__client-img">
-                                                        <img src="assets/img/testimonial/testimonial-1-2.jpg"
-                                                            alt="">
+                                                        <img src="assets/img/testimonial/testimonial-1-2.jpg" loading="lazy" alt="">
                                                     </div>
                                                     <div class="testimonial-one__client-content">
                                                         <h5 class="testimonial-one__client-name">Adam Smith
@@ -792,15 +784,12 @@
                                     <div class="col-xl-7">
                                         <div class="testimonial-one__left">
                                             <div class="testimonial-one__img-box">
-                                                <img src="assets/img/testimonial/testimonial-one-img-1.jpg"
-                                                    alt="">
+                                                <img src="assets/img/testimonial/testimonial-one-img-1.jpg" loading="lazy" alt="">
                                                 <div class="testimonial-one__shape-1">
-                                                    <img src="assets/img/shapes/testimonial-one-shape-1.png"
-                                                        alt="">
+                                                    <img src="assets/img/shapes/testimonial-one-shape-1.png" loading="lazy" alt="">
                                                 </div>
                                                 <div class="testimonial-one__shape-2">
-                                                    <img src="assets/img/shapes/testimonial-one-shape-2.png"
-                                                        alt="">
+                                                    <img src="assets/img/shapes/testimonial-one-shape-2.png" loading="lazy" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -810,8 +799,7 @@
                                             <div class="testimonial-one__single">
                                                 <div class="testimonial-one__client-info-box">
                                                     <div class="testimonial-one__client-img">
-                                                        <img src="assets/img/testimonial/testimonial-1-3.jpg"
-                                                            alt="">
+                                                        <img src="assets/img/testimonial/testimonial-1-3.jpg" loading="lazy" alt="">
                                                     </div>
                                                     <div class="testimonial-one__client-content">
                                                         <h5 class="testimonial-one__client-name">Sarika paul
@@ -843,21 +831,21 @@
                         <div class="swiper-slide">
                             <div class="testimonial-one__img-holder-box">
                                 <div class="testimonial-one__img-holder">
-                                    <img src="assets/img/testimonial/testimonial-thumb-1-1.jpg" alt="">
+                                    <img src="assets/img/testimonial/testimonial-thumb-1-1.jpg" loading="lazy" alt="">
                                 </div>
                             </div>
                         </div><!-- /.swiper-slide -->
                         <div class="swiper-slide middle">
                             <div class="testimonial-one__img-holder-box">
                                 <div class="testimonial-one__img-holder">
-                                    <img src="assets/img/testimonial/testimonial-thumb-1-2.jpg" alt="">
+                                    <img src="assets/img/testimonial/testimonial-thumb-1-2.jpg" loading="lazy" alt="">
                                 </div>
                             </div>
                         </div><!-- /.swiper-slide -->
                         <div class="swiper-slide">
                             <div class="testimonial-one__img-holder-box">
                                 <div class="testimonial-one__img-holder">
-                                    <img src="assets/img/testimonial/testimonial-thumb-1-3.jpg" alt="">
+                                    <img src="assets/img/testimonial/testimonial-thumb-1-3.jpg" loading="lazy" alt="">
                                 </div>
                             </div>
                         </div><!-- /.swiper-slide -->
@@ -895,7 +883,7 @@
                 <div class="blog-one__single">
                     <div class="blog-one__img-box">
                         <div class="blog-one__img">
-                            <img src="assets/img/blog/blog-1-2.jpg" alt="">
+                            <img src="assets/img/blog/blog-1-2.jpg" loading="lazy" alt="">
                         </div>
                     </div>
                     <div class="blog-one__content">
@@ -920,7 +908,7 @@
                 <div class="blog-one__single">
                     <div class="blog-one__img-box">
                         <div class="blog-one__img">
-                            <img src="assets/img/blog/blog-1-3.jpg" alt="">
+                            <img src="assets/img/blog/blog-1-3.jpg" loading="lazy" alt="">
                         </div>
                     </div>
                     <div class="blog-one__content">
@@ -945,7 +933,7 @@
                 <div class="blog-one__single">
                     <div class="blog-one__img-box">
                         <div class="blog-one__img">
-                            <img src="assets/img/blog/blog-1-1.jpg" alt="">
+                            <img src="assets/img/blog/blog-1-1.jpg" loading="lazy" alt="">
                         </div>
                     </div>
                     <div class="blog-one__content">

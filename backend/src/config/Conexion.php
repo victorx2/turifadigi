@@ -33,14 +33,14 @@ class Conexion
 
   public function ejecutar($sql, array $parametros)
   {
-    //$this->conexion->beginTransaction();
+    $this->conexion->beginTransaction();
     $sentencia = $this->conexion->prepare($sql);
     foreach ($parametros as $indice => $valor) {
       $sentencia->bindValue($indice, $valor);
     }
     $sentencia->execute();
     $ultimo_id_insertado = $this->conexion->lastInsertId();
-    //$this->conexion->commit();
+    $this->conexion->commit();
     return $ultimo_id_insertado;
   }
 
@@ -103,14 +103,14 @@ class Conexion
       $tablas = $result->fetchAll(PDO::FETCH_COLUMN);
       $this->conexion->exec("SET FOREIGN_KEY_CHECKS = 0");
       foreach ($tablas as $tabla) {
-        //$this->conexion->beginTransaction();
+        $this->conexion->beginTransaction();
         $this->conexion->exec("DROP TABLE IF EXISTS " . $tabla);
-        //$this->conexion->commit();
+        $this->conexion->commit();
       }
       $sql = file_get_contents($ruta . $respaldo_archivo);
-      //$this->conexion->beginTransaction();
+      $this->conexion->beginTransaction();
       $this->conexion->exec($sql);
-      //$this->conexion->commit();
+      $this->conexion->commit();
       $this->conexion->exec("SET FOREIGN_KEY_CHECKS = 1");
       return true;
     } catch (PDOException $e) {

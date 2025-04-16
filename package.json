@@ -1,0 +1,29 @@
+{
+  "name": "turifadigi",
+  "version": "1.0.0",
+  "description": "Sistema integral para la gestión de loterías que incluye:",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify": "node assets/js/minify.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorx2/turifadigi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/victorx2/turifadigi/issues"
+  },
+  "homepage": "https://github.com/victorx2/turifadigi#readme",
+  "devDependencies": {
+    "cssnano": "^7.0.6",
+    "terser": "^5.39.0"
+  }
+}

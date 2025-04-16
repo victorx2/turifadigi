@@ -3,9 +3,41 @@ require_once 'vendor/autoload.php'; // Carga automáticamente las clases necesar
 
 use Dotenv\Dotenv; // Importa la clase Dotenv para manejar variables de entorno
 // use App\config\DatabaseBackup; // Comentado: posible uso de una clase para respaldos de base de datos
-use App\controllers\{AuthController, RegisterUserController, HomeController, LoteriaController}; // Importa controladores necesarios
+use App\Controllers\{AuthController, RegisterUserController, HomeController}; // Importa controladores necesarios
 
 session_start(); // Inicializa la sesión para el manejo de usuarios
+
+
+
+// Agregar soporte multi-idioma
+// define('DEFAULT_TIMEZONE', 'America/New_York');
+// define('DEFAULT_LOCALE', 'es_US');
+// date_default_timezone_set(DEFAULT_TIMEZONE);
+// setlocale(LC_ALL, DEFAULT_LOCALE);
+
+// header('Cache-Control: public, max-age=31536000');
+// header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 31536000));
+
+// Agregar protección contra ataques
+// header('Content-Security-Policy: default-src \'self\'');
+// header('X-Content-Type-Options: nosniff');
+// header('X-Frame-Options: DENY');
+
+// Mejorar el sistema de logging
+// error_log(json_encode([
+//   'timestamp' => date('Y-m-d H:i:s'),
+//   'ip' => $_SERVER['REMOTE_ADDR'],
+//   'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+//   'request' => $_SERVER['REQUEST_URI'],
+//   'error' => $e->getMessage()
+// ]));
+
+// Forzar HTTPS
+// if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+//   header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+//   exit();
+// }
+
 
 // Verifica si la sesión se ha iniciado correctamente
 if (session_status() === PHP_SESSION_ACTIVE) {
@@ -55,9 +87,9 @@ $route = str_replace($base_path, '', $request_uri); // Elimina la ruta base de l
 // Debug de sesión (solo en desarrollo)
 if ($_ENV['APP_ENV'] === 'development') {
   // Muestra la información de la sesión si está en modo desarrollo
-  echo "<pre>";
-  print_r($_SESSION);
-  echo "</pre>";
+  //echo "<pre>";
+  //print_r($_SESSION);
+  //echo "</pre>";
 }
 
 // Manejo de la solicitud de inicio de sesión POST
@@ -87,6 +119,15 @@ switch ($route) {
     // Redirigir a login si el usuario no está autenticado
     if (!isset($_SESSION['nombre_usuario'])) {
       require_once 'views/auth/login.php';
+    } else {
+      (new HomeController())->index();
+    }
+    break;
+
+  case '/login2':
+    // Redirigir a login2 si el usuario no está autenticado
+    if (!isset($_SESSION['nombre_usuario'])) {
+      require_once 'views/auth/login2.php';
     } else {
       (new HomeController())->index();
     }

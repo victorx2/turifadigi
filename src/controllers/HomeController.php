@@ -8,6 +8,6 @@ class HomeController extends BaseController
 
   public function login()
   {
-    require_once 'views/layouts/modal_login.php';
+    require_once 'views/auth/login.php';
   }
 }

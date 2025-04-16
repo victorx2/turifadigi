@@ -1,70 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
+  <!-- Meta tags básicos -->
   <meta charset="UTF-8" />
+  <meta name="author" content="TuRifadigi"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> Home One || Zefxa || HTML 5 Template </title>
-  <!-- favicons Icons -->
+  <!-- <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"> -->
+
+  <meta name="description" content="TuRifadigi" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+  <!-- Título y Favicons -->
+  <title>TuRifadigi</title>
+  <!-- Rendered size:	1280 × 980 px
+Rendered aspect ratio:	64∶49
+File size:	41.7 kB
+Current source:	https://cegarifas.site/assets/imgs/bb51b8b776.jpg
+ -->
   <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/favicons/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/favicons/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/favicons/favicon-16x16.png" />
-  <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
-  <meta name="description" content="zefxa HTML 5 Template " />
+  <link rel="manifest" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/favicons/site.webmanifest" type="application/manifest+json" />
 
-  <!-- fonts -->
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 
-  <!-- Bootstrap CSS -->
+  <!-- CSS Frameworks -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script>
-    if (typeof bootstrap === 'undefined') {
-      document.write('<link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/bootstrap/css/bootstrap.min.css">')
-    }
-  </script>
 
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <script>
-    if (typeof FontAwesome === 'undefined') {
-      document.write('<link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/fontawesome/css/all.min.css">')
-    }
-  </script>
 
   <!-- jQuery UI -->
   <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+
   <!-- <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.css" /> -->
-  <!-- <script>
-    if (typeof jQuery.ui === 'undefined') {
-      document.write('<link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.css">')
-    }
-  </script> -->
 
   <!-- Swiper -->
   <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet">
-  <script>
-    if (typeof Swiper === 'undefined') {
-      document.write('<link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/swiper/swiper.min.css">')
-    }
-  </script>
 
-  <!-- Recursos locales personalizados -->
+  <!-- Plugins CSS -->
+
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/animate/animate.min.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/animate/custom-animate.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jarallax/jarallax.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-magnific-popup/jquery.magnific-popup.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/odometer/odometer.min.css" />
-  <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/zefxa-icons/style.css">
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/owl-carousel/owl.carousel.min.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/owl-carousel/owl.theme.default.min.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/bootstrap-select/css/bootstrap-select.min.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/nice-select/nice-select.css" />
-  <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/reey-font/stylesheet.css" />
 
-  <!-- template styles -->
+  <!-- CSS Personalizados -->
+  <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/zefxa-icons/style.css">
+  <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/reey-font/stylesheet.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/css/custom.css" />
   <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/css/custom_responsive.css" />
 </head>
@@ -74,18 +68,10 @@
   <div class="custom-cursor__cursor"></div>
   <div class="custom-cursor__cursor-two"></div>
 
-
-
-
-
   <div class="preloader">
     <div class="preloader__image"></div>
   </div>
   <!-- /.preloader -->
-
-
-
-
 
   <div class="page-wrapper">
     <header class="main-header">
@@ -139,99 +125,19 @@
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
                 <div class="main-menu__logo">
-                  <a href=""><img src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/resources/logo-1.png" alt=""></a>
+                  <a href=""><img src="assets/img/resources/logo-1.png" alt=""></a>
                 </div>
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
-                  <ul class="main-menu__list">
-                    <li class="dropdown">
-                      <a href="">Home
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href="">Home One</a></li>
-                        <li><a href="">Home Two</a></li>
-                        <li><a href="">Home Three</a></li>
-                        <li class="dropdown">
-                          <a href="#">One Page Styles</a>
-                          <ul>
-                            <li><a href="">Home One</a></li>
-                            <li><a href="">Home Two</a></li>
-                            <li><a href="">Home Three</a></li>
-                          </ul>
-                        </li>
-                        <li class="dropdown">
-                          <a href="#">Header Styles</a>
-                          <ul>
-                            <li><a href="">Header One</a></li>
-                            <li><a href="">Header Two</a></li>
-                            <li><a href="">Header Three</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#">Pages
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href=" ">About</a></li>
-                        <li><a href="">Team</a></li>
-                        <li><a href="">Team Details</a></li>
-                        <li><a href="">Testimonials</a></li>
-                        <li><a href="">Pricing</a></li>
-                        <li><a href="">Faq</a></li>
-                        <li><a href="">404 Error</a></li>
-                        <li><a href="">Coming Soon</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#">Services
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href="">Services</a></li>
-                        <li><a href="">Digital Marketing</a></li>
-                        <li><a href="">UI/UX Designing</a></li>
-                        <li><a href="">App Development</a></li>
-                        <li><a href="">Graphic Designing</a></li>
-                        <li><a href="">Website Development</a></li>
-                        <li><a href="">SEO & Content Writting</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#">Projects
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href="">Projects</a></li>
-                        <li><a href="">Project Details</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#">Blog
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href="">Blog</a></li>
-                        <li><a href="">Blog Details</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      <a href="auth">Contact
-                        <span class="main-menu-border"></span>
-                      </a>
-                    </li>
-                  </ul>
                 </div>
               </div>
               <div class="main-menu__right">
                 <div class="main-menu__cart-search-box">
-                  <a href="" class="main-menu__search search-toggler icon-magnifying-glass"></a>
-                  <a href="" class="main-menu__cart"><span class="icon-shopping-cart"></span></a>
+                  <a href="#" class="main-menu__search search-toggler icon-magnifying-glass"></a>
+                  <a href="#" class="main-menu__cart"><span class="icon-shopping-cart"></span></a>
                 </div>
                 <div class="main-menu__btn-box">
-                  <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
+                  <a href="contact.html" class="main-menu__btn thm-btn">Get Free Quote</a>
                 </div>
               </div>
             </div>
@@ -243,3 +149,36 @@
     <div class="stricky-header stricked-menu main-menu">
       <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
     </div><!-- /.stricky-header -->
+
+    <!--Page Header Start-->
+    <section class="page-header">
+      <div class="page-header__bg" style="background-image: url(assets/img/backgrounds/page-header-bg.jpg);">
+      </div>
+      <div class="page-header__shape-bg"
+        style="background-image: url(assets/img/shapes/page-header-shape-bg-three.png);"></div>
+      <div class="page-header__shape-1 float-bob-y">
+        <img src="assets/img/shapes/page-header-shape-1.png" alt="">
+      </div>
+      <div class="page-header__shape-2 img-bounce">
+        <img src="assets/img/shapes/page-header-shape-2.png" alt="">
+      </div>
+      <div class="page-header__shape-3 float-bob-x">
+        <img src="assets/img/shapes/page-header-shape-3.png" alt="">
+      </div>
+      <div class="container">
+        <div class="page-header__inner">
+          <div class="thm-breadcrumb__box">
+            <div class="thm-breadcrumb__icon">
+              <img src="assets/img/shapes/section-title-tagline-shape.png" alt="">
+            </div>
+            <ul class="thm-breadcrumb list-unstyled">
+              <li><a href="">Home</a></li>
+              <li><span>-</span></li>
+              <li>Contact Us</li>
+            </ul>
+          </div>
+          <h2>Contact Us</h2>
+        </div>
+      </div>
+    </section>
+    <!--Page Header End-->
