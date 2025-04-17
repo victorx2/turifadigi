@@ -23,15 +23,15 @@
     --zefxa-font-three: 'reeyregular';
     --zefxa-gray: #6c6b6f;
     --zefxa-gray-rgb: 108, 107, 111;
-    --zefxa-white: #ffffff;
-    --zefxa-white-rgb: 255, 255, 255;
-    --zefxa-base: #f50963;
-    --zefxa-base-rgb: 245, 9, 99;
-    --zefxa-black: #1c1b1f;
-    --zefxa-black-rgb: 28, 27, 31;
+    --zefxa-white: #fafafa;
+    --zefxa-white-rgb: 250, 250, 250;
+    --zefxa-base: #2962ff;
+    --zefxa-base-rgb: 41, 98, 255;
+    --zefxa-black: #212121;
+    --zefxa-black-rgb: 33, 33, 33;
     --zefxa-extra: #f4f5f8;
     --zefxa-extra-rgb: 244, 245, 248;
-  }
+}
   
   .row {
     --bs-gutter-x: 30px;

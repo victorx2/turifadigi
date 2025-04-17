@@ -6,12 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title> TuRifaDigi </title>
   <!-- favicons Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" /> -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
   <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
   <meta name="description" content="zefxa HTML 5 Template " />
 
@@ -142,60 +139,86 @@
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
                 <div class="main-menu__logo">
-                assets/img/backgrounds/TuRifaDigi.jpg
-                  <!-- <a href=""><img src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/resources/logo-1.png" alt=""></a> -->
+                  <a href=""><img src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/resources/logo-1.png" alt=""></a>
                 </div>
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
                   <ul class="main-menu__list">
                     <li class="dropdown">
-                      <a href="">Inicio
+                      <a href="">Home
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
                         <li><a href="">Home One</a></li>
+                        <li><a href="">Home Two</a></li>
+                        <li><a href="">Home Three</a></li>
                         <li class="dropdown">
                           <a href="#">One Page Styles</a>
                           <ul>
                             <li><a href="">Home One</a></li>
+                            <li><a href="">Home Two</a></li>
+                            <li><a href="">Home Three</a></li>
+                          </ul>
+                        </li>
+                        <li class="dropdown">
+                          <a href="#">Header Styles</a>
+                          <ul>
+                            <li><a href="">Header One</a></li>
+                            <li><a href="">Header Two</a></li>
+                            <li><a href="">Header Three</a></li>
                           </ul>
                         </li>
                       </ul>
                     </li>
-                    <!--    <li class="dropdown">
-                      <a href="#">Cuentas de pago
+                    <li class="dropdown">
+                      <a href="#">Pages
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
                         <li><a href=" ">About</a></li>
-                      </ul>
-                    </li> -->
-                    <li class="dropdown">
-                      <a href="#">Cuentas de pago
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href="">Cuentas de pago</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#">Contacto
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href="">Contacto</a></li>
+                        <li><a href="">Team</a></li>
+                        <li><a href="">Team Details</a></li>
+                        <li><a href="">Testimonials</a></li>
+                        <li><a href="">Pricing</a></li>
+                        <li><a href="">Faq</a></li>
+                        <li><a href="">404 Error</a></li>
+                        <li><a href="">Coming Soon</a></li>
                       </ul>
                     </li>
                     <li class="dropdown">
-                      <a href="#">Eventos
+                      <a href="#">Services
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
-                        <li><a href="">Eventos</a></li>
+                        <li><a href="">Services</a></li>
+                        <li><a href="">Digital Marketing</a></li>
+                        <li><a href="">UI/UX Designing</a></li>
+                        <li><a href="">App Development</a></li>
+                        <li><a href="">Graphic Designing</a></li>
+                        <li><a href="">Website Development</a></li>
+                        <li><a href="">SEO & Content Writting</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#">Projects
+                        <span class="main-menu-border"></span>
+                      </a>
+                      <ul>
+                        <li><a href="">Projects</a></li>
+                        <li><a href="">Project Details</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#">Blog
+                        <span class="main-menu-border"></span>
+                      </a>
+                      <ul>
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Blog Details</a></li>
                       </ul>
                     </li>
                     <li>
-                      <a href="auth">Iniciar Sesión
+                      <a href="auth">Contact
                         <span class="main-menu-border"></span>
                       </a>
                     </li>
