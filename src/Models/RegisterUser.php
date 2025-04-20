@@ -43,6 +43,7 @@ class RegisterUser
   const MESSAGE_USER_EXISTS = 'El nombre de usuario ya existe';
   const MESSAGE_PHONE_EXISTS = 'El número de teléfono ya está registrado';
   const MESSAGE_DATABASE_ERROR = 'Error al procesar la solicitud en la base de datos';
+  
   const MESSAGE_INVALID_DATA = 'Datos inválidos o incompletos';
 
   // Valores por defecto

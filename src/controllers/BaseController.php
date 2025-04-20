@@ -1,7 +1,4 @@
 <?php
-
-namespace App\controllers;
-
 class BaseController
 {
   protected $model;
@@ -11,9 +8,11 @@ class BaseController
   {
     // Inicializar el modelo correspondiente si existe
     $model_name = str_replace('Controller', '', get_class($this));
-    $model_class = "App\\models\\" . $model_name . 'Model';
+    $model_file = "models/{$model_name}Model.php";
 
-    if (class_exists($model_class)) {
+    if (file_exists($model_file)) {
+      require_once $model_file;
+      $model_class = $model_name . 'Model';
       $this->model = new $model_class();
     }
   }

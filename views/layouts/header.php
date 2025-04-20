@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8" />
@@ -142,7 +142,7 @@
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
                 <div class="main-menu__logo">
-                assets/img/backgrounds/TuRifaDigi.jpg
+                  <!-- <img src="assets/img/backgrounds/TuRifaDigi.jpg" alt=""> -->
                   <!-- <a href=""><img src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/resources/logo-1.png" alt=""></a> -->
                 </div>
                 <div class="main-menu__main-menu-box">
@@ -195,7 +195,7 @@
                       </ul>
                     </li>
                     <li>
-                      <a href="auth">Iniciar Sesión
+                      <a href="/TuRifadigi/login">Iniciar Sesión
                         <span class="main-menu-border"></span>
                       </a>
                     </li>

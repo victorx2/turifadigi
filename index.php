@@ -115,6 +115,15 @@ switch ($route) {
     require_once 'views/loteria/home.php';
     break;
 
+  case '/register':
+    // Redirigir a register si el usuario no está autenticado
+    if (!isset($_SESSION['nombre_usuario'])) {
+      require_once 'views/auth/register.php';
+    } else {
+      (new HomeController())->index();
+    }
+    break;
+
   case '/login':
     // Redirigir a login si el usuario no está autenticado
     if (!isset($_SESSION['nombre_usuario'])) {
