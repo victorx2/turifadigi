@@ -1,22 +1,16 @@
 <!--Site Footer Start-->
 <footer class="site-footer">
-  <!-- <div class="site-footer__bg" style="background-image: url(assets/img/backgrounds/site-footer-bg.jpg);">
-  </div> -->
   <div class="site-footer__top">
     <div class="container">
       <div class="row">
         <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
           <div class="footer-widget__column footer-widget__about">
             <div class="footer-widget__logo">
-              <!--  <a href=" "><img src="assets/img/resources/footer-logo.png" alt=""></a> -->
             </div>
             <p class="footer-widget__about-text"></p>
             <div class="site-footer__social-box">
               <h3 class="site-footer__social-title">Redes sociales</h3>
               <div class="site-footer__social">
-                <!-- <a href="#"><i class="fab fa-twitter"></i></a> -->
-                <!-- <a href="#"><i class="fab fa-facebook"></i></a> -->
-                <!-- <a href="#"><i class="fab fa-pinterest-p"></i></a> -->
                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D"><i class="fab fa-instagram"></i></a>
               </div>
             </div>
@@ -43,14 +37,7 @@
               <h3 class="footer-widget__title"> </h3>
             </div>
             <p class="footer-widget__newsletter-text"> </p>
-            <!-- <form class="footer-widget__newsletter-form mc-form" data-url="MC_FORM_URL"
-              novalidate="novalidate">
-              <div class="footer-widget__newsletter-form-input-box">
-                <input type="email" placeholder="Enter Email Address" name="EMAIL">
-                <button type="submit" class="footer-widget__newsletter-btn"><span
-                    class="fas fa-paper-plane"></span></button>
-              </div>
-            </form> -->
+
             <div class="mc-form__response"></div>
             <ul class="footer-widget__Contact-list list-unstyled">
               <li>

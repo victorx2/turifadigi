@@ -9,9 +9,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/TuRifaDigi.jpg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/TuRifaDigi.jpg" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" /> -->
   <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
   <meta name="description" content="zefxa HTML 5 Template " />
 
@@ -39,12 +36,6 @@
 
   <!-- jQuery UI -->
   <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.css" /> -->
-  <!-- <script>
-    if (typeof jQuery.ui === 'undefined') {
-      document.write('<link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.css">')
-    }
-  </script> -->
 
   <!-- Swiper -->
   <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet">
@@ -77,18 +68,10 @@
   <div class="custom-cursor__cursor"></div>
   <div class="custom-cursor__cursor-two"></div>
 
-
-
-
-
   <div class="preloader">
     <div class="preloader__image"></div>
   </div>
   <!-- /.preloader -->
-
-
-
-
 
   <div class="page-wrapper">
     <header class="main-header">
@@ -142,8 +125,6 @@
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
                 <div class="main-menu__logo">
-                  <!-- <img src="assets/img/backgrounds/TuRifaDigi.jpg" alt=""> -->
-                  <!-- <a href=""><img src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/assets/img/resources/logo-1.png" alt=""></a> -->
                 </div>
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
@@ -162,14 +143,6 @@
                         </li>
                       </ul>
                     </li>
-                    <!--    <li class="dropdown">
-                      <a href="#">Cuentas de pago
-                        <span class="main-menu-border"></span>
-                      </a>
-                      <ul>
-                        <li><a href=" ">About</a></li>
-                      </ul>
-                    </li> -->
                     <li class="dropdown">
                       <a href="#">Cuentas de pago
                         <span class="main-menu-border"></span>
@@ -204,8 +177,6 @@
               </div>
               <div class="main-menu__right">
                 <div class="main-menu__cart-search-box">
-                  <!-- <a href="" class="main-menu__search search-toggler icon-magnifying-glass"></a>
-                  <a href="" class="main-menu__cart"><span class="icon-shopping-cart"></span></a> -->
                 </div>
                 <div class="main-menu__btn-box">
                   <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
