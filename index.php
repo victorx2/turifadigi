@@ -60,12 +60,8 @@ if ($_ENV['APP_ENV'] === 'development') {
 if ($request_method === 'POST') {
     // Procesamiento de inicio de sesión
     if ($route === '/login') {
-        $authController = (new AuthController())->login($_REQUEST['name'], $_REQUEST['password']);
-        if (!$authController) {
-            $error = true;
-            require_once 'views/auth/login.php';
-            exit;
-        }
+        (new AuthController())->login($_POST);
+        exit;
     }
     
     // Procesamiento de registro de usuario

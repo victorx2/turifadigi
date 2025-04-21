@@ -1,137 +1,214 @@
 <?php require_once 'views/auth/header_login.php'; ?>
+
 <!--Contact Two Start-->
 <section class="contact-two">
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
   </div>
   <div class="container">
-    <div class="row">
-      <div class="col-xl-8">
-        <div class="contact-two__left">
-          <div class="section-title text-left">
-            <div class="section-title__tagline-box">
-              <div class="section-title__tagline-shape">
-                <img src="assets/images/shapes/section-title-tagline-shape.png" alt="">
-              </div>
-              <span class="section-title__tagline"></span>
-            </div>
-            <h2 class="section-title__title">Iniciar sesión
-              <br>
-            </h2>
+    <div class="row justify-content-center">
+      <div class="col-xl-6">
+        <div class="contact-two__left bg-white p-4 rounded shadow">
+          <div class="section-title text-center mb-4">
+            <h2 class="section-title__title">Iniciar sesión</h2>
           </div>
 
-          <form class="contact-form-validated contact-two__form" action="/TuRifadigi/login"
-            method="post" novalidate="novalidate">
+          <form id="form-login" class="contact-form-validated contact-two__form">
             <div class="row">
-              <div class="col-xl-6 col-lg-6">
-                <div class="contact-two__input-box">
-                  <input type="text" name="identificador" placeholder="Nombre de usuario o teléfono" title="El nombre de usuario o teléfono es requerido">
+              <div class="col-12 mb-3">
+                <div class="contact-two__input-box position-relative">
+                  <input
+                    type="text"
+                    name="identificador"
+                    id="identificador"
+                    class="form-control"
+                    placeholder="Nombre de usuario o teléfono"
+                    required>
                 </div>
               </div>
-              <div class="col-xl-6 col-lg-6">
-                <div class="contact-two__input-box">
-                  <input type="text" name="clave_usuario" placeholder="Contraseña" title="La contraseña es requerida">
+              <div class="col-12 mb-3">
+                <div class="contact-two__input-box position-relative">
+                  <input
+                    type="text"
+                    name="clave_usuario"
+                    id="clave_usuario"
+                    class="form-control"
+                    placeholder="Contraseña"
+                    required
+                    style="-webkit-text-security: disc;">
                 </div>
               </div>
-            </div>
-            <div class="col-xl-12 text-center">
-              <div class="contact-two__btn-box">
-                <button type="submit" class="thm-btn contact-two__btn">Iniciar sesión</button>
+              <div class="col-12 text-center">
+                <button type="submit" class="thm-btn contact-two__btn w-100">
+                  Iniciar sesión
+                </button>
               </div>
             </div>
           </form>
-          <div class="result"></div>
-          <p class="contact-two__left-text"><a href="/TuRifadigi/register">No tiene cuenta?</a><!--  <a href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/auth/login">Inicia sesión</a> --></p>
+
+          <div class="text-center mt-4">
+            <p class="contact-two__left-text">
+              <a href="/TuRifadigi/register" class="text-primary">¿No tiene cuenta?</a>
+            </p>
+          </div>
+
+          <!-- Toast container -->
+          <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header d-flex align-items-center">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto" id="toastTitle"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body" id="toastMessage"></div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<style>
+  /* Estilos adicionales para mejorar la apariencia */
+  .contact-two {
+    padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
 
+  .contact-two__left {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 15px !important;
+  }
+
+  .form-control {
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 0 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+  }
+
+  .thm-btn {
+    height: 50px;
+    border-radius: 8px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .thm-btn:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+  }
+
+  .contact-two__input-box {
+    margin-bottom: 20px;
+  }
+
+  /* Estilos para el toast */
+  .toast {
+    background: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .toast-header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 0.75rem;
+  }
+
+  .toast-body {
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact-two {
+      padding: 40px 0;
+    }
+
+    .contact-two__left {
+      margin: 15px;
+    }
+  }
+</style>
+
+<!-- Scripts necesarios -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+  // Mantener el mismo JavaScript que teníamos antes para la funcionalidad
+  function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('clave_usuario');
+    if (passwordInput.style.webkitTextSecurity === 'disc') {
+      passwordInput.style.webkitTextSecurity = 'none';
+    } else {
+      passwordInput.style.webkitTextSecurity = 'disc';
+    }
+  }
+
+  // Agregar el ícono del ojo
+  const passwordContainer = document.querySelector('#clave_usuario').parentNode;
+  const eyeIcon = document.createElement('i');
+  eyeIcon.className = 'fas fa-eye';
+  eyeIcon.style.cssText = `
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+`;
+  eyeIcon.addEventListener('click', togglePasswordVisibility);
+  passwordContainer.style.position = 'relative';
+  passwordContainer.appendChild(eyeIcon);
+
+  // Obtener referencias a los elementos
   let identificador = document.getElementById('identificador');
   let clave_usuario = document.getElementById('clave_usuario');
+
   // Prevenir espacios en todos los campos
   [identificador, clave_usuario].forEach(input => {
-    // Prevenir que se escriban espacios con la barra espaciadora
     input.addEventListener('keydown', function(e) {
       if (e.key === ' ') {
-        e.preventDefault(); // Cancela la acción por defecto de escribir un espacio
+        e.preventDefault();
       }
     });
 
-    // Prevenir pegar texto que contenga espacios
     input.addEventListener('paste', function(e) {
-      e.preventDefault(); // Cancela el pegado normal
+      e.preventDefault();
       let text = (e.clipboardData || window.clipboardData).getData('text');
       if (!text.includes(' ')) {
-        // Solo permite pegar si el texto no contiene espacios
         this.value = text;
       }
     });
 
-    // Limpiar espacios si se intentan agregar de otra forma
     input.addEventListener('input', function() {
-      this.value = this.value.replace(/\s/g, ''); // Elimina todos los espacios
+      this.value = this.value.replace(/\s/g, '');
     });
   });
 
-  // Validación en tiempo real para el campo nombre_usuario
-  nombre_usuario.addEventListener('input', function() {
-    if (this.value.trim() === '' || this.value.length < 3) {
-      showToast('warning', 'Campo vacío', 'El campo nombre de usuario se encuentra vacío y debe tener al menos 3 caracteres');
-      this.style.border = "2px solid red"; // Borde rojo si es inválido
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2"; // Borde azul si es válido
-    }
-  });
-
-  // Cambiar estilo cuando el campo nombre_usuario recibe foco
-  nombre_usuario.addEventListener('focus', function() {
-    if (!(this.value.trim() === '' || this.value.length < 3)) {
-      this.style.border = "2px solid #4a90e2"; // Borde azul si es válido
-    }
-  });
-
-  // Quitar borde cuando el campo nombre_usuario pierde el foco
-  nombre_usuario.addEventListener('blur', function() {
-    if (!(this.value.trim() === '' || this.value.length < 3)) {
-      this.style.border = ""; // Quita el borde si es válido
-    }
-  });
-
-  // Validación en tiempo real para el campo clave_usuario
-  clave_usuario.addEventListener('input', function() {
-    if (this.value.trim() === '' || this.value.length < 6) {
-      showToast('warning', 'Campo vacío', 'El campo contraseña se encuentra vacío y debe tener al menos 6 caracteres');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Cambiar estilo cuando el campo clave_usuario recibe foco
-  clave_usuario.addEventListener('focus', function() {
-    if (!(this.value.trim() === '' || this.value.length < 6)) {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Quitar borde cuando el campo clave_usuario pierde el foco
-  clave_usuario.addEventListener('blur', function() {
-    if (!(this.value.trim() === '' || this.value.length < 6)) {
-      this.style.border = "";
-    }
-  });
-
-  // Validación en tiempo real para el campo telefono_usuario
-  telefono_usuario.addEventListener('input', function() {
+  // Validación para identificador
+  identificador.addEventListener('input', function() {
     if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo teléfono se encuentra vacío');
+      showToast('warning', 'Campo vacío', 'El campo identificador es requerido');
       this.style.border = "2px solid red";
       this.focus();
     } else {
@@ -139,43 +216,39 @@
     }
   });
 
-  // Cambiar estilo cuando el campo telefono_usuario recibe foco
-  telefono_usuario.addEventListener('focus', function() {
-    if (!(this.value.trim() === '')) {
+  // Validación para clave_usuario
+  clave_usuario.addEventListener('input', function() {
+    if (this.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo contraseña es requerido');
+      this.style.border = "2px solid red";
+      this.focus();
+    } else {
       this.style.border = "2px solid #4a90e2";
     }
   });
 
-  // Quitar borde cuando el campo telefono_usuario pierde el foco
-  telefono_usuario.addEventListener('blur', function() {
-    if (!(this.value.trim() === '')) {
-      this.style.border = "";
-    }
-  });
+  // Manejo del formulario
+  document.getElementById('form-login').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-  // Manejo del envío del formulario
-  document.getElementById('form-registro').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita el envío normal del formulario
+    // Deshabilitar el botón de submit para evitar doble envío
+    const submitButton = this.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
 
     // Validaciones finales antes de enviar
-    if (nombre_usuario.value.trim() === '' || nombre_usuario.value.length < 3) {
-      showToast('warning', 'Campo vacío', 'El campo nombre de usuario se encuentra vacío y debe tener al menos 3 caracteres');
-      nombre_usuario.style.border = "2px solid red";
-      nombre_usuario.focus();
+    if (identificador.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo identificador es requerido');
+      identificador.style.border = "2px solid red";
+      identificador.focus();
+      submitButton.disabled = false;
       return;
     }
 
-    if (clave_usuario.value.trim() === '' || clave_usuario.value.length < 6) {
-      showToast('warning', 'Campo vacío', 'El campo contraseña se encuentra vacío y debe tener al menos 6 caracteres');
+    if (clave_usuario.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo contraseña es requerido');
       clave_usuario.style.border = "2px solid red";
       clave_usuario.focus();
-      return;
-    }
-
-    if (telefono_usuario.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo teléfono se encuentra vacío');
-      telefono_usuario.style.border = "2px solid red";
-      telefono_usuario.focus();
+      submitButton.disabled = false;
       return;
     }
 
@@ -183,37 +256,40 @@
     let formData = new FormData(this);
 
     // Envía los datos al servidor usando fetch
-    fetch('/TuRifadigi/registro_usuario', {
+    fetch('/TuRifadigi/login', {
         method: 'POST',
         body: new URLSearchParams(formData)
       })
       .then(response => response.json())
       .then(data => {
+        console.log('Respuesta del servidor:', data); // Debug
         if (data.success) {
           showToast(data.type, 'Éxito', data.message);
           setTimeout(() => {
-            window.location.href = '/TuRifadigi/login'; // Redirige después de 3 segundos
+            window.location.href = '/TuRifadigi/dashboard';
           }, 3000);
         } else {
           showToast(data.type, 'Error', data.message);
+          submitButton.disabled = false;
         }
       })
       .catch(error => {
+        console.error('Error:', error); // Debug
         showToast('error', 'Error', 'Hubo un error al procesar la solicitud');
+        submitButton.disabled = false;
       });
   });
 
-  // Función para mostrar notificaciones tipo toast
+  // Función showToast
   function showToast(type, title, message) {
     const toast = document.getElementById('notificationToast');
     const toastTitle = document.getElementById('toastTitle');
     const toastMessage = document.getElementById('toastMessage');
     const toastInstance = new bootstrap.Toast(toast, {
       autohide: true,
-      delay: 5000 // El toast se oculta automáticamente después de 5 segundos
+      delay: 5000
     });
 
-    // Configura el icono y color según el tipo de notificación
     let icon = '';
     let headerClass = '';
     switch (type) {
@@ -234,112 +310,13 @@
         headerClass = 'bg-info text-white';
     }
 
-    // Actualiza el contenido del toast
     toastTitle.innerHTML = icon + title;
     const header = toast.querySelector('.toast-header');
     header.className = `toast-header ${headerClass}`;
     toastMessage.textContent = message;
 
-    // Muestra el toast
     toastInstance.show();
   }
 </script>
-
-<style>
-  .toast-container {
-    position: static !important;
-    padding: 1rem;
-  }
-
-  .toast {
-    background: white;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    opacity: 1 !important;
-    margin: 0 auto;
-  }
-
-  .toast-header {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom: none;
-    padding: 0.75rem;
-  }
-
-  .toast-body {
-    padding: 1rem;
-    font-size: 0.95rem;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    word-wrap: break-word;
-  }
-
-  .btn-close {
-    filter: brightness(0) invert(1);
-    opacity: 0.8;
-    padding: 0.5rem;
-  }
-
-  .btn-close:hover {
-    opacity: 1;
-  }
-
-  /* Responsive styles */
-
-  @media (max-width: 768px) {
-    .toast-container {
-      padding: 0.5rem;
-    }
-
-    .toast {
-      width: 100% !important;
-      max-width: none;
-      margin: 0;
-    }
-
-    .toast-header {
-      padding: 0.5rem;
-    }
-
-    .toast-body {
-      padding: 0.75rem;
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .toast-container {
-      padding: 0.25rem;
-    }
-
-    .toast-header {
-      padding: 0.5rem;
-    }
-
-    .toast-body {
-      padding: 0.5rem;
-      font-size: 0.85rem;
-    }
-
-    #toastTitle {
-      font-size: 0.9rem;
-    }
-  }
-
-  /* Asegurar que el toast no se salga de la pantalla en dispositivos muy pequeños */
-  @media (max-width: 320px) {
-    .toast {
-      min-width: auto;
-    }
-
-    .toast-body {
-      font-size: 0.8rem;
-    }
-  }
-</style>
-
-
-
 
 <?php require_once 'views/auth/footer_login.php'; ?>

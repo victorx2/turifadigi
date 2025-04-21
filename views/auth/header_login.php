@@ -9,18 +9,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/TuRifaDigi.jpg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/TuRifaDigi.jpg" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" /> -->
   <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
   <meta name="description" content="zefxa HTML 5 Template " />
-
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script>
@@ -28,7 +23,6 @@
       document.write('<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">')
     }
   </script>
-
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script>
@@ -36,16 +30,8 @@
       document.write('<link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">')
     }
   </script>
-
   <!-- jQuery UI -->
   <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.css" /> -->
-  <!-- <script>
-    if (typeof jQuery.ui === 'undefined') {
-      document.write('<link rel="stylesheet" href="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/jquery-ui/jquery-ui.css">')
-    }
-  </script> -->
-
   <!-- Swiper -->
   <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet">
   <script>
@@ -53,7 +39,6 @@
       document.write('<link rel="stylesheet" href="vendor/swiper/swiper.min.css">')
     }
   </script>
-
   <!-- Recursos locales personalizados -->
   <link rel="stylesheet" href="vendor/animate/animate.min.css" />
   <link rel="stylesheet" href="vendor/animate/custom-animate.css" />
@@ -66,22 +51,17 @@
   <link rel="stylesheet" href="vendor/bootstrap-select/css/bootstrap-select.min.css" />
   <link rel="stylesheet" href="vendor/nice-select/nice-select.css" />
   <link rel="stylesheet" href="vendor/reey-font/stylesheet.css" />
-
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
 </head>
 
 <body class="custom-cursor">
-
   <div class="custom-cursor__cursor"></div>
   <div class="custom-cursor__cursor-two"></div>
-
   <div class="preloader">
     <div class="preloader__image"></div>
   </div>
-  <!-- /.preloader -->
-
   <div class="page-wrapper">
     <header class="main-header">
       <div class="main-menu__top">
@@ -89,9 +69,6 @@
           <div class="main-menu__top-inner">
             <div class="main-menu__top-left">
               <div class="main-menu__social">
-                <!-- <a href="#"><i class="icon-facebook"></i></a> -->
-                <!-- <a href="#"><i class="icon-google-plus-logo"></i></a> -->
-                <!-- <a href="#"><i class="icon-twitter"></i></a> -->
               </div>
               <ul class="list-unstyled main-menu__contact-list">
                 <li>
@@ -161,8 +138,8 @@
 
     <!--Page Header Start-->
     <section class="page-header">
-      <!-- <div class="page-header__bg" style="background-image: url(assets/img/backgrounds/page-header-bg.jpg);">
-      </div> -->
+      <div class="page-header__bg" style="background-image: url(assets/img/backgrounds/MotoYorsi.jpeg);">
+      </div>
       <div class="page-header__shape-bg"
         style="background-image: url(assets/img/shapes/page-header-shape-bg-three.png);"></div>
       <div class="page-header__shape-1 float-bob-y">
