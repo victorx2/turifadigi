@@ -29,13 +29,12 @@
               <div class="col-12 mb-3">
                 <div class="contact-two__input-box position-relative">
                   <input
-                    type="text"
+                    type="password"
                     name="clave_usuario"
                     id="clave_usuario"
                     class="form-control"
                     placeholder="Contraseña"
-                    required
-                    style="-webkit-text-security: disc;">
+                    required>
                 </div>
               </div>
               <div class="col-12 text-center">
@@ -266,7 +265,7 @@
         if (data.success) {
           showToast(data.type, 'Éxito', data.message);
           setTimeout(() => {
-            window.location.href = '/TuRifadigi/dashboard';
+            window.location.href = '/TuRifadigi/home';
           }, 3000);
         } else {
           showToast(data.type, 'Error', data.message);

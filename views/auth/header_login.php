@@ -73,34 +73,28 @@
               <ul class="list-unstyled main-menu__contact-list">
                 <li>
                   <div class="icon">
-                    <!-- <i class="icon-phone-call"></i> -->
                   </div>
                   <div class="text">
-                    <!-- <p><a href="tel:0012346823705">+00 (1234) 682 3705</a> -->
-                    <!-- </p> -->
                   </div>
                 </li>
                 <li>
                   <div class="icon">
-                    <!-- <i class="icon-mail"></i> -->
+
                   </div>
                   <div class="text">
-                    <!-- <p><a href="mailto:needhelp@company.com">needhelp@company.com</a> -->
-                    <!-- </p> -->
                   </div>
                 </li>
                 <li>
                   <div class="icon">
-                    <!-- <i class="icon-maps-and-flags"></i> -->
                   </div>
                   <div class="text">
-                    <!-- <p>80 Broklyn Golden Street UK</p> -->
+
                   </div>
                 </li>
               </ul>
             </div>
             <div class="main-menu__top-right">
-              <!-- <p class="main-menu__top-text">We Provide High Quality & Cost Effective Services</p> -->
+
             </div>
           </div>
         </div>
@@ -111,7 +105,7 @@
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
                 <div class="main-menu__logo">
-                  <!-- <a href=""><img src="assets/img/resources/logo-1.png" alt=""></a> -->
+
                 </div>
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
@@ -119,11 +113,10 @@
               </div>
               <div class="main-menu__right">
                 <div class="main-menu__cart-search-box">
-                  <!-- <a href="#" class="main-menu__search search-toggler icon-magnifying-glass"></a> -->
-                  <!-- <a href="#" class="main-menu__cart"><span class="icon-shopping-cart"></span></a> -->
+
                 </div>
                 <div class="main-menu__btn-box">
-                  <!-- <a href="contact.html" class="main-menu__btn thm-btn">Get Free Quote</a> -->
+
                 </div>
               </div>
             </div>
@@ -138,33 +131,149 @@
 
     <!--Page Header Start-->
     <section class="page-header">
-      <div class="page-header__bg" style="background-image: url(assets/img/backgrounds/MotoYorsi.jpeg);">
+      <style>
+        .page-header {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .page-header__bg2 {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url(assets/img/backgrounds/MotoYorsi.jpeg);
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          filter: brightness(0.4);
+          transform: scale(1.02);
+          transition: all 0.5s ease;
+        }
+
+        .page-header__content {
+          position: relative;
+          z-index: 2;
+          text-align: center;
+          padding: 20px;
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .page-header__title {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          font-weight: 700;
+          color: white;
+          margin-bottom: 1rem;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .page-header__subtitle {
+          font-size: clamp(1.8rem, 4vw, 2.5rem);
+          color: #3d7bff;
+          margin-bottom: 1rem;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .page-header__text {
+          font-size: clamp(1rem, 2vw, 1.2rem);
+          color: white;
+          margin-bottom: 2rem;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+          line-height: 1.6;
+        }
+
+        .wave-shape {
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 100%;
+          background: white;
+          height: clamp(80px, 15vh, 150px);
+          border-radius: 100% 100% 0 0;
+        }
+
+        /* Animación suave al cargar */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .page-header__content>* {
+          animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .page-header__title {
+          animation-delay: 0.2s;
+        }
+
+        .page-header__subtitle {
+          animation-delay: 0.4s;
+        }
+
+        .page-header__text {
+          animation-delay: 0.6s;
+        }
+
+        /* Ajustes específicos para diferentes dispositivos */
+        @media (max-width: 768px) {
+          .page-header {
+            height: 90vh;
+          }
+
+          .page-header__bg2 {
+            background-position: 65% center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .page-header {
+            height: 80vh;
+          }
+
+          .wave-shape {
+            height: clamp(60px, 10vh, 100px);
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .page-header__bg2 {
+            background-position: center 20%;
+          }
+        }
+
+        /* Orientación landscape en móviles */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .page-header {
+            height: 120vh;
+          }
+
+          .page-header__content {
+            padding-top: 40px;
+          }
+        }
+      </style>
+      <div class="page-header__bg2"></div>
+      <div class="page-header__content">
+        <h1 class="page-header__title">TuRifaDigital</h1>
+        <h2 class="page-header__subtitle">Tu Mejor Opción</h2>
+        <p class="page-header__text">Crea y gestiona tus rifas de manera fácil y segura.</p>
       </div>
-      <div class="page-header__shape-bg"
-        style="background-image: url(assets/img/shapes/page-header-shape-bg-three.png);"></div>
-      <div class="page-header__shape-1 float-bob-y">
-        <img src="assets/img/shapes/page-header-shape-1.png" alt="">
-      </div>
-      <div class="page-header__shape-2 img-bounce">
-        <img src="assets/img/shapes/page-header-shape-2.png" alt="">
-      </div>
-      <div class="page-header__shape-3 float-bob-x">
-        <!-- <img src="assets/img/shapes/page-header-shape-3.png" alt=""> -->
-      </div>
-      <div class="container">
-        <div class="page-header__inner">
-          <div class="thm-breadcrumb__box">
-            <div class="thm-breadcrumb__icon">
-              <!--  <img src="assets/img/shapes/section-title-tagline-shape.png" alt=""> -->
-            </div>
-            <ul class="thm-breadcrumb list-unstyled">
-              <!-- <li><a href="">Home</a></li> -->
-              <li><span></span></li>
-              <!--  <li>Contact Us</li> -->
-            </ul>
-          </div>
-          <!-- <h2>Contact Us</h2> -->
-        </div>
-      </div>
+      <div class="wave-shape"></div>
     </section>
     <!--Page Header End-->

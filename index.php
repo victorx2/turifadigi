@@ -63,7 +63,7 @@ if ($request_method === 'POST') {
         (new AuthController())->login($_POST);
         exit;
     }
-    
+
     // Procesamiento de registro de usuario
     if ($route === '/registro_usuario') {
         (new RegisterUserController())->insert($_REQUEST);
@@ -80,8 +80,8 @@ switch ($route) {
 
 
     case '/login':
-         // Página de inicio de sesión
-         if (!isset($_SESSION['logged_in'])) {
+        // Página de inicio de sesión
+        if (!isset($_SESSION['logged_in'])) {
             require_once 'views/auth/login.php';
         } else {
             header("Location: /TuRifadigi/home");
@@ -89,21 +89,21 @@ switch ($route) {
         }
         break;
 
-          
 
-        case '/home':
-            // Página principal del usuario autenticado
-            if (isset($_SESSION['logged_in'])) {
-                (new HomeController())->index();
-            } else {
-                header("Location: /TuRifadigi/login");
-                exit;
-            }
-            break;
+
+    case '/home':
+        // Página principal del usuario autenticado
+        if (isset($_SESSION['logged_in'])) {
+            (new HomeController())->index();
+        } else {
+            header("Location: /TuRifadigi/login");
+            exit;
+        }
+        break;
 
     case '/register':
         // Página de registro (solo para usuarios no autenticados)
-        if (!isset($_SESSION['nombre_usuario'])) {
+        if (!isset($_SESSION['logged_in'])) {
             require_once 'views/auth/register.php';
         } else {
             (new HomeController())->index();
