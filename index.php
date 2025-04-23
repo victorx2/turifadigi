@@ -110,6 +110,12 @@ switch ($route) {
         }
         break;
 
+    case '/sorteo':
+        // Página del sorteo (solo para usuarios no autenticados)
+        require_once 'views/loteria/sorteo.php';
+
+        break;
+
 
     default:
         // Ruta por defecto (página de lotería)
