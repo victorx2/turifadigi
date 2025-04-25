@@ -108,12 +108,28 @@
 </section>
 <!--Main Slider End-->
 
+
+
+
+
+
+<?php require_once 'premio.php'; ?>
+
+
+
+
+
 <!--Services One Start-->
 <section class="services-one">
   <div class="container">
     <!-- Título y contador de boletos -->
     <div class="section-title text-center">
       <h2 class="section-title__title">LISTA DE BOLETOS</h2>
+      <div class="progress-contain">
+        <div class="progress-actual" style="width: 0%;"></div>
+        <div class="progress-total"></div>
+        <div class="progress-percent" id="progress-percent" style="left: 0%;">0%</div>
+      </div>
       <div class="counter-section">
         <button class="thm-btn counter-btn minus">-</button>
         <div class="counter-display">
@@ -163,7 +179,53 @@
   </div>
 </section>
 
-<!-- Estilos CSS para la sección -->
+<!--Services One End-->
+
+<!-- Verificador de Boletos Start -->
+<section class="services-one">
+  <div class="container">
+    <div class="section-title text-center">
+      <h2 class="section-title__title">VERIFICADOR DE BOLETOS</h2>
+    </div>
+
+    <div class="verificador-container">
+      <div class="search-box">
+        <input type="text" id="findTicket" class="form-control" placeholder="Cédula o #Boleto" maxlength="16">
+        <button class="thm-btn search-btn" id="searchTicket">
+          <i class="fas fa-search"></i> BUSCAR
+        </button>
+      </div>
+
+      <div id="resultTickets" class="result-container" style="display: none;">
+        <div class="result-header">
+          <h5>
+            <strong id="msjNombre"></strong>
+          </h5>
+          <div class="qr-container">
+            <img id="qrCode" class="qr" src="" alt="QR" width="120" height="120">
+          </div>
+          <p id="msjRptaBusqueda"></p>
+          <div class="view-toggle">
+            <label class="switch">
+              <input type="checkbox" onchange="changeViewTicket(event)">
+              <span class="lever"></span> Sólo números
+            </label>
+          </div>
+        </div>
+
+        <div id="misticketsdiv" class="tickets-container">
+          <div id="numbersContain" style="display:none"></div>
+          <div id="ticketsContain">
+            <div class="container_ticket">
+              <widget id="widgetTicket" type="ticket" class="--flex-column"></widget>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <style>
   /* Estilos base */
   .counter-section {
@@ -470,6 +532,144 @@
   .hidden {
     display: none;
   }
+
+  .verificador-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--thm-white);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-box {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-box input {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--thm-border-color);
+    border-radius: 25px;
+    font-size: 1rem;
+  }
+
+  .result-container {
+    margin-top: 2rem;
+  }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .qr-container {
+    margin: 1rem 0;
+  }
+
+  .qr {
+    border: 1px solid var(--thm-border-color);
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
+
+  .view-toggle {
+    margin: 1rem 0;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .lever {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+
+  .lever:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+
+  input:checked+.lever {
+    background-color: var(--thm-base);
+  }
+
+  input:checked+.lever:before {
+    transform: translateX(26px);
+  }
+
+  .tickets-container {
+    margin-top: 2rem;
+  }
+
+  .container_ticket {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  /* Estilos para la barra de progreso */
+  .progress-contain {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin: 20px auto;
+    overflow: hidden;
+  }
+
+  .progress-actual {
+    position: absolute;
+    height: 100%;
+    background-color: var(--thm-base);
+    transition: width 0.3s ease;
+  }
+
+  .progress-total {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+  }
+
+  .progress-percent {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--thm-black);
+    font-size: 12px;
+    font-weight: bold;
+    transition: left 0.3s ease;
+  }
 </style>
 
 <script>
@@ -493,8 +693,38 @@
       pricePerBoleto: 4,
       lastLoadedBoleto: 0,
       batchSize: 100,
-      isLoading: false
+      isLoading: false,
+      progressSteps: {
+        boletos: 0,
+        nombre: false,
+        identificacion: false,
+        celular: false,
+        ubicacion: false
+      }
     };
+
+    function updateProgress() {
+      const totalSteps = 5; // Total de pasos a completar
+      let completedSteps = 0;
+
+      // Verificar boletos seleccionados (30% del progreso)
+      const boletosProgress = (state.selectedBoletos.size / state.maxSelection) * 30;
+      completedSteps += boletosProgress;
+
+      // Verificar datos personales (70% del progreso)
+      if (state.progressSteps.nombre) completedSteps += 20;
+      if (state.progressSteps.identificacion) completedSteps += 20;
+      if (state.progressSteps.celular) completedSteps += 15;
+      if (state.progressSteps.ubicacion) completedSteps += 15;
+
+      const progress = Math.min(completedSteps, 100);
+      const progressActual = document.querySelector('.progress-actual');
+      const progressPercent = document.getElementById('progress-percent');
+
+      progressActual.style.width = `${progress}%`;
+      progressPercent.style.left = `${progress}%`;
+      progressPercent.textContent = `${progress.toFixed(1)}%`;
+    }
 
     function updateUI() {
       // Actualizar contador
@@ -509,6 +739,9 @@
 
       // Actualizar números seleccionados
       renderSelectedNumbers();
+
+      // Actualizar barra de progreso
+      updateProgress();
     }
 
     function renderSelectedNumbers() {
@@ -569,6 +802,27 @@
       }
       updateUI();
     };
+
+    // Función para verificar datos personales
+    function verificarDatosPersonales() {
+      const nombre = document.getElementById('nombre').value;
+      const identification = document.getElementById('identification').value;
+      const celular = document.getElementById('celular').value;
+      const ubicacion = document.getElementById('location').value;
+
+      state.progressSteps.nombre = nombre.length > 0;
+      state.progressSteps.identificacion = identification.length > 0;
+      state.progressSteps.celular = celular.length > 0;
+      state.progressSteps.ubicacion = ubicacion !== 'Tachira'; // Asumiendo que Tachira es el valor por defecto
+
+      updateProgress();
+    }
+
+    // Agregar event listeners para los campos de datos personales
+    document.getElementById('nombre').addEventListener('input', verificarDatosPersonales);
+    document.getElementById('identification').addEventListener('input', verificarDatosPersonales);
+    document.getElementById('celular').addEventListener('input', verificarDatosPersonales);
+    document.getElementById('location').addEventListener('change', verificarDatosPersonales);
 
     // Event Listeners
     elements.minusBtn.onclick = () => {
@@ -739,143 +993,41 @@
         // Agregar más casos según sea necesario
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchTicket = document.getElementById('searchTicket');
+    const findTicket = document.getElementById('findTicket');
+    const resultTickets = document.getElementById('resultTickets');
+
+    searchTicket.addEventListener('click', function() {
+      const searchValue = findTicket.value.trim();
+      if (searchValue) {
+        // Aquí iría tu lógica de búsqueda
+        resultTickets.style.display = 'block';
+      }
+    });
+
+    findTicket.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchTicket.click();
+      }
+    });
+  });
+
+  function changeViewTicket(event) {
+    const numbersContain = document.getElementById('numbersContain');
+    const ticketsContain = document.getElementById('ticketsContain');
+
+    if (event.target.checked) {
+      numbersContain.style.display = 'block';
+      ticketsContain.style.display = 'none';
+    } else {
+      numbersContain.style.display = 'none';
+      ticketsContain.style.display = 'block';
+    }
+  }
 </script>
 
-<!--Team One Start-->
-<section class="team-one">
-  <div class="team-one__bg-box">
-    <div class="team-one__bg">
-    </div>
-  </div>
-  <div class="container">
-    <div class="section-title text-center">
-      <div class="section-title__tagline-box">
-        <div class="section-title__tagline-shape">
-        </div>
-      </div>
-      <h2 class="section-title__title"></h2>
-    </div>
-    <div class="row">
-      <div class="col-xl-12">
-        <h4 class="text-start"><i class="fa fa-user" aria-hidden="true"></i> DATOS PERSONALES</h4>
-        <div id="sectionAllPayments">
-          <h4 class="mt-20 text-start"><i class="fa fa-bank" aria-hidden="true"></i> MODOS DE PAGO</h4>
-          <div class="col-lg-12 mb-10">
-            <div class="row">
-              <div class="input-field col s6 m6">
-                <h6 class="text-start">Transferencia o depósito</h6>
-              </div>
-            </div>
-          </div>
-          <div id="container-payments" class="types flex flex-wrap justify-space-between payments-options mb-30">
-            <div id="2" class="type option-payment selected" onclick="showPaymentDetails(2)">
-              <div class="logo">
-                <img src="./assets/imgs/26436fd4e0.png" width="86" alt="PAGOMOVIL">
-              </div>
-            </div>
-            <div id="3" class="type option-payment" onclick="showPaymentDetails(3)">
-              <div class="logo">
-                <img src="./assets/imgs/f855e644c1.png" width="86" alt="ZELLE">
-              </div>
-            </div>
-            <div id="4" class="type option-payment" onclick="showPaymentDetails(4)">
-              <div class="logo">
-                <img src="./assets/imgs/9fbaef2914.png" width="86" alt="ZINLI">
-              </div>
-            </div>
-            <div id="8" class="type option-payment" onclick="showPaymentDetails(8)">
-              <div class="logo">
-                <img src="./assets/imgs/cbe783cd0c.png" width="86" alt="BANCOLOMBIA-COLOMBIA">
-              </div>
-            </div>
-            <div id="10" class="type option-payment" onclick="showPaymentDetails(10)">
-              <div class="logo">
-                <img src="./assets/imgs/3cdacb6a28.webp" width="86" alt="PAYPAL">
-              </div>
-            </div>
-            <div id="11" class="type option-payment" onclick="showPaymentDetails(11)">
-              <div class="logo">
-                <img src="./assets/imgs/286d7c71c4.webp" width="86" alt="BANCOESTADO">
-              </div>
-            </div>
-            <div id="12" class="type option-payment" onclick="showPaymentDetails(12)">
-              <div class="logo">
-                <img src="./assets/imgs/d61cb60139.png" width="86" alt="NEQUI">
-              </div>
-            </div>
-            <div id="6" class="type option-payment" onclick="showPaymentDetails(6)">
-              <div class="logo">
-                <img src="./assets/imgs/5ca96231f2.png" width="86" alt="TENPO-CHILE">
-              </div>
-            </div>
-            <div id="7" class="type option-payment" onclick="showPaymentDetails(7)">
-              <div class="logo">
-                <img src="./assets/imgs/e01157f052.png" width="86" alt="EFECTIVO">
-              </div>
-            </div>
-            <div id="9" class="type option-payment" onclick="showPaymentDetails(9)">
-              <div class="logo">
-                <img src="./assets/imgs/e9ed10e44a.png" width="86" alt="BINANCE">
-              </div>
-            </div>
-          </div>
-
-          <div id="datosBanco" class="text-center input-field col s12 m6">
-            <div>
-              <h6>
-                <span data-toggle="tooltip" data-placement="bottom" title="PAGO MOVIL">PAGO MOVIL</span>
-                <span data-toggle="tooltip" data-placement="bottom" title="Cuenta Personal"><i class="help-account fa fa-user" aria-hidden="true"></i></span>
-              </h6>
-            </div>
-            <div class="titularBank">Cuenta a Consultar</div>
-            <div class="payment-notes"><b></b></div>
-          </div>
-
-          <div class="calculatorContainer">
-            <h4>Conversor USD a <strong class="currencyCode">BS</strong></h4>
-            <div class="calculatorCon">
-              <button id="btnMinusCal" class="btnMinus"></button>
-              <div>
-                <input class="ticketQty" id="ticketQtyID" type="text" name="productQty" value="3" min="3" max="1000">
-              </div>
-              <button id="btnPlusCal" class="btnPlus"></button>
-            </div>
-            <div class="calculatorRadio">
-              <div>
-                <label for="BS">BS</label>
-                <input type="radio" name="currency" id="BS" value="BS" checked>
-              </div>
-              <div>
-                <label for="COP">COP</label>
-                <input type="radio" name="currency" id="COP" value="COP">
-              </div>
-              <div>
-                <label for="CLP">CLP</label>
-                <input type="radio" name="currency" id="CLP" value="CLP">
-              </div>
-            </div>
-            <div class="calculatorCurrencies">
-              <div class="cal-group">
-                <p>USD</p>
-                <strong id="montoTotalCal">32.00</strong>
-              </div>
-              <div class="cal-group">
-                <p class="currencyCode">BS</p>
-                <strong id="montoTotalCalFormatt">3401.92</strong>
-              </div>
-            </div>
-            <span>Tasa de cambio: 1 USD = </span> <span class="changeRate">106.31</span> <span class="currencyCode">BS</span>
-          </div>
-
-          <div id="priceConvert" class="">
-            <strong>Total: <span id="other">3401.92</span> <span class="currencyCode">BS</span> <small> (<span id="QtyNumberPrice">8</span> boletos)</small></strong>
-          </div>
-          <div id="bottomcontact" class="hidden">
-            <strong>CONSULTAR LA TASA DEL DIA</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--Team One End-->
+<?php require_once 'views/sorteo/whatsapp.php'; ?>
+<?php require_once 'views/sorteo/personal.php'; ?>
+<?php /* require_once 'views/sorteo/datos_personales_original.php'; */ ?>

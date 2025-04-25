@@ -1,0 +1,135 @@
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #666;
+  --background-light: #f8f9fa;
+  --background-white: #fff;
+  --text-dark: #333;
+  --border-radius: 15px;
+  --spacing-sm: 10px;
+  --spacing-md: 20px;
+  --spacing-lg: 30px;
+  --font-size-normal: 1.1rem;
+  --font-size-large: 1.2rem;
+  --font-size-title: 2.5rem;
+  --box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout */
+.supergana-section {
+  padding: var(--spacing-lg) 0;
+  background-color: var(--background-light);
+}
+
+.supergana-content {
+  background: var(--background-white);
+  padding: 40px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.prize-details {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Títulos y texto */
+.section-title__title {
+  font-size: var(--font-size-title);
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Información de lotería */
+.lottery-info p {
+  font-size: var(--font-size-large);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Premios */
+.prize-item {
+  background: var(--background-light);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+  transition: transform 0.3s ease;
+}
+
+.prize-item:hover {
+  transform: translateY(-5px);
+}
+
+.prize-item h4 {
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+.prize-item ul li {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-normal);
+  color: var(--secondary-color);
+}
+
+/* Secciones informativas */
+.date-info,
+.official-link,
+.contact-info,
+.important-info {
+  background: var(--background-light);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Ejemplo */
+.example-box {
+  background: #e9ecef;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-top: var(--spacing-lg);
+}
+
+.example-text {
+  font-style: italic;
+  color: var(--secondary-color);
+  font-size: var(--font-size-normal);
+}
+
+/* Alerta */
+.alert-info {
+  background-color: #cce5ff;
+  border-color: #b8daff;
+  color: #004085;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-large);
+}
+
+/* Enlaces */
+.official-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none;
+  margin-top: var(--spacing-sm);
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+.official-link a:hover {
+  color: darken(var(--primary-color), 10%);
+}
+
+/* Lista de información importante */
+.important-info ul li {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-normal);
+  color: var(--secondary-color);
+  position: relative;
+  padding-left: 20px;
+}
+
+.important-info ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+} 

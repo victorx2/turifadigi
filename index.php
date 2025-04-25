@@ -116,6 +116,11 @@ switch ($route) {
 
         break;
 
+    case '/raffle-config':
+        // Página de configuración de sorteo (solo para usuarios no autenticados)
+        require_once 'views/admin/raffle-config.php';
+        break;
+
 
     default:
         // Ruta por defecto (página de lotería)
