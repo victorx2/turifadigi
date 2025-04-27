@@ -14,6 +14,8 @@ class BoletoController
   public function __construct()
   {
     $this->model = new BoletoModel();
+    // Asegurarnos de que existan los boletos en la base de datos
+    $this->model->inicializarBoletos();
   }
   public function procesarCompra()
   {
@@ -132,6 +134,4 @@ class BoletoController
       exit;
     }
   }
-
-  
 }

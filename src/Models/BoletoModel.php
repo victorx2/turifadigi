@@ -15,13 +15,50 @@ class BoletoModel
     $this->db = new Conexion();
   }
 
+  public function inicializarBoletos()
+  {
+    try {
+      // Verificar si existe una rifa
+      $sqlRifa = "SELECT id_rifa FROM rifas WHERE id_rifa = 1";
+      $resultRifa = $this->db->consultar($sqlRifa, []);
+
+      if (empty($resultRifa)) {
+        // Si no existe la rifa, la creamos
+        $sqlInsertRifa = "INSERT INTO rifas (id_rifa, titulo, descripcion, fecha_inicio, fecha_fin, estado) 
+                         VALUES (1, '🎉 ¡POR EL SUPERGANA! 🎉', 'Rifa principal', CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY), 'activa')";
+        $this->db->ejecutar($sqlInsertRifa, []);
+      }
+
+      // Verificar si ya existen boletos
+      $sql = "SELECT COUNT(*) as total FROM boletos";
+      $result = $this->db->consultar($sql, []);
+
+      if ($result[0]['total'] == 0) {
+        // Si no hay boletos, los creamos
+        $sqlInsert = "INSERT INTO boletos (id_rifa, numero_boleto, estado) VALUES ";
+        $values = [];
+
+        // Crear 500 boletos
+        for ($i = 1; $i <= 500; $i++) {
+          $numero = str_pad($i, 4, '0', STR_PAD_LEFT);
+          $values[] = "(1, '$numero', 'disponible')";
+        }
+
+        $sqlInsert .= implode(',', $values);
+        $this->db->ejecutar($sqlInsert, []);
+      }
+    } catch (Exception $e) {
+      throw new Exception("Error al inicializar boletos: " . $e->getMessage());
+    }
+  }
+
   public function verificarDisponibilidad($numero)
   {
     $sql = "SELECT estado FROM boletos WHERE numero_boleto = :numero";
     $result = $this->db->consultar($sql, [':numero' => $numero]);
 
     if (empty($result)) {
-      return false;  
+      return false;
     }
 
     return $result[0]['estado'] === 'disponible';
@@ -38,37 +75,57 @@ class BoletoModel
         $placeholders[] = $paramName;
       }
 
-      $sql = "SELECT b.numero_boleto, b.estado
-              FROM boletos b
-              WHERE b.numero_boleto IN (" . implode(',', $placeholders) . ")
-              AND b.estado = 'disponible'";
+      // Modificamos la consulta para obtener todos los boletos, incluso si no existen
+      $sql = "SELECT b.numero_boleto, 
+                     CASE 
+                       WHEN b.id_boleto IS NULL THEN false
+                       WHEN b.estado = 'disponible' THEN true
+                       ELSE false
+                     END as disponible,
+                     COALESCE(b.estado, 'no_existe') as estado
+              FROM (SELECT " . implode(" UNION ALL SELECT ", array_fill(0, count($boletos), "?")) . ") AS nums(numero)
+              LEFT JOIN boletos b ON b.numero_boleto = nums.numero";
 
-      $result = $this->db->consultar($sql, $params);
+      // Reemplazamos los placeholders con los números de boleto
+      $result = $this->db->consultar($sql, $boletos);
+
+      if (empty($result)) {
+        // Si no hay resultados, significa que ningún boleto existe
+        throw new Exception("Error al consultar los boletos");
+      }
 
       $resultados = [];
-      $boletosNoDisponibles = [];
+      $mensajesError = [];
 
-      foreach ($boletos as $numero) {
-        $disponible = false;
-        foreach ($result as $row) {
-          if ($row['numero_boleto'] === $numero) {
-            $disponible = true;
+      foreach ($result as $row) {
+        $estado = $row['estado'];
+        $mensaje = "";
+
+        switch ($estado) {
+          case 'no_existe':
+            $mensaje = "El boleto {$row['numero_boleto']} no existe en el sistema";
             break;
-          }
+          case 'reservado':
+            $mensaje = "El boleto {$row['numero_boleto']} está reservado";
+            break;
+          case 'vendido':
+            $mensaje = "El boleto {$row['numero_boleto']} ya está vendido";
+            break;
         }
 
-        if (!$disponible) {
-          $boletosNoDisponibles[] = $numero;
+        if ($mensaje) {
+          $mensajesError[] = $mensaje;
         }
 
         $resultados[] = [
-          'numero' => $numero,
-          'disponible' => $disponible
+          'numero' => $row['numero_boleto'],
+          'disponible' => $row['disponible'],
+          'estado' => $estado
         ];
       }
 
-      if (!empty($boletosNoDisponibles)) {
-        throw new Exception("Los siguientes boletos no están disponibles: " . implode(', ', $boletosNoDisponibles));
+      if (!empty($mensajesError)) {
+        throw new Exception(implode("\n", $mensajesError));
       }
 
       return $resultados;
@@ -80,7 +137,19 @@ class BoletoModel
   public function procesarCompraConJoin($boletos, $nombre, $cedula, $telefono, $ubicacion, $total, $titular, $referencia, $metodoPago)
   {
     try {
-      // 1. Crear la compra primero
+      // 1. Primero verificamos la disponibilidad de todos los boletos
+      $boletosVerificar = [];
+      foreach ($boletos as $numeroBoleto) {
+        $sqlBoleto = "SELECT id_boleto FROM boletos WHERE numero_boleto = :numero AND estado = 'disponible'";
+        $resultBoleto = $this->db->consultar($sqlBoleto, [':numero' => $numeroBoleto]);
+
+        if (empty($resultBoleto)) {
+          throw new Exception("El boleto {$numeroBoleto} no está disponible");
+        }
+        $boletosVerificar[] = $resultBoleto[0]['id_boleto'];
+      }
+
+      // 2. Si llegamos aquí, todos los boletos están disponibles. Creamos la compra
       $sqlCompra = "INSERT INTO compras_boletos (id_rifa, total, estado, fecha_compra) 
                     VALUES (1, :total, 'pendiente', NOW())";
 
@@ -92,7 +161,7 @@ class BoletoModel
         throw new Exception("Error al crear la compra");
       }
 
-      // 2. Insertar datos personales
+      // 3. Insertamos datos personales
       $sqlDatosPersonales = "INSERT INTO datos_personales (id_compra, nombre, cedula, telefono, ubicacion) 
                             VALUES (:id_compra, :nombre, :cedula, :telefono, :ubicacion)";
 
@@ -104,25 +173,15 @@ class BoletoModel
         ':ubicacion' => $ubicacion
       ]);
 
-      // 3. Procesar cada boleto
+      // 4. Marcamos los boletos como reservados y creamos el detalle
       $precioUnitario = $total / count($boletos);
       $boletosInsertados = [];
 
-      foreach ($boletos as $numeroBoleto) {
-        $sqlBoleto = "SELECT id_boleto FROM boletos WHERE numero_boleto = :numero AND estado = 'disponible'";
-        $resultBoleto = $this->db->consultar($sqlBoleto, [':numero' => $numeroBoleto]);
-
-        if (empty($resultBoleto)) {
-          throw new Exception("El boleto {$numeroBoleto} no está disponible");
-        }
-
-        $idBoleto = $resultBoleto[0]['id_boleto'];
-
-        // Actualizar estado del boleto
+      foreach ($boletosVerificar as $index => $idBoleto) {
+        // Actualizar estado del boleto a reservado
         $sqlUpdateBoleto = "UPDATE boletos 
                            SET estado = 'reservado' 
-                           WHERE id_boleto = :id_boleto 
-                           AND estado = 'disponible'";
+                           WHERE id_boleto = :id_boleto";
 
         $this->db->ejecutar($sqlUpdateBoleto, [
           ':id_boleto' => $idBoleto
@@ -138,10 +197,10 @@ class BoletoModel
           ':precio_unitario' => $precioUnitario
         ]);
 
-        $boletosInsertados[] = $numeroBoleto;
+        $boletosInsertados[] = $boletos[$index];
       }
 
-      // 4. Registrar el pago
+      // 5. Registrar el pago como pendiente
       $sqlPago = "INSERT INTO pagos (id_compra, titular, referencia, metodo, monto, fecha, estado) 
                   VALUES (:id_compra, :titular, :referencia, :metodo, :monto, NOW(), 'pendiente')";
 
@@ -157,7 +216,7 @@ class BoletoModel
         'success' => true,
         'id_compra' => $idCompra,
         'boletos' => $boletosInsertados,
-        'mensaje' => 'Compra procesada correctamente'
+        'mensaje' => 'Compra procesada correctamente. Los boletos quedarán reservados hasta que se confirme el pago.'
       ];
     } catch (Exception $e) {
       throw $e;

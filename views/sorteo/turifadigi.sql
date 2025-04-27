@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2025 a las 18:43:14
+-- Tiempo de generación: 27-04-2025 a las 21:37:26
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -244,10 +244,8 @@ ALTER TABLE `boletos`
 -- Indices de la tabla `compras_boletos`
 --
 ALTER TABLE `compras_boletos`
-  DROP FOREIGN KEY `compras_boletos_ibfk_1`,
-  DROP KEY `id_usuario`,
   ADD PRIMARY KEY (`id_compra`),
-  ADD KEY `id_rifa` (`id_rifa`);
+  ADD KEY `compras_boletos_ibfk_2` (`id_rifa`);
 
 --
 -- Indices de la tabla `configuracion_precios`
@@ -346,7 +344,7 @@ ALTER TABLE `boletos`
 -- AUTO_INCREMENT de la tabla `compras_boletos`
 --
 ALTER TABLE `compras_boletos`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion_precios`
@@ -430,50 +428,6 @@ ALTER TABLE `usuarios_roles`
 ALTER TABLE `boletos`
   ADD CONSTRAINT `boletos_ibfk_1` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`),
   ADD CONSTRAINT `boletos_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
-
---
--- Filtros para la tabla `compras_boletos`
---
-ALTER TABLE `compras_boletos`
-  ADD CONSTRAINT `compras_boletos_ibfk_2` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`);
-
---
--- Filtros para la tabla `configuracion_rifas`
---
-ALTER TABLE `configuracion_rifas`
-  ADD CONSTRAINT `configuracion_rifas_ibfk_1` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`);
-
---
--- Filtros para la tabla `datos_personales`
---
-ALTER TABLE `datos_personales`
-  ADD CONSTRAINT `datos_personales_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `compras_boletos` (`id_compra`);
-
---
--- Filtros para la tabla `detalle_compras`
---
-ALTER TABLE `detalle_compras`
-  ADD CONSTRAINT `detalle_compras_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `compras_boletos` (`id_compra`),
-  ADD CONSTRAINT `detalle_compras_ibfk_2` FOREIGN KEY (`id_boleto`) REFERENCES `boletos` (`id_boleto`);
-
---
--- Filtros para la tabla `pagos`
---
-ALTER TABLE `pagos`
-  ADD CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `compras_boletos` (`id_compra`);
-
---
--- Filtros para la tabla `premios`
---
-ALTER TABLE `premios`
-  ADD CONSTRAINT `premios_ibfk_1` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`),
-  ADD CONSTRAINT `premios_ibfk_2` FOREIGN KEY (`id_tipo_premio`) REFERENCES `tipos_premios` (`id_tipo_premio`);
-
---
--- Filtros para la tabla `usuarios_auditorias`
---
-ALTER TABLE `usuarios_auditorias`
-  ADD CONSTRAINT `usuarios_auditorias_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
