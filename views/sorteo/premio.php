@@ -1,5 +1,34 @@
 <?php
-// Incluir el archivo CSS
+
+use App\Models\RaffleConfig;
+
+$configModel = new RaffleConfig();
+$config = $configModel->getConfig();
+
+// Valores por defecto si no hay configuración
+$premios_default = [
+  [
+    'nombre' => '🛵 Premio Mayor',
+    'descripcion' => "Si estás en Estados Unidos, ganas una moto\nSi estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes"
+  ],
+  [
+    'nombre' => '📱 Segundo Premio',
+    'descripcion' => "Un iPhone 16 Pro Max\nDisponible para cualquier país participante"
+  ],
+  [
+    'nombre' => '💵 Tercer Premio',
+    'descripcion' => "$1000 en efectivo\nPara participar debes comprar 10 boletos o más\nEste premio se activa con el 50% de los boletos vendidos"
+  ]
+];
+
+// Usar valores de la configuración o valores por defecto
+$titulo = $config['titulo'] ?? '🎉 ¡POR EL SUPERGANA! 🎉';
+$precio_boleto = $config['precio_boleto'] ?? '3';
+$boletos_minimos = $config['boletos_minimos'] ?? '2';
+$premios = !empty($config['premios']) ? $config['premios'] : $premios_default;
+$url_loteria = $config['url_loteria'] ?? 'https://tripletachira.com/';
+$numero_contacto = $config['numero_contacto'] ?? '407-428-7580';
+$texto_ejemplo = $config['texto_ejemplo'] ?? 'Si compras 10 boletos, participas automáticamente en el sorteo de $1000 cuando se alcance el 50% de los números vendidos. El día se anunciará públicamente.';
 ?>
 <link rel="stylesheet" href="assets/css/premio.css">
 
@@ -8,7 +37,7 @@
     <div class="row">
       <div class="col-xl-12">
         <article class="supergana-content text-center">
-          <h1 class="section-title__title">🎉 ¡POR EL SUPERGANA! 🎉</h1>
+          <h1 class="section-title__title"><?php echo htmlspecialchars($titulo); ?></h1>
           <div class="prize-details">
             <div class="alert alert-info mb-4" role="alert">
               <strong>Al completarse el 80% juega nuestra rifa</strong>
@@ -16,35 +45,19 @@
 
             <section class="lottery-info mb-4" aria-label="Información básica">
               <p>📍 Juega por la lotería de SuperGana</p>
-              <p>🎟️ Valor del boleto: <span class="price">$3</span></p>
-              <p>🎟️ Compra mínima: <span class="min-tickets">2 boletos</span> en adelante</p>
+              <p>🎟️ Valor del boleto: <span class="price">$<?php echo htmlspecialchars($precio_boleto); ?></span></p>
+              <p>🎟️ Compra mínima: <span class="min-tickets"><?php echo htmlspecialchars($boletos_minimos); ?> boletos</span> en adelante</p>
             </section>
 
             <section class="prize-list mb-4" aria-label="Lista de premios">
-              <div class="prize-item" role="article">
-                <h2>🛵 Premio Mayor:</h2>
-                <ul class="list-unstyled">
-                  <li>Si estás en Estados Unidos, ganas una moto</li>
-                  <li>Si estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes</li>
-                </ul>
-              </div>
-
-              <div class="prize-item" role="article">
-                <h2>📱 Segundo Premio:</h2>
-                <ul class="list-unstyled">
-                  <li>Un iPhone 16 Pro Max</li>
-                  <li>Disponible para cualquier país participante</li>
-                </ul>
-              </div>
-
-              <div class="prize-item" role="article">
-                <h2>💵 Tercer Premio:</h2>
-                <ul class="list-unstyled">
-                  <li>$1000 en efectivo</li>
-                  <li>Para participar debes comprar 10 boletos o más</li>
-                  <li>Este premio se activa con el 50% de los boletos vendidos</li>
-                </ul>
-              </div>
+              <?php foreach ($premios as $premio): ?>
+                <div class="prize-item" role="article">
+                  <h2><?php echo htmlspecialchars($premio['nombre']); ?></h2>
+                  <div class="premio-descripcion">
+                    <?php echo nl2br(htmlspecialchars($premio['descripcion'])); ?>
+                  </div>
+                </div>
+              <?php endforeach; ?>
             </section>
 
             <section class="date-info mb-4" aria-label="Fecha del sorteo">
@@ -54,7 +67,7 @@
 
             <section class="official-link mb-4" aria-label="Enlace oficial">
               <h2>🔗 Enlace oficial para seguir el sorteo:</h2>
-              <a href="https://tripletachira.com/" target="_blank" class="thm-btn" rel="noopener">
+              <a href="<?php echo htmlspecialchars($url_loteria); ?>" target="_blank" class="thm-btn" rel="noopener">
                 👉 SuperGana <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                 <span class="sr-only">(se abre en una nueva ventana)</span>
               </a>
@@ -62,7 +75,9 @@
 
             <section class="contact-info mb-4" aria-label="Información de contacto">
               <h2>📞 Número de contacto:</h2>
-              <p><a href="tel:407-428-7580" class="phone-number"><strong>407-428-7580</strong></a></p>
+              <p><a href="tel:<?php echo htmlspecialchars($numero_contacto); ?>" class="phone-number">
+                  <strong><?php echo htmlspecialchars($numero_contacto); ?></strong>
+                </a></p>
             </section>
 
             <section class="important-info mb-4" aria-label="Información importante">
@@ -76,7 +91,7 @@
 
             <aside class="example-box" role="complementary">
               <h2>💬 Ejemplo:</h2>
-              <p class="example-text">"Si compras 10 boletos, participas automáticamente en el sorteo de $1000 cuando se alcance el 50% de los números vendidos. El día se anunciará públicamente."</p>
+              <p class="example-text"><?php echo htmlspecialchars($texto_ejemplo); ?></p>
             </aside>
           </div>
         </article>

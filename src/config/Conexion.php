@@ -31,6 +31,11 @@ class Conexion
     }
   }
 
+  public function getConexion()
+  {
+    return $this->conexion;
+  }
+
   public function ejecutar($sql, array $parametros)
   {
     $this->conexion->beginTransaction();

@@ -1,0 +1,336 @@
+/* Contenedor principal de boletos */
+.boletos-container {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    max-width: 1200px;
+    height: 70vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #4CAF50 #f0f0f0;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Estilizar la barra de desplazamiento para Chrome */
+.boletos-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.boletos-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.boletos-container::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+    border-radius: 10px;
+}
+
+.boletos-container::-webkit-scrollbar-thumb:hover {
+    background: #3d8b40;
+}
+
+/* Grid de boletos */
+.boletos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 8px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+/* Estilos para cada boleto */
+.boleto {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    user-select: none;
+}
+
+.boleto:hover {
+    transform: translateY(-2px);
+    border-color: #4CAF50;
+    background: #f8f8f8;
+}
+
+.boleto.selected {
+    background: linear-gradient(145deg, #4CAF50, #45a049);
+    color: white;
+    border-color: #2E7D32;
+    box-shadow: 0 4px 8px rgba(76,175,80,0.3);
+}
+
+.boleto.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 12px;
+    color: white;
+}
+
+.boleto.vendido {
+    background: linear-gradient(145deg, #ffebee, #ffcdd2);
+    border-color: #ef5350;
+    color: #d32f2f;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.boleto.reservado {
+    background: linear-gradient(145deg, #fff8e1, #ffecb3);
+    border-color: #ffd54f;
+    color: #f57f17;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Animaciones */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.boleto.selected {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .boletos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        gap: 6px;
+    }
+
+    .boleto {
+        width: 50px;
+        height: 50px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .boletos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+        gap: 4px;
+    }
+
+    .boleto {
+        width: 40px;
+        height: 40px;
+        font-size: 11px;
+    }
+}
+
+/* Estilos para los números seleccionados */
+.selected-number {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(76,175,80,0.2);
+}
+
+.selected-number button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 4px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.selected-number button:hover {
+    opacity: 1;
+}
+
+/* Estilos para la barra de búsqueda */
+.search-input-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #757575;
+}
+
+.search-box input {
+    padding: 12px 45px;
+    border-radius: 25px;
+    border: 2px solid #e0e0e0;
+    width: 100%;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76,175,80,0.2);
+    outline: none;
+}
+
+/* Estilos para la sección de suerte */
+.elegir-suerte {
+    text-align: center;
+    padding: 15px;
+    margin: 20px 0;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.suerte-icon {
+    font-size: 24px;
+    animation: rotate 2s infinite linear;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Estilos para la leyenda */
+.boletos-leyenda {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.boleto-ejemplo {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 2px solid #e0e0e0;
+}
+
+.boleto-ejemplo.disponible {
+    background-color: white;
+    border-color: #e0e0e0;
+}
+
+.boleto-ejemplo.selected {
+    background-color: #4CAF50;
+    border-color: #2E7D32;
+}
+
+.boleto-ejemplo.vendido {
+    background-color: #ffebee;
+    border-color: #ef5350;
+}
+
+.boleto-ejemplo.reservado {
+    background-color: #fff8e1;
+    border-color: #ffd54f;
+}
+
+/* Mejoras en la sección de seleccionados */
+.selected-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.selected-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2E7D32;
+}
+
+.continue-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    border: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.continue-btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(46,125,50,0.2);
+}
+
+.continue-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: #9e9e9e;
+}
+
+/* Optimizaciones de rendimiento */
+.boletos-container {
+    -webkit-overflow-scrolling: touch;
+    backface-visibility: hidden;
+}
+
+.boleto {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
+} 

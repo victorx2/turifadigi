@@ -72,9 +72,12 @@
   <div class="custom-cursor__cursor"></div>
   <div class="custom-cursor__cursor-two"></div>
 
-  <div class="preloader">
+
+ <!--  <div class="preloader">
     <div class="preloader__image"></div>
-  </div>
+  </div> -->
+
+
   <!-- /.preloader -->
 
   <div class="page-wrapper">
@@ -138,7 +141,7 @@
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
-                        <li><a href="">Home One</a></li>
+                        <li><a href="/TuRifadigi/rifa_config">El lado del admin</a></li>
                         <li class="dropdown">
                           <a href="#">One Page Styles</a>
                           <ul>
@@ -164,7 +167,7 @@
                       </ul>
                     </li>
                     <li class="dropdown">
-                      <a href="#">Eventos
+                      <a href="/TuRifadigi/ganador">Eventos
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
