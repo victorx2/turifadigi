@@ -15,18 +15,62 @@ class BoletoController
   {
     $this->model = new BoletoModel();
   }
+  public function procesarCompra()
+  {
+    header('Content-Type: application/json');
 
-  //public function obtenerEstadoBoletos()
-  //{
-  //  header('Content-Type: application/json');
-  //  try {
-  //    $result = $this->model->obtenerEstadoBoletos();
-  //    echo json_encode($result);
-  //  } catch (Exception $e) {
-  //    http_response_code(500);
-  //    echo json_encode(['error' => $e->getMessage()]);
-  //  }
-  //}
+    try {
+      $data = json_decode(file_get_contents('php://input'), true);
+
+      if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception('Error en el formato JSON de entrada');
+      }
+
+      // Validar datos requeridos
+      $camposRequeridos = [
+        'boletos' => 'Boletos seleccionados',
+        'nombre' => 'Nombre completo',
+        'cedula' => 'Cédula',
+        'telefono' => 'Teléfono',
+        'ubicacion' => 'Ubicación',
+        'total' => 'Total a pagar',
+        'titular' => 'Titular de la cuenta',
+        'referencia' => 'Referencia de pago',
+        'metodo_pago' => 'Método de pago'
+      ];
+
+      foreach ($camposRequeridos as $campo => $nombre) {
+        if (empty($data[$campo])) {
+          throw new Exception("El campo {$nombre} es requerido");
+        }
+      }
+
+      // Procesar la compra usando una única transacción con INNER JOIN
+      $result = $this->model->procesarCompraConJoin(
+        $data['boletos'],
+        $data['nombre'],
+        $data['cedula'],
+        $data['telefono'],
+        $data['ubicacion'],
+        $data['total'],
+        $data['titular'],
+        $data['referencia'],
+        $data['metodo_pago']
+      );
+
+      echo json_encode([
+        'success' => true,
+        'message' => 'Compra procesada correctamente'
+      ]);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
+
 
   public function verificarDisponibilidad()
   {
@@ -89,92 +133,5 @@ class BoletoController
     }
   }
 
-  //public function actualizarEstadoBoleto()
-  //{
-  //  header('Content-Type: application/json');
-  //  $data = json_decode(file_get_contents('php://input'), true);
-  //  $numero = $data['numero'] ?? '';
-  //  $estado = $data['estado'] ?? '';
-  //  $userId = $data['user_id'] ?? null;
-  //  if (empty($numero) || empty($estado)) {
-  //    http_response_code(400);
-  //    echo json_encode(['error' => 'Datos incompletos']);
-  //    return;
-  //  }
-  //  try {
-  //    $result = $this->model->actualizarEstadoBoleto($numero, $estado, $userId);
-  //    echo json_encode(['success' => $result]);
-  //  } catch (Exception $e) {
-  //    http_response_code(500);
-  //    echo json_encode(['error' => $e->getMessage()]);
-  //  }
-  //}
-
-  public function procesarCompra()
-  {
-    header('Content-Type: application/json');
-
-    try {
-      $data = json_decode(file_get_contents('php://input'), true);
-
-      if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception('Error en el formato JSON de entrada');
-      }
-
-      // Validar datos requeridos
-      $camposRequeridos = [
-        'boletos' => 'Boletos seleccionados',
-        'nombre' => 'Nombre completo',
-        'cedula' => 'Cédula',
-        'telefono' => 'Teléfono',
-        'ubicacion' => 'Ubicación',
-        'total' => 'Total a pagar',
-        'titular' => 'Titular de la cuenta',
-        'referencia' => 'Referencia de pago',
-        'metodo_pago' => 'Método de pago'
-      ];
-
-      foreach ($camposRequeridos as $campo => $nombre) {
-        if (empty($data[$campo])) {
-          throw new Exception("El campo {$nombre} es requerido");
-        }
-      }
-
-      // Procesar la compra usando una única transacción con INNER JOIN
-      $result = $this->model->procesarCompraConJoin(
-        $data['boletos'],
-        $data['nombre'],
-        $data['cedula'],
-        $data['telefono'],
-        $data['ubicacion'],
-        $data['total'],
-        $data['titular'],
-        $data['referencia'],
-        $data['metodo_pago']
-      );
-
-      echo json_encode([
-        'success' => true,
-        'message' => 'Compra procesada correctamente'
-      ]);
-    } catch (Exception $e) {
-      http_response_code(500);
-      echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-      ]);
-    }
-  }
-
-  //public function obtenerTasaCambio()
-  //{
-  //  header('Content-Type: application/json');
-  //  try {
-  //    $tasa = 106.31; // En un caso real, esto vendría de una API o base de datos
-  //    echo json_encode(['tasa' => $tasa]);
-  //  } catch (Exception $e) {
-  //    http_response_code(500);
-  //    echo json_encode(['error' => $e->getMessage()]);
-  //  }
-  //}
+  
 }

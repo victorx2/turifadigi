@@ -272,16 +272,6 @@
       const referencia = document.getElementById('referencia').value.trim();
       const metodoPago = document.getElementById('metodoPago').value;
 
-      console.log('Datos del formulario:', {
-        nombre,
-        cedula,
-        telefono,
-        ubicacion,
-        titular,
-        referencia,
-        metodoPago
-      });
-
       if (!nombre || !cedula || !telefono || !ubicacion || !titular || !referencia) {
         alert('Por favor complete todos los campos requeridos');
         return;
@@ -291,25 +281,7 @@
       const totalBS = totalUSD * tasaUSD;
 
       try {
-        const responseVerificacion = await fetch('/TuRifadigi/verificarDisponibilidad', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            boletos: Array.from(boletosSeleccionados)
-          })
-        });
-
-        const dataVerificacion = await responseVerificacion.json();
-
-        const boletosNoDisponibles = dataVerificacion.disponibles.filter(b => !b.disponible).map(b => b.numero);
-
-        if (boletosNoDisponibles.length > 0) {
-          alert(`Los siguientes boletos ya no están disponibles: ${boletosNoDisponibles.join(', ')}`);
-          return;
-        }
-
+        // Primero procesamos la compra
         const datosCompra = {
           boletos: Array.from(boletosSeleccionados),
           nombre: nombre,
@@ -333,6 +305,25 @@
         const dataCompra = await responseCompra.json();
 
         if (dataCompra.success) {
+          // Después de procesar la compra, verificamos la disponibilidad
+          const responseVerificacion = await fetch('/TuRifadigi/verificarDisponibilidad', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              boletos: Array.from(boletosSeleccionados)
+            })
+          });
+
+          const dataVerificacion = await responseVerificacion.json();
+          const boletosNoDisponibles = dataVerificacion.disponibles.filter(b => !b.disponible).map(b => b.numero);
+
+          if (boletosNoDisponibles.length > 0) {
+            alert(`Los siguientes boletos ya no están disponibles: ${boletosNoDisponibles.join(', ')}`);
+            return;
+          }
+
           alert('¡Compra procesada correctamente!');
           window.location.reload();
         } else {
