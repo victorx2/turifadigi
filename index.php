@@ -36,23 +36,6 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $base_path = "/TuRifadigi";
 $route = str_replace($base_path, '', $request_uri);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
@@ -61,54 +44,16 @@ if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->procesarCompra();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
+    header('Content-Type: application/json');
+    try {
+        $controller = new BoletoController();
+        $controller->obtenerBoletosPaginados();
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    }
+}
 
 // Manejo de solicitudes POST
 //if ($request_method === 'POST') {

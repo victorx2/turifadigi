@@ -23,7 +23,6 @@ class BoletoModel
       $resultRifa = $this->db->consultar($sqlRifa, []);
 
       if (empty($resultRifa)) {
-        // Si no existe la rifa, la creamos
         $sqlInsertRifa = "INSERT INTO rifas (id_rifa, titulo, descripcion, fecha_inicio, fecha_fin, estado) 
                          VALUES (1, '🎉 ¡POR EL SUPERGANA! 🎉', 'Rifa principal', CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY), 'activa')";
         $this->db->ejecutar($sqlInsertRifa, []);
@@ -34,18 +33,41 @@ class BoletoModel
       $result = $this->db->consultar($sql, []);
 
       if ($result[0]['total'] == 0) {
-        // Si no hay boletos, los creamos
-        $sqlInsert = "INSERT INTO boletos (id_rifa, numero_boleto, estado) VALUES ";
-        $values = [];
+        // Crear índices para optimizar
+        $sqlIndices = [
+          "CREATE INDEX IF NOT EXISTS idx_numero_boleto ON boletos(numero_boleto)",
+          "CREATE INDEX IF NOT EXISTS idx_estado ON boletos(estado)",
+          "CREATE INDEX IF NOT EXISTS idx_id_rifa ON boletos(id_rifa)"
+        ];
 
-        // Crear 500 boletos
-        for ($i = 1; $i <= 500; $i++) {
-          $numero = str_pad($i, 4, '0', STR_PAD_LEFT);
-          $values[] = "(1, '$numero', 'disponible')";
+        foreach ($sqlIndices as $sqlIndex) {
+          try {
+            $this->db->ejecutar($sqlIndex, []);
+          } catch (Exception $e) {
+            // Ignorar si el índice ya existe
+          }
         }
 
-        $sqlInsert .= implode(',', $values);
-        $this->db->ejecutar($sqlInsert, []);
+        // Insertar boletos en lotes de 1000 para mejor rendimiento
+        $totalLotes = 10; // 10 lotes de 1000 para llegar a 10,000
+        for ($batch = 0; $batch < $totalLotes; $batch++) {
+          $sqlInsert = "INSERT INTO boletos (id_rifa, numero_boleto, estado) VALUES ";
+          $values = [];
+
+          $start = ($batch * 1000) + 1;
+          $end = $start + 999;
+
+          for ($i = $start; $i <= $end; $i++) {
+            $numero = str_pad($i, 4, '0', STR_PAD_LEFT);
+            $values[] = "(1, '$numero', 'disponible')";
+          }
+
+          $sqlInsert .= implode(',', $values);
+          $this->db->ejecutar($sqlInsert, []);
+
+          // Pequeña pausa entre lotes para no sobrecargar la BD
+          usleep(100000); // 100ms de pausa
+        }
       }
     } catch (Exception $e) {
       throw new Exception("Error al inicializar boletos: " . $e->getMessage());
@@ -220,6 +242,45 @@ class BoletoModel
       ];
     } catch (Exception $e) {
       throw $e;
+    }
+  }
+
+  // Método para obtener boletos paginados con mejor rendimiento
+  public function obtenerBoletosPaginados($pagina = 1, $porPagina = 100)
+  {
+    try {
+      // Asegurarse de que los boletos estén inicializados
+      $this->inicializarBoletos();
+
+      $offset = ($pagina - 1) * $porPagina;
+
+      // Optimizamos la consulta para mejor rendimiento
+      $sql = "SELECT 
+              b.numero_boleto,
+              b.estado,
+              CASE 
+                  WHEN b.estado = 'disponible' THEN 'disponible'
+                  ELSE b.estado
+              END as estado_real
+              FROM boletos b
+              WHERE b.id_rifa = 1 
+              ORDER BY CAST(b.numero_boleto AS UNSIGNED)
+              LIMIT :limit OFFSET :offset";
+
+      $boletos = $this->db->consultar($sql, [
+        ':limit' => $porPagina,
+        ':offset' => $offset
+      ]);
+
+      return [
+        'success' => true,
+        'data' => $boletos,
+        'pagina' => $pagina,
+        'por_pagina' => $porPagina,
+        'total' => count($boletos)
+      ];
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener boletos: " . $e->getMessage());
     }
   }
 }

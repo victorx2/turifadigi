@@ -134,4 +134,34 @@ class BoletoController
       exit;
     }
   }
+
+  public function obtenerBoletosPaginados()
+  {
+    header('Content-Type: application/json');
+    header('Cache-Control: no-cache, must-revalidate');
+
+    try {
+      $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+      $porPagina = isset($_GET['por_pagina']) ? (int)$_GET['por_pagina'] : 100;
+
+      // Validar parámetros
+      if ($pagina < 1) $pagina = 1;
+      if ($porPagina < 1 || $porPagina > 200) $porPagina = 100;
+
+      $boletos = $this->model->obtenerBoletosPaginados($pagina, $porPagina);
+
+      echo json_encode([
+        'success' => true,
+        'data' => $boletos,
+        'pagina' => $pagina,
+        'por_pagina' => $porPagina
+      ]);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
 }
