@@ -54,7 +54,7 @@
 
     <div class="contador-boletos">
       <button class="btn-circle">-</button>
-      <span class="numero-boletos">3</span>
+      <span class="numero-boletos">2</span>
       <button class="btn-circle">+</button>
       <div class="total">Total: <span id="totalUSD">12 USD</span></div>
     </div>
@@ -71,9 +71,9 @@
       <div class="loading-text">Cargando más boletos...</div>
     </div>
 
-    <div class="seleccionados-container">
+    <div class="seleccionados-container" style="display: none;">
       <span class="seleccionados-text">SELECCIONADOS</span>
-      <div class="contador">0 de 3</div>
+      <div class="contador">0</div>
       <div class="boletos-seleccionados-chips"></div>
       <button class="btn-continuar">CONTINUAR</button>
     </div>
@@ -270,7 +270,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     const boletosSeleccionados = new Set();
     const minBoletos = 2;
-    let cantidadSeleccion = 3;
+    let cantidadSeleccion = 2;
     const tasaUSD = 106.31;
     let precioUnitarioUSD = 3;
     const todosLosBoletos = [];
@@ -426,6 +426,19 @@
       contador.textContent = `${boletosSeleccionados.size} de ${cantidadSeleccion}`;
     }
 
+    // Mostrar u ocultar el contenedor de seleccionados
+    function toggleSelectedContainer() {
+      const contenedor = document.querySelector('.boletos-grid');
+      const boletos = contenedor.querySelectorAll('.selected');
+      const selectedContainer = document.querySelector('.seleccionados-container');
+
+      if (boletos.length >= 2) {
+        selectedContainer.style.display = 'block'; // Hacer visible
+      } else {
+        selectedContainer.style.display = 'none'; // Hacer invisible
+      }
+    }
+
     // Función para alternar selección de boleto
     function toggleBoleto(elemento, numero) {
       if (elemento.classList.contains('selected')) {
@@ -435,6 +448,7 @@
         elemento.classList.add('selected');
         boletosSeleccionados.add(numero);
       }
+      toggleSelectedContainer();
       actualizarContador();
       actualizarTotal();
       actualizarChipsBoletos();
@@ -467,6 +481,8 @@
           boletosSeleccionados.add(boletoSeleccionado.dataset.numero);
           actualizarContadorSeleccionados();
           actualizarChipsBoletos(); // Actualizar chips con retraso
+          toggleSelectedContainer()
+
         }, i * 200);
 
         boletosDisponibles.splice(indiceAleatorio, 1);
@@ -514,6 +530,7 @@
       filtrarBoletos(buscador.value);
     };
 
+    // Actualizar el contador de boletos
     function actualizarContador() {
       const contador = document.querySelector('.contador');
       contador.textContent = `${boletosSeleccionados.size} de ${cantidadSeleccion}`;
