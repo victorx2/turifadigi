@@ -1,6 +1,42 @@
 <link rel="stylesheet" href="assets/css/boletos.css">
 <link rel="stylesheet" href="assets/css/chip_alzar.css">
 
+<style>
+  /*   .location-options { */
+  /*     margin-bottom: 15px; */
+  /*     display: flex; */
+  /*     gap: 20px; */
+  /*   } */
+  /*  */
+  /*   .location-options label { */
+  /*     display: flex; */
+  /*     align-items: center; */
+  /*     gap: 8px; */
+  /*     cursor: pointer; */
+  /*   } */
+  /*  */
+  /*   .location-options input[type="radio"] { */
+  /*     cursor: pointer; */
+  /*   } */
+  /*  */
+  /*   .ui.search.dropdown { */
+  /*     width: 100%; */
+  /*     margin-top: 10px; */
+  /*   } */
+  /*  */
+  /*   .ui.search.dropdown .menu { */
+  /*     max-height: 200px; */
+  /*     overflow-y: auto; */
+  /*   } */
+  /*  */
+  /*   .ui.dropdown .menu .header { */
+  /*     font-weight: bold; */
+  /*     color: #2185d0; */
+  /*     padding: 8px 16px; */
+  /*     background-color: #f8f9fa; */
+  /*   } */
+</style>
+
 <?php require_once 'views/sorteo/main_slider.php'; ?>
 <?php require_once 'premio.php'; ?>
 
@@ -64,22 +100,63 @@
         <input type="text" class="form-control-custom" id="cedula" placeholder="9384235">
       </div>
 
+      <?php /* require_once 'views/sorteo/celular.php'; */ ?>
+
       <div class="form-group-custom">
         <label class="required">Celular</label>
-        <div class="phone-group">
-          <select class="form-control-custom" id="prefijo">
-            <option value="VE +58">VE +58</option>
-          </select>
-          <input type="tel" class="form-control-custom" id="telefono" placeholder="4163829342">
+        <div class="phone-group" style="display: flex; gap: 10px; align-items: center;">
+          <div id="prefijo-dropdown" class="ui search dropdown" data-silent="true">
+            <input type="hidden" name="prefijo">
+            <div class="default text">Seleccione prefijo</div>
+            <i class="dropdown icon"></i>
+            <div class="menu" style="display: none;" data-attached="true">
+              <div class="item" data-value="VE +58">VE +58</div>
+              <div class="item" data-value="US +1">US +1</div>
+              <div class="item" data-value="MX +52">MX +52</div>
+              <div class="item" data-value="CO +57">CO +57</div>
+              <div class="item" data-value="ES +34">ES +34</div>
+              <div class="item" data-value="AR +54">AR +54</div>
+              <div class="item" data-value="PE +51">PE +51</div>
+              <div class="item" data-value="CL +56">CL +56</div>
+              <div class="item" data-value="EC +593">EC +593</div>
+              <div class="item" data-value="DO +1">DO +1</div>
+              <div class="item" data-value="CA +1">CA +1</div>
+              <div class="item" data-value="BZ +501">BZ +501</div>
+              <div class="item" data-value="CR +506">CR +506</div>
+              <div class="item" data-value="SV +503">SV +503</div>
+              <div class="item" data-value="GT +502">GT +502</div>
+              <div class="item" data-value="HN +504">HN +504</div>
+              <div class="item" data-value="NI +505">NI +505</div>
+              <div class="item" data-value="PA +507">PA +507</div>
+              <div class="item" data-value="AG +1">AG +1</div>
+              <div class="item" data-value="BS +1">BS +1</div>
+              <div class="item" data-value="BB +1">BB +1</div>
+              <div class="item" data-value="CU +53">CU +53</div>
+              <div class="item" data-value="DM +1">DM +1</div>
+              <div class="item" data-value="GD +1">GD +1</div>
+              <div class="item" data-value="HT +509">HT +509</div>
+              <div class="item" data-value="JM +1">JM +1</div>
+              <div class="item" data-value="KN +1">KN +1</div>
+              <div class="item" data-value="LC +1">LC +1</div>
+              <div class="item" data-value="VC +1">VC +1</div>
+              <div class="item" data-value="TT +1">TT +1</div>
+              <div class="item" data-value="BO +591">BO +591</div>
+              <div class="item" data-value="BR +55">BR +55</div>
+              <div class="item" data-value="GY +592">GY +592</div>
+              <div class="item" data-value="PY +595">PY +595</div>
+              <div class="item" data-value="SR +597">SR +597</div>
+              <div class="item" data-value="UY +598">UY +598</div>
+            </div>
+            <input type="text" class="search" placeholder="">
+          </div>
+          <input type="tel" class="form-control-custom" id="telefono" placeholder="0416-3829342" style="width: 700px;" maxlength="11">
         </div>
       </div>
 
-      <div class="form-group-custom">
-        <label>Ubicación</label>
-        <select class="form-control-custom" id="ubicacion">
-          <option value="Tachira">Táchira</option>
-        </select>
-      </div>
+      <!--  -->
+      <?php require_once 'views/sorteo/ubicaciones.php'; ?>
+      <!--  -->
+
     </div>
 
     <div class="payment-section">
@@ -91,10 +168,22 @@
 
       <div class="payment-methods">
         <div class="payment-method active">
-          <img src="assets/img/pago-movil.png" alt="Pago Móvil">
+          <img src="assets/img/backgrounds/pagomovilmini.png" alt="Pago Móvil">
         </div>
         <div class="payment-method">
-          <img src="assets/img/zelle.png" alt="Zelle">
+          <img src="assets/img/backgrounds/zellemini.png" alt="Zelle">
+        </div>
+        <div class="payment-method">
+          <img src="assets/img/backgrounds/nesquimini.png" alt="Nesqui">
+        </div>
+        <div class="payment-method">
+          <img src="assets/img/backgrounds/paypalmini.webp" alt="Paypal">
+        </div>
+        <div class="payment-method">
+          <img src="assets/img/backgrounds/vzlamini.png" alt="Banco de Venezuela">
+        </div>
+        <div class="payment-method">
+          <img src="assets/img/backgrounds/bancocolombia.png" alt="Colombia">
         </div>
         <!-- Más métodos de pago aquí -->
       </div>
@@ -173,609 +262,7 @@
 
 
 <link rel="stylesheet" href="assets/css/buscar_boletos.css">
-
-<style>
-  .loading {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    display: none;
-    z-index: 1000;
-    font-size: 14px;
-  }
-
-  .loading.visible {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .loading::after {
-    content: '';
-    width: 20px;
-    height: 20px;
-    border: 2px solid #fff;
-    border-top: 2px solid transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  .boletos-container {
-    max-height: calc(100vh - 300px);
-    /* Altura ajustable según el viewport */
-    overflow-y: auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px auto;
-    width: 95%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .boletos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
-    gap: 8px;
-    padding: 10px;
-  }
-
-  .boleto {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 8px 4px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 13px;
-    color: #333;
-  }
-
-  .boleto:hover:not(.disabled) {
-    background: #f8f9fa;
-    border-color: #007bff;
-    transform: translateY(-1px);
-  }
-
-  .boleto.selected {
-    background: #007bff;
-    color: white;
-    border-color: #0056b3;
-  }
-
-  .boleto.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: #f5f5f5;
-  }
-
-  /* Estilizar la barra de scroll */
-  .boletos-container::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .boletos-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-  }
-
-  .boletos-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-  }
-
-  .boletos-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-
-  .loading-text {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #666;
-    font-size: 14px;
-    display: none;
-    z-index: 1000;
-  }
-
-  .loading-text.visible {
-    display: block;
-  }
-
-  .seleccionados-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    z-index: 1000;
-  }
-
-  .seleccionados-text {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-
-  .contador {
-    font-size: 14px;
-    color: #666;
-    margin: 10px 0;
-  }
-
-  .boletos-seleccionados-chips {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 15px 0;
-  }
-
-  .boleto-chip {
-    display: inline-flex;
-    align-items: center;
-    background: #007bff;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    gap: 8px;
-    cursor: default;
-  }
-
-  .chip-remove {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 0;
-    border-radius: 50%;
-    transition: background-color 0.2s;
-    margin-left: 5px;
-  }
-
-  .chip-remove:hover {
-    background: rgba(255, 255, 255, 0.5);
-  }
-
-  .btn-continuar {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-
-  .btn-continuar:hover {
-    background: #0056b3;
-  }
-
-  .form-personal {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .total-info {
-    background: #f8f9fa;
-    padding: 10px 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 14px;
-  }
-
-  .form-section {
-    margin-bottom: 30px;
-  }
-
-  .form-section-title {
-    color: #00BCD4;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .form-section-title i {
-    color: #00BCD4;
-    font-size: 24px;
-  }
-
-  .form-group-custom {
-    margin-bottom: 20px;
-  }
-
-  .form-group-custom label {
-    display: block;
-    margin-bottom: 8px;
-    color: #666;
-    font-size: 14px;
-  }
-
-  .form-group-custom label.required::after {
-    content: ' *';
-    color: #dc3545;
-  }
-
-  .form-control-custom {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s;
-  }
-
-  .form-control-custom:focus {
-    border-color: #00BCD4;
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.1);
-  }
-
-  /* Estilos específicos para la sección de pagos */
-  .payment-section {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px 0;
-  }
-
-  .payment-title {
-    color: #00BCD4;
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .payment-title i {
-    color: #00BCD4;
-    font-size: 20px;
-  }
-
-  .payment-subtitle {
-    color: #999;
-    font-size: 13px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .payment-methods {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-    gap: 15px;
-    margin: 20px auto;
-    max-width: 500px;
-  }
-
-  .payment-method {
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: white;
-  }
-
-  .payment-method img {
-    max-width: 100%;
-    height: auto;
-    max-height: 25px;
-    object-fit: contain;
-  }
-
-  .payment-method.active {
-    border-color: #00BCD4;
-    background: rgba(0, 188, 212, 0.05);
-  }
-
-  .payment-method.active::before {
-    content: '✓';
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #00BCD4;
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-  }
-
-  .payment-info {
-    text-align: center;
-    margin: 15px 0;
-  }
-
-  .payment-info p {
-    margin: 5px 0;
-    color: #333;
-  }
-
-  .payment-info p.subtitle {
-    color: #666;
-    font-size: 13px;
-  }
-
-  .converter-container {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px auto;
-    max-width: 400px;
-  }
-
-  .converter-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin: 15px 0;
-  }
-
-  .converter-controls input {
-    width: 40px;
-    text-align: center;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: white;
-  }
-
-  .btn-circle-custom {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: none;
-    background: #333;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .currency-options {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin: 15px 0;
-  }
-
-  .currency-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-
-  .currency-option input[type="radio"] {
-    accent-color: #00BCD4;
-  }
-
-  .conversion-result {
-    background: #f1f1f1;
-    border-radius: 8px;
-    padding: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 15px 0;
-  }
-
-  .amount {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #e9ecef;
-    border-radius: 6px;
-  }
-
-  .amount span:first-child {
-    color: #666;
-  }
-
-  .amount span:last-child {
-    font-weight: bold;
-    color: #333;
-  }
-
-  .exchange-rate {
-    text-align: center;
-    color: #666;
-    font-size: 12px;
-    margin-top: 10px;
-  }
-
-  .loading-text {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #666;
-    font-size: 14px;
-    display: none;
-    z-index: 1000;
-  }
-
-  .loading-text.visible {
-    display: block;
-  }
-
-  .seleccionados-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    z-index: 1000;
-  }
-
-  .seleccionados-text {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-
-  .contador {
-    font-size: 14px;
-    color: #666;
-    margin: 10px 0;
-  }
-
-  .boletos-seleccionados-chips {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 15px 0;
-  }
-
-  .boleto-chip {
-    display: inline-flex;
-    align-items: center;
-    background: #007bff;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    gap: 8px;
-    cursor: default;
-  }
-
-  .chip-remove {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 0;
-    border-radius: 50%;
-    transition: background-color 0.2s;
-    margin-left: 5px;
-  }
-
-  .chip-remove:hover {
-    background: rgba(255, 255, 255, 0.5);
-  }
-
-  .btn-continuar {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-
-  .btn-continuar:hover {
-    background: #0056b3;
-  }
-
-  .upload-section {
-    border: 2px dashed #e0e0e0;
-    border-radius: 8px;
-    padding: 25px;
-    text-align: center;
-    margin: 20px 0;
-    background: #f8f9fa;
-  }
-
-  .btn-upload {
-    background: none;
-    border: none;
-    color: #00BCD4;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin: 0 auto;
-    font-size: 14px;
-  }
-
-  .btn-confirmar {
-    background: #00BCD4;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-    transition: background-color 0.2s;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-top: 20px;
-  }
-
-  .btn-confirmar:hover {
-    background: #008c9e;
-  }
-</style>
+<link rel="stylesheet" href="assets/css/datos_personales.css">
 
 <div class="loading">Cargando boletos...</div>
 
@@ -890,8 +377,20 @@
 
     // Función para actualizar el total en USD
     function actualizarTotal() {
-      const total = cantidadSeleccion * precioUnitarioUSD;
-      totalUSDSpan.textContent = `${total} USD`;
+      const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
+      const totalBS = totalUSD * tasaUSD;
+
+      // Actualizar el total en USD en el contador
+      const totalUSDDisplay = document.getElementById('totalUSD');
+      if (totalUSDDisplay) {
+        totalUSDDisplay.textContent = `${totalUSD.toFixed(2)} USD`;
+      }
+
+      // Actualizar el total en BS en el formulario de datos personales
+      const totalBSDisplay = document.getElementById('totalBSDisplay');
+      if (totalBSDisplay) {
+        totalBSDisplay.textContent = `${totalBS.toFixed(2)} BS`;
+      }
     }
 
     // Función para actualizar los chips de boletos seleccionados
@@ -1018,19 +517,6 @@
     function actualizarContador() {
       const contador = document.querySelector('.contador');
       contador.textContent = `${boletosSeleccionados.size} de ${cantidadSeleccion}`;
-    }
-
-    function actualizarTotal() {
-      const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
-      const totalBS = totalUSD * tasaUSD;
-
-      const usdAmount = document.getElementById('usdAmount');
-      const bsAmount = document.getElementById('bsAmount');
-      const totalUSDDisplay = document.getElementById('totalUSD');
-
-      usdAmount.textContent = totalUSD.toFixed(2);
-      bsAmount.textContent = totalBS.toFixed(2);
-      totalUSDDisplay.textContent = totalUSD.toFixed(2) + ' USD';
     }
 
     // Verificar disponibilidad de boletos seleccionados
@@ -1228,5 +714,37 @@
       }
     `;
     document.head.appendChild(styles);
+
+    //// Manejo de los radio buttons para ubicación
+    //const locationRadios = document.querySelectorAll('input[name="location_type"]');
+    //const venezuelaDropdown = document.getElementById('venezuela-dropdown');
+    //const paisesDropdown = document.getElementById('paises-dropdown');
+    //
+    //// Inicializar los dropdowns de Semantic UI
+    //$('.ui.dropdown').dropdown();
+    //
+    //// Función para manejar el cambio de radio button
+    //function handleLocationChange(e) {
+    //  if (e.target.value === 'venezuela') {
+    //    venezuelaDropdown.style.display = 'block';
+    //    paisesDropdown.style.display = 'none';
+    //  } else {
+    //    venezuelaDropdown.style.display = 'none';
+    //    paisesDropdown.style.display = 'block';
+    //  }
+    //}
+    //
+    //// Agregar el evento a cada radio button
+    //locationRadios.forEach(radio => {
+    //  radio.addEventListener('change', handleLocationChange);
+    //});
+    //
+    //// Establecer el estado inicial
+    //const initialSelection = document.querySelector('input[name="location_type"]:checked');
+    //if (initialSelection) {
+    //  handleLocationChange({
+    //    target: initialSelection
+    //  });
+    //}
   });
 </script>

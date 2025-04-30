@@ -164,4 +164,22 @@ class BoletoController
       ]);
     }
   }
+
+  public function inicializarBoletos()
+  {
+    header('Content-Type: application/json');
+    try {
+      $this->model->inicializarBoletos();
+      echo json_encode([
+        'success' => true,
+        'message' => 'Boletos inicializados correctamente'
+      ]);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
 }

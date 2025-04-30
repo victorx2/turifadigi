@@ -1,4 +1,4 @@
-<div class="form-section">
+<!-- <div class="form-section">
   <div class="form-header">
     <i class="fas fa-user"></i>
     INFORMACIÓN DEL COMPRADOR
@@ -83,4 +83,4 @@
         boton.innerHTML = 'Enviar información';
       });
   });
-</script>
+</script> -->

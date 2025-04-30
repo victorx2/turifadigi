@@ -193,12 +193,9 @@
   }
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  if (typeof bootstrap === 'undefined') {
-    document.write('<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>')
-  }
-</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.0.0/swiper-bundle.min.js"></script>
 
@@ -244,7 +241,7 @@
 <!-- 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 -->
-
+<script src="assets/js/dropdown-search.js"></script>
 </body>
 
 </html>

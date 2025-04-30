@@ -28,12 +28,13 @@ class BoletoModel
         $this->db->ejecutar($sqlInsertRifa, []);
       }
 
-      // Verificar si ya existen boletos
+      // Verificar si ya existen boletos y cuántos hay
       $sql = "SELECT COUNT(*) as total FROM boletos";
       $result = $this->db->consultar($sql, []);
+      $totalActual = $result[0]['total'];
 
-      if ($result[0]['total'] == 0) {
-        // Crear índices para optimizar
+      if ($totalActual < 10000) {
+        // Crear índices para optimizar si no existen
         $sqlIndices = [
           "CREATE INDEX IF NOT EXISTS idx_numero_boleto ON boletos(numero_boleto)",
           "CREATE INDEX IF NOT EXISTS idx_estado ON boletos(estado)",
@@ -48,14 +49,16 @@ class BoletoModel
           }
         }
 
-        // Insertar boletos en lotes de 1000 para mejor rendimiento
-        $totalLotes = 10; // 10 lotes de 1000 para llegar a 10,000
-        for ($batch = 0; $batch < $totalLotes; $batch++) {
+        // Calcular cuántos boletos faltan
+        $boletosRestantes = 10000 - $totalActual;
+        $start = $totalActual + 1;
+
+        // Insertar los boletos restantes en lotes de 1000
+        while ($start <= 10000) {
           $sqlInsert = "INSERT INTO boletos (id_rifa, numero_boleto, estado) VALUES ";
           $values = [];
 
-          $start = ($batch * 1000) + 1;
-          $end = $start + 999;
+          $end = min($start + 999, 10000);
 
           for ($i = $start; $i <= $end; $i++) {
             $numero = str_pad($i, 4, '0', STR_PAD_LEFT);
@@ -67,6 +70,16 @@ class BoletoModel
 
           // Pequeña pausa entre lotes para no sobrecargar la BD
           usleep(100000); // 100ms de pausa
+
+          $start = $end + 1;
+        }
+
+        // Verificar que se hayan creado todos los boletos
+        $sqlVerificar = "SELECT COUNT(*) as total FROM boletos";
+        $resultVerificar = $this->db->consultar($sqlVerificar, []);
+
+        if ($resultVerificar[0]['total'] != 10000) {
+          throw new Exception("Error: No se pudieron crear todos los boletos. Total actual: " . $resultVerificar[0]['total']);
         }
       }
     } catch (Exception $e) {

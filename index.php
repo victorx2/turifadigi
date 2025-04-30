@@ -44,6 +44,8 @@ if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->procesarCompra();
 }
 
+
+
 if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
     header('Content-Type: application/json');
     try {
@@ -53,6 +55,10 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
         http_response_code(500);
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
+}
+
+if ($request_method === 'GET' && $route === '/inicializarBoletos') {
+    (new BoletoController())->inicializarBoletos();
 }
 
 // Manejo de solicitudes POST

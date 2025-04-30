@@ -65,6 +65,8 @@
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
+  <link rel="stylesheet" href="assets/css/dropdown-search.css">
 </head>
 
 <body class="custom-cursor">
@@ -73,7 +75,7 @@
   <div class="custom-cursor__cursor-two"></div>
 
 
- <!--  <div class="preloader">
+  <!--  <div class="preloader">
     <div class="preloader__image"></div>
   </div> -->
 
