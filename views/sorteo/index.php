@@ -30,7 +30,7 @@
       <div class="boletos-grid" id="boletosList">
         <!-- Los boletos se generarán dinámicamente aquí -->
       </div>
-      <div class="loading-text">Cargando más boletos...</div>
+      <div class="loading-text" style="display: block;">Cargando boletos...</div>
     </div>
 
     <div class="seleccionados-container" style="display: none;">
@@ -183,12 +183,44 @@
         timeout = setTimeout(later, wait);
       };
     }
+    //SECCION ANIMACION DE CARGA************
+    // Función para mostrar el texto de carga 
+    let dotCount = 0;
+
+    function animateLoadingText() {
+      let dots = '';
+      dotCount = (dotCount % 3) + 1; // Ciclo de 1 a 3
+
+      for (let i = 0; i < dotCount; i++) {
+        dots += '.';
+      }
+
+      loadingText.textContent = 'Cargando boletos' + dots;
+    }
+
+    // Opcional: Si la visibilidad del elemento cambia dinámicamente,
+    // puedes iniciar o detener el intervalo según sea necesario.
+    // Por ejemplo, para iniciar cuando se muestra:
+    function mostrarCargando() {
+      loadingText.style.display = 'block';
+      if (!window.loadingInterval) { // Verifica si el intervalo ya existe
+        window.loadingInterval = setInterval(animateLoadingText, 500);
+      }
+    }
+
+    // Y para detener cuando la carga finaliza y ocultar:
+    function ocultarCargando() {
+      loadingText.style.display = 'none';
+      clearInterval(window.loadingInterval);
+      window.loadingInterval = null; // Limpia la variable del intervalo
+    }
+    //FINAL DE SECCION ANIMACION DE CARGA************
 
     // Función para cargar más boletos
     async function cargarMasBoletos() {
-
-
       const fragment = document.createDocumentFragment();
+
+      mostrarCargando(); // Mostrar el texto de carga
 
       fetch('./boletos/obtenerBoletos') // Petición al backend
         .then(response => response.json())
@@ -217,21 +249,11 @@
         })
         .catch(error => {
           console.error('Error al cargar los boletos:', error);
+        })
+        .finally(marc => {
+          cargandoBoletos = false;
+          ocultarCargando(); // Ocultar el texto de carga
         });
-
-      boletosList.appendChild(fragment);
-
-      setTimeout(() => {
-        cargandoBoletos = false;
-        loadingText.classList.remove('visible');
-      }, 300);
-
-      // Mostrar mensaje cuando se hayan cargado todos los boletos
-      if (todosLosBoletos.length >= totalBoletos) {
-        loadingText.textContent = 'Has llegado al final de la lista';
-        loadingText.classList.add('visible');
-        setTimeout(() => loadingText.classList.remove('visible'), 2000);
-      }
     }
 
     // Cargar los primeros boletos
