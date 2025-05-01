@@ -197,8 +197,6 @@
 
       loadingText.textContent = 'Cargando boletos' + dots;
     }
-
-    // Opcional: Si la visibilidad del elemento cambia dinámicamente,
     // puedes iniciar o detener el intervalo según sea necesario.
     // Por ejemplo, para iniciar cuando se muestra:
     function mostrarCargando() {
@@ -229,12 +227,12 @@
             const boletos = data['data'];
             boletos.forEach(boleto => {
               const nuevoBoleto = document.createElement('div');
+
               if (boleto.estado == "reservado") {
                 nuevoBoleto.classList.add('boleto', 'disabled');
               } else {
                 nuevoBoleto.className = 'boleto';
-                nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero);
-
+                nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero_boleto);
               }
               nuevoBoleto.dataset.numero = boleto.numero_boleto;
               nuevoBoleto.textContent = boleto.numero_boleto;
@@ -251,6 +249,7 @@
           console.error('Error al cargar los boletos:', error);
         })
         .finally(marc => {
+          boletosList.appendChild(fragment);
           cargandoBoletos = false;
           ocultarCargando(); // Ocultar el texto de carga
         });
@@ -437,8 +436,9 @@
 
     // Actualizar el contador de boletos
     function actualizarContador() {
-      const contador = document.querySelector('.contador');
+      const contador = document.getElementsByClassName('.contador');
       contador.textContent = `${boletosSeleccionados.size} de ${cantidadSeleccion}`;
+      console.log('Contador actualizado:', contador.textContent);
     }
 
     // Verificar disponibilidad de boletos seleccionados
