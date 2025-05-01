@@ -145,7 +145,7 @@
                       <ul>
                         <li><a href="/TuRifadigi/rifa_config">El lado del admin</a></li>
                         <li class="dropdown">
-                          <a href="#">One Page Styles</a>
+                          <a href="/TuRifadigi/notificaciones_de_boletos/visualizaciones_de_boletos">One Page Styles</a>
                           <ul>
                             <li><a href="">Home One</a></li>
                           </ul>

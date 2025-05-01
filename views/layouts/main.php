@@ -154,125 +154,154 @@
 <!--Services One Start-->
 
 <section class="services-one">
-    <h3 class="services-one__big-text"></h3>
+    <style>
+        .services-one__content {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            max-height: 0;
+        }
+
+        .services-one__single {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .services-one__single:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .services-one__single.active .services-one__content {
+            max-height: 500px;
+            padding: 15px;
+        }
+
+        .services-one__title {
+            margin-bottom: 0;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .services-one__title:after {
+            content: '▼';
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .services-one__single.active .services-one__title:after {
+            transform: rotate(180deg);
+        }
+
+        .services-one__text {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+    </style>
+
     <div class="container">
         <div class="section-title text-center">
             <div class="section-title__tagline-box">
-                <div class="section-title__tagline-shape">
-
-                </div>
+                <div class="section-title__tagline-shape"></div>
                 <span class="section-title__tagline"></span>
             </div>
             <h2 class="section-title__title">Cuentas de pagos</h2>
         </div>
         <div class="row">
-            <!--Services One Single Start-->
+            <!-- Zelle -->
             <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="100ms">
                 <div class="services-one__single">
                     <div class="services-one__img-box">
                         <div class="services-one__img">
-                            <img src="assets/img/backgrounds/zelle.png" alt="">
+                            <img src="assets/img/backgrounds/zelle.png" alt="Zelle">
                         </div>
                     </div>
                     <div class="services-one__content-wrap">
-                        <div class="services-one__icon">
-                            <span class="icon-coding"></span>
-                        </div>
+                        <h3 class="services-one__title">Zelle</h3>
                         <div class="services-one__content">
-                            <h3 class="services-one__title"><a href="website-developmentphp">Zelle</a></h3>
-                            <p class="services-one__text">Número de telefono:+1 4074287580</p>
+                            <p class="services-one__text">Número de telefono: +1 4074287580</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--Services One Single End-->
-            <!--Services One Single Start-->
+
+            <!-- Nesqui -->
             <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="300ms">
                 <div class="services-one__single">
                     <div class="services-one__img-box">
                         <div class="services-one__img">
-                            <img src="assets/img/backgrounds/Nesqui.png" alt="">
+                            <img src="assets/img/backgrounds/Nesqui.png" alt="Nesqui">
                         </div>
                     </div>
                     <div class="services-one__content-wrap">
-                        <div class="services-one__icon">
-                            <span class="icon-curve"></span>
-                        </div>
+                        <h3 class="services-one__title">Nesqui</h3>
                         <div class="services-one__content">
-                            <h3 class="services-one__title"><a href="seo-content-writtingphp">Nesqui</a></h3>
-                            <p class="services-one__text"></p>
+                            <p class="services-one__text">Información próximamente</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--Services One Single End-->
-            <!--Services One Single Start-->
+
+            <!-- Paypal -->
             <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="600ms">
                 <div class="services-one__single">
                     <div class="services-one__img-box">
                         <div class="services-one__img">
-                            <img src="assets/img/backgrounds/paypa.jpg" alt="">
+                            <img src="assets/img/backgrounds/paypa.jpg" alt="Paypal">
                         </div>
                     </div>
                     <div class="services-one__content-wrap">
-                        <div class="services-one__icon">
-                            <span class="icon-creative"></span>
-                        </div>
+                        <h3 class="services-one__title">Paypal</h3>
                         <div class="services-one__content">
-                            <h3 class="services-one__title"><a href="digital-marketingphp">Paypal</a></h3>
                             <p class="services-one__text">Nombre: Yorsin Cruz Osorio</p>
-                            <p class="services-one__text">Correo Electronico: Yorsincruz1995@gmail.com</p>
-                            <p class="services-one__text">Usuario:@Yorsin0506</p>
-                            <p class="services-one__text">Número telefono: +1 4074287580</p>
+                            <p class="services-one__text">Correo: Yorsincruz1995@gmail.com</p>
+                            <p class="services-one__text">Usuario: @Yorsin0506</p>
+                            <p class="services-one__text">Teléfono: +1 4074287580</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--Services One Single End-->
-            <!--Services One Single Start-->
+
+            <!-- Banco de Venezuela -->
             <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="900ms">
                 <div class="services-one__single">
                     <div class="services-one__img-box">
                         <div class="services-one__img">
-                            <img src="assets/img/backgrounds/venezuela.jpg" alt="">
+                            <img src="assets/img/backgrounds/venezuela.jpg" alt="Banco de Venezuela">
                         </div>
                     </div>
                     <div class="services-one__content-wrap">
-                        <div class="services-one__icon">
-                            <span class="icon-productivity"></span>
-                        </div>
+                        <h3 class="services-one__title">Banco de Venezuela</h3>
                         <div class="services-one__content">
-                            <h3 class="services-one__title"><a href="digital-marketingphp">Banco de Venezuela</a></h3>
-                            <p class="services-one__text">Número de teléfono: 04124124923</p>
-                            <p class="services-one__text">Cédula de identidad: 28517267</p>
+                            <p class="services-one__text">Teléfono: 04124124923</p>
+                            <p class="services-one__text">Cédula: 28517267</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--Services One Single End-->
-            <!--Services One Single Start-->
-            <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="900ms">
-                <div class="services-one__single">
-                    <div class="services-one__img-box">
-                        <div class="services-one__img">
-                            <img src="assets/img/backgrounds/bancocolombia2.png" alt="">
-                        </div>
-                    </div>
-                    <div class="services-one__content-wrap">
-                        <div class="services-one__icon">
-                            <span class="icon-productivity"></span>
-                        </div>
-                        <div class="services-one__content">
-                            <h3 class="services-one__title"><a href="digital-marketingphp"> </a></h3>
-                            <p class="services-one__text"> </p>
-                            <p class="services-one__text"> </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Services One Single End-->
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.services-one__single');
+
+            serviceCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Toggle active class on the clicked card
+                    this.classList.toggle('active');
+
+                    // Optional: Close other cards when one is opened
+                    serviceCards.forEach(otherCard => {
+                        if (otherCard !== this && otherCard.classList.contains('active')) {
+                            otherCard.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </section>
 <!--Services One End-->
 

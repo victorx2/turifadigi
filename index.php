@@ -62,21 +62,21 @@ if ($request_method === 'GET' && $route === '/inicializarBoletos') {
 }
 
 // Manejo de solicitudes POST
-//if ($request_method === 'POST') {
-//    if ($route === '/login') {
-//        $authController = (new AuthController())->login($_REQUEST['user'], $_REQUEST['password']);
-//        if (!$authController) {
-//            $error = true;
-//            require_once 'views/auth/login.php';
-//        }
-//        exit;
-//    }
-//
-//    if ($route === '/guardarComprador') {
-//        (new BoletoController())->procesarCompra();
-//        exit;
-//    }
-//}
+if ($request_method === 'POST') {
+    if ($route === '/login') {
+        $authController = (new AuthController())->login($_REQUEST['user'], $_REQUEST['password']);
+        if (!$authController) {
+            $error = true;
+            require_once 'views/auth/login.php';
+        }
+        exit;
+    }
+
+    if ($route === '/guardarComprador') {
+        (new BoletoController())->procesarCompra();
+        exit;
+    }
+}
 
 // Validación de sesión
 //if (empty($_SESSION)) {
@@ -129,6 +129,14 @@ switch ($route) {
 
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
+        break;
+
+    case '/eiker_venta':
+        require_once 'views/admin/eiker_venta.php';
+        break;
+
+    case '/notificaciones_de_boletos/visualizaciones_de_boletos':
+        require_once 'views/notificaciones_de_boletos/visualizaciones_de_boletos.php';
         break;
 
     //case '/logout':

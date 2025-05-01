@@ -1,42 +1,5 @@
 <link rel="stylesheet" href="assets/css/boletos.css">
 <link rel="stylesheet" href="assets/css/chip_alzar.css">
-
-<style>
-  /*   .location-options { */
-  /*     margin-bottom: 15px; */
-  /*     display: flex; */
-  /*     gap: 20px; */
-  /*   } */
-  /*  */
-  /*   .location-options label { */
-  /*     display: flex; */
-  /*     align-items: center; */
-  /*     gap: 8px; */
-  /*     cursor: pointer; */
-  /*   } */
-  /*  */
-  /*   .location-options input[type="radio"] { */
-  /*     cursor: pointer; */
-  /*   } */
-  /*  */
-  /*   .ui.search.dropdown { */
-  /*     width: 100%; */
-  /*     margin-top: 10px; */
-  /*   } */
-  /*  */
-  /*   .ui.search.dropdown .menu { */
-  /*     max-height: 200px; */
-  /*     overflow-y: auto; */
-  /*   } */
-  /*  */
-  /*   .ui.dropdown .menu .header { */
-  /*     font-weight: bold; */
-  /*     color: #2185d0; */
-  /*     padding: 8px 16px; */
-  /*     background-color: #f8f9fa; */
-  /*   } */
-</style>
-
 <?php require_once 'views/sorteo/main_slider.php'; ?>
 <?php require_once 'premio.php'; ?>
 
@@ -83,179 +46,24 @@
     <div class="total-info">
       Total: <span id="totalBSDisplay">4252.40 BS</span> (1 boletos)
     </div>
-
     <div class="form-section">
       <h2 class="form-section-title">
         <i class="fas fa-user"></i>
         DATOS PERSONALES
       </h2>
-
       <div class="form-group-custom">
         <label class="required">Nombres y Apellidos</label>
         <input type="text" class="form-control-custom" id="nombre" placeholder="Nombre Apellido">
       </div>
-
       <div class="form-group-custom">
         <label class="required">Cédula</label>
         <input type="text" class="form-control-custom" id="cedula" placeholder="9384235">
       </div>
-
-      <?php /* require_once 'views/sorteo/celular.php'; */ ?>
-
-      <div class="form-group-custom">
-        <label class="required">Celular</label>
-        <div class="phone-group" style="display: flex; gap: 10px; align-items: center;">
-          <div id="prefijo-dropdown" class="ui search dropdown" data-silent="true">
-            <input type="hidden" name="prefijo">
-            <div class="default text">Seleccione prefijo</div>
-            <i class="dropdown icon"></i>
-            <div class="menu" style="display: none;" data-attached="true">
-              <div class="item" data-value="VE +58">VE +58</div>
-              <div class="item" data-value="US +1">US +1</div>
-              <div class="item" data-value="MX +52">MX +52</div>
-              <div class="item" data-value="CO +57">CO +57</div>
-              <div class="item" data-value="ES +34">ES +34</div>
-              <div class="item" data-value="AR +54">AR +54</div>
-              <div class="item" data-value="PE +51">PE +51</div>
-              <div class="item" data-value="CL +56">CL +56</div>
-              <div class="item" data-value="EC +593">EC +593</div>
-              <div class="item" data-value="DO +1">DO +1</div>
-              <div class="item" data-value="CA +1">CA +1</div>
-              <div class="item" data-value="BZ +501">BZ +501</div>
-              <div class="item" data-value="CR +506">CR +506</div>
-              <div class="item" data-value="SV +503">SV +503</div>
-              <div class="item" data-value="GT +502">GT +502</div>
-              <div class="item" data-value="HN +504">HN +504</div>
-              <div class="item" data-value="NI +505">NI +505</div>
-              <div class="item" data-value="PA +507">PA +507</div>
-              <div class="item" data-value="AG +1">AG +1</div>
-              <div class="item" data-value="BS +1">BS +1</div>
-              <div class="item" data-value="BB +1">BB +1</div>
-              <div class="item" data-value="CU +53">CU +53</div>
-              <div class="item" data-value="DM +1">DM +1</div>
-              <div class="item" data-value="GD +1">GD +1</div>
-              <div class="item" data-value="HT +509">HT +509</div>
-              <div class="item" data-value="JM +1">JM +1</div>
-              <div class="item" data-value="KN +1">KN +1</div>
-              <div class="item" data-value="LC +1">LC +1</div>
-              <div class="item" data-value="VC +1">VC +1</div>
-              <div class="item" data-value="TT +1">TT +1</div>
-              <div class="item" data-value="BO +591">BO +591</div>
-              <div class="item" data-value="BR +55">BR +55</div>
-              <div class="item" data-value="GY +592">GY +592</div>
-              <div class="item" data-value="PY +595">PY +595</div>
-              <div class="item" data-value="SR +597">SR +597</div>
-              <div class="item" data-value="UY +598">UY +598</div>
-            </div>
-            <input type="text" class="search" placeholder="">
-          </div>
-          <input type="tel" class="form-control-custom" id="telefono" placeholder="0416-3829342" style="width: 700px;" maxlength="11">
-        </div>
-      </div>
-
-      <!--  -->
+      <?php require_once 'views/sorteo/celular.php'; ?>
       <?php require_once 'views/sorteo/ubicaciones.php'; ?>
-      <!--  -->
-
     </div>
-
-    <div class="payment-section">
-      <div class="payment-title">
-        <i class="fas fa-money-bill"></i>
-        MODOS DE PAGO
-      </div>
-      <div class="payment-subtitle">Transferencia o depósito</div>
-
-      <div class="payment-methods">
-        <div class="payment-method active">
-          <img src="assets/img/backgrounds/pagomovilmini.png" alt="Pago Móvil">
-        </div>
-        <div class="payment-method">
-          <img src="assets/img/backgrounds/zellemini.png" alt="Zelle">
-        </div>
-        <div class="payment-method">
-          <img src="assets/img/backgrounds/nesquimini.png" alt="Nesqui">
-        </div>
-        <div class="payment-method">
-          <img src="assets/img/backgrounds/paypalmini.webp" alt="Paypal">
-        </div>
-        <div class="payment-method">
-          <img src="assets/img/backgrounds/vzlamini.png" alt="Banco de Venezuela">
-        </div>
-        <div class="payment-method">
-          <img src="assets/img/backgrounds/bancocolombia.png" alt="Colombia">
-        </div>
-        <!-- Más métodos de pago aquí -->
-      </div>
-
-      <div class="payment-info">
-        <p>PAGO MÓVIL</p>
-        <p class="subtitle">Cuenta a Consultar</p>
-      </div>
-
-      <div class="converter-container">
-        <h3 class="text-center">Conversor USD a BS</h3>
-        <div class="converter-controls">
-          <button class="btn-circle-custom">-</button>
-          <input type="text" value="1" readonly>
-          <button class="btn-circle-custom">+</button>
-        </div>
-
-        <div class="currency-options">
-          <label class="currency-option">
-            <input type="radio" name="currency" value="BS" checked> BS
-          </label>
-          <label class="currency-option">
-            <input type="radio" name="currency" value="COP"> COP
-          </label>
-        </div>
-
-        <div class="conversion-result">
-          <div class="amount">
-            <span>USD</span>
-            <span>40.00</span>
-          </div>
-          <div class="amount">
-            <span>BS</span>
-            <span>4252.40</span>
-          </div>
-        </div>
-        <p class="exchange-rate">Tasa de cambio: 1 USD = 106.31 BS</p>
-      </div>
-    </div>
-
-    <div class="form-section">
-      <h2 class="form-section-title">
-        <i class="fas fa-file-invoice"></i>
-        COMPROBANTE DE PAGO
-      </h2>
-      <p class="form-section-subtitle">Foto o Captura de Pantalla</p>
-
-      <div class="upload-section">
-        <button class="btn-upload">
-          <i class="fas fa-upload"></i>
-          Foto/Captura de Pantalla
-        </button>
-      </div>
-
-      <div class="form-group-custom">
-        <label class="required">Titular</label>
-        <input type="text" class="form-control-custom" id="titular">
-      </div>
-
-      <div class="form-group-custom">
-        <label class="required">Referencia de pago (Últimos 4 dígitos)</label>
-        <input type="text" class="form-control-custom" id="referencia">
-      </div>
-
-      <div class="form-group-custom">
-        <label>Método de pago</label>
-        <select class="form-control-custom" id="metodoPago">
-          <option value="Banco de venezuela">Banco de Venezuela</option>
-        </select>
-      </div>
-    </div>
-
+    <?php require_once 'views/sorteo/modo_de_pago.php'; ?>
+    <?php require_once 'views/sorteo/comprobante_de_pago.php'; ?>
     <button type="submit" class="btn-confirmar">CONFIRMAR</button>
   </div>
 </div>
@@ -268,14 +76,90 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Configuración global para Semantic UI Transitions
+    $.fn.transition.settings.silent = true;
+
+    // Inicializar el dropdown con configuración optimizada
+    const $dropdown = $('#payment-method-dropdown').dropdown({
+      onChange: function(value, text, $selectedItem) {
+        mostrarDatosPago(value);
+      },
+      // Desactivar animaciones y transiciones
+      transition: 'none',
+      duration: 0,
+      animation: 'none',
+      // Configuración adicional para evitar problemas de DOM
+      allowReselection: true,
+      forceSelection: false,
+      selectOnKeydown: false,
+      fullTextSearch: false,
+      // Evitar que el menú se oculte automáticamente
+      hideOnScroll: false,
+      allowTab: false,
+      // Configuración de rendimiento
+      throttle: 0,
+      // Configuración de búsqueda
+      match: 'text',
+      preserveHTML: false,
+      sortSelect: false,
+      // Configuración de visualización
+      direction: 'auto',
+      keepOnScreen: true
+    });
+
+    // Asegurarse de que el dropdown esté visible
+    $dropdown.css({
+      'display': 'block',
+      'visibility': 'visible',
+      'opacity': '1'
+    });
+
+    // Función para mostrar los detalles del método de pago seleccionado
+    function mostrarDatosPago(metodo) {
+      const paymentTitle = document.getElementById('paymentTitle');
+      const paymentDetails = document.getElementById('paymentDetails');
+
+      if (!paymentTitle || !paymentDetails) return;
+
+      switch (metodo) {
+        case 'zelle':
+          paymentTitle.textContent = 'ZELLE';
+          paymentDetails.innerHTML = `
+            <p class="subtitle">Datos de la cuenta</p>
+            <p>Número de teléfono: +1 4074287580</p>
+          `;
+          break;
+
+        case 'paypal':
+          paymentTitle.textContent = 'PAYPAL';
+          paymentDetails.innerHTML = `
+            <p class="subtitle">Datos de la cuenta</p>
+            <p>Nombre: Yorsin Cruz Osorio</p>
+            <p>Correo Electrónico: Yorsincruz1995@gmail.com</p>
+            <p>Usuario: @Yorsin0506</p>
+            <p>Número teléfono: +1 4074287580</p>
+          `;
+          break;
+
+        case 'banco_venezuela':
+          paymentTitle.textContent = 'BANCO DE VENEZUELA';
+          paymentDetails.innerHTML = `
+            <p class="subtitle">Datos de la cuenta</p>
+            <p>Número de teléfono: 04124124923</p>
+            <p>Cédula de identidad: 28517267</p>
+          `;
+          break;
+      }
+    }
+
     const boletosSeleccionados = new Set();
     const minBoletos = 2;
-    let cantidadSeleccion = 3;
+    let cantidadSeleccion = 2;
     const tasaUSD = 106.31;
     let precioUnitarioUSD = 3;
     const todosLosBoletos = [];
     let cargandoBoletos = false;
-    const boletosPorPagina = 500; // Aumentamos la cantidad por página
+    const boletosPorPagina = 500;
     const totalBoletos = 10000;
 
     // Referencias a elementos del DOM
@@ -358,33 +242,37 @@
     // Cargar los primeros boletos
     cargarMasBoletos();
 
+    // Inicializar el contador y total
+    numeroBoletosSpan.textContent = cantidadSeleccion;
+    actualizarTotal();
+    actualizarContador();
+
     // Manejadores para los botones + y -
     btnMenos.addEventListener('click', () => {
       if (cantidadSeleccion > minBoletos) {
         cantidadSeleccion--;
         numeroBoletosSpan.textContent = cantidadSeleccion;
         actualizarTotal();
+        actualizarContador();
       }
     });
 
     btnMas.addEventListener('click', () => {
-      if (cantidadSeleccion < 10000) { // Aumentado a 10000 boletos máximo
+      if (cantidadSeleccion < 10000) {
         cantidadSeleccion++;
         numeroBoletosSpan.textContent = cantidadSeleccion;
         actualizarTotal();
+        actualizarContador();
       }
     });
 
     // Función para actualizar el total en USD
     function actualizarTotal() {
-      const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
+      const totalUSD = cantidadSeleccion * precioUnitarioUSD;
       const totalBS = totalUSD * tasaUSD;
 
       // Actualizar el total en USD en el contador
-      const totalUSDDisplay = document.getElementById('totalUSD');
-      if (totalUSDDisplay) {
-        totalUSDDisplay.textContent = `${totalUSD.toFixed(2)} USD`;
-      }
+      totalUSDSpan.textContent = `${totalUSD} USD`;
 
       // Actualizar el total en BS en el formulario de datos personales
       const totalBSDisplay = document.getElementById('totalBSDisplay');
@@ -582,17 +470,69 @@
     document.querySelector('.btn-confirmar').onclick = async function(e) {
       e.preventDefault();
 
-      // Validar campos requeridos
-      const nombre = document.getElementById('nombre').value.trim();
-      const cedula = document.getElementById('cedula').value.trim();
-      const telefono = document.getElementById('telefono').value.trim();
-      const ubicacion = document.getElementById('ubicacion').value.trim();
-      const titular = document.getElementById('titular').value.trim();
-      const referencia = document.getElementById('referencia').value.trim();
-      const metodoPago = document.getElementById('metodoPago').value;
+      // Función auxiliar para obtener valor seguro
+      const getInputValue = (selector) => {
+        const element = document.querySelector(selector);
+        return element ? element.value.trim() : '';
+      };
 
-      if (!nombre || !cedula || !telefono || !ubicacion || !titular || !referencia) {
-        alert('Por favor complete todos los campos requeridos');
+      // Obtener valores de forma segura
+      const formData = {
+        nombre: getInputValue('#nombre'),
+        cedula: getInputValue('#cedula'),
+        telefono: getInputValue('#telefono'),
+        prefijo: $('input[name="prefijo"]').val(),
+        estado: $('input[name="estado_venezuela"]').val() || $('input[name="pais_internacional"]').val(),
+        titular: getInputValue('#titular'),
+        referencia: getInputValue('#referencia'),
+        metodoPago: $('input[name="payment_method"]').val()
+      };
+
+      // Validar que todos los campos requeridos tengan valor
+      const camposRequeridos = [{
+          campo: 'nombre',
+          mensaje: 'Nombre'
+        },
+        {
+          campo: 'cedula',
+          mensaje: 'Cédula'
+        },
+        {
+          campo: 'telefono',
+          mensaje: 'Teléfono'
+        },
+        {
+          campo: 'prefijo',
+          mensaje: 'Prefijo telefónico'
+        },
+        {
+          campo: 'estado',
+          mensaje: 'Ubicación'
+        },
+        {
+          campo: 'titular',
+          mensaje: 'Titular'
+        },
+        {
+          campo: 'referencia',
+          mensaje: 'Referencia'
+        },
+        {
+          campo: 'metodoPago',
+          mensaje: 'Método de pago'
+        }
+      ];
+
+      const camposFaltantes = camposRequeridos
+        .filter(({
+          campo
+        }) => !formData[campo])
+        .map(({
+          mensaje
+        }) => mensaje);
+
+      if (camposFaltantes.length > 0) {
+        alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
         return;
       }
 
@@ -600,17 +540,11 @@
       const totalBS = totalUSD * tasaUSD;
 
       try {
-        // Primero procesamos la compra
+        // Preparar datos de la compra
         const datosCompra = {
           boletos: Array.from(boletosSeleccionados),
-          nombre: nombre,
-          cedula: cedula,
-          telefono: telefono,
-          ubicacion: ubicacion,
-          total: totalBS,
-          titular: titular,
-          referencia: referencia,
-          metodo_pago: metodoPago
+          ...formData,
+          total: totalBS
         };
 
         const responseCompra = await fetch('/TuRifadigi/procesarCompra', {
@@ -624,7 +558,7 @@
         const dataCompra = await responseCompra.json();
 
         if (dataCompra.success) {
-          // Después de procesar la compra, verificamos la disponibilidad
+          // Verificar disponibilidad después de procesar la compra
           const responseVerificacion = await fetch('/TuRifadigi/verificarDisponibilidad', {
             method: 'POST',
             headers: {
@@ -714,37 +648,70 @@
       }
     `;
     document.head.appendChild(styles);
-
-    //// Manejo de los radio buttons para ubicación
-    //const locationRadios = document.querySelectorAll('input[name="location_type"]');
-    //const venezuelaDropdown = document.getElementById('venezuela-dropdown');
-    //const paisesDropdown = document.getElementById('paises-dropdown');
-    //
-    //// Inicializar los dropdowns de Semantic UI
-    //$('.ui.dropdown').dropdown();
-    //
-    //// Función para manejar el cambio de radio button
-    //function handleLocationChange(e) {
-    //  if (e.target.value === 'venezuela') {
-    //    venezuelaDropdown.style.display = 'block';
-    //    paisesDropdown.style.display = 'none';
-    //  } else {
-    //    venezuelaDropdown.style.display = 'none';
-    //    paisesDropdown.style.display = 'block';
-    //  }
-    //}
-    //
-    //// Agregar el evento a cada radio button
-    //locationRadios.forEach(radio => {
-    //  radio.addEventListener('change', handleLocationChange);
-    //});
-    //
-    //// Establecer el estado inicial
-    //const initialSelection = document.querySelector('input[name="location_type"]:checked');
-    //if (initialSelection) {
-    //  handleLocationChange({
-    //    target: initialSelection
-    //  });
-    //}
   });
 </script>
+<link rel="stylesheet" href="assets/css/dropdown-search-method.css">
+
+
+<head>
+  <link rel="stylesheet" href="/TuRifadigi/assets/css/payment.css">
+  <script src="/TuRifadigi/assets/js/payment.js"></script>
+</head>
+
+<style>
+  /* Estilos para el grupo de teléfono */
+  .phone-group {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .phone-group .ui.dropdown {
+    min-height: 45px;
+    width: 140px !important;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    background: white;
+    margin: 0;
+  }
+
+  .phone-group .ui.dropdown .text {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .phone-group .ui.dropdown .menu {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .phone-group input[type="tel"] {
+    height: 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 14px;
+    color: #333;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .phone-group input[type="tel"]:focus {
+    border-color: #85b7d9;
+    outline: none;
+  }
+
+  .phone-group .ui.dropdown:hover,
+  .phone-group input[type="tel"]:hover {
+    border-color: #ccc;
+  }
+
+  .phone-group .ui.dropdown.active {
+    border-color: #85b7d9;
+  }
+</style>
