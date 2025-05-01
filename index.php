@@ -91,9 +91,7 @@ if ($request_method === 'POST') {
 
 switch ($route) {
 
-    /* case '/': */
-    /*     require_once 'views/rifa/home.php'; */
-    /*     break; */
+
 
     case '/':
         require_once 'views/main.php';
@@ -125,41 +123,18 @@ switch ($route) {
         }
         break;
 
-    /*   case '/sorteo': */
-    /*       require_once 'views/rifa/sorteo.php'; */
-    /*       break; */
-
     case '/sorteo':
         (new BoletoController())->index();
         break;
-
-    //case '/boletos':
-    //    (new BoletoController())->index();
-    //    break;
-
-    /* case '/ganador': */
-    /*     require_once 'views/rifa/ganador.php'; */
-    /*     break; */
 
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
         break;
 
-    /* case '/eiker_venta': */
-    /*     require_once 'views/admin/eiker_venta.php'; */
-    /*     break; */
-
-    /* case '/notificaciones_de_boletos/visualizaciones_de_boletos': */
-    /*     require_once 'views/notificaciones_de_boletos/visualizaciones_de_boletos.php'; */
-    /*     break; */
 
     case '/boletos':
-        require_once 'views/administracion/boletos/boletos.php';
+        require_once 'views/administracion/boletos/index.php';
         break;
-
-    //case '/logout':
-    //    (new AuthController())->logout();
-    //    break;
 
     default:
         require_once 'views/rifa/home.php';
