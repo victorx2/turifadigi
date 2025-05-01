@@ -26,7 +26,7 @@ $titulo = $config['titulo'] ?? '🎉 ¡POR EL SUPERGANA! 🎉';
 $precio_boleto = $config['precio_boleto'] ?? '3';
 $boletos_minimos = $config['boletos_minimos'] ?? '2';
 $premios = !empty($config['premios']) ? $config['premios'] : $premios_default;
-$url_loteria = $config['url_loteria'] ?? 'https://tripletachira.com/';
+$url_rifa = $config['url_rifa'] ?? 'https://tripletachira.com/';
 $numero_contacto = $config['numero_contacto'] ?? '407-428-7580';
 $texto_ejemplo = $config['texto_ejemplo'] ?? 'Si compras 10 boletos, participas automáticamente en el sorteo de $1000 cuando se alcance el 50% de los números vendidos. El día se anunciará públicamente.';
 ?>
@@ -67,7 +67,7 @@ $texto_ejemplo = $config['texto_ejemplo'] ?? 'Si compras 10 boletos, participas 
 
             <section class="official-link mb-4" aria-label="Enlace oficial">
               <h2>🔗 Enlace oficial para seguir el sorteo:</h2>
-              <a href="<?php echo htmlspecialchars($url_loteria); ?>" target="_blank" class="thm-btn" rel="noopener">
+              <a href="<?php echo htmlspecialchars($url_rifa); ?>" target="_blank" class="thm-btn" rel="noopener">
                 👉 SuperGana <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                 <span class="sr-only">(se abre en una nueva ventana)</span>
               </a>

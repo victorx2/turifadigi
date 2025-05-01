@@ -17,6 +17,14 @@ class BoletoController
     // Asegurarnos de que existan los boletos en la base de datos
     $this->model->inicializarBoletos();
   }
+
+  public function index()
+  {
+
+    require_once 'views/rifa/sorteo.php';
+    
+  }
+
   public function procesarCompra()
   {
     header('Content-Type: application/json');

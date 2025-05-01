@@ -81,9 +81,9 @@
             </div>
 
             <div class="mb-3">
-              <label for="url_loteria" class="form-label">URL de la Lotería</label>
-              <input type="url" class="form-control" id="url_loteria" name="url_loteria"
-                value="<?php echo htmlspecialchars($config['url_loteria'] ?? 'https://tripletachira.com/'); ?>" required>
+              <label for="url_rifa" class="form-label">URL de la Lotería</label>
+              <input type="url" class="form-control" id="url_rifa" name="url_rifa"
+                value="<?php echo htmlspecialchars($config['url_rifa'] ?? 'https://tripletachira.com/'); ?>" required>
             </div>
 
             <div class="mb-3">

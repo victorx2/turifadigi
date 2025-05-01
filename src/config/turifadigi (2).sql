@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-04-2025 a las 18:12:29
+-- Tiempo de generación: 01-05-2025 a las 16:20:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,6 @@ CREATE TABLE `boletos` (
 
 CREATE TABLE `compras_boletos` (
   `id_compra` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
   `id_rifa` int(11) NOT NULL,
   `fecha_compra` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` enum('pendiente','pagado','cancelado') NOT NULL DEFAULT 'pendiente',
@@ -86,6 +85,22 @@ CREATE TABLE `configuracion_rifas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `datos_personales`
+--
+
+CREATE TABLE `datos_personales` (
+  `id_datos` int(11) NOT NULL,
+  `id_compra` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `cedula` varchar(20) NOT NULL,
+  `telefono` varchar(20) NOT NULL,
+  `ubicacion` varchar(100) NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `detalle_compras`
 --
 
@@ -94,6 +109,23 @@ CREATE TABLE `detalle_compras` (
   `id_compra` int(11) NOT NULL,
   `id_boleto` int(11) NOT NULL,
   `precio_unitario` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pagos`
+--
+
+CREATE TABLE `pagos` (
+  `id_pago` int(11) NOT NULL,
+  `id_compra` int(11) NOT NULL,
+  `titular` varchar(100) NOT NULL,
+  `referencia` varchar(20) NOT NULL,
+  `metodo` varchar(50) NOT NULL,
+  `monto` decimal(10,2) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  `estado` enum('pendiente','verificado','rechazado') NOT NULL DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -206,15 +238,17 @@ ALTER TABLE `boletos`
   ADD PRIMARY KEY (`id_boleto`),
   ADD UNIQUE KEY `numero_boleto` (`numero_boleto`),
   ADD KEY `id_rifa` (`id_rifa`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `idx_numero_boleto` (`numero_boleto`),
+  ADD KEY `idx_estado` (`estado`),
+  ADD KEY `idx_id_rifa` (`id_rifa`);
 
 --
 -- Indices de la tabla `compras_boletos`
 --
 ALTER TABLE `compras_boletos`
   ADD PRIMARY KEY (`id_compra`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_rifa` (`id_rifa`);
+  ADD KEY `compras_boletos_ibfk_2` (`id_rifa`);
 
 --
 -- Indices de la tabla `configuracion_precios`
@@ -230,12 +264,26 @@ ALTER TABLE `configuracion_rifas`
   ADD KEY `id_rifa` (`id_rifa`);
 
 --
+-- Indices de la tabla `datos_personales`
+--
+ALTER TABLE `datos_personales`
+  ADD PRIMARY KEY (`id_datos`),
+  ADD KEY `id_compra` (`id_compra`);
+
+--
 -- Indices de la tabla `detalle_compras`
 --
 ALTER TABLE `detalle_compras`
   ADD PRIMARY KEY (`id_detalle`),
   ADD KEY `id_compra` (`id_compra`),
   ADD KEY `id_boleto` (`id_boleto`);
+
+--
+-- Indices de la tabla `pagos`
+--
+ALTER TABLE `pagos`
+  ADD PRIMARY KEY (`id_pago`),
+  ADD KEY `id_compra` (`id_compra`);
 
 --
 -- Indices de la tabla `premios`
@@ -314,10 +362,22 @@ ALTER TABLE `configuracion_rifas`
   MODIFY `id_configuracion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `datos_personales`
+--
+ALTER TABLE `datos_personales`
+  MODIFY `id_datos` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `detalle_compras`
 --
 ALTER TABLE `detalle_compras`
   MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pagos`
+--
+ALTER TABLE `pagos`
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `premios`
@@ -371,39 +431,6 @@ ALTER TABLE `usuarios_roles`
 ALTER TABLE `boletos`
   ADD CONSTRAINT `boletos_ibfk_1` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`),
   ADD CONSTRAINT `boletos_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
-
---
--- Filtros para la tabla `compras_boletos`
---
-ALTER TABLE `compras_boletos`
-  ADD CONSTRAINT `compras_boletos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
-  ADD CONSTRAINT `compras_boletos_ibfk_2` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`);
-
---
--- Filtros para la tabla `configuracion_rifas`
---
-ALTER TABLE `configuracion_rifas`
-  ADD CONSTRAINT `configuracion_rifas_ibfk_1` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`);
-
---
--- Filtros para la tabla `detalle_compras`
---
-ALTER TABLE `detalle_compras`
-  ADD CONSTRAINT `detalle_compras_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `compras_boletos` (`id_compra`),
-  ADD CONSTRAINT `detalle_compras_ibfk_2` FOREIGN KEY (`id_boleto`) REFERENCES `boletos` (`id_boleto`);
-
---
--- Filtros para la tabla `premios`
---
-ALTER TABLE `premios`
-  ADD CONSTRAINT `premios_ibfk_1` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`),
-  ADD CONSTRAINT `premios_ibfk_2` FOREIGN KEY (`id_tipo_premio`) REFERENCES `tipos_premios` (`id_tipo_premio`);
-
---
--- Filtros para la tabla `usuarios_auditorias`
---
-ALTER TABLE `usuarios_auditorias`
-  ADD CONSTRAINT `usuarios_auditorias_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -68,14 +68,14 @@ class RaffleConfig
       $sqlConfig = "UPDATE configuracion_rifas SET 
                     titulo = :titulo,
                     numero_contacto = :numero_contacto,
-                    url_loteria = :url_loteria,
+                    url_rifa = :url_rifa,
                     texto_ejemplo = :texto_ejemplo
                     WHERE id = 1";
 
       $this->db->ejecutar($sqlConfig, [
         ':titulo' => $data['titulo'],
         ':numero_contacto' => $data['numero_contacto'],
-        ':url_loteria' => $data['url_loteria'],
+        ':url_rifa' => $data['url_rifa'],
         ':texto_ejemplo' => $data['texto_ejemplo']
       ]);
 

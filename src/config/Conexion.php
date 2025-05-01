@@ -34,25 +34,44 @@ class Conexion
 
   public function ejecutar($sql, array $parametros)
   {
-    $this->conexion->beginTransaction();
-    $sentencia = $this->conexion->prepare($sql);
-    foreach ($parametros as $indice => $valor) {
-      $sentencia->bindValue($indice, $valor);
+    try {
+      $this->conexion->beginTransaction();
+      $sentencia = $this->conexion->prepare($sql);
+
+      if (!empty($parametros)) {
+        foreach ($parametros as $parametro => $valor) {
+          $tipo = is_int($valor) ? PDO::PARAM_INT : PDO::PARAM_STR;
+          $sentencia->bindValue($parametro, $valor, $tipo);
+        }
+      }
+
+      $sentencia->execute();
+      $ultimo_id_insertado = $this->conexion->lastInsertId();
+      $this->conexion->commit();
+      return $ultimo_id_insertado;
+    } catch (PDOException $e) {
+      $this->conexion->rollBack();
+      throw new Exception("Error en la ejecución: " . $e->getMessage());
     }
-    $sentencia->execute();
-    $ultimo_id_insertado = $this->conexion->lastInsertId();
-    $this->conexion->commit();
-    return $ultimo_id_insertado;
   }
 
   public function consultar($sql, array $parametros)
   {
-    $sentencia = $this->conexion->prepare($sql);
-    foreach ($parametros as $indice => $valor) {
-      $sentencia->bindValue($indice, $valor);
+    try {
+      $sentencia = $this->conexion->prepare($sql);
+
+      if (!empty($parametros)) {
+        foreach ($parametros as $parametro => $valor) {
+          $tipo = is_int($valor) ? PDO::PARAM_INT : PDO::PARAM_STR;
+          $sentencia->bindValue($parametro, $valor, $tipo);
+        }
+      }
+
+      $sentencia->execute();
+      return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      throw new Exception("Error en la consulta: " . $e->getMessage());
     }
-    $sentencia->execute();
-    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function backup()

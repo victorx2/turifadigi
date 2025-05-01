@@ -11,14 +11,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.jpg" />
   <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
   <meta name="description" content="zefxa HTML 5 Template " />
-
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-
-
   <!-- Lista de boletos -->
   <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
@@ -139,16 +136,17 @@
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
                   <ul class="main-menu__list">
                     <li class="dropdown">
-                      <a href="/TuRifadigi/sorteo">Inicio
+                      <a href="/TuRifadigi/">Inicio
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
                         <li><a href="/TuRifadigi/rifa_config">El lado del admin</a></li>
                         <li class="dropdown">
-                          <a href="/TuRifadigi/notificaciones_de_boletos/visualizaciones_de_boletos">One Page Styles</a>
-                          <ul>
-                            <li><a href="">Home One</a></li>
-                          </ul>
+                          <a href="/TuRifadigi/boletos">Vista de boletos</a>
+                          <!--  <a href="/TuRifadigi/notificaciones_de_boletos/visualizaciones_de_boletos">One Page Styles</a> -->
+                          <!-- <ul> -->
+                          <!--   <li><a href="">Home One</a></li> -->
+                          <!-- </ul> -->
                         </li>
                       </ul>
                     </li>
@@ -169,12 +167,12 @@
                       </ul>
                     </li>
                     <li class="dropdown">
-                      <a href="/TuRifadigi/ganador">Eventos
+                      <a href="/TuRifadigi/sorteo">SORTEOS
                         <span class="main-menu-border"></span>
                       </a>
-                      <ul>
-                        <li><a href="">Eventos</a></li>
-                      </ul>
+                      <!-- <ul> -->
+                      <!--   <li><a href="">Eventos</a></li> -->
+                      <!-- </ul> -->
                     </li>
                     <li>
                       <a href="/TuRifadigi/login">Iniciar Sesión

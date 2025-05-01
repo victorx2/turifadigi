@@ -33,52 +33,25 @@ class BoletoModel
       $result = $this->db->consultar($sql, []);
       $totalActual = $result[0]['total'];
 
-      if ($totalActual < 10000) {
-        // Crear índices para optimizar si no existen
-        $sqlIndices = [
-          "CREATE INDEX IF NOT EXISTS idx_numero_boleto ON boletos(numero_boleto)",
-          "CREATE INDEX IF NOT EXISTS idx_estado ON boletos(estado)",
-          "CREATE INDEX IF NOT EXISTS idx_id_rifa ON boletos(id_rifa)"
-        ];
+      if ($totalActual < 9999) {
+        // Insertar boletos faltantes usando una sola consulta
+        $sqlInsert = "INSERT IGNORE INTO boletos (id_rifa, numero_boleto, estado)
+                      WITH RECURSIVE numeros AS (
+                        SELECT 1 as n
+                        UNION ALL
+                        SELECT n + 1 FROM numeros WHERE n < 9999
+                      )
+                      SELECT 1, LPAD(n, 4, '0'), 'disponible'
+                      FROM numeros
+                      WHERE LPAD(n, 4, '0') NOT IN (SELECT numero_boleto FROM boletos)";
 
-        foreach ($sqlIndices as $sqlIndex) {
-          try {
-            $this->db->ejecutar($sqlIndex, []);
-          } catch (Exception $e) {
-            // Ignorar si el índice ya existe
-          }
-        }
+        $this->db->ejecutar($sqlInsert, []);
 
-        // Calcular cuántos boletos faltan
-        $boletosRestantes = 10000 - $totalActual;
-        $start = $totalActual + 1;
-
-        // Insertar los boletos restantes en lotes de 1000
-        while ($start <= 10000) {
-          $sqlInsert = "INSERT INTO boletos (id_rifa, numero_boleto, estado) VALUES ";
-          $values = [];
-
-          $end = min($start + 999, 10000);
-
-          for ($i = $start; $i <= $end; $i++) {
-            $numero = str_pad($i, 4, '0', STR_PAD_LEFT);
-            $values[] = "(1, '$numero', 'disponible')";
-          }
-
-          $sqlInsert .= implode(',', $values);
-          $this->db->ejecutar($sqlInsert, []);
-
-          // Pequeña pausa entre lotes para no sobrecargar la BD
-          usleep(100000); // 100ms de pausa
-
-          $start = $end + 1;
-        }
-
-        // Verificar que se hayan creado todos los boletos
+        // Verificar el total final
         $sqlVerificar = "SELECT COUNT(*) as total FROM boletos";
         $resultVerificar = $this->db->consultar($sqlVerificar, []);
 
-        if ($resultVerificar[0]['total'] != 10000) {
+        if ($resultVerificar[0]['total'] < 9999) {
           throw new Exception("Error: No se pudieron crear todos los boletos. Total actual: " . $resultVerificar[0]['total']);
         }
       }

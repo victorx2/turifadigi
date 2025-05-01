@@ -25,7 +25,7 @@ class RaffleConfigController
         'precio_boleto' => '3',
         'boletos_minimos' => '2',
         'numero_contacto' => '407-428-7580',
-        'url_loteria' => 'https://tripletachira.com/',
+        'url_rifa' => 'https://tripletachira.com/',
         'texto_ejemplo' => 'Si compras 10 boletos, participas automáticamente en el sorteo de $1000 cuando se alcance el 50% de los números vendidos. El día se anunciará públicamente.',
         'premios' => [
           [

@@ -4,8 +4,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Importa las clases necesarias
 use Dotenv\Dotenv; // Para manejar variables de entorno
-use App\Controllers\{AuthController, RegisterUserController, HomeController, RaffleConfigController}; // Controladores principales
-use App\Controllers\BoletoController;
+use App\Controllers\{AuthController, RegisterUserController, HomeController, RaffleConfigController, BoletoController}; // Controladores principales
+//use App\Controllers\BoletoController;
 
 // Inicia la sesión para manejar la autenticación del usuario
 session_start();
@@ -88,9 +88,15 @@ if ($request_method === 'POST') {
 //}
 
 // Enrutamiento principal de la aplicación
+
 switch ($route) {
+
+    /* case '/': */
+    /*     require_once 'views/rifa/home.php'; */
+    /*     break; */
+
     case '/':
-        require_once 'views/loteria/home.php';
+        require_once 'views/main.php';
         break;
 
     case '/login':
@@ -119,24 +125,36 @@ switch ($route) {
         }
         break;
 
+    /*   case '/sorteo': */
+    /*       require_once 'views/rifa/sorteo.php'; */
+    /*       break; */
+
     case '/sorteo':
-        require_once 'views/loteria/sorteo.php';
+        (new BoletoController())->index();
         break;
 
-    case '/ganador':
-        require_once 'views/loteria/ganador.php';
-        break;
+    //case '/boletos':
+    //    (new BoletoController())->index();
+    //    break;
+
+    /* case '/ganador': */
+    /*     require_once 'views/rifa/ganador.php'; */
+    /*     break; */
 
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
         break;
 
-    case '/eiker_venta':
-        require_once 'views/admin/eiker_venta.php';
-        break;
+    /* case '/eiker_venta': */
+    /*     require_once 'views/admin/eiker_venta.php'; */
+    /*     break; */
 
-    case '/notificaciones_de_boletos/visualizaciones_de_boletos':
-        require_once 'views/notificaciones_de_boletos/visualizaciones_de_boletos.php';
+    /* case '/notificaciones_de_boletos/visualizaciones_de_boletos': */
+    /*     require_once 'views/notificaciones_de_boletos/visualizaciones_de_boletos.php'; */
+    /*     break; */
+
+    case '/boletos':
+        require_once 'views/administracion/boletos/boletos.php';
         break;
 
     //case '/logout':
@@ -144,6 +162,6 @@ switch ($route) {
     //    break;
 
     default:
-        require_once 'views/loteria/home.php';
+        require_once 'views/rifa/home.php';
         break;
 }

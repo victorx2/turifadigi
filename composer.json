@@ -1,6 +1,6 @@
 {
-    "name": "sistema-loteria/app",
-    "description": "Sistema de Lotería",
+    "name": "turifadigi/app",
+    "description": "Rifa",
     "type": "project",
     "require": {
         "php": ">=7.4",
