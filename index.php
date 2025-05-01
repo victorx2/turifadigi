@@ -141,6 +141,6 @@ switch ($route) {
         break;
 
     default:
-        require_once 'views/rifa/home.php';
+        require_once 'views/main.php';
         break;
 }
