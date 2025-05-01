@@ -31,6 +31,9 @@ class BoletoController
     try {
       $data = json_decode(file_get_contents('php://input'), true);
 
+      var_dump($data); // Para depuración, eliminar en producción
+
+
       if (json_last_error() !== JSON_ERROR_NONE) {
         throw new Exception('Error en el formato JSON de entrada');
       }
@@ -41,11 +44,11 @@ class BoletoController
         'nombre' => 'Nombre completo',
         'cedula' => 'Cédula',
         'telefono' => 'Teléfono',
-        'ubicacion' => 'Ubicación',
+        'estado' => 'Ubicación',
         'total' => 'Total a pagar',
         'titular' => 'Titular de la cuenta',
         'referencia' => 'Referencia de pago',
-        'metodo_pago' => 'Método de pago'
+        'metodoPago' => 'Método de pago'
       ];
 
       foreach ($camposRequeridos as $campo => $nombre) {
@@ -60,11 +63,11 @@ class BoletoController
         $data['nombre'],
         $data['cedula'],
         $data['telefono'],
-        $data['ubicacion'],
+        $data['estado'],
         $data['total'],
         $data['titular'],
         $data['referencia'],
-        $data['metodo_pago']
+        $data['metodoPago']
       );
 
       echo json_encode([
