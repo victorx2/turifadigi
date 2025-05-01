@@ -40,9 +40,22 @@ if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
 
+
+
+
+
+
+
 if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->procesarCompra();
 }
+
+
+
+
+
+
+
 
 if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
     header('Content-Type: application/json');
@@ -60,21 +73,21 @@ if ($request_method === 'GET' && $route === '/inicializarBoletos') {
 }
 
 // Manejo de solicitudes POST
-if ($request_method === 'POST') {
-    if ($route === '/login') {
-        $authController = (new AuthController())->login($_REQUEST['user'], $_REQUEST['password']);
-        if (!$authController) {
-            $error = true;
-            require_once 'views/auth/login.php';
-        }
-        exit;
-    }
-
-    if ($route === '/guardarComprador') {
-        (new BoletoController())->procesarCompra();
-        exit;
-    }
-}
+//if ($request_method === 'POST') {
+//    if ($route === '/login') {
+//        $authController = (new AuthController())->login($_REQUEST['user'], $_REQUEST['password']);
+//        if (!$authController) {
+//            $error = true;
+//            require_once 'views/auth/login.php';
+//        }
+//        exit;
+//    }
+//
+//    if ($route === '/guardarComprador') {
+//        (new BoletoController())->procesarCompra();
+//        exit;
+//    }
+//}
 
 
 if ($request_method === 'POST' && $route === '/procesarCompra') {
