@@ -186,27 +186,38 @@
 
     // Función para cargar más boletos
     async function cargarMasBoletos() {
-      if (cargandoBoletos || todosLosBoletos.length >= totalBoletos) return;
 
-      cargandoBoletos = true;
-      loadingText.classList.add('visible');
-
-      const inicio = todosLosBoletos.length + 1;
-      const fin = Math.min(inicio + boletosPorPagina - 1, totalBoletos);
 
       const fragment = document.createDocumentFragment();
-      for (let i = inicio; i <= fin; i++) {
-        const numero = i.toString().padStart(4, '0');
-        const boleto = document.createElement('div');
-        boleto.className = 'boleto';
-        boleto.textContent = numero;
-        boleto.dataset.numero = numero;
-        boleto.onclick = function() {
-          toggleBoleto(this, numero);
-        };
-        fragment.appendChild(boleto);
-        todosLosBoletos.push(boleto);
-      }
+
+      fetch('./boletos/obtenerBoletos') // Petición al backend
+        .then(response => response.json())
+        .then(data => {
+          if (data && Array.isArray(data['data'])) {
+            const boletos = data['data'];
+            boletos.forEach(boleto => {
+              const nuevoBoleto = document.createElement('div');
+              if (boleto.estado == "reservado") {
+                nuevoBoleto.classList.add('boleto', 'disabled');
+              } else {
+                nuevoBoleto.className = 'boleto';
+                nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero);
+
+              }
+              nuevoBoleto.dataset.numero = boleto.numero_boleto;
+              nuevoBoleto.textContent = boleto.numero_boleto;
+              fragment.appendChild(nuevoBoleto);
+              todosLosBoletos.push(nuevoBoleto);
+            });
+
+            boletosList.appendChild(fragment);
+          } else {
+            console.error('Formato de respuesta inválido:', data);
+          }
+        })
+        .catch(error => {
+          console.error('Error al cargar los boletos:', error);
+        });
 
       boletosList.appendChild(fragment);
 
@@ -222,21 +233,6 @@
         setTimeout(() => loadingText.classList.remove('visible'), 2000);
       }
     }
-
-    // Manejador del scroll del contenedor
-    function handleScroll() {
-      const {
-        scrollTop,
-        scrollHeight,
-        clientHeight
-      } = boletosContainer;
-      if (scrollHeight - scrollTop - clientHeight < 300) {
-        cargarMasBoletos();
-      }
-    }
-
-    // Agregar el evento de scroll al contenedor
-    boletosContainer.addEventListener('scroll', handleScroll);
 
     // Cargar los primeros boletos
     cargarMasBoletos();

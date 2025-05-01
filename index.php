@@ -44,16 +44,16 @@ if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->procesarCompra();
 }
 
-if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
-    header('Content-Type: application/json');
-    try {
-        $controller = new BoletoController();
-        $controller->obtenerBoletosPaginados();
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-    }
-}
+// if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados')) {
+//     header('Content-Type: application/json');
+//     try {
+//         $controller = new BoletoController();
+//         $controller->obtenerBoletosPaginados();
+//     } catch (Exception $e) {
+//         http_response_code(500);
+//         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+//     }
+// }
 
 if ($request_method === 'GET' && $route === '/inicializarBoletos') {
     (new BoletoController())->inicializarBoletos();
@@ -81,7 +81,6 @@ if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->show();
 }
 
-
 // Validación de sesión
 //if (empty($_SESSION)) {
 //    require_once 'views/auth/login.php';
@@ -94,9 +93,6 @@ if ($request_method === 'POST' && $route === '/procesarCompra') {
 // Enrutamiento principal de la aplicación
 
 switch ($route) {
-
-
-
     case '/':
         require_once 'views/main.php';
         break;
@@ -126,6 +122,10 @@ switch ($route) {
             (new HomeController())->index();
         }
         break;
+    case '/boletos/obtenerBoletos':
+        require_once 'views/sorteo/boletosDisponibility.php';
+        break;
+
 
     case '/sorteo':
         (new BoletoController())->index();
@@ -139,7 +139,6 @@ switch ($route) {
     case '/boletos':
         require_once 'views/administracion/boletos/index.php';
         break;
-
     default:
         require_once 'views/main.php';
         break;
