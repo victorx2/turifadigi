@@ -269,4 +269,69 @@ class BoletoModel
       throw new Exception("Error al obtener boletos: " . $e->getMessage());
     }
   }
+
+  public function show()
+  {
+    try {
+      $sql = "SELECT 
+                cb.id_compra,
+                b.numero_boleto,
+                dp.nombre as cliente,
+                p.metodo as metodo_pago,
+                cb.total,
+                cb.estado,
+                cb.fecha_compra,
+                TIMESTAMPADD(HOUR, 24, cb.fecha_compra) as fecha_limite,
+                p.estado as estado_pago,
+                p.titular,
+                p.referencia
+              FROM compras_boletos cb
+              INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra
+              INNER JOIN boletos b ON dc.id_boleto = b.id_boleto
+              INNER JOIN datos_personales dp ON cb.id_compra = dp.id_compra
+              INNER JOIN pagos p ON cb.id_compra = p.id_compra
+              WHERE cb.estado = 'pendiente'
+              ORDER BY cb.fecha_compra DESC";
+
+      $result = $this->db->consultar($sql, []);
+
+      // Procesar los resultados para agrupar boletos por compra
+      $compras = [];
+      foreach ($result as $row) {
+        $id_compra = $row['id_compra'];
+
+        if (!isset($compras[$id_compra])) {
+          // Primera vez que vemos esta compra
+          $fecha_limite = new \DateTime($row['fecha_limite']);
+          $ahora = new \DateTime();
+          $tiempo_restante = $fecha_limite->diff($ahora);
+
+          $compras[$id_compra] = [
+            'id_compra' => $id_compra,
+            'cliente' => $row['cliente'],
+            'metodo_pago' => $row['metodo_pago'],
+            'total' => $row['total'],
+            'estado' => $row['estado'],
+            'fecha_compra' => $row['fecha_compra'],
+            'tiempo_restante' => [
+              'horas' => $tiempo_restante->h + ($tiempo_restante->days * 24),
+              'minutos' => $tiempo_restante->i,
+              'expirado' => $ahora > $fecha_limite
+            ],
+            'estado_pago' => $row['estado_pago'],
+            'titular' => $row['titular'],
+            'referencia' => $row['referencia'],
+            'boletos' => []
+          ];
+        }
+
+        // Agregar el número de boleto a la compra
+        $compras[$id_compra]['boletos'][] = $row['numero_boleto'];
+      }
+
+      return array_values($compras);
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener los datos de compras: " . $e->getMessage());
+    }
+  }
 }

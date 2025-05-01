@@ -44,8 +44,6 @@ if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->procesarCompra();
 }
 
-
-
 if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
     header('Content-Type: application/json');
     try {
@@ -77,6 +75,12 @@ if ($request_method === 'POST') {
         exit;
     }
 }
+
+
+if ($request_method === 'POST' && $route === '/procesarCompra') {
+    (new BoletoController())->show();
+}
+
 
 // Validación de sesión
 //if (empty($_SESSION)) {
