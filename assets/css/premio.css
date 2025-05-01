@@ -111,7 +111,6 @@
   gap: var(--spacing-sm);
   text-decoration: none;
   margin-top: var(--spacing-sm);
-  color: var(--primary-color);
   transition: color 0.3s ease;
 }
 
