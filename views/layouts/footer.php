@@ -186,7 +186,9 @@
 
 
 <!-- Scripts CDN con fallback -->
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
   if (typeof jQuery === 'undefined') {
     document.write('<script src="vendor/jquery/jquery-3.6.0.min.js"><\/script>')
@@ -200,13 +202,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.0.0/swiper-bundle.min.js"></script>
 
 <script src="vendor/swiper/swiper.min.js"></script>
-<!--
- <script>
-  if (typeof Swiper === 'undefined') {
-    document.write('<script src="<?php echo $_ENV['APP_URL'] . $_ENV['BASE_PATH']; ?>/vendor/swiper/swiper.min.js"><\/script>')
-  }
-</script>
--->
 
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
@@ -238,10 +233,11 @@
 <!-- template js -->
 <script src="assets/js/header.js"></script>
 <script src="assets/js/main.js"></script>
-<!-- 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
--->
 <script src="assets/js/dropdown-search.js"></script>
+<script src="assets/js/tabla_boletos.js"></script>
+<script src="assets/js/dataTables.js"></script>
+<script src="assets/js/dataTables.bootstrap5.js"></script>
+<script src="assets/js/tooltip.js"></script>
 </body>
 
 </html>

@@ -24,16 +24,25 @@ class BoletoController
     require_once 'views/rifa/sorteo.php';
   }
 
+  public function indexAdmin()
+  {
+    try {
+      $data = $this->model->show();
+      $dataJSON = json_encode($data);
+      require_once 'views/administracion/boletos/index.php';
+    } catch (Exception $e) {
+      $_SESSION['mensaje'] = '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
+      require_once 'views/administracion/boletos/index.php';
+    }
+  }
+
   public function procesarCompra()
   {
     header('Content-Type: application/json');
 
     try {
       $data = json_decode(file_get_contents('php://input'), true);
-
       var_dump($data); // Para depuración, eliminar en producción
-
-
       if (json_last_error() !== JSON_ERROR_NONE) {
         throw new Exception('Error en el formato JSON de entrada');
       }
@@ -197,7 +206,7 @@ class BoletoController
       ]);
     }
   }
-  
+
   public function inicializarBoletos()
   {
     header('Content-Type: application/json');
@@ -232,5 +241,17 @@ class BoletoController
         'error' => $e->getMessage()
       ]);
     }
+  }
+
+  public function confirmarPago($id_compra)
+  {
+    try {
+      $this->model->marcarCompraComoPagada($id_compra);
+      $_SESSION['mensaje'] = '<div class="alert alert-success">¡Compra confirmada como pagada!</div>';
+    } catch (Exception $e) {
+      $_SESSION['mensaje'] = '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
+    }
+    header('Location: /TuRifadigi/boletos');
+    exit;
   }
 }

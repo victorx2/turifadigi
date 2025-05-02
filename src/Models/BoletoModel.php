@@ -271,27 +271,27 @@ class BoletoModel
     }
   }
 
- // Método para obtener boletos paginados con mejor rendimiento
- public function obtenerBoletos()
- {
-   try {
-     // Asegurarse de que los boletos estén inicializados
-     $this->inicializarBoletos();
+  // Método para obtener boletos paginados con mejor rendimiento
+  public function obtenerBoletos()
+  {
+    try {
+      // Asegurarse de que los boletos estén inicializados
+      $this->inicializarBoletos();
 
-     // Optimizamos la consulta para mejor rendimiento
-     $sql = "SELECT id_boleto, id_rifa, estado, numero_boleto FROM `boletos` ORDER BY `boletos`.`id_boleto` ASC;";
+      // Optimizamos la consulta para mejor rendimiento
+      $sql = "SELECT id_boleto, id_rifa, estado, numero_boleto FROM `boletos` ORDER BY `boletos`.`id_boleto` ASC;";
 
-     $boletos = $this->db->consultar($sql, []);
+      $boletos = $this->db->consultar($sql, []);
 
-     return [
-       'success' => true,
-       'data' => $boletos,
-       'total' => count($boletos)
-     ];
-   } catch (Exception $e) {
-     throw new Exception("Error al obtener boletos: " . $e->getMessage());
-   }
- }
+      return [
+        'success' => true,
+        'data' => $boletos,
+        'total' => count($boletos)
+      ];
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener boletos: " . $e->getMessage());
+    }
+  }
 
   public function show()
   {
@@ -355,6 +355,21 @@ class BoletoModel
       return array_values($compras);
     } catch (Exception $e) {
       throw new Exception("Error al obtener los datos de compras: " . $e->getMessage());
+    }
+  }
+
+
+
+
+
+  public function marcarCompraComoPagada($id_compra)
+  {
+    try {
+      $sql = "UPDATE compras_boletos SET estado = 'pagado' WHERE id_compra = :id_compra";
+      $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
+      return true;
+    } catch (Exception $e) {
+      throw new Exception("Error al actualizar el estado: " . $e->getMessage());
     }
   }
 }

@@ -1,337 +1,234 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php include_once "views/layouts/header.php"; ?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administración de Boletos - TuRifadigi</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-  <style>
-    .admin-container {
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+<section class="main-slider">
 
-    .header-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+  <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
+                "effect": "fade",
+                "pagination": {
+                "el": "#main-slider-pagination",
+                "type": "bullets",
+                "clickable": true
+                },
+                "navigation": {
+                "nextEl": "#main-slider__swiper-button-next",
+                "prevEl": "#main-slider__swiper-button-prev"
+                },
+                "autoplay": {
+                    "delay": 8000
+                } 
+            }'>
 
-    .filters-section {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
+    <div class="swiper-wrapper">
 
-    .filter-group {
-      flex: 1;
-      min-width: 200px;
-    }
 
-    .filter-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-      color: #333;
-    }
+      <div class="swiper-slide">
 
-    .filter-group select,
-    .filter-group input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
+        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/sorteo.jpg);"></div>
+        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
+        <div class="main-slider__shape-1 float-bob-y">
+          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
+        </div>
+        <div class="main-slider__shape-2 img-bounce">
+          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
+        </div>
 
-    .boletos-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="main-slider__content">
+                <h2 class="main-slider__title">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
+                <p class="main-slider__text">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
+                <div class="main-slider__btn-box">
+                  <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Comenzar ahora</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    .boletos-table th,
-    .boletos-table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
 
-    .boletos-table th {
-      background: #f8f9fa;
-      font-weight: 600;
-    }
+      <div class="swiper-slide">
 
-    .status-badge {
-      padding: 5px 10px;
-      border-radius: 15px;
-      font-size: 0.85em;
-      font-weight: 500;
-    }
+        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-2.jpg);"></div>
+        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shature-bg.png);"></div>
+        <div class="main-slider__shape-1 float-bob-y">
+          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
+        </div>
+        <div class="main-slider__shape-2 img-bounce">
+          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
+        </div>
 
-    .status-pendiente {
-      background: #fff3cd;
-      color: #856404;
-    }
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="main-slider__content">
+                <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
+                <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
+                <div class="main-slider__btn-box">
+                  <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Regístrate gratis</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    .status-pagado {
-      background: #d4edda;
-      color: #155724;
-    }
 
-    .status-cancelado {
-      background: #f8d7da;
-      color: #721c24;
-    }
+      <div class="swiper-slide">
 
-    .action-buttons {
-      display: flex;
-      gap: 8px;
-    }
+        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-3.jpg);"></div>
+        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
+        <div class="main-slider__shape-1 float-bob-y">
+          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
+        </div>
+        <div class="main-slider__shape-2 img-bounce">
+          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
+        </div>
 
-    .btn-action {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: all 0.3s ease;
-    }
-
-    .btn-verificar {
-      background: #28a745;
-      color: white;
-    }
-
-    .btn-cancelar {
-      background: #dc3545;
-      color: white;
-    }
-
-    .btn-verificar:hover {
-      background: #218838;
-    }
-
-    .btn-cancelar:hover {
-      background: #c82333;
-    }
-
-    .timer {
-      font-size: 0.9em;
-      color: #666;
-    }
-
-    .timer.warning {
-      color: #dc3545;
-    }
-
-    .pagination {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .pagination button {
-      padding: 8px 15px;
-      border: 1px solid #ddd;
-      background: white;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .pagination button.active {
-      background: #007bff;
-      color: white;
-      border-color: #007bff;
-    }
-
-    .search-box {
-      position: relative;
-      flex: 1;
-      max-width: 300px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 8px 35px 8px 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    .search-box i {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #666;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="admin-container">
-    <div class="header-section">
-      <h1><i class="fas fa-ticket-alt"></i> Administración de Boletos</h1>
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar boleto...">
-        <i class="fas fa-search"></i>
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="main-slider__content">
+                <h2 class="main-slider__title">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
+                <p class="main-slider__text">Múltiples métodos de pago <br> y transacciones seguras.</p>
+                <div class="main-slider__btn-box">
+                  <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Conoce más</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="filters-section">
-      <div class="filter-group">
-        <label>Estado</label>
-        <select id="estadoFilter">
-          <option value="">Todos</option>
-          <option value="pendiente">Pendiente</option>
-          <option value="pagado">Pagado</option>
-          <option value="cancelado">Cancelado</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Fecha</label>
-        <input type="date" id="fechaFilter">
-      </div>
-      <div class="filter-group">
-        <label>Método de Pago</label>
-        <select id="metodoPagoFilter">
-          <option value="">Todos</option>
-          <option value="zelle">Zelle</option>
-          <option value="paypal">PayPal</option>
-          <option value="banco_venezuela">Banco de Venezuela</option>
-        </select>
-      </div>
+    <div class="swiper-pagination" id="main-slider-pagination"></div>
+  </div>
+</section>
+
+<div class="container-lg">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 mb-4">
+      <h1 style="color: #5497CC;" class=" text-center">Administración de Boletos</h1>
+      <h5 class=" text-center"> <strong>- Gestión de Boletos de Rifa -</strong> </h5>
     </div>
-
-    <table class="boletos-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Número Boleto</th>
-          <th>Cliente</th>
-          <th>Método de Pago</th>
-          <th>Total</th>
-          <th>Estado</th>
-          <th>Tiempo Restante</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="boletosTableBody">
-        <!-- Los datos se cargarán dinámicamente -->
-      </tbody>
-    </table>
-
-    <div class="pagination">
-      <button id="prevPage"><i class="fas fa-chevron-left"></i></button>
-      <button class="active">1</button>
-      <button>2</button>
-      <button>3</button>
-      <button id="nextPage"><i class="fas fa-chevron-right"></i></button>
+    <div class="col-lg-2"></div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 mb-2 d-flex justify-content-center">
     </div>
   </div>
+  <div class="row justify-content-center mb-3">
+    <div class="col-lg-12 table-responsive">
+      <table id="tabla" class="table table-sm table-bordered table-hover mb-0">
+        <thead class="align-middle">
+          <tr>
+            <th class="text-center bg-body-tertiary" width="1%">#</th>
+            <th class="text-center bg-body-tertiary" width="20%">FECHA DE COMPRA</th>
+            <th class="text-center bg-body-tertiary" width="25%">COMPRADOR</th>
+            <th class="text-center bg-body-tertiary" width="20%">BOLETOS</th>
+            <th class="text-center bg-body-tertiary" width="10%">MONTO</th>
+            <th class="text-center bg-body-tertiary" width="10%">ESTADO</th>
+            <th class="text-center bg-body-tertiary" width="14%">ACCIONES</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Inicializar los dropdowns de Semantic UI
-      $('.ui.dropdown').dropdown();
 
-      // Función para cargar los datos
-      function cargarDatos() {
-        fetch('/TuRifadigi/procesarCompra')
-          .then(response => response.json())
-          .then(data => {
-            const tbody = document.getElementById('boletosTableBody');
-            tbody.innerHTML = '';
+<?php include_once "views/layouts/footer.php"; ?>
 
-            data.forEach(compra => {
-              const row = document.createElement('tr');
 
-              // Crear el contenido de la fila
-              const tiempoRestante = compra.tiempo_restante.expirado ?
-                '<span class="timer warning">Expirado</span>' :
-                `<span class="timer">${compra.tiempo_restante.horas}h ${compra.tiempo_restante.minutos}m</span>`;
+<script>
+  // CARGA DE LA TABLA
 
-              row.innerHTML = `
-                <td>${compra.id_compra}</td>
-                <td>${compra.boletos.join(', ')}</td>
-                <td>${compra.cliente}</td>
-                <td>${compra.metodo_pago}</td>
-                <td>${compra.total} BS</td>
-                <td>
-                  <span class="status-badge status-${compra.estado_pago}">
-                    ${compra.estado_pago}
-                  </span>
-                </td>
-                <td>${tiempoRestante}</td>
-                <td class="action-buttons">
-                  <button class="btn-action btn-verificar" onclick="verificarPago(${compra.id_compra})">
-                    <i class="fas fa-check"></i> Verificar
-                  </button>
-                  <button class="btn-action btn-cancelar" onclick="cancelarCompra(${compra.id_compra})">
-                    <i class="fas fa-times"></i> Cancelar
-                  </button>
-                </td>
-              `;
+  let dataD = JSON.parse('<?php echo $dataJSON; ?>');
+  let i = 0;
 
-              tbody.appendChild(row);
-            });
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Error al cargar los datos');
-          });
+  dataD.forEach((elemento, index) => {
+    let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
+    let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
+                        <div data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="${elemento['estado'] === 'Pagado' ? 'Botón Bloqueado' : 'Editar'}">
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm" onclick="pregunta(${elemento['id_compra']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>`;
+    dataD[i]['contador'] = (i + 1);
+    dataD[i]['boletos'] = boletos;
+    dataD[i]['acciones'] = acciones;
+    dataD[i]['estado'] = elemento['estado'] === 'Pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
+    i++;
+  })
+
+  const datos = {
+    'id_tabla': '#tabla',
+    'data': dataD,
+    'columns': [{
+        'data': 'contador',
+        'title': '#',
+        'className': 'text-center'
+      },
+      {
+        'data': 'fecha_compra',
+        'title': 'FECHA DE COMPRA',
+        'className': 'text-center'
+      },
+      {
+        'data': 'cliente',
+        'title': 'COMPRADOR',
+        'className': 'text-center'
+      },
+      {
+        'data': 'boletos',
+        'title': 'BOLETOS',
+        'className': 'text-center'
+      },
+      {
+        'data': 'total',
+        'title': 'MONTO',
+        'className': 'text-center'
+      },
+      {
+        'data': 'estado',
+        'title': 'ESTADO',
+        'className': 'text-center'
+      },
+      {
+        'data': 'acciones',
+        'title': 'ACCIONES',
+        'className': 'text-center'
       }
+    ]
+  };
 
-      // Función para verificar pago
-      window.verificarPago = function(idCompra) {
-        if (confirm('¿Está seguro de verificar este pago?')) {
-          // Aquí irá la lógica para verificar el pago
-          console.log('Verificando pago:', idCompra);
-        }
-      };
+  cargar_tabla_boletos(datos);
 
-      // Función para cancelar compra
-      window.cancelarCompra = function(idCompra) {
-        if (confirm('¿Está seguro de cancelar esta compra?')) {
-          // Aquí irá la lógica para cancelar la compra
-          console.log('Cancelando compra:', idCompra);
-        }
-      };
 
-      // Cargar datos inicialmente
-      cargarDatos();
-
-      // Actualizar datos cada minuto
-      setInterval(cargarDatos, 60000);
-
-      // Eventos de filtrado
-      document.getElementById('estadoFilter').addEventListener('change', cargarDatos);
-      document.getElementById('fechaFilter').addEventListener('change', cargarDatos);
-      document.getElementById('metodoPagoFilter').addEventListener('change', cargarDatos);
-
-      // Búsqueda en tiempo real
-      document.getElementById('searchInput').addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const rows = document.querySelectorAll('#boletosTableBody tr');
-
-        rows.forEach(row => {
-          const text = row.textContent.toLowerCase();
-          row.style.display = text.includes(searchTerm) ? '' : 'none';
-        });
-      });
+  function pregunta(id) {
+    Swal.fire({
+      title: "Pregunta",
+      text: "¿Está seguro de que verifico este código?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Si, estoy seguro!",
+      confirmButtonColor: "#28A745",
+      cancelButtonText: "No, no estoy seguro.",
+      cancelButtonColor: "#d33",
+      reverseButtons: "true"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/TuRifadigi/confirmarBoleto/" + id;
+      }
     });
-  </script>
-</body>
+  }
+</script>
 
-</html>
+<?php if (!empty($_SESSION['mensaje'])) {
+  echo $_SESSION['mensaje'];
+  unset($_SESSION['mensaje']);
+} ?>

@@ -50,7 +50,6 @@ if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->procesarCompra();
 }
 
-<<<<<<< HEAD
 
 
 
@@ -68,18 +67,6 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
 }
-=======
-// if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados')) {
-//     header('Content-Type: application/json');
-//     try {
-//         $controller = new BoletoController();
-//         $controller->obtenerBoletosPaginados();
-//     } catch (Exception $e) {
-//         http_response_code(500);
-//         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-//     }
-// }
->>>>>>> 292bd71d0423c711bd4646945ee0ec749babe3c2
 
 if ($request_method === 'GET' && $route === '/inicializarBoletos') {
     (new BoletoController())->inicializarBoletos();
@@ -106,6 +93,18 @@ if ($request_method === 'GET' && $route === '/inicializarBoletos') {
 if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->show();
 }
+
+if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
+    $id = intval(substr($route, strlen('/confirmarBoleto/')));
+    (new BoletoController())->confirmarPago($id);
+    exit;
+}
+
+//if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
+//    $id = intval(substr($route, strlen('/confirmarBoleto/')));
+//    (new BoletoController())->verificarDisponibilidad($id);
+//    exit;
+//}
 
 // Validación de sesión
 //if (empty($_SESSION)) {
@@ -161,10 +160,15 @@ switch ($route) {
         require_once 'views/admin/rifa_config.php';
         break;
 
+    //case '/boletos':
+    //    require_once 'views/administracion/show.php';
+    //    break;
 
     case '/boletos':
-        require_once 'views/administracion/boletos/index.php';
+        (new BoletoController())->indexAdmin();
         break;
+
+
     default:
         require_once 'views/main.php';
         break;
