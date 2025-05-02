@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
   <!-- Lista de boletos -->
-  
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script>
@@ -61,7 +61,7 @@
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
-  
+
   <link rel="stylesheet" href="assets/css/dropdown-search.css">
 </head>
 
@@ -139,10 +139,14 @@
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
-                        <li><a href="/TuRifadigi/rifa_config">El lado del admin</a></li>
+                        <li>
+                          <a href="/TuRifadigi/rifa_config">El lado del admin</a>
+                        </li>
                         <li class="dropdown">
                           <a href="/TuRifadigi/boletos">Vista de boletos</a>
-
+                        </li>
+                        <li class="dropdown">
+                          <a href="/TuRifadigi/main_config">Editar el main</a>
                         </li>
                       </ul>
                     </li>
@@ -166,7 +170,7 @@
                       <a href="/TuRifadigi/sorteo">SORTEOS
                         <span class="main-menu-border"></span>
                       </a>
-               
+
                     </li>
                     <li>
                       <a href="/TuRifadigi/login">Iniciar Sesión

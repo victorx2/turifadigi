@@ -4,7 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Importa las clases necesarias
 use Dotenv\Dotenv; // Para manejar variables de entorno
-use App\Controllers\{AuthController, RegisterUserController, HomeController, RaffleConfigController, BoletoController}; // Controladores principales
+use App\Controllers\{AuthController, RegisterUserController, HomeController, RaffleConfigController, BoletoController, ConfigMainController}; // Controladores principales
 //use App\Controllers\BoletoController;
 
 // Inicia la sesión para manejar la autenticación del usuario
@@ -92,6 +92,24 @@ if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
     exit;
 }
 
+if ($request_method === 'GET' && $route === '/cuentas_pago/listar') {
+    (new ConfigMainController())->listar();
+    exit;
+}
+if ($request_method === 'POST' && $route === '/cuentas_pago/guardar') {
+    (new ConfigMainController())->guardar();
+    exit;
+}
+if ($request_method === 'POST' && $route === '/cuentas_pago/eliminar') {
+    (new ConfigMainController())->eliminar();
+    exit;
+}
+
+/* if ($request_method === 'GET' && $route === '/main_config') { */
+/*     (new ConfigMainController())->index(); */
+/*     exit; */
+/* } */
+
 //if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
 //    $id = intval(substr($route, strlen('/confirmarBoleto/')));
 //    (new BoletoController())->verificarDisponibilidad($id);
@@ -162,6 +180,9 @@ switch ($route) {
         (new BoletoController())->indexAdmin();
         break;
 
+    case '/main_config':
+        (new ConfigMainController())->index();
+        break;
 
     default:
         require_once 'views/main.php';
