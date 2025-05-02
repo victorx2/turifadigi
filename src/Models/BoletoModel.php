@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Config\Conexion;
 use Exception;
 use PDO;
+use PhpOption\None;
 
 class BoletoModel
 {
@@ -269,6 +270,28 @@ class BoletoModel
       throw new Exception("Error al obtener boletos: " . $e->getMessage());
     }
   }
+
+ // Método para obtener boletos paginados con mejor rendimiento
+ public function obtenerBoletos()
+ {
+   try {
+     // Asegurarse de que los boletos estén inicializados
+     $this->inicializarBoletos();
+
+     // Optimizamos la consulta para mejor rendimiento
+     $sql = "SELECT id_boleto, id_rifa, estado, numero_boleto FROM `boletos` ORDER BY `boletos`.`id_boleto` ASC;";
+
+     $boletos = $this->db->consultar($sql, []);
+
+     return [
+       'success' => true,
+       'data' => $boletos,
+       'total' => count($boletos)
+     ];
+   } catch (Exception $e) {
+     throw new Exception("Error al obtener boletos: " . $e->getMessage());
+   }
+ }
 
   public function show()
   {

@@ -30,7 +30,7 @@
       <div class="boletos-grid" id="boletosList">
         <!-- Los boletos se generarán dinámicamente aquí -->
       </div>
-      <div class="loading-text">Cargando más boletos...</div>
+      <div class="loading-text" style="display: block;">Cargando boletos...</div>
     </div>
 
     <div class="seleccionados-container" style="display: none;">
@@ -183,60 +183,77 @@
         timeout = setTimeout(later, wait);
       };
     }
+    //SECCION ANIMACION DE CARGA************
+    // Función para mostrar el texto de carga 
+    let dotCount = 0;
+
+    function animateLoadingText() {
+      let dots = '';
+      dotCount = (dotCount % 3) + 1; // Ciclo de 1 a 3
+
+      for (let i = 0; i < dotCount; i++) {
+        dots += '.';
+      }
+
+      loadingText.textContent = 'Cargando boletos' + dots;
+    }
+    // puedes iniciar o detener el intervalo según sea necesario.
+    // Por ejemplo, para iniciar cuando se muestra:
+    function mostrarCargando() {
+      loadingText.style.display = 'block';
+      if (!window.loadingInterval) { // Verifica si el intervalo ya existe
+        window.loadingInterval = setInterval(animateLoadingText, 500);
+      }
+    }
+
+    // Y para detener cuando la carga finaliza y ocultar:
+    function ocultarCargando() {
+      loadingText.style.display = 'none';
+      clearInterval(window.loadingInterval);
+      window.loadingInterval = null; // Limpia la variable del intervalo
+    }
+    //FINAL DE SECCION ANIMACION DE CARGA************
 
     // Función para cargar más boletos
     async function cargarMasBoletos() {
-      if (cargandoBoletos || todosLosBoletos.length >= totalBoletos) return;
-
-      cargandoBoletos = true;
-      loadingText.classList.add('visible');
-
-      const inicio = todosLosBoletos.length + 1;
-      const fin = Math.min(inicio + boletosPorPagina - 1, totalBoletos);
-
       const fragment = document.createDocumentFragment();
-      for (let i = inicio; i <= fin; i++) {
-        const numero = i.toString().padStart(4, '0');
-        const boleto = document.createElement('div');
-        boleto.className = 'boleto';
-        boleto.textContent = numero;
-        boleto.dataset.numero = numero;
-        boleto.onclick = function() {
-          toggleBoleto(this, numero);
-        };
-        fragment.appendChild(boleto);
-        todosLosBoletos.push(boleto);
-      }
 
-      boletosList.appendChild(fragment);
+      mostrarCargando(); // Mostrar el texto de carga
 
-      setTimeout(() => {
-        cargandoBoletos = false;
-        loadingText.classList.remove('visible');
-      }, 300);
+      fetch('./boletos/obtenerBoletos') // Petición al backend
+        .then(response => response.json())
+        .then(data => {
+          if (data && Array.isArray(data['data'])) {
+            const boletos = data['data'];
+            boletos.forEach(boleto => {
+              const nuevoBoleto = document.createElement('div');
 
-      // Mostrar mensaje cuando se hayan cargado todos los boletos
-      if (todosLosBoletos.length >= totalBoletos) {
-        loadingText.textContent = 'Has llegado al final de la lista';
-        loadingText.classList.add('visible');
-        setTimeout(() => loadingText.classList.remove('visible'), 2000);
-      }
+              if (boleto.estado == "reservado") {
+                nuevoBoleto.classList.add('boleto', 'disabled');
+              } else {
+                nuevoBoleto.className = 'boleto';
+                nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero_boleto);
+              }
+              nuevoBoleto.dataset.numero = boleto.numero_boleto;
+              nuevoBoleto.textContent = boleto.numero_boleto;
+              fragment.appendChild(nuevoBoleto);
+              todosLosBoletos.push(nuevoBoleto);
+            });
+
+            boletosList.appendChild(fragment);
+          } else {
+            console.error('Formato de respuesta inválido:', data);
+          }
+        })
+        .catch(error => {
+          console.error('Error al cargar los boletos:', error);
+        })
+        .finally(marc => {
+          boletosList.appendChild(fragment);
+          cargandoBoletos = false;
+          ocultarCargando(); // Ocultar el texto de carga
+        });
     }
-
-    // Manejador del scroll del contenedor
-    function handleScroll() {
-      const {
-        scrollTop,
-        scrollHeight,
-        clientHeight
-      } = boletosContainer;
-      if (scrollHeight - scrollTop - clientHeight < 300) {
-        cargarMasBoletos();
-      }
-    }
-
-    // Agregar el evento de scroll al contenedor
-    boletosContainer.addEventListener('scroll', handleScroll);
 
     // Cargar los primeros boletos
     cargarMasBoletos();
@@ -419,8 +436,9 @@
 
     // Actualizar el contador de boletos
     function actualizarContador() {
-      const contador = document.querySelector('.contador');
+      const contador = document.getElementsByClassName('.contador');
       contador.textContent = `${boletosSeleccionados.size} de ${cantidadSeleccion}`;
+      console.log('Contador actualizado:', contador.textContent);
     }
 
     // Verificar disponibilidad de boletos seleccionados

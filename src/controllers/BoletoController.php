@@ -31,6 +31,9 @@ class BoletoController
     try {
       $data = json_decode(file_get_contents('php://input'), true);
 
+      var_dump($data); // Para depuración, eliminar en producción
+
+
       if (json_last_error() !== JSON_ERROR_NONE) {
         throw new Exception('Error en el formato JSON de entrada');
       }
@@ -172,6 +175,29 @@ class BoletoController
     }
   }
 
+  public function obtenerBoletos()
+  {
+    header('Content-Type: application/json');
+    header('Cache-Control: no-cache, must-revalidate');
+
+    try {
+
+      $boletos = $this->model->obtenerBoletos();
+
+      echo json_encode([
+        'success' => true,
+        'data' => $boletos['data'],
+        'total' => $boletos['total'],
+      ]);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
+  
   public function inicializarBoletos()
   {
     header('Content-Type: application/json');
