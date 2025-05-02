@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Models\ConfigMain;
+use Exception;
+
+class ConfigMainController
+{
+  private $model;
+
+  public function __construct()
+  {
+    $this->model = new ConfigMain();
+  }
+
+  public function index()
+  {
+    require_once 'views/admin/main.config.php';
+  }
+  public function listar()
+  {
+    $cuentas = $this->model->getAllCuentas();
+    header('Content-Type: application/json');
+    echo json_encode($cuentas);
+  }
+
+  public function guardar()
+  {
+    try {
+      $data = [
+        'nombre' => $_POST['nombre'] ?? '',
+        'tipo' => $_POST['tipo'] ?? '',
+        'correo' => $_POST['correo'] ?? null,
+        'usuario' => $_POST['usuario'] ?? null,
+        'telefono' => $_POST['telefono'] ?? null,
+        'cedula' => $_POST['cedula'] ?? null,
+        'imagen' => null
+      ];
+
+      // Manejo de imagen
+      if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+        $nombreImg = uniqid() . '_' . $_FILES['imagen']['name'];
+        $rutaDestino = 'assets/img/backgrounds/' . $nombreImg;
+
+        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
+          $data['imagen'] = $rutaDestino;
+        }
+      }
+
+      if (!empty($_POST['id'])) {
+        $this->model->updateCuenta($_POST['id'], $data);
+        $mensaje = 'Cuenta actualizada exitosamente';
+      } else {
+        $this->model->addCuenta($data);
+        $mensaje = 'Cuenta agregada exitosamente';
+      }
+
+      echo json_encode([
+        'success' => true,
+        'mensaje' => $mensaje
+      ]);
+    } catch (Exception $e) {
+      echo json_encode([
+        'success' => false,
+        'mensaje' => 'Error al procesar la solicitud: ' . $e->getMessage()
+      ]);
+    }
+  }
+
+  public function eliminar()
+  {
+    $id = $_POST['id'] ?? 0;
+    $this->model->deleteCuenta($id);
+    echo json_encode(['success' => true]);
+  }
+}
