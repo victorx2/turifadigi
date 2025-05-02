@@ -641,7 +641,6 @@
           //   return;
           // }
 
-          alert('¡Compra procesada correctamente!');
 
           generarEnlaceWhatsApp({
             nombre: formData.nombre,
@@ -649,9 +648,10 @@
             telefono: formData.telefono
           }, boletosCargar);
 
-          setTimeout(() => {
+          alert('¡Compra procesada correctamente!');
+
           window.location.reload();
-          }, 200); // Redirigir después de 2 segundos
+
         } else {
           alert(dataCompra.rroer || 'Error al procesar la compra');
         }
