@@ -40,22 +40,9 @@ if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
 
-
-
-
-
-
-
 if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->procesarCompra();
 }
-
-
-
-
-
-
-
 
 if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
     header('Content-Type: application/json');
@@ -89,9 +76,14 @@ if ($request_method === 'GET' && $route === '/inicializarBoletos') {
 //    }
 //}
 
-
 if ($request_method === 'POST' && $route === '/procesarCompra') {
     (new BoletoController())->show();
+}
+
+if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
+    $id = intval(substr($route, strlen('/confirmarBoleto/')));
+    (new BoletoController())->confirmarPago($id);
+    exit;
 }
 
 if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
