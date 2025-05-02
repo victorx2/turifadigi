@@ -71,8 +71,37 @@
 <link rel="stylesheet" href="assets/css/buscar_boletos.css">
 <link rel="stylesheet" href="assets/css/datos_personales.css">
 
-<div class="loading">Cargando boletos...</div>
+<!-- // Este script genera un enlace de WhatsApp con los datos del cliente y los boletos comprados] -->
+<script>
+  function generarEnlaceWhatsApp(data, ticketsComprados) {
 
+    const nombre = data.nombre; // Reemplaza con el nombre del cliente
+    const cedula = data.cedula; // Reemplaza con la cédula del cliente   
+    const celular = data.telefono; // Reemplaza con el número de celular del cliente
+    const numeroTelefono = "14077329524"; // Numero de la empresa en WhatsApp
+    const listaTickets = ticketsComprados.join(', '); // Convierte el array de tickets en una cadena separada por comas
+
+    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets} en la rifa "¡SUPER GANA!".\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 120 horas para realizarlo. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCedula: ${cedula}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODO CON TURIFADIGITAL!`;
+
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const enlaceWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeCodificado}`;
+
+    // Crear un elemento <a> dinámicamente
+    const enlace = document.createElement('a');
+    enlace.href = enlaceWhatsApp;
+    enlace.target = '_blank'; // Abre el enlace en una nueva pestaña
+    enlace.style.display = 'none'; // Oculta el enlace
+
+    // Agregar el enlace al body
+    document.body.appendChild(enlace);
+
+    // Simular un clic en el enlace
+    enlace.click();
+
+    // Eliminar el enlace del DOM (opcional, pero buena práctica)
+    document.body.removeChild(enlace);
+  }
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Configuración global para Semantic UI Transitions
@@ -572,11 +601,12 @@
 
       const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
       const totalBS = totalUSD * tasaUSD;
+      const boletosCargar = Array.from(boletosSeleccionados)
 
       try {
         // Preparar datos de la compra
         const datosCompra = {
-          boletos: Array.from(boletosSeleccionados),
+          boletos: boletosCargar,
           ...formData,
           total: totalBS
         };
@@ -592,29 +622,38 @@
         const dataCompra = await responseCompra.json();
 
         if (dataCompra.success) {
-          // Verificar disponibilidad después de procesar la compra
-          const responseVerificacion = await fetch('/TuRifadigi/verificarDisponibilidad', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              boletos: Array.from(boletosSeleccionados)
-            })
-          });
+          // // Verificar disponibilidad ANTES de procesar la compra
+          // const responseVerificacion = await fetch('/TuRifadigi/verificarDisponibilidad', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json'
+          //   },
+          //   body: JSON.stringify({
+          //     boletos: Array.from(boletosSeleccionados)
+          //   })
+          // });
 
-          const dataVerificacion = await responseVerificacion.json();
-          const boletosNoDisponibles = dataVerificacion.disponibles.filter(b => !b.disponible).map(b => b.numero);
+          // const dataVerificacion = await responseVerificacion.json();
+          // const boletosNoDisponibles = dataVerificacion.disponibles.filter(b => !b.disponible).map(b => b.numero);
 
-          if (boletosNoDisponibles.length > 0) {
-            alert(`Los siguientes boletos ya no están disponibles: ${boletosNoDisponibles.join(', ')}`);
-            return;
-          }
+          // if (boletosNoDisponibles.length > 0) {
+          //   alert(`Los siguientes boletos ya no están disponibles: ${boletosNoDisponibles.join(', ')}`);
+          //   return;
+          // }
 
           alert('¡Compra procesada correctamente!');
+
+          generarEnlaceWhatsApp({
+            nombre: formData.nombre,
+            cedula: formData.cedula,
+            telefono: formData.telefono
+          }, boletosCargar);
+
+          setTimeout(() => {
           window.location.reload();
+          }, 200); // Redirigir después de 2 segundos
         } else {
-          alert(dataCompra.error || 'Error al procesar la compra');
+          alert(dataCompra.rroer || 'Error al procesar la compra');
         }
       } catch (error) {
         console.error('Error:', error);

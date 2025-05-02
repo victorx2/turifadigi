@@ -55,9 +55,9 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
     }
 }
 
-if ($request_method === 'GET' && $route === '/inicializarBoletos') {
-    (new BoletoController())->inicializarBoletos();
-}
+// if ($request_method === 'GET' && $route === '/inicializarBoletos') {
+//     (new BoletoController())->inicializarBoletos();
+// }
 
 // Manejo de solicitudes POST
 //if ($request_method === 'POST') {
@@ -76,9 +76,9 @@ if ($request_method === 'GET' && $route === '/inicializarBoletos') {
 //    }
 //}
 
-if ($request_method === 'POST' && $route === '/procesarCompra') {
-    (new BoletoController())->show();
-}
+// if ($request_method === 'POST' && $route === '/procesarCompra') {
+//     (new BoletoController())->show();
+// }
 
 if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
     $id = intval(substr($route, strlen('/confirmarBoleto/')));
@@ -143,7 +143,9 @@ switch ($route) {
         require_once 'views/sorteo/boletosDisponibility.php';
         break;
 
+    case '/procesarCompra':
 
+        break;
     case '/sorteo':
         (new BoletoController())->index();
         break;
