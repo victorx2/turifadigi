@@ -80,6 +80,11 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
 //     (new BoletoController())->show();
 // }
 
+if ($request_method === 'POST' && $route === '/registro_usuario') {
+    (new RegisterUserController())->insert();
+    exit;
+}
+
 if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
     $id = intval(substr($route, strlen('/confirmarBoleto/')));
     (new BoletoController())->confirmarPago($id);

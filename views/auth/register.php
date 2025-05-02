@@ -3,7 +3,7 @@
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
   </div>
-  
+
   <div class="container">
     <div class="row">
       <div class="col-xl-8">
@@ -21,7 +21,27 @@
             <div class="row">
               <div class="col-xl-6 col-lg-6">
                 <div class="contact-two__input-box">
-                  <input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Nombre del usuario" title="El nombre del usuario es requerido" required>
+                  <input type="text" name="nombre" id="nombre" placeholder="Nombre" title="El nombre es requerido" required>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6">
+                <div class="contact-two__input-box">
+                  <input type="text" name="apellido" id="apellido" placeholder="Apellido" title="El apellido es requerido" required>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6">
+                <div class="contact-two__input-box">
+                  <input type="text" name="cedula" id="cedula" placeholder="Cédula" title="La cédula es requerida" required>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6">
+                <div class="contact-two__input-box">
+                  <input type="text" name="ubicacion" id="ubicacion" placeholder="Ubicación" title="La ubicación es requerida" required>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6">
+                <div class="contact-two__input-box">
+                  <input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Nombre de usuario" title="El nombre de usuario es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -38,6 +58,16 @@
                     pattern="[0-9]{20}"
                     maxlength="20"
                     title="El número de teléfono es requerido"
+                    required>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6">
+                <div class="contact-two__input-box">
+                  <input type="email"
+                    name="correo_usuario"
+                    id="correo_usuario"
+                    placeholder="Correo electrónico"
+                    title="El correo electrónico es requerido"
                     required>
                 </div>
               </div>
@@ -97,13 +127,17 @@
 
 
 <script>
-  
+  let nombre = document.getElementById('nombre');
+  let apellido = document.getElementById('apellido');
+  let cedula = document.getElementById('cedula');
+  let ubicacion = document.getElementById('ubicacion');
   let nombre_usuario = document.getElementById('nombre_usuario');
   let clave_usuario = document.getElementById('clave_usuario');
   let telefono_usuario = document.getElementById('telefono_usuario');
+  let correo_usuario = document.getElementById('correo_usuario');
 
   // Prevenir espacios en todos los campos
-  [nombre_usuario, clave_usuario, telefono_usuario].forEach(input => {
+  [nombre, apellido, cedula, ubicacion, nombre_usuario, clave_usuario, telefono_usuario, correo_usuario].forEach(input => {
     // Prevenir que se escriban espacios con la barra espaciadora
     input.addEventListener('keydown', function(e) {
       if (e.key === ' ') {
@@ -124,6 +158,62 @@
     // Limpiar espacios si se intentan agregar de otra forma
     input.addEventListener('input', function() {
       this.value = this.value.replace(/\s/g, ''); // Elimina todos los espacios
+    });
+  });
+
+  // Validación para los nuevos campos
+  nombre.addEventListener('input', function() {
+    if (this.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo nombre se encuentra vacío');
+      this.style.border = "2px solid red";
+      this.focus();
+    } else {
+      this.style.border = "2px solid #4a90e2";
+    }
+  });
+
+  apellido.addEventListener('input', function() {
+    if (this.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo apellido se encuentra vacío');
+      this.style.border = "2px solid red";
+      this.focus();
+    } else {
+      this.style.border = "2px solid #4a90e2";
+    }
+  });
+
+  cedula.addEventListener('input', function() {
+    if (this.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo cédula se encuentra vacío');
+      this.style.border = "2px solid red";
+      this.focus();
+    } else {
+      this.style.border = "2px solid #4a90e2";
+    }
+  });
+
+  ubicacion.addEventListener('input', function() {
+    if (this.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo ubicación se encuentra vacío');
+      this.style.border = "2px solid red";
+      this.focus();
+    } else {
+      this.style.border = "2px solid #4a90e2";
+    }
+  });
+
+  // Funciones focus y blur para los nuevos campos
+  [nombre, apellido, cedula, ubicacion].forEach(campo => {
+    campo.addEventListener('focus', function() {
+      if (this.value.trim() !== '') {
+        this.style.border = "2px solid #4a90e2";
+      }
+    });
+
+    campo.addEventListener('blur', function() {
+      if (this.value.trim() !== '') {
+        this.style.border = "";
+      }
     });
   });
 
@@ -202,11 +292,70 @@
     }
   });
 
+  // Validación para correo electrónico
+  correo_usuario.addEventListener('input', function() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (this.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo correo electrónico se encuentra vacío');
+      this.style.border = "2px solid red";
+      this.focus();
+    } else if (!emailRegex.test(this.value.trim())) {
+      showToast('warning', 'Formato inválido', 'El formato del correo electrónico no es válido');
+      this.style.border = "2px solid red";
+      this.focus();
+    } else {
+      this.style.border = "2px solid #4a90e2";
+    }
+  });
+
+  // Funciones focus y blur para correo
+  correo_usuario.addEventListener('focus', function() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (this.value.trim() !== '' && emailRegex.test(this.value.trim())) {
+      this.style.border = "2px solid #4a90e2";
+    }
+  });
+
+  correo_usuario.addEventListener('blur', function() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (this.value.trim() !== '' && emailRegex.test(this.value.trim())) {
+      this.style.border = "";
+    }
+  });
+
   // Manejo del envío del formulario
   document.getElementById('form-registro').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita el envío normal del formulario
 
     // Validaciones finales antes de enviar
+    if (nombre.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo nombre se encuentra vacío');
+      nombre.style.border = "2px solid red";
+      nombre.focus();
+      return;
+    }
+
+    if (apellido.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo apellido se encuentra vacío');
+      apellido.style.border = "2px solid red";
+      apellido.focus();
+      return;
+    }
+
+    if (cedula.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo cédula se encuentra vacío');
+      cedula.style.border = "2px solid red";
+      cedula.focus();
+      return;
+    }
+
+    if (ubicacion.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo ubicación se encuentra vacío');
+      ubicacion.style.border = "2px solid red";
+      ubicacion.focus();
+      return;
+    }
+
     if (nombre_usuario.value.trim() === '' || nombre_usuario.value.length < 3) {
       showToast('warning', 'Campo vacío', 'El campo nombre de usuario se encuentra vacío y debe tener al menos 3 caracteres');
       nombre_usuario.style.border = "2px solid red";
@@ -225,6 +374,19 @@
       showToast('warning', 'Campo vacío', 'El campo teléfono se encuentra vacío');
       telefono_usuario.style.border = "2px solid red";
       telefono_usuario.focus();
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (correo_usuario.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El campo correo electrónico se encuentra vacío');
+      correo_usuario.style.border = "2px solid red";
+      correo_usuario.focus();
+      return;
+    } else if (!emailRegex.test(correo_usuario.value.trim())) {
+      showToast('warning', 'Formato inválido', 'El formato del correo electrónico no es válido');
+      correo_usuario.style.border = "2px solid red";
+      correo_usuario.focus();
       return;
     }
 

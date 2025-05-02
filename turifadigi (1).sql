@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2025 a las 20:43:24
+-- Tiempo de generación: 02-05-2025 a las 23:51:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -51,25 +51,25 @@ INSERT INTO `boletos` (`id_boleto`, `id_rifa`, `numero_boleto`, `estado`, `id_us
 (8, 1, '0008', 'disponible', NULL, '2025-05-01 17:41:30'),
 (9, 1, '0009', 'disponible', NULL, '2025-05-01 17:41:30'),
 (10, 1, '0010', 'disponible', NULL, '2025-05-01 17:41:30'),
-(11, 1, '0011', 'disponible', NULL, '2025-05-01 17:41:30'),
-(12, 1, '0012', 'disponible', NULL, '2025-05-01 17:41:30'),
+(11, 1, '0011', 'reservado', NULL, '2025-05-02 20:13:30'),
+(12, 1, '0012', 'reservado', NULL, '2025-05-02 20:15:06'),
 (13, 1, '0013', 'disponible', NULL, '2025-05-01 17:41:30'),
-(14, 1, '0014', 'disponible', NULL, '2025-05-01 17:41:30'),
-(15, 1, '0015', 'disponible', NULL, '2025-05-01 17:41:30'),
+(14, 1, '0014', 'reservado', NULL, '2025-05-02 20:13:30'),
+(15, 1, '0015', 'reservado', NULL, '2025-05-02 20:15:06'),
 (16, 1, '0016', 'disponible', NULL, '2025-05-01 17:41:30'),
-(17, 1, '0017', 'disponible', NULL, '2025-05-01 17:41:30'),
+(17, 1, '0017', 'reservado', NULL, '2025-05-02 20:13:30'),
 (18, 1, '0018', 'disponible', NULL, '2025-05-01 17:41:30'),
 (19, 1, '0019', 'disponible', NULL, '2025-05-01 17:41:30'),
 (20, 1, '0020', 'disponible', NULL, '2025-05-01 17:41:30'),
 (21, 1, '0021', 'disponible', NULL, '2025-05-01 17:41:30'),
 (22, 1, '0022', 'disponible', NULL, '2025-05-01 17:41:30'),
-(23, 1, '0023', 'disponible', NULL, '2025-05-01 17:41:30'),
+(23, 1, '0023', 'reservado', NULL, '2025-05-02 20:19:56'),
 (24, 1, '0024', 'disponible', NULL, '2025-05-01 17:41:30'),
 (25, 1, '0025', 'disponible', NULL, '2025-05-01 17:41:30'),
-(26, 1, '0026', 'disponible', NULL, '2025-05-01 17:41:30'),
+(26, 1, '0026', 'reservado', NULL, '2025-05-02 20:19:56'),
 (27, 1, '0027', 'disponible', NULL, '2025-05-01 17:41:30'),
 (28, 1, '0028', 'disponible', NULL, '2025-05-01 17:41:30'),
-(29, 1, '0029', 'disponible', NULL, '2025-05-01 17:41:30'),
+(29, 1, '0029', 'reservado', NULL, '2025-05-02 20:19:56'),
 (30, 1, '0030', 'disponible', NULL, '2025-05-01 17:41:30'),
 (31, 1, '0031', 'disponible', NULL, '2025-05-01 17:41:30'),
 (32, 1, '0032', 'disponible', NULL, '2025-05-01 17:41:30'),
@@ -91,7 +91,7 @@ INSERT INTO `boletos` (`id_boleto`, `id_rifa`, `numero_boleto`, `estado`, `id_us
 (48, 1, '0048', 'disponible', NULL, '2025-05-01 17:41:30'),
 (49, 1, '0049', 'disponible', NULL, '2025-05-01 17:41:30'),
 (50, 1, '0050', 'disponible', NULL, '2025-05-01 17:41:30'),
-(51, 1, '0051', 'disponible', NULL, '2025-05-01 17:41:30'),
+(51, 1, '0051', 'reservado', NULL, '2025-05-02 20:11:57'),
 (52, 1, '0052', 'disponible', NULL, '2025-05-01 17:41:30'),
 (53, 1, '0053', 'disponible', NULL, '2025-05-01 17:41:30'),
 (54, 1, '0054', 'disponible', NULL, '2025-05-01 17:41:30'),
@@ -104,8 +104,8 @@ INSERT INTO `boletos` (`id_boleto`, `id_rifa`, `numero_boleto`, `estado`, `id_us
 (61, 1, '0061', 'disponible', NULL, '2025-05-01 17:41:30'),
 (62, 1, '0062', 'disponible', NULL, '2025-05-01 17:41:30'),
 (63, 1, '0063', 'disponible', NULL, '2025-05-01 17:41:30'),
-(64, 1, '0064', 'disponible', NULL, '2025-05-01 17:41:30'),
-(65, 1, '0065', 'disponible', NULL, '2025-05-01 17:41:30'),
+(64, 1, '0064', 'reservado', NULL, '2025-05-02 20:11:57'),
+(65, 1, '0065', 'reservado', NULL, '2025-05-02 20:11:57'),
 (66, 1, '0066', 'disponible', NULL, '2025-05-01 17:41:30'),
 (67, 1, '0067', 'disponible', NULL, '2025-05-01 17:41:30'),
 (68, 1, '0068', 'disponible', NULL, '2025-05-01 17:41:30'),
@@ -136,7 +136,7 @@ INSERT INTO `boletos` (`id_boleto`, `id_rifa`, `numero_boleto`, `estado`, `id_us
 (93, 1, '0093', 'disponible', NULL, '2025-05-01 17:41:30'),
 (94, 1, '0094', 'disponible', NULL, '2025-05-01 17:41:30'),
 (95, 1, '0095', 'disponible', NULL, '2025-05-01 17:41:30'),
-(96, 1, '0096', 'disponible', NULL, '2025-05-01 17:41:30'),
+(96, 1, '0096', 'reservado', NULL, '2025-05-02 20:10:16'),
 (97, 1, '0097', 'disponible', NULL, '2025-05-01 17:41:30'),
 (98, 1, '0098', 'disponible', NULL, '2025-05-01 17:41:30'),
 (99, 1, '0099', 'disponible', NULL, '2025-05-01 17:41:30'),
@@ -152,7 +152,7 @@ INSERT INTO `boletos` (`id_boleto`, `id_rifa`, `numero_boleto`, `estado`, `id_us
 (109, 1, '0109', 'disponible', NULL, '2025-05-01 17:41:30'),
 (110, 1, '0110', 'disponible', NULL, '2025-05-01 17:41:30'),
 (111, 1, '0111', 'disponible', NULL, '2025-05-01 17:41:30'),
-(112, 1, '0112', 'disponible', NULL, '2025-05-01 17:41:30'),
+(112, 1, '0112', 'reservado', NULL, '2025-05-02 20:10:16'),
 (113, 1, '0113', 'disponible', NULL, '2025-05-01 17:41:30'),
 (114, 1, '0114', 'disponible', NULL, '2025-05-01 17:41:30'),
 (115, 1, '0115', 'disponible', NULL, '2025-05-01 17:41:30'),
@@ -10076,7 +10076,12 @@ INSERT INTO `compras_boletos` (`id_compra`, `id_rifa`, `fecha_compra`, `estado`,
 (2, 1, '2025-05-02 00:24:34', 'pendiente', 637.86),
 (3, 1, '2025-05-02 00:25:38', 'pendiente', 1275.72),
 (4, 1, '2025-05-02 12:21:20', 'pendiente', 637.86),
-(5, 1, '2025-05-02 12:24:17', 'pendiente', 637.86);
+(5, 1, '2025-05-02 12:24:17', 'pendiente', 637.86),
+(6, 1, '2025-05-02 20:10:16', 'pendiente', 637.86),
+(7, 1, '2025-05-02 20:11:57', 'pendiente', 956.79),
+(8, 1, '2025-05-02 20:13:30', 'pendiente', 956.79),
+(9, 1, '2025-05-02 20:15:06', 'pendiente', 637.86),
+(10, 1, '2025-05-02 20:19:56', 'pendiente', 956.79);
 
 -- --------------------------------------------------------
 
@@ -10161,7 +10166,29 @@ INSERT INTO `datos_personales` (`id_datos`, `id_compra`, `nombre`, `cedula`, `te
 (2, 2, 'dsfd', '43543', '3454355', 'AM', '2025-05-02 00:24:34'),
 (3, 3, 'dsfd', '43543', '3454355', 'AM', '2025-05-02 00:25:38'),
 (4, 4, 'Victorino', '04124578781', '3243432', 'AM', '2025-05-02 12:21:20'),
-(5, 5, 'Victor', '4353543', '4353545', 'AR', '2025-05-02 12:24:17');
+(5, 5, 'Victor', '4353543', '4353545', 'AR', '2025-05-02 12:24:17'),
+(6, 6, 'dfsdfds', '43534', '35435', 'AP', '2025-05-02 20:10:16'),
+(7, 7, 'DFSDFS', '435353454', '2343224', 'AR', '2025-05-02 20:11:57'),
+(8, 8, 'Vff', '33443', '511588585', 'AM', '2025-05-02 20:13:30'),
+(9, 9, 'Zjzzj', '24423', '1646688', 'AR', '2025-05-02 20:15:06'),
+(10, 10, 'Fjfjj', '37733', '23355', 'AN', '2025-05-02 20:19:56');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `datos_personales_usuarios`
+--
+
+CREATE TABLE `datos_personales_usuarios` (
+  `id_datos` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `cedula` varchar(20) NOT NULL,
+  `telefono` varchar(20) NOT NULL,
+  `ubicacion` varchar(100) NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -10193,7 +10220,20 @@ INSERT INTO `detalle_compras` (`id_detalle`, `id_compra`, `id_boleto`, `precio_u
 (10, 4, 5, 318.93),
 (11, 4, 6, 318.93),
 (12, 5, 59, 318.93),
-(13, 5, 58, 318.93);
+(13, 5, 58, 318.93),
+(14, 6, 112, 318.93),
+(15, 6, 96, 318.93),
+(16, 7, 51, 318.93),
+(17, 7, 65, 318.93),
+(18, 7, 64, 318.93),
+(19, 8, 17, 318.93),
+(20, 8, 14, 318.93),
+(21, 8, 11, 318.93),
+(22, 9, 12, 318.93),
+(23, 9, 15, 318.93),
+(24, 10, 29, 318.93),
+(25, 10, 26, 318.93),
+(26, 10, 23, 318.93);
 
 -- --------------------------------------------------------
 
@@ -10221,7 +10261,12 @@ INSERT INTO `pagos` (`id_pago`, `id_compra`, `titular`, `referencia`, `metodo`, 
 (2, 2, 'efsds', '32434', 'paypal', 637.86, '2025-05-02 00:24:34', 'pendiente'),
 (3, 3, 'efsds', '32434', 'paypal', 1275.72, '2025-05-02 00:25:38', 'pendiente'),
 (4, 4, 'afdsdf', '32423', 'zelle', 637.86, '2025-05-02 12:21:20', 'pendiente'),
-(5, 5, 'fddfssdf', '4355', 'paypal', 637.86, '2025-05-02 12:24:17', 'pendiente');
+(5, 5, 'fddfssdf', '4355', 'paypal', 637.86, '2025-05-02 12:24:17', 'pendiente'),
+(6, 6, 'fgfdgf', '423432', 'zelle', 637.86, '2025-05-02 20:10:16', 'pendiente'),
+(7, 7, '2', '3243', 'zelle', 956.79, '2025-05-02 20:11:57', 'pendiente'),
+(8, 8, 'Jddjd', '423r', 'zelle', 956.79, '2025-05-02 20:13:30', 'pendiente'),
+(9, 9, 'Sjjddj', '73e7', 'paypal', 637.86, '2025-05-02 20:15:06', 'pendiente'),
+(10, 10, 'Djdjdj', '3663', 'zelle', 956.79, '2025-05-02 20:19:56', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -10379,6 +10424,13 @@ ALTER TABLE `datos_personales`
   ADD KEY `id_compra` (`id_compra`);
 
 --
+-- Indices de la tabla `datos_personales_usuarios`
+--
+ALTER TABLE `datos_personales_usuarios`
+  ADD PRIMARY KEY (`id_datos`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
 -- Indices de la tabla `detalle_compras`
 --
 ALTER TABLE `detalle_compras`
@@ -10455,7 +10507,7 @@ ALTER TABLE `boletos`
 -- AUTO_INCREMENT de la tabla `compras_boletos`
 --
 ALTER TABLE `compras_boletos`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion_precios`
@@ -10479,19 +10531,25 @@ ALTER TABLE `cuentas_pago`
 -- AUTO_INCREMENT de la tabla `datos_personales`
 --
 ALTER TABLE `datos_personales`
-  MODIFY `id_datos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_datos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `datos_personales_usuarios`
+--
+ALTER TABLE `datos_personales_usuarios`
+  MODIFY `id_datos` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compras`
 --
 ALTER TABLE `detalle_compras`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `premios`
@@ -10545,6 +10603,12 @@ ALTER TABLE `usuarios_roles`
 ALTER TABLE `boletos`
   ADD CONSTRAINT `boletos_ibfk_1` FOREIGN KEY (`id_rifa`) REFERENCES `rifas` (`id_rifa`),
   ADD CONSTRAINT `boletos_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
+
+--
+-- Filtros para la tabla `datos_personales_usuarios`
+--
+ALTER TABLE `datos_personales_usuarios`
+  ADD CONSTRAINT `fk_datos_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

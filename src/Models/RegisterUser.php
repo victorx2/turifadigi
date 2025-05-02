@@ -14,6 +14,7 @@ class RegisterUser
   const COLUMN_NAME = 'nombre_usuario';
   const COLUMN_PASSWORD = 'clave_usuario';
   const COLUMN_PHONE = 'telefono_usuario';
+  const COLUMN_EMAIL = 'correo_usuario';
 
   const STATUS_TABLE = 'usuarios_estados';
   const STATUS_ID = 'id_estatus_estado';
@@ -31,6 +32,13 @@ class RegisterUser
   const AUDIT_DATE = 'fecha_auditoria';
   const AUDIT_TIME = 'hora_auditoria';
 
+  const PERSONAL_DATA_TABLE = 'datos_personales';
+  const PERSONAL_DATA_ID = 'id_datos';
+  const PERSONAL_DATA_NAME = 'nombre';
+  const PERSONAL_DATA_IDENT = 'cedula';
+  const PERSONAL_DATA_PHONE = 'telefono';
+  const PERSONAL_DATA_LOCATION = 'ubicacion';
+
   // Códigos de estado de registro
   const REGISTRATION_SUCCESS = 1;    // Registro exitoso
   const ERROR_USER_EXISTS = 2;       // Usuario ya existe
@@ -43,7 +51,7 @@ class RegisterUser
   const MESSAGE_USER_EXISTS = 'El nombre de usuario ya existe';
   const MESSAGE_PHONE_EXISTS = 'El número de teléfono ya está registrado';
   const MESSAGE_DATABASE_ERROR = 'Error al procesar la solicitud en la base de datos';
-  
+
   const MESSAGE_INVALID_DATA = 'Datos inválidos o incompletos';
 
   // Valores por defecto
@@ -75,12 +83,17 @@ class RegisterUser
    * 3. Inserta o verifica los roles y estatus por defecto
    * 4. Inserta el nuevo usuario
    * 5. Registra la acción en la auditoría
+   * 6. Inserta los datos personales
    */
   public function insert(array $request): int
   {
     try {
       // Validar datos requeridos
-      if (empty($request['nombre_usuario']) || empty($request['clave_usuario']) || empty($request['telefono_usuario'])) {
+      if (
+        empty($request['nombre_usuario']) || empty($request['clave_usuario']) || empty($request['telefono_usuario']) ||
+        empty($request['nombre']) || empty($request['apellido']) || empty($request['cedula']) || empty($request['ubicacion']) ||
+        empty($request['correo_usuario'])
+      ) {
         return self::ERROR_INVALID_DATA;
       }
 
@@ -94,39 +107,64 @@ class RegisterUser
         return self::ERROR_PHONE_EXISTS;
       }
 
-      // 1. Insertar el rol
-      $roleSql = "INSERT INTO usuarios_roles (usuario_rol) VALUES ('Usuario')";
-      $roleId = $this->db->ejecutar($roleSql, []);
+      try {
+        // 1. Insertar el rol
+        $roleSql = "INSERT INTO usuarios_roles (usuario_rol) VALUES ('Usuario')";
+        $roleId = $this->db->ejecutar($roleSql, []);
 
-      // 2. Insertar el estado
-      $statusSql = "INSERT INTO usuarios_estados (usuario_estado, descripcion_estado) 
-                  VALUES ('Activo', 'Usuario activo en el sistema')";
-      $statusId = $this->db->ejecutar($statusSql, []);
+        // 2. Insertar el estado
+        $statusSql = "INSERT INTO usuarios_estados (usuario_estado, descripcion_estado) 
+                    VALUES ('Activo', 'Usuario activo en el sistema')";
+        $statusId = $this->db->ejecutar($statusSql, []);
 
-      // 3. Insertar el usuario
-      $userSql = "INSERT INTO usuarios 
-                (nombre_usuario, clave_usuario, telefono_usuario, id_estatus, id_rol) 
-                VALUES (:nombre_usuario, :clave_usuario, :telefono_usuario, :id_estatus, :id_rol)";
+        // 3. Insertar el usuario
+        $userSql = "INSERT INTO usuarios 
+                  (nombre_usuario, clave_usuario, telefono_usuario, correo_usuario, id_estatus, id_rol) 
+                  VALUES (:nombre_usuario, :clave_usuario, :telefono_usuario, :correo_usuario, :id_estatus, :id_rol)";
 
-      $userId = $this->db->ejecutar($userSql, [
-        ':nombre_usuario' => $request['nombre_usuario'],
-        ':clave_usuario' => $request['clave_usuario'],
-        ':telefono_usuario' => $request['telefono_usuario'],
-        ':id_estatus' => $statusId,
-        ':id_rol' => $roleId
-      ]);
+        $userId = $this->db->ejecutar($userSql, [
+          ':nombre_usuario' => $request['nombre_usuario'],
+          ':clave_usuario' => $request['clave_usuario'],
+          ':telefono_usuario' => $request['telefono_usuario'],
+          ':correo_usuario' => $request['correo_usuario'],
+          ':id_estatus' => $statusId,
+          ':id_rol' => $roleId
+        ]);
 
-      // 4. Insertar en usuarios_auditorias
-      $auditSql = "INSERT INTO usuarios_auditorias 
-                 (id_usuario, acciones_auditoria, fecha_auditoria, hora_auditoria) 
-                 VALUES (:id_usuario, :accion, CURDATE(), CURTIME())";
+        // 4. Insertar en usuarios_auditorias
+        $auditSql = "INSERT INTO usuarios_auditorias 
+                   (id_usuario, acciones_auditoria, fecha_auditoria, hora_auditoria) 
+                   VALUES (:id_usuario, :accion, CURDATE(), CURTIME())";
 
-      $this->db->ejecutar($auditSql, [
-        ':id_usuario' => $userId,
-        ':accion' => 'Registro de nuevo usuario'
-      ]);
+        $this->db->ejecutar($auditSql, [
+          ':id_usuario' => $userId,
+          ':accion' => 'Registro de nuevo usuario'
+        ]);
 
-      return self::REGISTRATION_SUCCESS;
+        // 5. Crear una entrada "compra" ficticia para poder relacionar los datos personales
+        // Como los datos personales tienen un id_compra, necesitamos crear una compra
+        $compraSql = "INSERT INTO compras_boletos (id_rifa, total, fecha, estado) 
+                     VALUES (1, 0, CURDATE(), 'pendiente')";
+        $compraId = $this->db->ejecutar($compraSql, []);
+
+        // 6. Insertar datos personales
+        $nombreCompleto = $request['nombre'] . ' ' . $request['apellido'];
+        $personalDataSql = "INSERT INTO datos_personales 
+                          (id_compra, nombre, cedula, telefono, ubicacion) 
+                          VALUES (:id_compra, :nombre, :cedula, :telefono, :ubicacion)";
+
+        $this->db->ejecutar($personalDataSql, [
+          ':id_compra' => $compraId,
+          ':nombre' => $nombreCompleto,
+          ':cedula' => $request['cedula'],
+          ':telefono' => $request['telefono_usuario'],
+          ':ubicacion' => $request['ubicacion']
+        ]);
+
+        return self::REGISTRATION_SUCCESS;
+      } catch (Exception $e) {
+        throw $e;
+      }
     } catch (Exception $e) {
       error_log("Error en RegisterUser::insert: " . $e->getMessage());
       return self::ERROR_DATABASE;
