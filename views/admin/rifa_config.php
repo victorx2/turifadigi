@@ -3,7 +3,7 @@
 <div class="container py-5">
   <div class="row">
     <div class="col-12">
-      <div class="card">
+      <div class="card" style="margin-top: 120px;">
         <div class="card-header">
           <h3 class="card-title">Configuración de la Rifa</h3>
         </div>

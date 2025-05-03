@@ -125,7 +125,7 @@
         </div>
       </div>
       <nav class="main-menu">
-        <div class="main-menu__wrapper">
+        <div class="main-menu__wrapper" style="background-color: #201f23;">
           <div class="container">
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
@@ -172,8 +172,8 @@
                       </a>
 
                     </li>
-                    <li>
-                      <a href="/TuRifadigi/login">Iniciar Sesión
+                    <li class="dropdown" S>
+                      <a href="/TuRifadigi/register">crear cuenta
                         <span class="main-menu-border"></span>
                       </a>
                     </li>
