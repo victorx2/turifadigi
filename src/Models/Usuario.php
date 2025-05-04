@@ -11,10 +11,10 @@ class Usuario
   const TABLE_NAME = 'usuarios';
   const COLUMN_ID = 'id_usuario';
   const COLUMN_STATUS = 'id_estatus';
-  const COLUMN_NAME = 'nombre_usuario';
-  const COLUMN_PASSWORD = 'clave_usuario';
-  const COLUMN_PHONE = 'telefono_usuario';
-  const COLUMN_EMAIL = 'correo_usuario';
+  const COLUMN_NAME = 'usuario';
+  const COLUMN_PASSWORD = 'password';
+  const COLUMN_PHONE = 'telefono';
+  const COLUMN_EMAIL = 'correo';
   const COLUMN_LAST_ACCESS = 'ultimo_acceso';
   const COLUMN_ATTEMPTS = 'intentos_fallidos';
 
@@ -28,6 +28,7 @@ class Usuario
 
   private $db;
   private $datosPersonales;
+  private $audi;
 
   /**
    * Constructor: Inicializa la conexión a la base de datos y el modelo de datos personales
@@ -35,52 +36,51 @@ class Usuario
   public function __construct()
   {
     $this->db = new Conexion();
+    $this->audi = new Auditoria();
     $this->datosPersonales = new DatosPersonales();
   }
 
   /**
    * Inserta un nuevo usuario en la base de datos
-   * @param array $data - Datos del usuario (nombre_usuario, clave_usuario, telefono_usuario, correo_usuario)
+   * @param array $data - Datos del usuario (usuario, password, telefono, correo)
    * @return int|bool - ID del usuario insertado o false en caso de error
    */
   public function insert(array $data): int|bool
   {
     try {
       // Validar datos requeridos
-      if (
-        empty($data['nombre_usuario']) || empty($data['clave_usuario']) ||
-        empty($data['telefono_usuario']) || empty($data['correo_usuario'])
-      ) {
+      if (empty($data['usuario']) || empty($data['password'])) {
+        error_log("Error en Usuario::insert: Datos requeridos faltantes");
         return false;
       }
 
       // Verificar si el usuario ya existe
-      if ($this->existeUsuario($data['nombre_usuario'])) {
+      if ($this->existeUsuario($data['usuario'])) {
+        error_log("Error en Usuario::insert: El usuario ya existe");
         return false;
       }
 
-      // 1. Insertar el rol (o usar uno existente)
-      $roleId = $this->obtenerOCrearRol('Usuario');
-
-      // 2. Insertar el estado (o usar uno existente)
-      $statusId = $this->obtenerOCrearEstado('Activo', 'Usuario activo en el sistema');
-
-      // 3. Insertar el usuario
+      // Insertar el usuario
       $userSql = "INSERT INTO " . self::TABLE_NAME . " 
-                (nombre_usuario, clave_usuario, telefono_usuario, correo_usuario, id_estatus, id_rol) 
-                VALUES (:nombre_usuario, :clave_usuario, :telefono_usuario, :correo_usuario, :id_estatus, :id_rol)";
+                (usuario, password,correo,nivel,estado) 
+                VALUES (:usuario, :password,:correo,1,1)";
 
       $userId = $this->db->ejecutar($userSql, [
-        ':nombre_usuario' => $data['nombre_usuario'],
-        ':clave_usuario' => $data['clave_usuario'],
-        ':telefono_usuario' => $data['telefono_usuario'],
-        ':correo_usuario' => $data['correo_usuario'],
-        ':id_estatus' => $statusId,
-        ':id_rol' => $roleId
+        ':usuario' => $data['usuario'],
+        ':password' => password_hash($data['password'], PASSWORD_DEFAULT),
+        ':correo' => $data['correo']
       ]);
 
-      // 4. Registrar la acción en auditoría
-      $this->registrarAuditoria($userId, 'Registro de nuevo usuario');
+      $this->audi->store([
+        'ID' => $userId,
+        'acciones' => 'Usuario Registrado',
+        'fecha' => date('Y-m-d'),
+        'hora' => date('H:i:s')
+      ]);
+      if (!$userId) {
+        error_log("Error en Usuario::insert: No se pudo insertar el usuario");
+        return false;
+      }
 
       return $userId;
     } catch (Exception $e) {
@@ -224,25 +224,26 @@ class Usuario
    * @param string $rolName - Nombre del rol
    * @return int - ID del rol
    */
-  private function obtenerOCrearRol(string $rolName): int
-  {
-    try {
-      // Verificar si el rol ya existe
-      $sql = "SELECT " . self::ROLE_ID . " FROM " . self::ROLES_TABLE . " WHERE " . self::ROLE_NAME . " = :role_name";
-      $result = $this->db->consultar($sql, [':role_name' => $rolName]);
 
-      if ($result && count($result) > 0) {
-        return $result[0][self::ROLE_ID];
-      }
+  /* private function obtenerOCrearRol(string $rolName): int */
+  /* { */
+  /*   try { */
+  /*     // Verificar si el rol ya existe */
+  /*     $sql = "SELECT " . self::ROLE_ID . " FROM " . self::ROLES_TABLE . " WHERE " . self::ROLE_NAME . " = :role_name"; */
+  /*     $result = $this->db->consultar($sql, [':role_name' => $rolName]); */
 
-      // Si no existe, crearlo
-      $sql = "INSERT INTO " . self::ROLES_TABLE . " (" . self::ROLE_NAME . ") VALUES (:role_name)";
-      return $this->db->ejecutar($sql, [':role_name' => $rolName]);
-    } catch (Exception $e) {
-      error_log("Error en Usuario::obtenerOCrearRol: " . $e->getMessage());
-      throw $e;
-    }
-  }
+  /*     if ($result && count($result) > 0) { */
+  /*       return $result[0][self::ROLE_ID]; */
+  /*     } */
+
+  /*     // Si no existe, crearlo */
+  /*     $sql = "INSERT INTO " . self::ROLES_TABLE . " (" . self::ROLE_NAME . ") VALUES (:role_name)"; */
+  /*     return $this->db->ejecutar($sql, [':role_name' => $rolName]); */
+  /*   } catch (Exception $e) { */
+  /*     error_log("Error en Usuario::obtenerOCrearRol: " . $e->getMessage()); */
+  /*     throw $e; */
+  /*   } */
+  /* } */
 
   /**
    * Obtiene un estado existente o crea uno nuevo
@@ -250,28 +251,28 @@ class Usuario
    * @param string $descripcion - Descripción del estado
    * @return int - ID del estado
    */
-  private function obtenerOCrearEstado(string $estadoName, string $descripcion): int
-  {
-    try {
-      // Verificar si el estado ya existe
-      $sql = "SELECT " . self::STATUS_ID . " FROM " . self::STATUS_TABLE . " WHERE " . self::STATUS_NAME . " = :status_name";
-      $result = $this->db->consultar($sql, [':status_name' => $estadoName]);
+  /* private function obtenerOCrearEstado(string $estadoName, string $descripcion): int */
+  /* { */
+  /*   try { */
+  /*     // Verificar si el estado ya existe */
+  /*     $sql = "SELECT " . self::STATUS_ID . " FROM " . self::STATUS_TABLE . " WHERE " . self::STATUS_NAME . " = :status_name"; */
+  /*     $result = $this->db->consultar($sql, [':status_name' => $estadoName]); */
 
-      if ($result && count($result) > 0) {
-        return $result[0][self::STATUS_ID];
-      }
+  /*     if ($result && count($result) > 0) { */
+  /*       return $result[0][self::STATUS_ID]; */
+  /*     } */
 
-      // Si no existe, crearlo
-      $sql = "INSERT INTO " . self::STATUS_TABLE . " (" . self::STATUS_NAME . ", descripcion_estado) VALUES (:status_name, :descripcion)";
-      return $this->db->ejecutar($sql, [
-        ':status_name' => $estadoName,
-        ':descripcion' => $descripcion
-      ]);
-    } catch (Exception $e) {
-      error_log("Error en Usuario::obtenerOCrearEstado: " . $e->getMessage());
-      throw $e;
-    }
-  }
+  /*     // Si no existe, crearlo */
+  /*     $sql = "INSERT INTO " . self::STATUS_TABLE . " (" . self::STATUS_NAME . ", descripcion_estado) VALUES (:status_name, :descripcion)"; */
+  /*     return $this->db->ejecutar($sql, [ */
+  /*       ':status_name' => $estadoName, */
+  /*       ':descripcion' => $descripcion */
+  /*     ]); */
+  /*   } catch (Exception $e) { */
+  /*     error_log("Error en Usuario::obtenerOCrearEstado: " . $e->getMessage()); */
+  /*     throw $e; */
+  /*   } */
+  /* } */
 
   /**
    * Registra una acción en la tabla de auditoría
@@ -279,19 +280,19 @@ class Usuario
    * @param string $accion - Descripción de la acción
    * @return int - ID de la auditoría
    */
-  private function registrarAuditoria(int $id_usuario, string $accion): int
-  {
-    try {
-      $sql = "INSERT INTO usuarios_auditorias (id_usuario, acciones_auditoria, fecha_auditoria, hora_auditoria) 
-              VALUES (:id_usuario, :accion, CURDATE(), CURTIME())";
+  /* private function registrarAuditoria(int $id_usuario, string $accion): int */
+  /* { */
+  /*   try { */
+  /*     $sql = "INSERT INTO usuarios_auditorias (id_usuario, acciones_auditoria, fecha_auditoria, hora_auditoria)  */
+  /*             VALUES (:id_usuario, :accion, CURDATE(), CURTIME())"; */
 
-      return $this->db->ejecutar($sql, [
-        ':id_usuario' => $id_usuario,
-        ':accion' => $accion
-      ]);
-    } catch (Exception $e) {
-      error_log("Error en Usuario::registrarAuditoria: " . $e->getMessage());
-      throw $e;
-    }
-  }
+  /*     return $this->db->ejecutar($sql, [ */
+  /*       ':id_usuario' => $id_usuario, */
+  /*       ':accion' => $accion */
+  /*     ]); */
+  /*   } catch (Exception $e) { */
+  /*     error_log("Error en Usuario::registrarAuditoria: " . $e->getMessage()); */
+  /*     throw $e; */
+  /*   } */
+  /* } */
 }

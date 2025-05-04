@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Models;
+/* namespace App\Models;
 
 use App\config\Conexion;
 use Exception;
 
 class RaffleConfig
 {
-  // Constantes para los estados
   const UPDATE_SUCCESS = 1;
   const ERROR_INVALID_DATA = 2;
   const ERROR_DATABASE = 3;
 
-  // Mensajes de respuesta
   const MESSAGE_UPDATE_SUCCESS = 'Configuración actualizada exitosamente';
   const MESSAGE_INVALID_DATA = 'Datos inválidos o incompletos';
   const MESSAGE_DATABASE_ERROR = 'Error al procesar la solicitud en la base de datos';
@@ -26,7 +24,6 @@ class RaffleConfig
 
   public function getConfig()
   {
-    // Obtener configuración básica
     $sql = "SELECT cr.*, cp.precio_boleto, cp.boletos_minimos 
             FROM configuracion_rifas cr 
             INNER JOIN configuracion_precios cp ON cr.id_configuracion = cp.id 
@@ -34,7 +31,6 @@ class RaffleConfig
 
     $config = $this->db->consultar($sql, []);
 
-    // Obtener premios
     $sql = "SELECT p.*, tp.nombre as tipo_premio 
             FROM premios p 
             INNER JOIN tipos_premios tp ON p.id_tipo_premio = tp.id_tipo_premio";
@@ -47,12 +43,10 @@ class RaffleConfig
   public function updateConfig(array $data): int
   {
     try {
-      // Validar datos requeridos
       if (empty($data['titulo']) || empty($data['precio_boleto']) || empty($data['boletos_minimos'])) {
         return self::ERROR_INVALID_DATA;
       }
 
-      // Actualizar configuración de precios
       $sqlPrecios = "UPDATE configuracion_precios SET 
                     precio_boleto = :precio_boleto,
                     boletos_minimos = :boletos_minimos
@@ -64,7 +58,6 @@ class RaffleConfig
         ':config_precio_id' => 1
       ]);
 
-      // Actualizar configuración principal
       $sqlConfig = "UPDATE configuracion_rifas SET 
                     titulo = :titulo,
                     numero_contacto = :numero_contacto,
@@ -79,7 +72,6 @@ class RaffleConfig
         ':texto_ejemplo' => $data['texto_ejemplo']
       ]);
 
-      // Actualizar premios
       if (isset($data['premios']) && is_array($data['premios'])) {
         foreach ($data['premios'] as $premio) {
           $sqlPremio = "UPDATE premios SET 
@@ -132,4 +124,4 @@ class RaffleConfig
         ];
     }
   }
-}
+} */

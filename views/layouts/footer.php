@@ -133,8 +133,7 @@
     <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
 
     <div class="logo-box">
-      <a href="indexphp" aria-label="logo image"><img src="assets/img/resources/logo-1.png" width="150"
-          alt="" /></a>
+      <a href="" aria-label="logo image"><!-- LOGO TURIFADIGI --></a>
     </div>
     <!-- /.logo-box -->
     <div class="mobile-nav__container"></div>

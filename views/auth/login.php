@@ -1,68 +1,72 @@
-<?php require_once 'views/auth/header_login.php'; ?>
+<?php require_once 'views/auth/header.php'; ?>
 
-<!--Contact Two Start-->
-<section class="contact-two">
-  <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
-    <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
-  </div>
+<section class="login-section">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-xl-6">
-        <div class="contact-two__left bg-white p-4 rounded shadow">
-          <div class="section-title text-center mb-4">
-            <h2 class="section-title__title">Iniciar sesión</h2>
+      <div class="col-lg-6 col-md-8">
+        <div class="login-card">
+          <div class="login-header text-center mb-4">
+            <h2 class="login-title">Iniciar Sesión</h2>
           </div>
 
-          <form id="form-login" class="contact-form-validated contact-two__form">
-            <div class="row">
-              <div class="col-12 mb-3">
-                <div class="contact-two__input-box position-relative">
-                  <input
-                    type="text"
-                    name="identificador"
-                    id="identificador"
-                    class="form-control"
-                    placeholder="Nombre de usuario o teléfono"
-                    required>
-                </div>
+          <form id="form-login" class="login-form" method="post">
+            <div class="form-group mb-3">
+              <div class="input-group">
+                <input 
+                  type="text" 
+                  name="usuario" 
+                  id="usuario" 
+                  class="form-control"
+                  placeholder="Nombre de usuario"
+                  required
+                  autocomplete="username"
+                >
               </div>
-              <div class="col-12 mb-3">
-                <div class="contact-two__input-box position-relative">
-                  <input
-                    type="password"
-                    name="clave_usuario"
-                    id="clave_usuario"
-                    class="form-control"
-                    placeholder="Contraseña"
-                    required>
-                </div>
+            </div>
+
+            <div class="form-group mb-4">
+              <div class="input-group">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control"
+                  placeholder="Contraseña"
+                  required
+                  autocomplete="current-password"
+                >
+                <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()">
+                  <i class="fas fa-eye"></i>
+                </span>
               </div>
-              <div class="col-12 text-center">
-                <button type="submit" class="thm-btn contact-two__btn w-100">
-                  Iniciar sesión
-                </button>
-              </div>
+            </div>
+
+            <div class="form-group text-center">
+              <button type="submit" class="btn btn-primary w-100">
+                Iniciar Sesión
+              </button>
             </div>
           </form>
 
           <div class="text-center mt-4">
-            <p class="contact-two__left-text">
-              <a href="/TuRifadigi/register" class="text-primary">¿No tiene cuenta?</a>
+            <p class="register-link">
+              ¿No tienes cuenta? <a href="/TuRifadigi/register">Regístrate aquí</a>
+            </p>
+            <p class="forgot-password-link mt-2">
+              <a href="/TuRifadigi/forgot-password">¿Olvidaste tu contraseña?</a>
             </p>
           </div>
 
-          <!-- Toast container -->
-          <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+          <!-- Notificaciones Toast -->
+          <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="toast-header d-flex align-items-center">
-                <i class="fas fa-info-circle me-2"></i>
+              <div class="toast-header">
                 <strong class="me-auto" id="toastTitle"></strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
               </div>
               <div class="toast-body" id="toastMessage"></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -70,19 +74,26 @@
 </section>
 
 <style>
-  /* Estilos adicionales para mejorar la apariencia */
-  .contact-two {
-    padding: 80px 0;
+  /* Estilos principales */
+  .login-section {
     min-height: 100vh;
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 2rem 0;
   }
 
-  .contact-two__left {
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    border-radius: 15px !important;
+  .login-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .login-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
   }
 
   .form-control {
@@ -99,223 +110,120 @@
     box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
   }
 
-  .thm-btn {
-    height: 50px;
-    border-radius: 8px;
+  .btn-primary {
     background-color: #4a90e2;
-    color: white;
     border: none;
+    padding: 12px;
+    font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
   }
 
-  .thm-btn:hover {
+  .btn-primary:hover {
     background-color: #357abd;
     transform: translateY(-2px);
   }
 
-  .contact-two__input-box {
-    margin-bottom: 20px;
+  .password-toggle {
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
   }
 
-  /* Estilos para el toast */
-  .toast {
-    background: white;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  .register-link a,
+  .forgot-password-link a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 500;
   }
 
-  .toast-header {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    padding: 0.75rem;
-  }
-
-  .toast-body {
-    padding: 1rem;
-    font-size: 0.95rem;
+  .register-link a:hover,
+  .forgot-password-link a:hover {
+    text-decoration: underline;
   }
 
   /* Responsive */
   @media (max-width: 768px) {
-    .contact-two {
-      padding: 40px 0;
-    }
-
-    .contact-two__left {
-      margin: 15px;
+    .login-card {
+      margin: 1rem;
+      padding: 1.5rem;
     }
   }
 </style>
 
-<!-- Scripts necesarios -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  // Mantener el mismo JavaScript que teníamos antes para la funcionalidad
+  // Función para mostrar/ocultar contraseña
   function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('clave_usuario');
-    if (passwordInput.style.webkitTextSecurity === 'disc') {
-      passwordInput.style.webkitTextSecurity = 'none';
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.querySelector('.password-toggle i');
+    
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
     } else {
-      passwordInput.style.webkitTextSecurity = 'disc';
+      passwordInput.type = 'password';
+      eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
     }
   }
 
-  // Agregar el ícono del ojo
-  const passwordContainer = document.querySelector('#clave_usuario').parentNode;
-  const eyeIcon = document.createElement('i');
-  eyeIcon.className = 'fas fa-eye';
-  eyeIcon.style.cssText = `
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #666;
-`;
-  eyeIcon.addEventListener('click', togglePasswordVisibility);
-  passwordContainer.style.position = 'relative';
-  passwordContainer.appendChild(eyeIcon);
-
-  // Obtener referencias a los elementos
-  let identificador = document.getElementById('identificador');
-  let clave_usuario = document.getElementById('clave_usuario');
-
-  // Prevenir espacios en todos los campos
-  [identificador, clave_usuario].forEach(input => {
-    input.addEventListener('keydown', function(e) {
-      if (e.key === ' ') {
-        e.preventDefault();
-      }
-    });
-
-    input.addEventListener('paste', function(e) {
-      e.preventDefault();
-      let text = (e.clipboardData || window.clipboardData).getData('text');
-      if (!text.includes(' ')) {
-        this.value = text;
-      }
-    });
-
-    input.addEventListener('input', function() {
-      this.value = this.value.replace(/\s/g, '');
-    });
-  });
-
-  // Validación para identificador
-  identificador.addEventListener('input', function() {
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo identificador es requerido');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Validación para clave_usuario
-  clave_usuario.addEventListener('input', function() {
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo contraseña es requerido');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Manejo del formulario
+  // Validación del formulario
   document.getElementById('form-login').addEventListener('submit', function(event) {
     event.preventDefault();
+    
+    const usuario = document.getElementById('usuario');
+    const password = document.getElementById('password');
+    let valid = true;
 
-    // Deshabilitar el botón de submit para evitar doble envío
-    const submitButton = this.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-
-    // Validaciones finales antes de enviar
-    if (identificador.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo identificador es requerido');
-      identificador.style.border = "2px solid red";
-      identificador.focus();
-      submitButton.disabled = false;
-      return;
+    if (usuario.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'El nombre de usuario es requerido');
+      usuario.focus();
+      valid = false;
     }
 
-    if (clave_usuario.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo contraseña es requerido');
-      clave_usuario.style.border = "2px solid red";
-      clave_usuario.focus();
-      submitButton.disabled = false;
-      return;
+    if (password.value.trim() === '') {
+      showToast('warning', 'Campo vacío', 'La contraseña es requerida');
+      password.focus();
+      valid = false;
     }
 
-    // Si pasa todas las validaciones, prepara los datos para enviar
-    let formData = new FormData(this);
-
-    // Envía los datos al servidor usando fetch
-    fetch('/TuRifadigi/login', {
+    if (valid) {
+      const formData = new FormData(this);
+      fetch('/TuRifadigi/login', {
         method: 'POST',
         body: new URLSearchParams(formData)
       })
       .then(response => response.json())
       .then(data => {
-        console.log('Respuesta del servidor:', data); // Debug
         if (data.success) {
-          showToast(data.type, 'Éxito', data.message);
+          showToast('success', 'Éxito', data.message);
           setTimeout(() => {
             window.location.href = '/TuRifadigi/home';
-          }, 3000);
+          }, 2000);
         } else {
-          showToast(data.type, 'Error', data.message);
-          submitButton.disabled = false;
+          showToast('error', 'Error', data.message);
         }
       })
       .catch(error => {
-        console.error('Error:', error); // Debug
-        showToast('error', 'Error', 'Hubo un error al procesar la solicitud');
-        submitButton.disabled = false;
+        showToast('error', 'Error', 'Hubo un problema al procesar la solicitud');
       });
+    }
   });
 
-  // Función showToast
+  // Función para mostrar notificaciones
   function showToast(type, title, message) {
-    const toast = document.getElementById('notificationToast');
+    const toast = new bootstrap.Toast(document.getElementById('notificationToast'));
     const toastTitle = document.getElementById('toastTitle');
     const toastMessage = document.getElementById('toastMessage');
-    const toastInstance = new bootstrap.Toast(toast, {
-      autohide: true,
-      delay: 5000
-    });
-
-    let icon = '';
-    let headerClass = '';
-    switch (type) {
-      case 'success':
-        icon = '<i class="fas fa-check-circle text-white me-2"></i>';
-        headerClass = 'bg-success text-white';
-        break;
-      case 'error':
-        icon = '<i class="fas fa-exclamation-circle text-white me-2"></i>';
-        headerClass = 'bg-danger text-white';
-        break;
-      case 'warning':
-        icon = '<i class="fas fa-exclamation-triangle text-white me-2"></i>';
-        headerClass = 'bg-warning text-white';
-        break;
-      default:
-        icon = '<i class="fas fa-info-circle text-white me-2"></i>';
-        headerClass = 'bg-info text-white';
-    }
-
-    toastTitle.innerHTML = icon + title;
-    const header = toast.querySelector('.toast-header');
-    header.className = `toast-header ${headerClass}`;
+    
+    toastTitle.textContent = title;
     toastMessage.textContent = message;
-
-    toastInstance.show();
+    
+    toast.show();
   }
 </script>
 
-<?php require_once 'views/auth/footer_login.php'; ?>
+<?php require_once 'views/auth/footer.php'; ?>

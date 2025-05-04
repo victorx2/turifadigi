@@ -1,4 +1,4 @@
-<?php require_once 'views/auth/header_login.php'; ?>
+<?php require_once 'views/auth/header.php'; ?>
 <section class="contact-two">
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
@@ -41,19 +41,19 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <div class="contact-two__input-box">
-                  <input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Nombre de usuario" title="El nombre de usuario es requerido" required>
+                  <input type="text" name="usuario" id="usuario" placeholder="Nombre de usuario" title="El nombre de usuario es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <div class="contact-two__input-box">
-                  <input type="text" name="clave_usuario" id="clave_usuario" placeholder="Contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;">
+                  <input type="text" name="password" id="password" placeholder="Contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <div class="contact-two__input-box">
                   <input type="text"
-                    name="telefono_usuario"
-                    id="telefono_usuario"
+                    name="telefono"
+                    id="telefono"
                     placeholder="Número de teléfono"
                     pattern="[0-9]{20}"
                     maxlength="20"
@@ -64,8 +64,8 @@
               <div class="col-xl-6 col-lg-6">
                 <div class="contact-two__input-box">
                   <input type="email"
-                    name="correo_usuario"
-                    id="correo_usuario"
+                    name="correo"
+                    id="correo"
                     placeholder="Correo electrónico"
                     title="El correo electrónico es requerido"
                     required>
@@ -104,7 +104,7 @@
 
 <script>
   function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('clave_usuario');
+    const passwordInput = document.getElementById('password');
     if (passwordInput.style.webkitTextSecurity === 'disc') {
       passwordInput.style.webkitTextSecurity = 'none';
     } else {
@@ -112,7 +112,7 @@
     }
   }
 
-  const passwordContainer = document.querySelector('#clave_usuario').parentNode;
+  const passwordContainer = document.querySelector('#password').parentNode;
   const eyeIcon = document.createElement('i');
   eyeIcon.className = 'fas fa-eye';
   eyeIcon.style.position = 'absolute';
@@ -131,13 +131,13 @@
   let apellido = document.getElementById('apellido');
   let cedula = document.getElementById('cedula');
   let ubicacion = document.getElementById('ubicacion');
-  let nombre_usuario = document.getElementById('nombre_usuario');
-  let clave_usuario = document.getElementById('clave_usuario');
-  let telefono_usuario = document.getElementById('telefono_usuario');
-  let correo_usuario = document.getElementById('correo_usuario');
+  let usuario = document.getElementById('usuario');
+  let password = document.getElementById('password');
+  let telefono = document.getElementById('telefono');
+  let correo = document.getElementById('correo');
 
   // Prevenir espacios en todos los campos
-  [nombre, apellido, cedula, ubicacion, nombre_usuario, clave_usuario, telefono_usuario, correo_usuario].forEach(input => {
+  [nombre, apellido, cedula, ubicacion, usuario, password, telefono, correo].forEach(input => {
     // Prevenir que se escriban espacios con la barra espaciadora
     input.addEventListener('keydown', function(e) {
       if (e.key === ' ') {
@@ -217,8 +217,8 @@
     });
   });
 
-  // Validación en tiempo real para el campo nombre_usuario
-  nombre_usuario.addEventListener('input', function() {
+  // Validación en tiempo real para el campo usuario
+  usuario.addEventListener('input', function() {
     if (this.value.trim() === '' || this.value.length < 3) {
       showToast('warning', 'Campo vacío', 'El campo nombre de usuario se encuentra vacío y debe tener al menos 3 caracteres');
       this.style.border = "2px solid red"; // Borde rojo si es inválido
@@ -228,22 +228,22 @@
     }
   });
 
-  // Cambiar estilo cuando el campo nombre_usuario recibe foco
-  nombre_usuario.addEventListener('focus', function() {
+  // Cambiar estilo cuando el campo usuario recibe foco
+  usuario.addEventListener('focus', function() {
     if (!(this.value.trim() === '' || this.value.length < 3)) {
       this.style.border = "2px solid #4a90e2"; // Borde azul si es válido
     }
   });
 
-  // Quitar borde cuando el campo nombre_usuario pierde el foco
-  nombre_usuario.addEventListener('blur', function() {
+  // Quitar borde cuando el campo usuario pierde el foco
+  usuario.addEventListener('blur', function() {
     if (!(this.value.trim() === '' || this.value.length < 3)) {
       this.style.border = ""; // Quita el borde si es válido
     }
   });
 
-  // Validación en tiempo real para el campo clave_usuario
-  clave_usuario.addEventListener('input', function() {
+  // Validación en tiempo real para el campo password
+  password.addEventListener('input', function() {
     if (this.value.trim() === '' || this.value.length < 6) {
       showToast('warning', 'Campo vacío', 'El campo contraseña se encuentra vacío y debe tener al menos 6 caracteres');
       this.style.border = "2px solid red";
@@ -253,22 +253,22 @@
     }
   });
 
-  // Cambiar estilo cuando el campo clave_usuario recibe foco
-  clave_usuario.addEventListener('focus', function() {
+  // Cambiar estilo cuando el campo password recibe foco
+  password.addEventListener('focus', function() {
     if (!(this.value.trim() === '' || this.value.length < 6)) {
       this.style.border = "2px solid #4a90e2";
     }
   });
 
-  // Quitar borde cuando el campo clave_usuario pierde el foco
-  clave_usuario.addEventListener('blur', function() {
+  // Quitar borde cuando el campo password pierde el foco
+  password.addEventListener('blur', function() {
     if (!(this.value.trim() === '' || this.value.length < 6)) {
       this.style.border = "";
     }
   });
 
-  // Validación en tiempo real para el campo telefono_usuario
-  telefono_usuario.addEventListener('input', function() {
+  // Validación en tiempo real para el campo telefono
+  telefono.addEventListener('input', function() {
     if (this.value.trim() === '') {
       showToast('warning', 'Campo vacío', 'El campo teléfono se encuentra vacío');
       this.style.border = "2px solid red";
@@ -278,22 +278,22 @@
     }
   });
 
-  // Cambiar estilo cuando el campo telefono_usuario recibe foco
-  telefono_usuario.addEventListener('focus', function() {
+  // Cambiar estilo cuando el campo telefono recibe foco
+  telefono.addEventListener('focus', function() {
     if (!(this.value.trim() === '')) {
       this.style.border = "2px solid #4a90e2";
     }
   });
 
-  // Quitar borde cuando el campo telefono_usuario pierde el foco
-  telefono_usuario.addEventListener('blur', function() {
+  // Quitar borde cuando el campo telefono pierde el foco
+  telefono.addEventListener('blur', function() {
     if (!(this.value.trim() === '')) {
       this.style.border = "";
     }
   });
 
   // Validación para correo electrónico
-  correo_usuario.addEventListener('input', function() {
+  correo.addEventListener('input', function() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (this.value.trim() === '') {
       showToast('warning', 'Campo vacío', 'El campo correo electrónico se encuentra vacío');
@@ -309,14 +309,14 @@
   });
 
   // Funciones focus y blur para correo
-  correo_usuario.addEventListener('focus', function() {
+  correo.addEventListener('focus', function() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (this.value.trim() !== '' && emailRegex.test(this.value.trim())) {
       this.style.border = "2px solid #4a90e2";
     }
   });
 
-  correo_usuario.addEventListener('blur', function() {
+  correo.addEventListener('blur', function() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (this.value.trim() !== '' && emailRegex.test(this.value.trim())) {
       this.style.border = "";
@@ -356,37 +356,37 @@
       return;
     }
 
-    if (nombre_usuario.value.trim() === '' || nombre_usuario.value.length < 3) {
+    if (usuario.value.trim() === '' || usuario.value.length < 3) {
       showToast('warning', 'Campo vacío', 'El campo nombre de usuario se encuentra vacío y debe tener al menos 3 caracteres');
-      nombre_usuario.style.border = "2px solid red";
-      nombre_usuario.focus();
+      usuario.style.border = "2px solid red";
+      usuario.focus();
       return;
     }
 
-    if (clave_usuario.value.trim() === '' || clave_usuario.value.length < 6) {
+    if (password.value.trim() === '' || password.value.length < 6) {
       showToast('warning', 'Campo vacío', 'El campo contraseña se encuentra vacío y debe tener al menos 6 caracteres');
-      clave_usuario.style.border = "2px solid red";
-      clave_usuario.focus();
+      password.style.border = "2px solid red";
+      password.focus();
       return;
     }
 
-    if (telefono_usuario.value.trim() === '') {
+    if (telefono.value.trim() === '') {
       showToast('warning', 'Campo vacío', 'El campo teléfono se encuentra vacío');
-      telefono_usuario.style.border = "2px solid red";
-      telefono_usuario.focus();
+      telefono.style.border = "2px solid red";
+      telefono.focus();
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (correo_usuario.value.trim() === '') {
+    if (correo.value.trim() === '') {
       showToast('warning', 'Campo vacío', 'El campo correo electrónico se encuentra vacío');
-      correo_usuario.style.border = "2px solid red";
-      correo_usuario.focus();
+      correo.style.border = "2px solid red";
+      correo.focus();
       return;
-    } else if (!emailRegex.test(correo_usuario.value.trim())) {
+    } else if (!emailRegex.test(correo.value.trim())) {
       showToast('warning', 'Formato inválido', 'El formato del correo electrónico no es válido');
-      correo_usuario.style.border = "2px solid red";
-      correo_usuario.focus();
+      correo.style.border = "2px solid red";
+      correo.focus();
       return;
     }
 
@@ -556,4 +556,4 @@
   unset($_SESSION['mensaje']);
 } ?>
 
-<?php require_once 'views/auth/footer_login.php'; ?>
+<?php require_once 'views/auth/footer.php'; ?>

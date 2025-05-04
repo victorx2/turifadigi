@@ -40,6 +40,4 @@ config/local.php
  
 # Archivos de prueba
 index.html
-
-/views/layouts/zexfa.php
-
+ 

@@ -22,41 +22,41 @@ class RegisterUserController
     try {
       // Obtener y validar los datos del formulario
       $datosUsuario = [
-        'nombre_usuario' => $_POST['nombre_usuario'] ?? '',
-        'clave_usuario' => $_POST['clave_usuario'] ?? '',
-        'telefono_usuario' => $_POST['telefono_usuario'] ?? '',
-        'correo_usuario' => $_POST['correo_usuario'] ?? ''
+        'usuario' => $_POST['usuario'] ?? '',
+        'password' => $_POST['password'] ?? '',
+        'correo' => $_POST['correo'] ?? ''
       ];
 
       $datosPersonales = [
         'nombre' => $_POST['nombre'] ?? '',
         'apellido' => $_POST['apellido'] ?? '',
         'cedula' => $_POST['cedula'] ?? '',
-        'telefono' => $_POST['telefono_usuario'] ?? '',
+        'telefono' => $_POST['telefono'] ?? '',
         'ubicacion' => $_POST['ubicacion'] ?? ''
       ];
 
-      // Validación básica
-      foreach ($datosUsuario as $valor) {
-        if (empty($valor)) {
-          echo json_encode([
-            'success' => false,
-            'message' => 'Todos los campos de usuario son requeridos',
-            'type' => 'error'
-          ]);
-          exit();
-        }
+      // Validación básica de usuario y contraseña
+      if (empty($datosUsuario['usuario']) || empty($datosUsuario['password'])) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'El nombre de usuario y la contraseña son requeridos',
+          'type' => 'error'
+        ]);
+        exit();
       }
 
-      foreach ($datosPersonales as $valor) {
-        if (empty($valor)) {
-          echo json_encode([
-            'success' => false,
-            'message' => 'Todos los campos de datos personales son requeridos',
-            'type' => 'error'
-          ]);
-          exit();
-        }
+      // Validación de datos personales
+      if (
+        empty($datosPersonales['nombre']) || empty($datosPersonales['apellido']) ||
+        empty($datosPersonales['cedula']) || empty($datosPersonales['telefono']) ||
+        empty($datosPersonales['ubicacion'])
+      ) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'Todos los campos de datos personales son requeridos',
+          'type' => 'error'
+        ]);
+        exit();
       }
 
       // Registrar usuario
@@ -65,34 +65,31 @@ class RegisterUserController
       if (!$idUsuario) {
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar el usuario. El nombre de usuario o teléfono ya existe.',
+          'message' => 'Error al registrar el usuario. El nombre de usuario ya existe.',
           'type' => 'error'
         ]);
         exit();
       }
 
       // Registrar datos personales
-      $datosRegistrados = $this->datosPersonales->insert($idUsuario, $datosPersonales);
-
-      if (!$datosRegistrados) {
+      if ($this->usuario->registrarDatosPersonales($idUsuario, $datosPersonales)) {
+        echo json_encode([
+          'success' => true,
+          'message' => 'Usuario y datos personales registrados correctamente',
+          'type' => 'success'
+        ]);
+      } else {
         echo json_encode([
           'success' => false,
-          'message' => 'El usuario se registró correctamente, pero hubo un error al guardar los datos personales.',
-          'type' => 'warning'
+          'message' => 'Error al registrar los datos personales',
+          'type' => 'error'
         ]);
-        exit();
       }
-
-      echo json_encode([
-        'success' => true,
-        'message' => 'Usuario registrado correctamente',
-        'type' => 'success'
-      ]);
     } catch (\Exception $e) {
-      error_log("Error en RegisterUserController::insert: " . $e->getMessage());
+      error_log("Error en RegistroController::insert: " . $e->getMessage());
       echo json_encode([
         'success' => false,
-        'message' => 'Error interno del servidor',
+        'message' => 'Error interno del servidor: ' . $e->getMessage(),
         'type' => 'error'
       ]);
     }

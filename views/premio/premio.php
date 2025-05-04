@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\RaffleConfig;
+/* use App\Models\RaffleConfig;
 
 $configModel = new RaffleConfig();
 $config = $configModel->getConfig();
@@ -98,4 +98,4 @@ $texto_ejemplo = $config['texto_ejemplo'] ?? 'Si compras 10 boletos, participas 
       </div>
     </div>
   </div>
-</main>
+</main> */

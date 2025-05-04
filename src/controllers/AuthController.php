@@ -4,10 +4,12 @@ namespace App\Controllers;
 
 use App\Models\LoginUser;
 
-class AuthController {
+class AuthController
+{
     private $login;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->login = new LoginUser();
     }
 
@@ -16,7 +18,7 @@ class AuthController {
         header('Content-Type: application/json');
         try {
             // Validación básica de datos
-            if (empty($request['identificador']) || empty($request['clave_usuario'])) {
+            if (empty($request['usuario']) || empty($request['password'])) {
                 echo json_encode([
                     'success' => false,
                     'message' => 'Todos los campos son requeridos',
@@ -27,11 +29,11 @@ class AuthController {
 
             $result = $this->login->login($request);
             $response = $this->login->getStatusMessage($result);
-            
+
             // Debug temporal
-            error_log('Login attempt - Identificador: ' . $request['identificador']);
+            error_log('Login attempt - Identificador: ' . $request['usuario']);
             error_log('Login result: ' . json_encode($response));
-            
+
             echo json_encode($response);
         } catch (\Exception $e) {
             error_log("Error en AuthController::login: " . $e->getMessage());

@@ -16,6 +16,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  <!-- Lista de boletos -->
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script>
@@ -23,6 +25,7 @@
       document.write('<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">')
     }
   </script>
+
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script>
@@ -30,8 +33,10 @@
       document.write('<link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">')
     }
   </script>
+
   <!-- jQuery UI -->
   <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+
   <!-- Swiper -->
   <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet">
   <script>
@@ -39,6 +44,7 @@
       document.write('<link rel="stylesheet" href="vendor/swiper/swiper.min.css">')
     }
   </script>
+
   <!-- Recursos locales personalizados -->
   <link rel="stylesheet" href="vendor/animate/animate.min.css" />
   <link rel="stylesheet" href="vendor/animate/custom-animate.css" />
@@ -51,9 +57,12 @@
   <link rel="stylesheet" href="vendor/bootstrap-select/css/bootstrap-select.min.css" />
   <link rel="stylesheet" href="vendor/nice-select/nice-select.css" />
   <link rel="stylesheet" href="vendor/reey-font/stylesheet.css" />
+
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
+
+  <link rel="stylesheet" href="assets/css/dropdown-search.css">
 </head>
 
 <body class="custom-cursor">
@@ -104,9 +113,9 @@
           <div class="container">
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
-                <div class="main-menu__logo">
+                <!-- <div class="main-menu__logo">
 
-                </div>
+                </div> -->
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
                 </div>
@@ -126,11 +135,11 @@
     </header>
 
     <div class="stricky-header stricked-menu main-menu">
-      <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
-    </div><!-- /.stricky-header -->
+      <div class="sticky-header__content"></div>
+    </div>
 
-    <!--Page Header Start-->
     <section class="page-header">
+
       <style>
         .page-header {
           position: relative;
@@ -149,12 +158,13 @@
           width: 100%;
           height: 100%;
           background-image: url(assets/img/backgrounds/MotoYorsi.jpeg);
-          background-size: cover;
+          background-size: contain;
           background-position: center;
           background-repeat: no-repeat;
           filter: brightness(0.4);
-          transform: scale(1.02);
+          transform: scale(1);
           transition: all 0.5s ease;
+          object-fit: cover;
         }
 
         .page-header__content {
@@ -191,17 +201,6 @@
           line-height: 1.6;
         }
 
-        .wave-shape {
-          position: absolute;
-          bottom: -2px;
-          left: 0;
-          width: 100%;
-          background: white;
-          height: clamp(80px, 15vh, 150px);
-          border-radius: 100% 100% 0 0;
-        }
-
-        /* Animación suave al cargar */
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -230,13 +229,13 @@
           animation-delay: 0.6s;
         }
 
-        /* Ajustes específicos para diferentes dispositivos */
         @media (max-width: 768px) {
           .page-header {
             height: 90vh;
           }
 
           .page-header__bg2 {
+            background-size: cover;
             background-position: 65% center;
           }
         }
@@ -246,18 +245,12 @@
             height: 80vh;
           }
 
-          .wave-shape {
-            height: clamp(60px, 10vh, 100px);
-          }
-        }
-
-        @media (min-width: 1200px) {
           .page-header__bg2 {
-            background-position: center 20%;
+            background-size: cover;
+            background-position: 75% center;
           }
         }
 
-        /* Orientación landscape en móviles */
         @media (max-height: 500px) and (orientation: landscape) {
           .page-header {
             height: 120vh;
@@ -268,12 +261,13 @@
           }
         }
       </style>
+
       <div class="page-header__bg2"></div>
+
       <div class="page-header__content">
         <h1 class="page-header__title">TuRifaDigital</h1>
         <h2 class="page-header__subtitle">Tu Mejor Opción</h2>
         <p class="page-header__text">Crea y gestiona tus rifas de manera fácil y segura.</p>
       </div>
-      <div class="wave-shape"></div>
+
     </section>
-    <!--Page Header End-->

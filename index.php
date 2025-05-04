@@ -80,6 +80,11 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
 //     (new BoletoController())->show();
 // }
 
+if ($request_method === 'POST' && $route === '/login') {
+    (new AuthController())->login($_REQUEST['usuario'], $_REQUEST['password']);
+    exit;
+}
+
 if ($request_method === 'POST' && $route === '/registro_usuario') {
     (new RegisterUserController())->insert();
     exit;
@@ -125,7 +130,8 @@ if ($request_method === 'POST' && $route === '/cuentas_pago/eliminar') {
 //if (empty($_SESSION)) {
 //    require_once 'views/auth/login.php';
 //    exit;
-//} else if ((isset($_SESSION['nombre_usuario']) && $route === '/login') || (isset($_SESSION['nombre_usuario']) && $route === '/')) {
+
+//} else if ((isset($_SESSION['usuario']) && $route === '/login') || (isset($_SESSION['usuario']) && $route === '/')) {
 //    (new HomeController())->index();
 //    exit;
 //}
@@ -138,7 +144,7 @@ switch ($route) {
         break;
 
     case '/login':
-        if (!isset($_SESSION['logged_in'])) {
+        if (!isset($_SESSION['usuario'])) {
             require_once 'views/auth/login.php';
         } else {
             header("Location: /TuRifadigi/home");
@@ -147,7 +153,7 @@ switch ($route) {
         break;
 
     case '/home':
-        if (isset($_SESSION['logged_in'])) {
+        if (isset($_SESSION['usuario'])) {
             (new HomeController())->index();
         } else {
             header("Location: /TuRifadigi/login");
@@ -156,7 +162,7 @@ switch ($route) {
         break;
 
     case '/register':
-        if (!isset($_SESSION['logged_in'])) {
+        if (!isset($_SESSION['usuario'])) {
             require_once 'views/auth/register.php';
         } else {
             (new HomeController())->index();

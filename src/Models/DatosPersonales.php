@@ -8,7 +8,7 @@ use Exception;
 class DatosPersonales
 {
   // Constantes para las tablas y columnas de la base de datos
-  const TABLE_NAME = 'datos_personales_usuarios';
+  const TABLE_NAME = 'datos_personales';
   const COLUMN_ID = 'id_datos';
   const COLUMN_USER_ID = 'id_usuario';
   const COLUMN_NAME = 'nombre';
@@ -43,13 +43,8 @@ class DatosPersonales
         empty($datos['cedula']) || empty($datos['telefono']) ||
         empty($datos['ubicacion'])
       ) {
+        error_log("Error en DatosPersonales::insert: Datos requeridos faltantes");
         return false;
-      }
-
-      // Verificar si ya existen datos para este usuario
-      if ($this->existenDatos($id_usuario)) {
-        // Actualizar en lugar de insertar
-        return $this->update($id_usuario, $datos);
       }
 
       // Insertar datos personales
