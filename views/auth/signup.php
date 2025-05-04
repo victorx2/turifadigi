@@ -20,41 +20,48 @@
           <form id="form-registro" class="contact-form-validated contact-two__form" action="registro_usuario" method="post">
             <div class="row">
               <div class="col-xl-6 col-lg-6">
+                <label for="nombre" class="form-label" style="font-weight: bold;">Nombre *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="nombre" id="nombre" placeholder="Nombre" title="El nombre es requerido" required>
+                  <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre" title="El nombre es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
+                <label for="apellido" class="form-label" style="font-weight: bold;">Apellido *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="apellido" id="apellido" placeholder="Apellido" title="El apellido es requerido" required>
+                  <input type="text" name="apellido" id="apellido" placeholder="Ingrese su apellido" title="El apellido es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
+                <label for="cedula" class="form-label" style="font-weight: bold;">Cédula *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="cedula" id="cedula" placeholder="Cédula" title="La cédula es requerida" required>
+                  <input type="text" name="cedula" id="cedula" placeholder="Ingrese su cédula" title="La cédula es requerida" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
+                <label for="ubicacion" class="form-label" style="font-weight: bold;">Ubicación *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion" placeholder="Ubicación" title="La ubicación es requerida" required>
+                  <input type="text" name="ubicacion" id="ubicacion" placeholder="Ingrese su ubicación" title="La ubicación es requerida" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
+                <label for="usuario" class="form-label" style="font-weight: bold;">Nombre de usuario *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="usuario" id="usuario" placeholder="Nombre de usuario" title="El nombre de usuario es requerido" required>
+                  <input type="text" name="usuario" id="usuario" placeholder="Cree un nombre de usuario" title="El nombre de usuario es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
+                <label for="password" class="form-label" style="font-weight: bold;">Contraseña *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="password" id="password" placeholder="Contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;">
+                  <input type="text" name="password" id="password" placeholder="Cree una contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
+                <label for="telefono" class="form-label" style="font-weight: bold;">Teléfono *</label>
                 <div class="contact-two__input-box">
                   <input type="text"
                     name="telefono"
                     id="telefono"
-                    placeholder="Número de teléfono"
+                    placeholder="Ingrese su número de teléfono"
                     pattern="[0-9]{20}"
                     maxlength="20"
                     title="El número de teléfono es requerido"
@@ -62,11 +69,12 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
+                <label for="correo" class="form-label" style="font-weight: bold;">Correo electrónico *</label>
                 <div class="contact-two__input-box">
                   <input type="email"
                     name="correo"
                     id="correo"
-                    placeholder="Correo electrónico"
+                    placeholder="Ingrese su correo electrónico"
                     title="El correo electrónico es requerido"
                     required>
                 </div>
