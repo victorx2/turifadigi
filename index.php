@@ -84,7 +84,7 @@ if ($request_method === 'POST' && $route === '/login') {
     (new AuthController())->login($_REQUEST['usuario'], $_REQUEST['password']);
     exit;
 }
-
+ 
 if ($request_method === 'POST' && $route === '/recuperar_password') {
     (new AuthController())->recuperarPassword(['correo' => $_REQUEST['correo']]);
     exit;

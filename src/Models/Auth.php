@@ -93,7 +93,7 @@ class Auth
       error_log("Intentando recuperar contraseña para: " . $request['correo']);
 
       // Consulta SQL para validar solo por correo
-      $sql = "SELECT * FROM usuarios WHERE correo = :correo LIMIT 1";
+      $sql = "SELECT id_usuario, usuario, correo FROM usuarios WHERE correo = :correo AND estado = 1 LIMIT 1";
       $params = [':correo' => trim($request['correo'])];
 
       error_log("Ejecutando consulta SQL: " . $sql);
@@ -105,27 +105,36 @@ class Auth
 
       if ($result && count($result) > 0) {
         error_log("Usuario encontrado, generando token de recuperación");
-        // Generar token único
-        $token = bin2hex(random_bytes(32));
 
-        // Actualizar el token en la base de datos
-        $sqlUpdate = "UPDATE usuarios SET token_recuperacion = :token WHERE correo = :correo";
-        $paramsUpdate = [
-          ':token' => $token,
-          ':correo' => trim($request['correo'])
-        ];
-
-        error_log("Actualizando token en la base de datos");
-        $this->db->ejecutar($sqlUpdate, $paramsUpdate);
-
-        // Preparar datos para el correo
-        $datosCorreo = [
-          'usuario' => $result[0]['usuario'],
-          'token' => $token
-        ];
-
-        error_log("Enviando correo de recuperación");
         try {
+          // Generar token único
+          $token = bin2hex(random_bytes(32));
+          $expiracion = date('Y-m-d H:i:s', strtotime('+24 hours'));
+
+          // Actualizar el token en la base de datos
+          $sqlUpdate = "UPDATE usuarios SET 
+                       token_recuperacion = :token,
+                       token_expiracion = :expiracion,
+                       fecha_modificacion = NOW() 
+                       WHERE correo = :correo";
+
+          $paramsUpdate = [
+            ':token' => $token,
+            ':expiracion' => $expiracion,
+            ':correo' => trim($request['correo'])
+          ];
+
+          error_log("Actualizando token en la base de datos con expiración: " . $expiracion);
+          $this->db->ejecutar($sqlUpdate, $paramsUpdate);
+
+          // Preparar datos para el correo
+          $datosCorreo = [
+            'usuario' => $result[0]['usuario'],
+            'token' => $token
+          ];
+
+          error_log("Enviando correo de recuperación");
+
           $correoController = new CorreoController(
             'smtp.gmail.com',
             true,
@@ -143,13 +152,13 @@ class Auth
             error_log("Correo enviado exitosamente a: " . $request['correo']);
             $_SESSION['reset_email'] = $request['correo'];
             return self::LOGIN_SUCCESS;
-          } else {
-            error_log("Error al enviar el correo");
-            throw new Exception("Error al enviar el correo de recuperación");
           }
+
+          error_log("Error al enviar el correo");
+          return self::ERROR_DATABASE;
         } catch (Exception $e) {
-          error_log("Error en el envío de correo: " . $e->getMessage());
-          throw $e;
+          error_log("Error en la generación/actualización del token: " . $e->getMessage());
+          return self::ERROR_DATABASE;
         }
       }
 
@@ -202,13 +211,13 @@ class Auth
       case self::LOGIN_SUCCESS:
         return [
           'success' => true,
-          'message' => 'Se ha enviado un correo con las instrucciones para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada.',
+          'message' => 'Se ha enviado un correo con las instrucciones para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada y la carpeta de spam.',
           'type' => 'success'
         ];
       case self::ERROR_INVALID_CREDENTIALS:
         return [
           'success' => false,
-          'message' => 'No se encontró ninguna cuenta asociada a este correo electrónico. Por favor, verifica el correo ingresado.',
+          'message' => 'No se encontró ninguna cuenta activa asociada a este correo electrónico. Por favor, verifica el correo ingresado.',
           'type' => 'error'
         ];
       case self::ERROR_INVALID_DATA:
@@ -217,10 +226,16 @@ class Auth
           'message' => 'Por favor, ingresa un correo electrónico válido.',
           'type' => 'error'
         ];
+      case self::ERROR_DATABASE:
+        return [
+          'success' => false,
+          'message' => 'Hubo un error al procesar tu solicitud. Por favor, verifica tu conexión a internet e intenta nuevamente.',
+          'type' => 'error'
+        ];
       default:
         return [
           'success' => false,
-          'message' => 'Hubo un error al procesar tu solicitud. Por favor, intenta nuevamente más tarde.',
+          'message' => 'Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde o contacta al soporte técnico.',
           'type' => 'error'
         ];
     }

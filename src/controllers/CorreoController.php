@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use PHPMailer\PHPMailer\{PHPMailer, SMTP, Exception};
+use PHPMailer\PHPMailer\{PHPMailer, Exception};
 
 class CorreoController
 {
