@@ -85,6 +85,28 @@ if ($request_method === 'POST' && $route === '/login') {
     exit;
 }
 
+if ($request_method === 'POST' && $route === '/recuperar_password') {
+    (new AuthController())->recuperarPassword(['correo' => $_REQUEST['correo']]);
+    exit;
+}
+
+if ($request_method === 'POST' && $route === '/reset_password') {
+    (new AuthController())->resetPassword([
+        'token' => $_REQUEST['token'],
+        'password' => $_REQUEST['password']
+    ]);
+    exit;
+}
+
+if ($request_method === 'GET' && $route === '/reset-password') {
+    if (!isset($_GET['token'])) {
+        header('Location: /TuRifadigi/login');
+        exit;
+    }
+    require_once 'views/auth/reset-password.php';
+    exit;
+}
+
 if ($request_method === 'POST' && $route === '/registro_usuario') {
     (new RegisterUserController())->insert();
     exit;
@@ -161,20 +183,25 @@ switch ($route) {
         }
         break;
 
-    case '/register':
+    case '/signup':
         if (!isset($_SESSION['usuario'])) {
-            require_once 'views/auth/register.php';
+            require_once 'views/auth/signup.php';
         } else {
             (new HomeController())->index();
         }
         break;
+
+    case '/forgot-password':
+        require_once 'views/auth/forgot-password.php';
+        break;
+
     case '/boletos/obtenerBoletos':
         require_once 'views/sorteo/boletosDisponibility.php';
         break;
 
     case '/procesarCompra':
-
         break;
+
     case '/sorteo':
         (new BoletoController())->index();
         break;
@@ -182,10 +209,6 @@ switch ($route) {
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
         break;
-
-    //case '/boletos':
-    //    require_once 'views/administracion/show.php';
-    //    break;
 
     case '/boletos':
         (new BoletoController())->indexAdmin();

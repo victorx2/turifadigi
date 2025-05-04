@@ -172,8 +172,8 @@
                       </a>
 
                     </li>
-                    <li class="dropdown" S>
-                      <a href="/TuRifadigi/register">crear cuenta
+                    <li class="dropdown">
+                      <a href="/TuRifadigi/signup">crear cuenta
                         <span class="main-menu-border"></span>
                       </a>
                     </li>

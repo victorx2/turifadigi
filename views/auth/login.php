@@ -12,15 +12,14 @@
           <form id="form-login" class="login-form" method="post">
             <div class="form-group mb-3">
               <div class="input-group">
-                <input 
-                  type="text" 
-                  name="usuario" 
-                  id="usuario" 
+                <input
+                  type="text"
+                  name="usuario"
+                  id="usuario"
                   class="form-control"
                   placeholder="Nombre de usuario"
                   required
-                  autocomplete="username"
-                >
+                  autocomplete="username">
               </div>
             </div>
 
@@ -33,8 +32,7 @@
                   class="form-control"
                   placeholder="Contraseña"
                   required
-                  autocomplete="current-password"
-                >
+                  autocomplete="current-password">
                 <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()">
                   <i class="fas fa-eye"></i>
                 </span>
@@ -50,7 +48,7 @@
 
           <div class="text-center mt-4">
             <p class="register-link">
-              ¿No tienes cuenta? <a href="/TuRifadigi/register">Regístrate aquí</a>
+              ¿No tienes cuenta? <a href="/TuRifadigi/signup">Regístrate aquí</a>
             </p>
             <p class="forgot-password-link mt-2">
               <a href="/TuRifadigi/forgot-password">¿Olvidaste tu contraseña?</a>
@@ -160,7 +158,7 @@
   function togglePasswordVisibility() {
     const passwordInput = document.getElementById('password');
     const eyeIcon = document.querySelector('.password-toggle i');
-    
+
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';
       eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
@@ -173,7 +171,7 @@
   // Validación del formulario
   document.getElementById('form-login').addEventListener('submit', function(event) {
     event.preventDefault();
-    
+
     const usuario = document.getElementById('usuario');
     const password = document.getElementById('password');
     let valid = true;
@@ -193,23 +191,23 @@
     if (valid) {
       const formData = new FormData(this);
       fetch('/TuRifadigi/login', {
-        method: 'POST',
-        body: new URLSearchParams(formData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          showToast('success', 'Éxito', data.message);
-          setTimeout(() => {
-            window.location.href = '/TuRifadigi/home';
-          }, 2000);
-        } else {
-          showToast('error', 'Error', data.message);
-        }
-      })
-      .catch(error => {
-        showToast('error', 'Error', 'Hubo un problema al procesar la solicitud');
-      });
+          method: 'POST',
+          body: new URLSearchParams(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            showToast('success', 'Éxito', data.message);
+            setTimeout(() => {
+              window.location.href = '/TuRifadigi/home';
+            }, 2000);
+          } else {
+            showToast('error', 'Error', data.message);
+          }
+        })
+        .catch(error => {
+          showToast('error', 'Error', 'Hubo un problema al procesar la solicitud');
+        });
     }
   });
 
@@ -218,10 +216,10 @@
     const toast = new bootstrap.Toast(document.getElementById('notificationToast'));
     const toastTitle = document.getElementById('toastTitle');
     const toastMessage = document.getElementById('toastMessage');
-    
+
     toastTitle.textContent = title;
     toastMessage.textContent = message;
-    
+
     toast.show();
   }
 </script>
