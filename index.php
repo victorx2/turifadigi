@@ -85,11 +85,6 @@ if ($request_method === 'POST' && $route === '/login') {
     exit;
 }
 
-if ($request_method === 'POST' && $route === '/recuperar_password') {
-    (new AuthController())->recuperarPassword(['correo' => $_REQUEST['correo']]);
-    exit;
-}
-
 if ($request_method === 'POST' && $route === '/reset_password') {
     (new AuthController())->resetPassword([
         'token' => $_REQUEST['token'],
@@ -233,7 +228,9 @@ switch ($route) {
     case '/api/login':
         require_once 'src/API/login.php';
         break;
-
+    case '/api/recovery_password':
+        require_once 'src/API/password_recovery.php';
+        break;
     default:
         require_once 'views/main.php';
         break;
