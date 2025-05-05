@@ -190,7 +190,7 @@
 
     if (valid) {
       const formData = new FormData(this);
-      fetch('/TuRifadigi/login', {
+      fetch('/TuRifadigi/api/login', {
           method: 'POST',
           body: new URLSearchParams(formData)
         })

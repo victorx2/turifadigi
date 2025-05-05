@@ -81,7 +81,7 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
 // }
 
 if ($request_method === 'POST' && $route === '/login') {
-    (new AuthController())->login($_REQUEST['usuario'], $_REQUEST['password']);
+
     exit;
 }
 
@@ -227,6 +227,11 @@ switch ($route) {
 
     case '/main_config':
         (new ConfigMainController())->index();
+        break;
+
+    //SECCIONES API
+    case '/api/login':
+        require_once 'src/API/login.php';
         break;
 
     default:

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\config\Conexion;
 use App\Controllers\CorreoController;
+use App\Controllers\CriptografiaController;
 use Exception;
 
 class Auth
@@ -28,10 +29,12 @@ class Auth
   const MESSAGE_INVALID_DATA = 'Datos inválidos o incompletos';
 
   private $db;
+  private $ctf;
 
   public function __construct()
   {
     $this->db = new Conexion();
+    $this->ctf = new CriptografiaController();
   }
 
   public function login(array $request): int
@@ -47,13 +50,10 @@ class Auth
 
       // Consulta SQL para validar solo por usuario
       $sql = "SELECT * FROM usuarios WHERE 
-             usuario = :usuario 
-             AND password = :password 
-             LIMIT 1";
+             usuario = :usuario";
 
       $params = [
         ':usuario' => trim($request['usuario']),
-        ':password' => trim($request['password'])
       ];
 
       // Debug de la consulta
@@ -66,11 +66,15 @@ class Auth
       error_log('Query result: ' . json_encode($result));
 
       if ($result && count($result) > 0) {
+        $lomo = $this->ctf->desencriptacion($result[0]["password"]);
+        var_dump($lomo, $request['password']);
+        if ($lomo != (int)$request['password']) {
+          return self::ERROR_INVALID_DATA;
+        }
         // Guardar datos en sesión
         $_SESSION['id_usuario'] = $result[0]['id_usuario'];
         $_SESSION['usuario'] = $result[0]['usuario'];
         $_SESSION['logged_in'] = true;
-
         return self::LOGIN_SUCCESS;
       }
 
