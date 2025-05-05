@@ -149,13 +149,37 @@ require_once 'views/layouts/header.php';
           </ul>
         </div>
       </div>
+
       <div class="col-xl-7">
         <div class="why-we-are__right">
+          <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success">
+              <?php echo $_SESSION['success'];
+              unset($_SESSION['success']); ?>
+            </div>
+          <?php endif; ?>
+
+          <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger">
+              <?php echo $_SESSION['error'];
+              unset($_SESSION['error']); ?>
+            </div>
+          <?php endif; ?>
+
+          <form action="/TuRifadigi/banner_update" method="POST" enctype="multipart/form-data" class="mb-3">
+            <div class="form-group">
+              <label for="imagen">Actualizar Banner (Solo PNG o JPG, máximo 5MB)</label>
+              <input type="file" class="form-control" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Actualizar Banner</button>
+          </form>
+
           <div class="why-we-are__img wow slideInRight animated" data-wow-delay="0.1s" data-wow-duration="1500ms">
-            <img src="assets/img/backgrounds/sorteo.jpg" alt="TuRifaDigital">
+            <img src="<?php echo htmlspecialchars($imagenFondo); ?>" alt="TuRifaDigital">
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -221,7 +245,7 @@ require_once 'views/layouts/header.php';
     </div>
     <div class="row">
       <!-- Formulario para crear/editar cuentas de pago -->
-      <div class="container mb-4">
+      <!--  <div class="container mb-4">
         <form id="formCuentaPago" enctype="multipart/form-data">
           <input type="hidden" name="id" id="idCuenta">
           <input type="hidden" name="imagen_actual" id="imagen_actual">
@@ -255,7 +279,7 @@ require_once 'views/layouts/header.php';
             </div>
           </div>
         </form>
-      </div>
+      </div> -->
 
       <!-- Aquí se mostrarán las cuentas dinámicamente -->
       <div id="listaCuentas" class="row"></div>
@@ -350,6 +374,7 @@ require_once 'views/layouts/header.php';
     </div>
   </div>
 
+  <!-- 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       cargarCuentas();
@@ -435,7 +460,8 @@ require_once 'views/layouts/header.php';
           });
       }
     });
-  </script>
+  </script> 
+  -->
 </section>
 <!--Services One End-->
 
@@ -535,7 +561,7 @@ require_once 'views/layouts/footer.php';
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
 
-<script>
+<!-- <script>
   let contador = 1; // Para IDs únicos
 
   function agregarCartaDesdeForm() {
@@ -593,4 +619,4 @@ require_once __DIR__ . '/../layouts/footer.php';
     if (nombre) carta.querySelector(".services-one__title").innerText = nombre;
     if (info) carta.querySelector(".services-one__text").innerText = info;
   }
-</script>
+</script> -->

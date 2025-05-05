@@ -57,17 +57,84 @@
     transform: scale(1.1);
   }
 
-  .ui.search.dropdown {
+  /* Estilos para los selects personalizados */
+  .select-container {
     width: 100%;
     margin-top: 20px;
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(10px);
+    position: relative;
   }
 
-  .ui.search.dropdown.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .select-custom {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .custom-dropdown {
+    position: relative;
+    width: 100%;
+  }
+
+  .dropdown-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .dropdown-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+  }
+
+  .dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-top: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+  }
+
+  .dropdown-options.show {
+    display: block;
+  }
+
+  .dropdown-option {
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+
+  .dropdown-option:hover {
+    background-color: #f5f5f5;
+  }
+
+  .dropdown-group-label {
+    padding: 8px 12px;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    color: #666;
+  }
+
+  .no-results {
+    padding: 12px;
+    color: #666;
+    text-align: center;
+    font-style: italic;
   }
 
   .map-container {
@@ -86,105 +153,101 @@
   }
 </style>
 
-<div class="form-group-custom">
-  <label>Ubicación</label>
+<div class="form-group-custom" style="margin-bottom: 20px;">
+  <label class="required" style="color: #2962ff; font-weight: bold;">Ubicación</label>
 
   <div class="location-options">
-    <label id="venezuelaLabel">
+    <label id="venezuelaLabel" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
       <input type="radio" name="location_type" value="venezuela" checked>
       <img src="assets/img/backgrounds/vzla.jpg" alt="Bandera de Venezuela" class="map-icon">
       <span>Venezuela</span>
     </label>
 
-    <label id="latinoamericaLabel">
+    <label id="latinoamericaLabel" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
       <input type="radio" name="location_type" value="internacional">
       <img src="assets/img/backgrounds/america.png" alt="Mapa de América" class="map-icon">
       <span>Internacional</span>
     </label>
   </div>
 
-  <div id="venezuela-dropdown" class="ui search dropdown">
-    <input type="hidden" name="estado_venezuela">
-    <div class="default text">Seleccione un estado</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-      <div class="item" data-value="AM">Amazonas</div>
-      <div class="item" data-value="AN">Anzoátegui</div>
-      <div class="item" data-value="AP">Apure</div>
-      <div class="item" data-value="AR">Aragua</div>
-      <div class="item" data-value="BA">Barinas</div>
-      <div class="item" data-value="BO">Bolívar</div>
-      <div class="item" data-value="CA">Carabobo</div>
-      <div class="item" data-value="CO">Cojedes</div>
-      <div class="item" data-value="DA">Delta Amacuro</div>
-      <div class="item" data-value="DC">Distrito Capital</div>
-      <div class="item" data-value="FA">Falcón</div>
-      <div class="item" data-value="GU">Guárico</div>
-      <div class="item" data-value="LA">Lara</div>
-      <div class="item" data-value="MI">Miranda</div>
-      <div class="item" data-value="MO">Monagas</div>
-      <div class="item" data-value="ME">Mérida</div>
-      <div class="item" data-value="NE">Nueva Esparta</div>
-      <div class="item" data-value="PO">Portuguesa</div>
-      <div class="item" data-value="SU">Sucre</div>
-      <div class="item" data-value="TR">Trujillo</div>
-      <div class="item" data-value="TA">Táchira</div>
-      <div class="item" data-value="VA">Vargas</div>
-      <div class="item" data-value="YA">Yaracuy</div>
-      <div class="item" data-value="ZU">Zulia</div>
+  <div id="venezuela-dropdown" class="custom-dropdown">
+    <input type="text" class="dropdown-input" placeholder="Buscar estado..." data-type="venezuela" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
+    <input type="hidden" name="estado_venezuela" id="estado-venezuela-value">
+    <div class="dropdown-options">
+      <div class="dropdown-option" data-value="AM">Amazonas</div>
+      <div class="dropdown-option" data-value="AN">Anzoátegui</div>
+      <div class="dropdown-option" data-value="AP">Apure</div>
+      <div class="dropdown-option" data-value="AR">Aragua</div>
+      <div class="dropdown-option" data-value="BA">Barinas</div>
+      <div class="dropdown-option" data-value="BO">Bolívar</div>
+      <div class="dropdown-option" data-value="CA">Carabobo</div>
+      <div class="dropdown-option" data-value="CO">Cojedes</div>
+      <div class="dropdown-option" data-value="DA">Delta Amacuro</div>
+      <div class="dropdown-option" data-value="DC">Distrito Capital</div>
+      <div class="dropdown-option" data-value="FA">Falcón</div>
+      <div class="dropdown-option" data-value="GU">Guárico</div>
+      <div class="dropdown-option" data-value="LA">Lara</div>
+      <div class="dropdown-option" data-value="MI">Miranda</div>
+      <div class="dropdown-option" data-value="MO">Monagas</div>
+      <div class="dropdown-option" data-value="ME">Mérida</div>
+      <div class="dropdown-option" data-value="NE">Nueva Esparta</div>
+      <div class="dropdown-option" data-value="PO">Portuguesa</div>
+      <div class="dropdown-option" data-value="SU">Sucre</div>
+      <div class="dropdown-option" data-value="TR">Trujillo</div>
+      <div class="dropdown-option" data-value="TA">Táchira</div>
+      <div class="dropdown-option" data-value="VA">Vargas</div>
+      <div class="dropdown-option" data-value="YA">Yaracuy</div>
+      <div class="dropdown-option" data-value="ZU">Zulia</div>
     </div>
-    <input type="text" class="search" placeholder="">
   </div>
 
-  <div id="paises-dropdown" class="ui search dropdown" style="display: none;">
-    <input type="hidden" name="pais_internacional">
-    <div class="default text">Seleccione un país</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-      <div class="header">América del Norte</div>
-      <div class="item" data-value="CA">Canadá</div>
-      <div class="item" data-value="US">Estados Unidos</div>
-      <div class="item" data-value="MX">México</div>
+  <div id="paises-dropdown" class="custom-dropdown" style="display: none;">
+    <input type="text" class="dropdown-input" placeholder="Buscar país..." data-type="internacional" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
+    <input type="hidden" name="pais_internacional" id="pais-internacional-value">
+    <div class="dropdown-options">
+      <div class="dropdown-group-label">América del Norte</div>
+      <div class="dropdown-option" data-value="CA">Canadá</div>
+      <div class="dropdown-option" data-value="US">Estados Unidos</div>
+      <div class="dropdown-option" data-value="MX">México</div>
 
-      <div class="header">América Central</div>
-      <div class="item" data-value="BZ">Belice</div>
-      <div class="item" data-value="CR">Costa Rica</div>
-      <div class="item" data-value="SV">El Salvador</div>
-      <div class="item" data-value="GT">Guatemala</div>
-      <div class="item" data-value="HN">Honduras</div>
-      <div class="item" data-value="NI">Nicaragua</div>
-      <div class="item" data-value="PA">Panamá</div>
+      <div class="dropdown-group-label">América Central</div>
+      <div class="dropdown-option" data-value="BZ">Belice</div>
+      <div class="dropdown-option" data-value="CR">Costa Rica</div>
+      <div class="dropdown-option" data-value="SV">El Salvador</div>
+      <div class="dropdown-option" data-value="GT">Guatemala</div>
+      <div class="dropdown-option" data-value="HN">Honduras</div>
+      <div class="dropdown-option" data-value="NI">Nicaragua</div>
+      <div class="dropdown-option" data-value="PA">Panamá</div>
 
-      <div class="header">El Caribe</div>
-      <div class="item" data-value="AG">Antigua y Barbuda</div>
-      <div class="item" data-value="BS">Bahamas</div>
-      <div class="item" data-value="BB">Barbados</div>
-      <div class="item" data-value="CU">Cuba</div>
-      <div class="item" data-value="DM">Dominica</div>
-      <div class="item" data-value="GD">Granada</div>
-      <div class="item" data-value="HT">Haití</div>
-      <div class="item" data-value="JM">Jamaica</div>
-      <div class="item" data-value="DO">República Dominicana</div>
-      <div class="item" data-value="KN">San Cristóbal y Nieves</div>
-      <div class="item" data-value="LC">Santa Lucía</div>
-      <div class="item" data-value="VC">San Vicente y las Granadinas</div>
-      <div class="item" data-value="TT">Trinidad y Tobago</div>
+      <div class="dropdown-group-label">El Caribe</div>
+      <div class="dropdown-option" data-value="AG">Antigua y Barbuda</div>
+      <div class="dropdown-option" data-value="BS">Bahamas</div>
+      <div class="dropdown-option" data-value="BB">Barbados</div>
+      <div class="dropdown-option" data-value="CU">Cuba</div>
+      <div class="dropdown-option" data-value="DM">Dominica</div>
+      <div class="dropdown-option" data-value="GD">Granada</div>
+      <div class="dropdown-option" data-value="HT">Haití</div>
+      <div class="dropdown-option" data-value="JM">Jamaica</div>
+      <div class="dropdown-option" data-value="DO">República Dominicana</div>
+      <div class="dropdown-option" data-value="KN">San Cristóbal y Nieves</div>
+      <div class="dropdown-option" data-value="LC">Santa Lucía</div>
+      <div class="dropdown-option" data-value="VC">San Vicente y las Granadinas</div>
+      <div class="dropdown-option" data-value="TT">Trinidad y Tobago</div>
 
-      <div class="header">América del Sur</div>
-      <div class="item" data-value="AR">Argentina</div>
-      <div class="item" data-value="BO">Bolivia</div>
-      <div class="item" data-value="BR">Brasil</div>
-      <div class="item" data-value="CL">Chile</div>
-      <div class="item" data-value="CO">Colombia</div>
-      <div class="item" data-value="EC">Ecuador</div>
-      <div class="item" data-value="GY">Guyana</div>
-      <div class="item" data-value="PY">Paraguay</div>
-      <div class="item" data-value="PE">Perú</div>
-      <div class="item" data-value="SR">Surinam</div>
-      <div class="item" data-value="UY">Uruguay</div>
-      <div class="item" data-value="VE">Venezuela</div>
+      <div class="dropdown-group-label">América del Sur</div>
+      <div class="dropdown-option" data-value="AR">Argentina</div>
+      <div class="dropdown-option" data-value="BO">Bolivia</div>
+      <div class="dropdown-option" data-value="BR">Brasil</div>
+      <div class="dropdown-option" data-value="CL">Chile</div>
+      <div class="dropdown-option" data-value="CO">Colombia</div>
+      <div class="dropdown-option" data-value="EC">Ecuador</div>
+      <div class="dropdown-option" data-value="GY">Guyana</div>
+      <div class="dropdown-option" data-value="PY">Paraguay</div>
+      <div class="dropdown-option" data-value="PE">Perú</div>
+      <div class="dropdown-option" data-value="SR">Surinam</div>
+      <div class="dropdown-option" data-value="UY">Uruguay</div>
+      <div class="dropdown-option" data-value="VE">Venezuela</div>
     </div>
-    <input type="text" class="search" placeholder="">
   </div>
 </div>
 
@@ -196,42 +259,102 @@
     const venezuelaLabel = document.getElementById('venezuelaLabel');
     const latinoamericaLabel = document.getElementById('latinoamericaLabel');
 
-    // Inicializar los dropdowns de Semantic UI
-    $('.ui.dropdown').dropdown();
-
     // Función para manejar el cambio de radio button
     function handleLocationChange(e) {
-      // Remover clase active de todos los labels
       venezuelaLabel.classList.remove('active');
       latinoamericaLabel.classList.remove('active');
-      venezuelaDropdown.classList.remove('visible');
-      paisesDropdown.classList.remove('visible');
 
       if (e.target.value === 'venezuela') {
-        venezuelaDropdown.style.display = 'block';
+        venezuelaDropdown.style.display = '';
         paisesDropdown.style.display = 'none';
         venezuelaLabel.classList.add('active');
-        setTimeout(() => venezuelaDropdown.classList.add('visible'), 50);
       } else {
         venezuelaDropdown.style.display = 'none';
-        paisesDropdown.style.display = 'block';
+        paisesDropdown.style.display = '';
         latinoamericaLabel.classList.add('active');
-        setTimeout(() => paisesDropdown.classList.add('visible'), 50);
       }
     }
 
-    // Agregar el evento a cada radio button
+    // Inicializar dropdowns personalizados
+    function initializeCustomDropdowns() {
+      const dropdowns = document.querySelectorAll('.custom-dropdown');
+
+      dropdowns.forEach(dropdown => {
+        const input = dropdown.querySelector('.dropdown-input');
+        const options = dropdown.querySelector('.dropdown-options');
+        const allOptions = dropdown.querySelectorAll('.dropdown-option');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+
+        // Mostrar/ocultar opciones al hacer clic en el input
+        input.addEventListener('click', () => {
+          options.classList.toggle('show');
+        });
+
+        // Cerrar dropdown al hacer clic fuera
+        document.addEventListener('click', (e) => {
+          if (!dropdown.contains(e.target)) {
+            options.classList.remove('show');
+          }
+        });
+
+        // Filtrar opciones al escribir
+        input.addEventListener('input', () => {
+          const searchText = input.value.toLowerCase();
+          let hasResults = false;
+
+          allOptions.forEach(option => {
+            const text = option.textContent.toLowerCase();
+            if (text.includes(searchText)) {
+              option.style.display = '';
+              hasResults = true;
+            } else {
+              option.style.display = 'none';
+            }
+          });
+
+          // Mostrar mensaje si no hay resultados
+          const existingNoResults = options.querySelector('.no-results');
+          if (!hasResults) {
+            if (!existingNoResults) {
+              const noResults = document.createElement('div');
+              noResults.className = 'no-results';
+              noResults.textContent = 'No se encontraron resultados';
+              options.appendChild(noResults);
+            }
+          } else if (existingNoResults) {
+            existingNoResults.remove();
+          }
+
+          options.classList.add('show');
+        });
+
+        // Seleccionar opción
+        allOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            const value = option.getAttribute('data-value');
+            const text = option.textContent;
+            input.value = text;
+            hiddenInput.value = value;
+            options.classList.remove('show');
+          });
+        });
+      });
+    }
+
+    // Agregar eventos a los radio buttons
     locationRadios.forEach(radio => {
       radio.addEventListener('change', handleLocationChange);
     });
 
-    // Establecer el estado inicial
+    // Establecer estado inicial
     const initialSelection = document.querySelector('input[name="location_type"]:checked');
     if (initialSelection) {
       handleLocationChange({
         target: initialSelection
       });
-      setTimeout(() => venezuelaDropdown.classList.add('visible'), 50);
     }
+
+    // Inicializar dropdowns personalizados
+    initializeCustomDropdowns();
   });
 </script>
