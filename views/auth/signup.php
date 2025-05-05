@@ -40,7 +40,7 @@
               <div class="col-xl-6 col-lg-6">
                 <label for="ubicacion" class="form-label" style="font-weight: bold;">Ubicación *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion" placeholder="Ingrese su ubicación" title="La ubicación es requerida" required>
+                  <input type="text" name="ubicacion" id="ubicacion" placeholder="E.J: País, estado, dirección" title="La ubicación es requerida" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">

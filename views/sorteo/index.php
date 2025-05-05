@@ -8,6 +8,16 @@
 
     <div class="progressLoader">
       <style>
+        .no-sort-activ {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          font-size: 20px;
+          color: #000;
+          margin: auto;
+        }
+
         .progressLoader {
           display: flex;
           justify-content: center;
@@ -327,14 +337,24 @@
 
       mostrarCargando(); // Mostrar el texto de carga
       let comprados = 0;
+
       await fetch('./boletos/obtenerBoletos') // Petición al backend
         .then(response => response.json())
         .then(data => {
           if (data && Array.isArray(data['data'])) {
             const boletos = data['data'];
+
+            if (boletos.rifa_estado == 0) {
+              const nuevoBoleto = document.createElement('div');
+              boletosList.style.display = 'flex';
+              nuevoBoleto.classList.add('no-sort-activ');
+              nuevoBoleto.textContent = "Sin sorteos activos";
+              fragment.appendChild(nuevoBoleto);
+              return
+            }
+
             boletos.forEach(boleto => {
               const nuevoBoleto = document.createElement('div');
-
               if (boleto.estado == "reservado") {
                 nuevoBoleto.classList.add('boleto', 'disabled');
                 comprados++;

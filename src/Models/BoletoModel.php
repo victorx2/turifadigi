@@ -20,55 +20,34 @@ class BoletoModel
   {
     try {
       // Verificar si existe una rifa con su configuración asociada
-      $sqlRifa = "SELECT r.id_rifa 
+      $sqlRifa = "SELECT *
                  FROM rifas r
-                 JOIN configuracion c ON r.id_configuracion = c.id_configuracion
-                 WHERE r.id_rifa = 1";
+                 INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+                 WHERE c.estado = 1";
       $resultRifa = $this->db->consultar($sqlRifa, []);
 
-      if (empty($resultRifa)) {
-        try {
-            // Primero insertar la configuración necesaria con las columnas correctas
-            $sqlInsertConfig = "INSERT INTO configuracion (id_configuracion, fecha_inicio, fecha_fin) 
-                              VALUES (1, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY))";
-            $this->db->ejecutar($sqlInsertConfig, []);
+      // CREAR RIFA DEBERIA SER OTRA FUNCION BB
+      // if (empty($resultRifa)) {
+      //   try {
+      //       // Primero insertar la configuración necesaria con las columnas correctas
+      //       $sqlInsertConfig = "INSERT INTO configuracion (id_configuracion, fecha_inicio, fecha_fin) 
+      //                         VALUES (1, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY))";
+      //       $this->db->ejecutar($sqlInsertConfig, []);
 
-            // Luego insertar la rifa con la configuración asociada
-            $sqlInsertRifa = "INSERT INTO rifas (id_rifa, titulo, descripcion, estado, fecha_creacion, id_configuracion) 
-                            VALUES (1, '🎉 ¡POR EL SUPERGANA! 🎉', 'Rifa principal', 'activa', CURDATE(), 1)";
-            $this->db->ejecutar($sqlInsertRifa, []);
-        } catch (Exception $e) {
-            throw new Exception("Error al inicializar la rifa: " . $e->getMessage());
-        }
-      }
+      //       // Luego insertar la rifa con la configuración asociada
+      //       $sqlInsertRifa = "INSERT INTO rifas (id_rifa, titulo, descripcion, estado, fecha_creacion, id_configuracion) 
+      //                       VALUES (1, '🎉 ¡POR EL SUPERGANA! 🎉', 'Rifa principal', 'activa', CURDATE(), 1)";
+      //       $this->db->ejecutar($sqlInsertRifa, []);
+      //   } catch (Exception $e) {
+      //       throw new Exception("Error al inicializar la rifa: " . $e->getMessage());
+      //   }
+      // }
 
       // Verificar si ya existen boletos y cuántos hay
-      $sql = "SELECT COUNT(*) as total FROM boletos";
-      $result = $this->db->consultar($sql, []);
-      $totalActual = $result[0]['total'];
-
-      if ($totalActual < 9999) {
-        // Insertar boletos faltantes usando una sola consulta
-        $sqlInsert = "INSERT IGNORE INTO boletos (id_rifa, numero_boleto, estado)
-                      WITH RECURSIVE numeros AS (
-                        SELECT 1 as n
-                        UNION ALL
-                        SELECT n + 1 FROM numeros WHERE n < 9999
-                      )
-                      SELECT 1, LPAD(n, 4, '0'), 'disponible'
-                      FROM numeros
-                      WHERE LPAD(n, 4, '0') NOT IN (SELECT numero_boleto FROM boletos)";
-
-        $this->db->ejecutar($sqlInsert, []);
-
-        // Verificar el total final
-        $sqlVerificar = "SELECT COUNT(*) as total FROM boletos";
-        $resultVerificar = $this->db->consultar($sqlVerificar, []);
-
-        if ($resultVerificar[0]['total'] < 9999) {
-          throw new Exception("Error: No se pudieron crear todos los boletos. Total actual: " . $resultVerificar[0]['total']);
-        }
+      if (!$resultRifa) {
+        throw new Exception("No se encontró una rifa activa");
       }
+
     } catch (Exception $e) {
       throw new Exception("Error al inicializar boletos: " . $e->getMessage());
     }
@@ -292,7 +271,7 @@ class BoletoModel
       $this->inicializarBoletos();
 
       // Optimizamos la consulta para mejor rendimiento
-      $sql = "SELECT id_boleto, id_rifa, estado, numero_boleto FROM `boletos` ORDER BY `boletos`.`id_boleto` ASC;";
+      $sql = "SELECT b.id_boleto, b.id_rifa, b.numero_boleto, b.estado AS estado, c.estado AS rifa_estado, r.id_rifa FROM boletos b INNER JOIN rifas r INNER JOIN configuracion c WHERE c.estado = 1 ORDER BY b.id_boleto ASC;";
 
       $boletos = $this->db->consultar($sql, []);
 
@@ -370,10 +349,6 @@ class BoletoModel
       throw new Exception("Error al obtener los datos de compras: " . $e->getMessage());
     }
   }
-
-
-
-
 
   public function marcarCompraComoPagada($id_compra)
   {
