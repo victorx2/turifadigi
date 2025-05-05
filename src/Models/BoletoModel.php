@@ -19,14 +19,27 @@ class BoletoModel
   public function inicializarBoletos()
   {
     try {
-      // Verificar si existe una rifa
-      $sqlRifa = "SELECT id_rifa FROM rifas WHERE id_rifa = 1";
+      // Verificar si existe una rifa con su configuración asociada
+      $sqlRifa = "SELECT r.id_rifa 
+                 FROM rifas r
+                 JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+                 WHERE r.id_rifa = 1";
       $resultRifa = $this->db->consultar($sqlRifa, []);
 
       if (empty($resultRifa)) {
-        $sqlInsertRifa = "INSERT INTO rifas (id_rifa, titulo, descripcion, fecha_inicio, fecha_fin, estado) 
-                         VALUES (1, '🎉 ¡POR EL SUPERGANA! 🎉', 'Rifa principal', CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY), 'activa')";
-        $this->db->ejecutar($sqlInsertRifa, []);
+        try {
+            // Primero insertar la configuración necesaria con las columnas correctas
+            $sqlInsertConfig = "INSERT INTO configuracion (id_configuracion, fecha_inicio, fecha_fin) 
+                              VALUES (1, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY))";
+            $this->db->ejecutar($sqlInsertConfig, []);
+
+            // Luego insertar la rifa con la configuración asociada
+            $sqlInsertRifa = "INSERT INTO rifas (id_rifa, titulo, descripcion, estado, fecha_creacion, id_configuracion) 
+                            VALUES (1, '🎉 ¡POR EL SUPERGANA! 🎉', 'Rifa principal', 'activa', CURDATE(), 1)";
+            $this->db->ejecutar($sqlInsertRifa, []);
+        } catch (Exception $e) {
+            throw new Exception("Error al inicializar la rifa: " . $e->getMessage());
+        }
       }
 
       // Verificar si ya existen boletos y cuántos hay
