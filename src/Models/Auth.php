@@ -199,15 +199,6 @@ class Auth
     }
   }
 
-  private function generarPasswordSegura(int $longitud = 8): string
-  {
-    $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $password = '';
-    for ($i = 0; $i < $longitud; $i++) {
-      $password .= $caracteres[rand(0, strlen($caracteres) - 1)];
-    }
-    return $password;
-  }
 
   public function getStatusMessage(int $status): array
   {
