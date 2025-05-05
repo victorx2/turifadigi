@@ -62,7 +62,7 @@
         const progressValue = document.querySelector('.progress-value');
         const progressLabel = document.querySelector('.progress-label');
 
-        let width = 5;
+        let width = 5; // Valor inicial de la barra de progreso
         let totalWidth = comprado / total * 100;
 
         if (totalWidth > width) { // Cambia el valor de 100 por el total real de boletos
@@ -74,10 +74,13 @@
               progressValue.style.width = width + '%';
               progressLabel.textContent = width + '%';
             }
-          }, 20); // Cambia el tiempo para ajustar la velocidad de la animación
-        } else {
+          }, 30); // Cambia el tiempo para ajustar la velocidad de la animación
+        } else if (totalWidth > 0 && totalWidth < 5) {
           progressValue.style.width = '5%';
           progressLabel.textContent = '1%';
+        } else {
+          progressValue.style.width = width + '%';
+          progressLabel.textContent = '0%';
         }
       }
     </script>
@@ -345,7 +348,9 @@
               todosLosBoletos.push(nuevoBoleto);
             });
 
-            animateProgressBar(boletos.length, comprados); // Llama a la función de animación con el total y el número de boletos comprados
+            setTimeout(() => {
+              animateProgressBar(boletos.length, comprados) //Llama a la función de animación con el total y el número de boletos comprados
+            }, 1000);
 
             boletosList.appendChild(fragment);
           } else {
