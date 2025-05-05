@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="assets/css/boletos.css">
 <link rel="stylesheet" href="assets/css/chip_alzar.css">
+<link rel="stylesheet" href="assets/css/premio.css">
 
+<?php require_once 'views/sorteo/datos_personales/premio.php'; ?>
 
 <div class="container-fluid">
   <div class="text-center">
@@ -40,23 +42,15 @@
         .progress-label {
           margin: 0 5px;
         }
-
-        /* 
-        @keyframes load {
-          0% {
-            width: 5%;
-          }
-
-          100% {
-            width: 56%;
-          }
-        } */
       </style>
+
       <div class="progress">
         <div class="progress-value"></div>
         <div class="progress-label">0%</div>
       </div>
+
     </div>
+
     <script>
       function animateProgressBar(total, comprado) {
         const progressValue = document.querySelector('.progress-value');
@@ -84,6 +78,7 @@
         }
       }
     </script>
+
     <div class="elegir-title">
       <button id="btnRandomNumber" class="magic-button">
         <i class="fa fa-star"></i>
@@ -124,24 +119,50 @@
       Total: <span id="totalBSDisplay">4252.40 BS</span> (1 boletos)
     </div>
     <div class="form-section">
-      <h2 class="form-section-title">
-        <i class="fas fa-user"></i>
+      <h2 class="form-section-title" style="color: #2962ff; font-weight: bold; font-size: 24px;">
+        <i class="fas fa-user" style="color: #2962ff;"></i>
         DATOS PERSONALES
       </h2>
-      <div class="form-group-custom">
-        <label class="required">Nombres y Apellidos</label>
-        <input type="text" class="form-control-custom" id="nombre" placeholder="Nombre Apellido">
+      <div class="form-group-custom" style="margin-bottom: 20px;">
+        <label class="required" style="color: #2962ff; font-weight: bold;">Nombres y Apellidos</label>
+        <input type="text" class="form-control-custom" id="nombre" placeholder="Nombre Apellido" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
       </div>
-      <div class="form-group-custom">
-        <label class="required">Cédula</label>
-        <input type="text" class="form-control-custom" id="cedula" placeholder="9384235">
+      <div class="form-group-custom" style="margin-bottom: 20px;">
+        <label class="required" style="color: #2962ff; font-weight: bold;">Cédula</label>
+        <input type="text" class="form-control-custom" id="cedula" placeholder="9384235" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
       </div>
-      <?php require_once 'views/sorteo/celular.php'; ?>
-      <?php require_once 'views/sorteo/ubicaciones.php'; ?>
+
+
+      <?php require_once 'views/sorteo/datos_personales/celular.php'; ?>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <?php require_once 'views/sorteo/datos_personales/ubicaciones.php'; ?>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
     </div>
-    <?php require_once 'views/sorteo/modo_de_pago.php'; ?>
-    <?php require_once 'views/sorteo/comprobante_de_pago.php'; ?>
+
+    <?php require_once 'views/sorteo/datos_personales/modo_de_pago.php'; ?>
+
+    <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
+
     <button type="submit" class="btn-confirmar">CONFIRMAR</button>
+
   </div>
 </div>
 
@@ -704,25 +725,6 @@
         const dataCompra = await responseCompra.json();
 
         if (dataCompra.success) {
-          // // Verificar disponibilidad ANTES de procesar la compra
-          // const responseVerificacion = await fetch('/TuRifadigi/verificarDisponibilidad', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   },
-          //   body: JSON.stringify({
-          //     boletos: Array.from(boletosSeleccionados)
-          //   })
-          // });
-
-          // const dataVerificacion = await responseVerificacion.json();
-          // const boletosNoDisponibles = dataVerificacion.disponibles.filter(b => !b.disponible).map(b => b.numero);
-
-          // if (boletosNoDisponibles.length > 0) {
-          //   alert(`Los siguientes boletos ya no están disponibles: ${boletosNoDisponibles.join(', ')}`);
-          //   return;
-          // }
-
 
           generarEnlaceWhatsApp({
             nombre: formData.nombre,
@@ -812,61 +814,3 @@
   <link rel="stylesheet" href="/TuRifadigi/assets/css/payment.css">
   <script src="/TuRifadigi/assets/js/payment.js"></script>
 </head>
-
-<style>
-  /* Estilos para el grupo de teléfono */
-  .phone-group {
-    display: flex;
-    gap: 10px;
-    align-items: stretch;
-  }
-
-  .phone-group .ui.dropdown {
-    min-height: 45px;
-    width: 140px !important;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    background: white;
-    margin: 0;
-  }
-
-  .phone-group .ui.dropdown .text {
-    font-size: 14px;
-    color: #333;
-  }
-
-  .phone-group .ui.dropdown .menu {
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    margin-top: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  .phone-group input[type="tel"] {
-    height: 45px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 0 15px;
-    font-size: 14px;
-    color: #333;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .phone-group input[type="tel"]:focus {
-    border-color: #85b7d9;
-    outline: none;
-  }
-
-  .phone-group .ui.dropdown:hover,
-  .phone-group input[type="tel"]:hover {
-    border-color: #ccc;
-  }
-
-  .phone-group .ui.dropdown.active {
-    border-color: #85b7d9;
-  }
-</style>

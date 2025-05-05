@@ -84,7 +84,7 @@ if ($request_method === 'POST' && $route === '/login') {
     (new AuthController())->login($_REQUEST['usuario'], $_REQUEST['password']);
     exit;
 }
- 
+
 if ($request_method === 'POST' && $route === '/recuperar_password') {
     (new AuthController())->recuperarPassword(['correo' => $_REQUEST['correo']]);
     exit;
@@ -124,18 +124,29 @@ if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
     exit;
 }
 
-if ($request_method === 'GET' && $route === '/cuentas_pago/listar') {
-    (new ConfigMainController())->listar();
+
+if ($request_method === 'GET' && $route === '/main_config') {
+    (new ConfigMainController())->index();
     exit;
 }
-if ($request_method === 'POST' && $route === '/cuentas_pago/guardar') {
-    (new ConfigMainController())->guardar();
+
+if ($request_method === 'POST' && $route === '/banner_update') {
+    (new ConfigMainController())->actualizarBanner();
     exit;
 }
-if ($request_method === 'POST' && $route === '/cuentas_pago/eliminar') {
-    (new ConfigMainController())->eliminar();
-    exit;
-}
+
+/* if ($request_method === 'GET' && $route === '/cuentas_pago/listar') { */
+/*     (new ConfigMainController())->listar(); */
+/*     exit; */
+/* } */
+/* if ($request_method === 'POST' && $route === '/cuentas_pago/guardar') { */
+/*     (new ConfigMainController())->guardar(); */
+/*     exit; */
+/* } */
+/* if ($request_method === 'POST' && $route === '/cuentas_pago/eliminar') { */
+/*     (new ConfigMainController())->eliminar(); */
+/*     exit; */
+/* } */
 
 /* if ($request_method === 'GET' && $route === '/main_config') { */
 /*     (new ConfigMainController())->index(); */
