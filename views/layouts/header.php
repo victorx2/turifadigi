@@ -139,7 +139,7 @@
                         <span class="main-menu-border"></span>
                       </a>
                       <ul>
-                        <li>
+                        <li class="dropdown">
                           <a href="/TuRifadigi/rifa_config">El lado del admin</a>
                         </li>
                         <li class="dropdown">

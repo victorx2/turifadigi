@@ -207,7 +207,7 @@ switch ($route) {
         break;
 
     case '/boletos/obtenerBoletos':
-        require_once 'views/sorteo/boletosDisponibility.php';
+        require_once 'src/API/boletosDisponibility.php';
         break;
 
     case '/procesarCompra':

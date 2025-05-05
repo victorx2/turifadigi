@@ -91,7 +91,6 @@ class BoletoController
     }
   }
 
-
   public function verificarDisponibilidad()
   {
     // Limpiar cualquier salida anterior
