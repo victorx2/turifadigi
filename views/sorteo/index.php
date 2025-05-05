@@ -6,6 +6,81 @@
   <div class="text-center">
     <h1 class="lista-title">LISTA DE BOLETOS</h1>
 
+    <div class="progressLoader">
+      <style>
+        .progressLoader {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .progress {
+          background: rgba(0, 0, 0, 0.137);
+          justify-content: flex-start;
+          border-radius: 100px;
+          align-items: center;
+          position: relative;
+          padding: 0 5px;
+          display: flex;
+          height: 40px;
+          width: 50%;
+          margin: 20px 0 5px;
+        }
+
+        .progress-value {
+          animation: load 2s normal forwards;
+          transition: transform 0.2s ease-in-out;
+          box-shadow: 0 10px 40px -10px #414141;
+          border-radius: 100px;
+          background: linear-gradient(45deg, #00bcd4, #2196f3);
+          height: 30px;
+          width: 0;
+        }
+
+        .progress-label {
+          margin: 0 5px;
+        }
+
+        /* 
+        @keyframes load {
+          0% {
+            width: 5%;
+          }
+
+          100% {
+            width: 56%;
+          }
+        } */
+      </style>
+      <div class="progress">
+        <div class="progress-value"></div>
+        <div class="progress-label">0%</div>
+      </div>
+    </div>
+    <script>
+      function animateProgressBar(total, comprado) {
+        const progressValue = document.querySelector('.progress-value');
+        const progressLabel = document.querySelector('.progress-label');
+
+        let width = 5;
+        let totalWidth = comprado / total * 100;
+
+        if (totalWidth > width) { // Cambia el valor de 100 por el total real de boletos
+          const interval = setInterval(() => {
+            if (width >= totalWidth) {
+              clearInterval(interval);
+            } else {
+              width++;
+              progressValue.style.width = width + '%';
+              progressLabel.textContent = width + '%';
+            }
+          }, 20); // Cambia el tiempo para ajustar la velocidad de la animación
+        } else {
+          progressValue.style.width = '5%';
+          progressLabel.textContent = '1%';
+        }
+      }
+    </script>
     <div class="elegir-title">
       <button id="btnRandomNumber" class="magic-button">
         <i class="fa fa-star"></i>
@@ -248,8 +323,8 @@
       const fragment = document.createDocumentFragment();
 
       mostrarCargando(); // Mostrar el texto de carga
-
-      fetch('./boletos/obtenerBoletos') // Petición al backend
+      let comprados = 0;
+      await fetch('./boletos/obtenerBoletos') // Petición al backend
         .then(response => response.json())
         .then(data => {
           if (data && Array.isArray(data['data'])) {
@@ -259,6 +334,7 @@
 
               if (boleto.estado == "reservado") {
                 nuevoBoleto.classList.add('boleto', 'disabled');
+                comprados++;
               } else {
                 nuevoBoleto.className = 'boleto';
                 nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero_boleto);
@@ -268,6 +344,8 @@
               fragment.appendChild(nuevoBoleto);
               todosLosBoletos.push(nuevoBoleto);
             });
+
+            animateProgressBar(boletos.length, comprados); // Llama a la función de animación con el total y el número de boletos comprados
 
             boletosList.appendChild(fragment);
           } else {
@@ -467,7 +545,6 @@
     function actualizarContador() {
       const contador = document.getElementsByClassName('.contador');
       contador.textContent = `${boletosSeleccionados.size} de ${cantidadSeleccion}`;
-      console.log('Contador actualizado:', contador.textContent);
     }
 
     // Verificar disponibilidad de boletos seleccionados
