@@ -99,7 +99,7 @@
     let formData = new FormData(this);
 
     // Envía los datos al servidor usando fetch
-    fetch('/TuRifadigi/recuperar_password', {
+    fetch('/TuRifadigi/recovery_password', {
         method: 'POST',
         body: new URLSearchParams(formData)
       })
@@ -107,9 +107,9 @@
       .then(data => {
         if (data.success) {
           showToast(data.type, 'Éxito', data.message);
-          setTimeout(() => {
-            window.location.href = '/TuRifadigi/login'; // Redirige después de 3 segundos
-          }, 3000);
+          // setTimeout(() => {
+          //   window.location.href = '/TuRifadigi/login'; // Redirige después de 3 segundos
+          // }, 6000);
         } else {
           showToast(data.type, 'Error', data.message);
         }

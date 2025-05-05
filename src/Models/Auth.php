@@ -199,6 +199,7 @@ class Auth
     }
   }
 
+  
 
   public function getStatusMessage(int $status): array
   {
