@@ -206,7 +206,7 @@ class Auth
       case self::LOGIN_SUCCESS:
         return [
           'success' => true,
-          'message' => 'Se ha enviado un correo con las instrucciones para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada y la carpeta de spam.',
+          'message' => 'Inicio de sesión exitoso, redirigiendo.',
           'type' => 'success'
         ];
       case self::ERROR_INVALID_CREDENTIALS:
@@ -218,7 +218,7 @@ class Auth
       case self::ERROR_INVALID_DATA:
         return [
           'success' => false,
-          'message' => 'Por favor, ingresa un correo electrónico válido.',
+            'message' => 'La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.',
           'type' => 'error'
         ];
       case self::ERROR_DATABASE:

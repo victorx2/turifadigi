@@ -203,7 +203,7 @@
               <div class="main-menu__cart-search-box">
               </div>
               <div class="main-menu__btn-box">
-              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy>Cerrar Sesión</a>
+              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy()>Cerrar Sesión</a>
               </div>
               </div>';
               } ?>

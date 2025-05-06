@@ -7,7 +7,7 @@ use Dotenv\Dotenv; // Para manejar variables de entorno
 use App\Controllers\{AuthController, RegisterUserController, HomeController, BoletoController, ConfigMainController}; // Controladores principales
 
 // Inicia la sesión para manejar la autenticación del usuario
-session_start();
+@session_start();
 
 // Configuración de zona horaria y localización
 date_default_timezone_set('America/Caracas');
