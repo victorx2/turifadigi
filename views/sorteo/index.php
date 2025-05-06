@@ -649,7 +649,28 @@
         alert('Debe seleccionar al menos 2 boletos para continuar');
         return;
       }
-      document.getElementById('datosPersonales').style.display = 'block';
+
+      fetch('/turifadigi/api/session_verfication', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            boletos: Array.from(boletosSeleccionados)
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            console.log('Boletos disponibles:', data.session);
+          } else {
+            alert('Algunos boletos no están disponibles. Por favor, selecciona otros.');
+          }
+        })
+        .catch(error => {
+          console.error('Error al verificar disponibilidad:', error);
+        });
+      document.getElementById('datosPersonales').style.display = 'none';
       this.parentElement.style.display = 'none';
     };
 
