@@ -235,6 +235,9 @@ switch ($route) {
     case '/api/recovery_password':
         require_once 'src/API/password_recovery.php';
         break;
+    case '/api/session_verfication':
+        require_once 'src/API/sessionVerify.php';
+        break;
 
     default:
         require_once 'views/main.php';

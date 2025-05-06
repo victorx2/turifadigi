@@ -1384,6 +1384,12 @@ ul {
   transition: 500ms;
 }
 
+
+.mobile-nav__content .main-menu__list>li>ul>li>a {
+  color: #818181;
+  padding: 0 10px;
+}
+
 .mobile-nav__content .main-menu__list>li>a.expanded .mobile-nav__content .main-menu__list>li>ul>li>a.expanded .mobile-nav__content .main-menu__list>li>ul>li>ul>li>a.expanded {
   color: var(--zefxa-base);
 }
@@ -4397,7 +4403,7 @@ ul {
   font-weight: 600;
   color: var(--zefxa-base);
   counter-increment: count;
-  content: "0"counter(count);
+  content: "0" counter(count);
   transition: all 200ms linear;
   transition-delay: 0.1s;
   font-family: var(--zefxa-font-two);
@@ -7329,7 +7335,7 @@ ul {
   font-weight: 600;
   color: rgba(var(--zefxa-black-rgb), .12);
   counter-increment: count;
-  content: "0"counter(count);
+  content: "0" counter(count);
   transition: all 200ms linear;
   transition-delay: 0.1s;
 }
@@ -7858,7 +7864,7 @@ ul {
   font-weight: 600;
   color: var(--zefxa-base);
   counter-increment: count;
-  content: ""counter(count);
+  content: "" counter(count);
   transition: all 200ms linear;
   transition-delay: 0.1s;
   font-family: var(--zefxa-font-two);
@@ -9177,7 +9183,7 @@ ul {
   border-radius: 50%;
   color: var(--zefxa-base);
   counter-increment: count;
-  content: "0"counter(count);
+  content: "0" counter(count);
   transition: all 200ms linear;
   transition-delay: 0.1s;
   -webkit-transition: all 500ms ease;
