@@ -1,4 +1,13 @@
 <?php require_once 'views/auth/header.php'; ?>
+<!-- Agregar CSS de Toastify -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<!-- Agregar CSS personalizado -->
+<link rel="stylesheet" type="text/css" href="assets/css/ToastPersonalizado.css">
+<!-- Agregar JS de Toastify -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<!-- Agregar JS personalizado -->
+<script type="text/javascript" src="assets/js/ToastPersonalizado.js"></script>
+
 <section class="contact-two">
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
@@ -91,19 +100,6 @@
 
           <p class="contact-two__left-text" style="margin-top: 20px;">¿Ya tienes una cuenta? &nbsp;&nbsp;&nbsp;<a href="/TuRifadigi/login">Inicia sesión</a></p>
 
-
-          <div class="toast-container mt-3 mx-auto" style="width: 100%; max-width: 600px;">
-            <div id="notificationToast" class="toast w-100" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="toast-header d-flex align-items-center">
-                <i class="fas fa-info-circle me-2"></i>
-                <strong class="me-auto text-truncate" id="toastTitle"></strong>
-                <button type="button" class="btn-close ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
-              <div class="toast-body" id="toastMessage">
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
@@ -111,6 +107,8 @@
 </section>
 
 <script>
+  // ? [Función para mostrar/ocultar contraseña] - Alterna la visibilidad del texto en el campo de contraseña
+  // ! Usa la propiedad webkitTextSecurity para cambiar entre 'disc' (puntos) y 'none' (texto visible)
   function togglePasswordVisibility() {
     const passwordInput = document.getElementById('password_signup');
     if (passwordInput.style.webkitTextSecurity === 'disc') {
@@ -457,121 +455,22 @@
   });
 
   function showToast(type, title, message) {
-    const toast = document.getElementById('notificationToast');
-    const toastTitle = document.getElementById('toastTitle');
-    const toastMessage = document.getElementById('toastMessage');
-
-    const icons = {
-      success: 'check-circle',
-      error: 'exclamation-circle',
-      warning: 'exclamation-triangle',
-      info: 'info-circle'
-    };
-
-    toastTitle.innerHTML = `<i class="fas fa-${icons[type]} text-white me-2"></i>${title}`;
-    toast.querySelector('.toast-header').className = `toast-header bg-${type === 'error' ? 'danger' : type} text-white`;
-    toastMessage.textContent = message;
-
-    new bootstrap.Toast(toast, {
-      autohide: true,
-      delay: 5000
-    }).show();
+    switch (type) {
+      case 'success':
+        ToastPersonalizado.exito(title, message);
+        break;
+      case 'error':
+        ToastPersonalizado.error(title, message);
+        break;
+      case 'warning':
+        ToastPersonalizado.advertencia(title, message);
+        break;
+      case 'info':
+        ToastPersonalizado.info(title, message);
+        break;
+    }
   }
 </script>
-
-<style>
-  .toast-container {
-    position: static !important;
-    padding: 1rem;
-  }
-
-  .toast {
-    background: white;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    opacity: 1 !important;
-    margin: 0 auto;
-  }
-
-  .toast-header {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom: none;
-    padding: 0.75rem;
-  }
-
-  .toast-body {
-    padding: 1rem;
-    font-size: 0.95rem;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    word-wrap: break-word;
-  }
-
-  .btn-close {
-    filter: brightness(0) invert(1);
-    opacity: 0.8;
-    padding: 0.5rem;
-  }
-
-  .btn-close:hover {
-    opacity: 1;
-  }
-
-
-
-  @media (max-width: 768px) {
-    .toast-container {
-      padding: 0.5rem;
-    }
-
-    .toast {
-      width: 100% !important;
-      max-width: none;
-      margin: 0;
-    }
-
-    .toast-header {
-      padding: 0.5rem;
-    }
-
-    .toast-body {
-      padding: 0.75rem;
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .toast-container {
-      padding: 0.25rem;
-    }
-
-    .toast-header {
-      padding: 0.5rem;
-    }
-
-    .toast-body {
-      padding: 0.5rem;
-      font-size: 0.85rem;
-    }
-
-    #toastTitle {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 320px) {
-    .toast {
-      min-width: auto;
-    }
-
-    .toast-body {
-      font-size: 0.8rem;
-    }
-  }
-</style>
-
 
 <?php if (!empty($_SESSION['mensaje'])) {
   echo $_SESSION['mensaje'];
