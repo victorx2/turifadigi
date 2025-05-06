@@ -4,8 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Importa las clases necesarias
 use Dotenv\Dotenv; // Para manejar variables de entorno
-use App\Controllers\{AuthController, RegisterUserController, HomeController, RaffleConfigController, BoletoController, ConfigMainController}; // Controladores principales
-//use App\Controllers\BoletoController;
+use App\Controllers\{AuthController, RegisterUserController, HomeController, BoletoController, ConfigMainController}; // Controladores principales
 
 // Inicia la sesión para manejar la autenticación del usuario
 session_start();
