@@ -25,5 +25,8 @@
   "devDependencies": {
     "cssnano": "^7.0.6",
     "terser": "^5.39.0"
+  },
+  "dependencies": {
+    "toastify-js": "^1.12.0"
   }
 }

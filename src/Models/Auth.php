@@ -199,15 +199,7 @@ class Auth
     }
   }
 
-  // private function generarPasswordSegura(int $longitud = 8): string
-  // {
-  //   $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  //   $password = '';
-  //   for ($i = 0; $i < $longitud; $i++) {
-  //     $password .= $caracteres[rand(0, strlen($caracteres) - 1)];
-  //   }
-  //   return $password;
-  // }
+  
 
   public function getStatusMessage(int $status): array
   {
@@ -215,7 +207,7 @@ class Auth
       case self::LOGIN_SUCCESS:
         return [
           'success' => true,
-          'message' => 'Inicio de sesión exitoso.',
+          'message' => 'Se ha enviado un correo con las instrucciones para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada y la carpeta de spam.',
           'type' => 'success'
         ];
       case self::ERROR_INVALID_CREDENTIALS:
@@ -227,7 +219,7 @@ class Auth
       case self::ERROR_INVALID_DATA:
         return [
           'success' => false,
-          'message' => 'Por favor, ingresa una contraseña válida.',
+          'message' => 'Por favor, ingresa un correo electrónico válido.',
           'type' => 'error'
         ];
       case self::ERROR_DATABASE:

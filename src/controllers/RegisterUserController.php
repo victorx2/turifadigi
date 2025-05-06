@@ -16,83 +16,81 @@ class RegisterUserController
     $this->datosPersonales = new DatosPersonales();
   }
 
-  public function insert(): void
+  public function insert(array $data): void
   {
     header('Content-Type: application/json');
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Cache-Control: post-check=0, pre-check=0', false);
+    header('Pragma: no-cache');
+
     try {
-      // Obtener y validar los datos del formulario
+      // Preparar datos del usuario
       $datosUsuario = [
-        'usuario' => $_POST['usuario'] ?? '',
-        'password' => $_POST['password'] ?? '',
-        'correo' => $_POST['correo'] ?? ''
+        'usuario' => $data['usuario'] ?? '',
+        'password' => $data['password'] ?? '',
+        'correo' => $data['correo'] ?? ''
       ];
 
       $datosPersonales = [
-        'nombre' => $_POST['nombre'] ?? '',
-        'apellido' => $_POST['apellido'] ?? '',
-        'cedula' => $_POST['cedula'] ?? '',
-        'telefono' => $_POST['telefono'] ?? '',
-        'ubicacion' => $_POST['ubicacion'] ?? ''
+        'nombre' => $data['nombre'] ?? '',
+        'apellido' => $data['apellido'] ?? '',
+        'cedula' => $data['cedula'] ?? '',
+        'telefono' => $data['telefono'] ?? '',
+        'ubicacion' => $data['ubicacion'] ?? ''
       ];
 
-      // Validación básica de usuario y contraseña
-      if (empty($datosUsuario['usuario']) || empty($datosUsuario['password'])) {
+      // Verificar si el usuario existe antes de intentar insertar
+      if ($this->usuario->existeUsuario($datosUsuario['usuario'])) {
+        http_response_code(409);
         echo json_encode([
           'success' => false,
-          'message' => 'El nombre de usuario y la contraseña son requeridos',
+          'message' => 'El nombre de usuario ya existe',
           'type' => 'error'
         ]);
-        exit();
+        return;
       }
 
-      // Validación de datos personales
-      if (
-        empty($datosPersonales['nombre']) || empty($datosPersonales['apellido']) ||
-        empty($datosPersonales['cedula']) || empty($datosPersonales['telefono']) ||
-        empty($datosPersonales['ubicacion'])
-      ) {
-        echo json_encode([
-          'success' => false,
-          'message' => 'Todos los campos de datos personales son requeridos',
-          'type' => 'error'
-        ]);
-        exit();
-      }
-
-      // Registrar usuario
+      // Intentar registrar el usuario
       $idUsuario = $this->usuario->insert($datosUsuario);
 
-      if (!$idUsuario) {
+      if ($idUsuario === false) {
+        http_response_code(500);
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar el usuario. El nombre de usuario ya existe.',
+          'message' => 'Error al registrar el usuario',
           'type' => 'error'
         ]);
-        exit();
+        return;
       }
 
       // Registrar datos personales
       if ($this->usuario->registrarDatosPersonales($idUsuario, $datosPersonales)) {
+        http_response_code(201);
         echo json_encode([
           'success' => true,
-          'message' => 'Usuario y datos personales registrados correctamente',
-          'type' => 'success'
+          'message' => 'Registro exitoso',
+          'type' => 'success',
+          'redirect' => '/TuRifadigi/login'
         ]);
+        return;
       } else {
+        http_response_code(500);
         echo json_encode([
           'success' => false,
           'message' => 'Error al registrar los datos personales',
           'type' => 'error'
         ]);
+        return;
       }
     } catch (\Exception $e) {
+      http_response_code(500);
       error_log("Error en RegistroController::insert: " . $e->getMessage());
       echo json_encode([
         'success' => false,
-        'message' => 'Error interno del servidor: ' . $e->getMessage(),
+        'message' => 'Error interno del servidor',
         'type' => 'error'
       ]);
+      return;
     }
-    exit();
   }
 }

@@ -36,6 +36,8 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $base_path = "/TuRifadigi";
 $route = str_replace($base_path, '', $request_uri);
 
+// print_r($_SESSION);
+
 if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
@@ -81,7 +83,6 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
 // }
 
 if ($request_method === 'POST' && $route === '/login') {
-
     exit;
 }
 
@@ -103,7 +104,7 @@ if ($request_method === 'GET' && $route === '/reset-password') {
 }
 
 if ($request_method === 'POST' && $route === '/registro_usuario') {
-    (new RegisterUserController())->insert();
+    (new RegisterUserController())->insert($_POST);
     exit;
 }
 
@@ -230,9 +231,11 @@ switch ($route) {
     case '/api/login':
         require_once 'src/API/login.php';
         break;
+
     case '/api/recovery_password':
         require_once 'src/API/password_recovery.php';
         break;
+
     default:
         require_once 'views/main.php';
         break;

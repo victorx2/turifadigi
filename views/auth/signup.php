@@ -1,4 +1,13 @@
 <?php require_once 'views/auth/header.php'; ?>
+<!-- Agregar CSS de Toastify -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<!-- Agregar CSS personalizado -->
+<link rel="stylesheet" type="text/css" href="assets/css/ToastPersonalizado.css">
+<!-- Agregar JS de Toastify -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<!-- Agregar JS personalizado -->
+<script type="text/javascript" src="assets/js/ToastPersonalizado.js"></script>
+
 <section class="contact-two">
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
@@ -11,7 +20,7 @@
           <div class="section-title text-left">
             <div class="section-title__tagline-box">
               <div class="section-title__tagline-shape">
-                <img src="assets/images/shapes/section-title-tagline-shape.png" alt="">
+              
               </div>
               <span class="section-title__tagline"></span>
             </div>
@@ -20,47 +29,47 @@
           <form id="form-registro" class="contact-form-validated contact-two__form" action="registro_usuario" method="post">
             <div class="row">
               <div class="col-xl-6 col-lg-6">
-                <label for="nombre" class="form-label" style="font-weight: bold;">Nombre *</label>
+                <label for="nombre_signup" class="form-label" style="font-weight: bold;">Nombre *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre" title="El nombre es requerido" required>
+                  <input type="text" name="nombre" id="nombre_signup" placeholder="Ingrese su nombre" title="El nombre es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="apellido" class="form-label" style="font-weight: bold;">Apellido *</label>
+                <label for="apellido_signup" class="form-label" style="font-weight: bold;">Apellido *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="apellido" id="apellido" placeholder="Ingrese su apellido" title="El apellido es requerido" required>
+                  <input type="text" name="apellido" id="apellido_signup" placeholder="Ingrese su apellido" title="El apellido es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="cedula" class="form-label" style="font-weight: bold;">Cédula *</label>
+                <label for="cedula_signup" class="form-label" style="font-weight: bold;">Cédula *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="cedula" id="cedula" placeholder="Ingrese su cédula" title="La cédula es requerida" required>
+                  <input type="text" name="cedula" id="cedula_signup" placeholder="Ingrese su cédula" title="La cédula es requerida" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="ubicacion" class="form-label" style="font-weight: bold;">Ubicación *</label>
+                <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">Ubicación *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion" placeholder="E.J: País, estado, dirección" title="La ubicación es requerida" required>
+                  <input type="text" name="ubicacion" id="ubicacion_signup" placeholder="E.J: País, estado, dirección" title="La ubicación es requerida" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="usuario" class="form-label" style="font-weight: bold;">Nombre de usuario *</label>
+                <label for="usuario_signup" class="form-label" style="font-weight: bold;">Nombre de usuario *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="usuario" id="usuario" placeholder="Cree un nombre de usuario" title="El nombre de usuario es requerido" required>
+                  <input type="text" name="usuario" id="usuario_signup" placeholder="Cree un nombre de usuario" title="El nombre de usuario es requerido" required>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="password" class="form-label" style="font-weight: bold;">Contraseña *</label>
+                <label for="password_signup" class="form-label" style="font-weight: bold;">Contraseña *</label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="password" id="password" placeholder="Cree una contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;">
+                  <input type="text" name="password" id="password_signup" placeholder="Cree una contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="telefono" class="form-label" style="font-weight: bold;">Teléfono *</label>
+                <label for="telefono_signup" class="form-label" style="font-weight: bold;">Teléfono *</label>
                 <div class="contact-two__input-box">
                   <input type="text"
                     name="telefono"
-                    id="telefono"
+                    id="telefono_signup"
                     placeholder="Ingrese su número de teléfono"
                     pattern="[0-9]{20}"
                     maxlength="20"
@@ -69,11 +78,11 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="correo" class="form-label" style="font-weight: bold;">Correo electrónico *</label>
+                <label for="correo_signup" class="form-label" style="font-weight: bold;">Correo electrónico *</label>
                 <div class="contact-two__input-box">
                   <input type="email"
                     name="correo"
-                    id="correo"
+                    id="correo_signup"
                     placeholder="Ingrese su correo electrónico"
                     title="El correo electrónico es requerido"
                     required>
@@ -91,19 +100,6 @@
 
           <p class="contact-two__left-text" style="margin-top: 20px;">¿Ya tienes una cuenta? &nbsp;&nbsp;&nbsp;<a href="/TuRifadigi/login">Inicia sesión</a></p>
 
-          <!-- Toast ubicado debajo del formulario -->
-          <div class="toast-container mt-3 mx-auto" style="width: 100%; max-width: 600px;">
-            <div id="notificationToast" class="toast w-100" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="toast-header d-flex align-items-center">
-                <i class="fas fa-info-circle me-2"></i>
-                <strong class="me-auto text-truncate" id="toastTitle"></strong>
-                <button type="button" class="btn-close ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
-              <div class="toast-body" id="toastMessage">
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
@@ -111,8 +107,10 @@
 </section>
 
 <script>
+  // ? [Función para mostrar/ocultar contraseña] - Alterna la visibilidad del texto en el campo de contraseña
+  // ! Usa la propiedad webkitTextSecurity para cambiar entre 'disc' (puntos) y 'none' (texto visible)
   function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('password');
+    const passwordInput = document.getElementById('password_signup');
     if (passwordInput.style.webkitTextSecurity === 'disc') {
       passwordInput.style.webkitTextSecurity = 'none';
     } else {
@@ -120,7 +118,7 @@
     }
   }
 
-  const passwordContainer = document.querySelector('#password').parentNode;
+  const passwordContainer = document.querySelector('#password_signup').parentNode;
   const eyeIcon = document.createElement('i');
   eyeIcon.className = 'fas fa-eye';
   eyeIcon.style.position = 'absolute';
@@ -135,429 +133,344 @@
 
 
 <script>
-  let nombre = document.getElementById('nombre');
-  let apellido = document.getElementById('apellido');
-  let cedula = document.getElementById('cedula');
-  let ubicacion = document.getElementById('ubicacion');
-  let usuario = document.getElementById('usuario');
-  let password = document.getElementById('password');
-  let telefono = document.getElementById('telefono');
-  let correo = document.getElementById('correo');
+  let nombre_signup = document.getElementById('nombre_signup');
+  let apellido_signup = document.getElementById('apellido_signup');
+  let cedula_signup = document.getElementById('cedula_signup');
+  let ubicacion_signup = document.getElementById('ubicacion_signup');
+  let usuario_signup = document.getElementById('usuario_signup');
+  let password_signup = document.getElementById('password_signup');
+  let telefono_signup = document.getElementById('telefono_signup');
+  let correo_signup = document.getElementById('correo_signup');
 
-  // Prevenir espacios en todos los campos
-  [nombre, apellido, cedula, ubicacion, usuario, password, telefono, correo].forEach(input => {
-    // Prevenir que se escriban espacios con la barra espaciadora
+
+  // ? [Array de inputs] - Seleccionamos los elementos del formulario que queremos validar
+  [nombre_signup, apellido_signup, cedula_signup, usuario_signup, password_signup, telefono_signup, correo_signup].forEach(input => {
+
+    // ? [Evento keydown] - Escuchamos cuando se presiona una tecla en el input
     input.addEventListener('keydown', function(e) {
+
+      // ! [Validación de espacio] - Si la tecla presionada es un espacio, prevenimos la acción por defecto
       if (e.key === ' ') {
-        e.preventDefault(); // Cancela la acción por defecto de escribir un espacio
+        e.preventDefault();
       }
     });
 
-    // Prevenir pegar texto que contenga espacios
+    // ? [Evento paste específico] - Maneja la acción de pegar con validaciones por campo
     input.addEventListener('paste', function(e) {
-      e.preventDefault(); // Cancela el pegado normal
+      e.preventDefault();
       let text = (e.clipboardData || window.clipboardData).getData('text');
-      if (!text.includes(' ')) {
-        // Solo permite pegar si el texto no contiene espacios
+
+      // * [Validación campos nombre/apellido] - Permite pegar solo texto (sin espacios)
+      if (this.id === 'nombre_signup' || this.id === 'apellido_signup') {
+        if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/.test(text)) {
+          this.value = text;
+        }
+      }
+      // * [Validación campos cédula/teléfono] - Permite pegar solo números
+      else if (this.id === 'cedula_signup' || this.id === 'telefono_signup') {
+        if (/^\d+$/.test(text)) {
+          this.value = text;
+        }
+      }
+      // * [Validación campo correo] - Permite pegar cualquier texto, símbolos, números y espacios
+      else if (this.id === 'correo_signup') {
         this.value = text;
       }
-    });
-
-    // Limpiar espacios si se intentan agregar de otra forma
-    input.addEventListener('input', function() {
-      this.value = this.value.replace(/\s/g, ''); // Elimina todos los espacios
-    });
-  });
-
-  // Validación para los nuevos campos
-  nombre.addEventListener('input', function() {
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo nombre se encuentra vacío');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  apellido.addEventListener('input', function() {
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo apellido se encuentra vacío');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  cedula.addEventListener('input', function() {
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo cédula se encuentra vacío');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  ubicacion.addEventListener('input', function() {
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo ubicación se encuentra vacío');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Funciones focus y blur para los nuevos campos
-  [nombre, apellido, cedula, ubicacion].forEach(campo => {
-    campo.addEventListener('focus', function() {
-      if (this.value.trim() !== '') {
-        this.style.border = "2px solid #4a90e2";
-      }
-    });
-
-    campo.addEventListener('blur', function() {
-      if (this.value.trim() !== '') {
-        this.style.border = "";
+      // ! [Restricción campos usuario/contraseña] - Bloquea completamente pegar texto
+      else if (this.id === 'usuario_signup' || this.id === 'password_signup') {
+        return false;
       }
     });
   });
 
-  // Validación en tiempo real para el campo usuario
-  usuario.addEventListener('input', function() {
-    if (this.value.trim() === '' || this.value.length < 3) {
-      showToast('warning', 'Campo vacío', 'El campo nombre de usuario se encuentra vacío y debe tener al menos 3 caracteres');
-      this.style.border = "2px solid red"; // Borde rojo si es inválido
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2"; // Borde azul si es válido
+
+  // Función genérica para validar campos
+  const validarCampo = (campo, minLength = 1, regex = null) => {
+    const valor = campo.value.trim();
+    const vacio = valor === '';
+    const longitudInvalida = valor.length < minLength;
+    const formatoInvalido = regex && !regex.test(valor);
+
+    if (vacio || longitudInvalida || formatoInvalido) {
+      const mensaje = vacio ? 'Campo vacío' :
+        longitudInvalida ? `Mínimo ${minLength} caracteres` :
+        'Formato inválido';
+      showToast('warning', 'Error', `El campo ${campo.name} ${mensaje}`);
+      campo.style.border = "2px solid red";
+      campo.focus();
+      return false;
     }
+    campo.style.border = "2px solid #4a90e2";
+    return true;
+  };
+
+  // Configuración de validaciones por campo
+  const validaciones = {
+    nombre_signup: {
+      minLength: 1
+    },
+    apellido_signup: {
+      minLength: 1
+    },
+    cedula_signup: {
+      minLength: 1
+    },
+    ubicacion_signup: {
+      minLength: 1
+    },
+    usuario_signup: {
+      minLength: 3
+    },
+    password_signup: {
+      minLength: 6
+    },
+    telefono_signup: {
+      minLength: 1
+    },
+    correo_signup: {
+      minLength: 1,
+      regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    }
+  };
+
+  // Aplicar eventos a todos los campos
+  Object.keys(validaciones).forEach(id => {
+    const campo = document.getElementById(id);
+    const {
+      minLength,
+      regex
+    } = validaciones[id];
+
+    campo.addEventListener('input', () => validarCampo(campo, minLength, regex));
+
+    campo.addEventListener('focus', () => {
+      if (campo.value.trim() !== '') {
+        campo.style.border = "2px solid #4a90e2";
+      }
+    });
+
+    campo.addEventListener('blur', () => {
+      if (campo.value.trim() !== '') {
+        campo.style.border = "";
+      }
+    });
   });
 
-  // Cambiar estilo cuando el campo usuario recibe foco
-  usuario.addEventListener('focus', function() {
-    if (!(this.value.trim() === '' || this.value.length < 3)) {
-      this.style.border = "2px solid #4a90e2"; // Borde azul si es válido
+
+  const form = document.getElementById('form-registro');
+  let isSubmitting = false;
+
+  // Objeto con las reglas de validación
+  const validationRules = {
+    nombre_signup: {
+      pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/,
+      message: 'El nombre solo debe contener letras'
+    },
+    apellido_signup: {
+      pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/,
+      message: 'El apellido solo debe contener letras'
+    },
+    cedula_signup: {
+      pattern: /^\d+$/,
+      message: 'La cédula solo debe contener números'
+    },
+    ubicacion_signup: {
+      allowSpaces: true,
+      pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s,.-]+$/,
+      message: 'La ubicación contiene caracteres no válidos'
+    },
+    usuario_signup: {
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/,
+      minLength: 8,
+      message: 'El usuario debe contener mayúsculas, minúsculas, números y caracteres especiales',
+      strengthChecks: {
+        lowercase: /[a-z]/,
+        uppercase: /[A-Z]/,
+        numbers: /[0-9]/,
+        special: /[$@$!%*?&]/
+      }
+    },
+    password_signup: {
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/,
+      minLength: 8,
+      message: 'La contraseña debe contener mayúsculas, minúsculas, números y caracteres especiales',
+      strengthChecks: {
+        lowercase: /[a-z]/,
+        uppercase: /[A-Z]/,
+        numbers: /[0-9]/,
+        special: /[$@$!%*?&]/
+      }
+    },
+    telefono_signup: {
+      pattern: /^\d+$/,
+      message: 'El teléfono solo debe contener números'
+    },
+    correo_signup: {
+      pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+      message: 'Formato inválido (ejemplo: usuario@dominio.com)'
     }
-  });
+  };
 
-  // Quitar borde cuando el campo usuario pierde el foco
-  usuario.addEventListener('blur', function() {
-    if (!(this.value.trim() === '' || this.value.length < 3)) {
-      this.style.border = ""; // Quita el borde si es válido
-    }
-  });
+  // Función para verificar la fortaleza de contraseña/usuario
+  function checkStrength(value, checks) {
+    let strength = 0;
+    let feedback = [];
+    const requirements = {
+      'minúsculas': checks.lowercase,
+      'mayúsculas': checks.uppercase,
+      'números': checks.numbers,
+      'caracteres especiales ($@$!%*?&)': checks.special
+    };
 
-  // Validación en tiempo real para el campo password
-  password.addEventListener('input', function() {
-    if (this.value.trim() === '' || this.value.length < 6) {
-      showToast('warning', 'Campo vacío', 'El campo contraseña se encuentra vacío y debe tener al menos 6 caracteres');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Cambiar estilo cuando el campo password recibe foco
-  password.addEventListener('focus', function() {
-    if (!(this.value.trim() === '' || this.value.length < 6)) {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Quitar borde cuando el campo password pierde el foco
-  password.addEventListener('blur', function() {
-    if (!(this.value.trim() === '' || this.value.length < 6)) {
-      this.style.border = "";
-    }
-  });
-
-  // Validación en tiempo real para el campo telefono
-  telefono.addEventListener('input', function() {
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo teléfono se encuentra vacío');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Cambiar estilo cuando el campo telefono recibe foco
-  telefono.addEventListener('focus', function() {
-    if (!(this.value.trim() === '')) {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Quitar borde cuando el campo telefono pierde el foco
-  telefono.addEventListener('blur', function() {
-    if (!(this.value.trim() === '')) {
-      this.style.border = "";
-    }
-  });
-
-  // Validación para correo electrónico
-  correo.addEventListener('input', function() {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (this.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo correo electrónico se encuentra vacío');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else if (!emailRegex.test(this.value.trim())) {
-      showToast('warning', 'Formato inválido', 'El formato del correo electrónico no es válido');
-      this.style.border = "2px solid red";
-      this.focus();
-    } else {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  // Funciones focus y blur para correo
-  correo.addEventListener('focus', function() {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (this.value.trim() !== '' && emailRegex.test(this.value.trim())) {
-      this.style.border = "2px solid #4a90e2";
-    }
-  });
-
-  correo.addEventListener('blur', function() {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (this.value.trim() !== '' && emailRegex.test(this.value.trim())) {
-      this.style.border = "";
-    }
-  });
-
-  // Manejo del envío del formulario
-  document.getElementById('form-registro').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita el envío normal del formulario
-
-    // Validaciones finales antes de enviar
-    if (nombre.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo nombre se encuentra vacío');
-      nombre.style.border = "2px solid red";
-      nombre.focus();
-      return;
+    for (const [requirement, regex] of Object.entries(requirements)) {
+      if (regex.test(value)) {
+        strength += 25;
+      } else {
+        feedback.push(requirement);
+      }
     }
 
-    if (apellido.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo apellido se encuentra vacío');
-      apellido.style.border = "2px solid red";
-      apellido.focus();
-      return;
+    return {
+      strength,
+      color: strength < 50 ? '#ff4d4d' : strength < 75 ? '#ffd700' : '#4CAF50',
+      message: `${strength < 50 ? 'débil' : strength < 75 ? 'medio' : 'fuerte'}${feedback.length ? ` (falta: ${feedback.join(', ')})` : ''}`
+    };
+  }
+
+  // Función para validar un campo
+  function validateField(fieldId, value) {
+    const field = document.getElementById(fieldId);
+    const rules = validationRules[fieldId];
+
+    if (!value.trim()) {
+      field.style.border = "2px solid red";
+      showToast('warning', 'Campo vacío', `El campo ${fieldId.split('_')[0]} es requerido`);
+      return false;
     }
 
-    if (cedula.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo cédula se encuentra vacío');
-      cedula.style.border = "2px solid red";
-      cedula.focus();
-      return;
+    if (rules.minLength && value.length < rules.minLength) {
+      field.style.border = "2px solid red";
+      showToast('warning', 'Campo inválido', `Mínimo ${rules.minLength} caracteres requeridos`);
+      return false;
     }
 
-    if (ubicacion.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo ubicación se encuentra vacío');
-      ubicacion.style.border = "2px solid red";
-      ubicacion.focus();
-      return;
+    if (!rules.allowSpaces) {
+      field.value = value.replace(/\s/g, '');
     }
 
-    if (usuario.value.trim() === '' || usuario.value.length < 3) {
-      showToast('warning', 'Campo vacío', 'El campo nombre de usuario se encuentra vacío y debe tener al menos 3 caracteres');
-      usuario.style.border = "2px solid red";
-      usuario.focus();
-      return;
+    if (rules.pattern && !rules.pattern.test(value.trim())) {
+      field.style.border = "2px solid red";
+      showToast('warning', 'Formato inválido', rules.message);
+      return false;
     }
 
-    if (password.value.trim() === '' || password.value.length < 6) {
-      showToast('warning', 'Campo vacío', 'El campo contraseña se encuentra vacío y debe tener al menos 6 caracteres');
-      password.style.border = "2px solid red";
-      password.focus();
-      return;
+    if (rules.strengthChecks) {
+      const strengthResult = checkStrength(value, rules.strengthChecks);
+      field.style.border = `2px solid ${strengthResult.color}`;
+
+      const strengthMessage = document.getElementById(`${fieldId}_strength`);
+      if (strengthMessage) {
+        strengthMessage.textContent = `Fortaleza: ${strengthResult.message}`;
+        strengthMessage.style.color = strengthResult.color;
+      }
+
+      return strengthResult.strength === 100;
     }
 
-    if (telefono.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo teléfono se encuentra vacío');
-      telefono.style.border = "2px solid red";
-      telefono.focus();
-      return;
+    field.style.border = "2px solid #4a90e2";
+    return true;
+  }
+
+  // Inicialización de campos
+  Object.keys(validationRules).forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    const rules = validationRules[fieldId];
+
+    // Crear indicador de fortaleza si es necesario
+    if (rules.strengthChecks) {
+      const strengthDiv = document.createElement('div');
+      strengthDiv.id = `${fieldId}_strength`;
+      strengthDiv.style.cssText = 'margin-top: 5px; font-size: 12px;';
+      field.parentElement.appendChild(strengthDiv);
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (correo.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El campo correo electrónico se encuentra vacío');
-      correo.style.border = "2px solid red";
-      correo.focus();
-      return;
-    } else if (!emailRegex.test(correo.value.trim())) {
-      showToast('warning', 'Formato inválido', 'El formato del correo electrónico no es válido');
-      correo.style.border = "2px solid red";
-      correo.focus();
-      return;
-    }
+    // Event listeners
+    ['input', 'blur', 'keyup'].forEach(event => {
+      field.addEventListener(event, () => validateField(fieldId, field.value));
+    });
 
-    // Si pasa todas las validaciones, prepara los datos para enviar
-    let formData = new FormData(this);
-
-    // Envía los datos al servidor usando fetch
-    fetch('/TuRifadigi/registro_usuario', {
-        method: 'POST',
-        body: new URLSearchParams(formData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          showToast(data.type, 'Éxito', data.message);
-          setTimeout(() => {
-            window.location.href = '/TuRifadigi/login'; // Redirige después de 3 segundos
-          }, 3000);
-        } else {
-          showToast(data.type, 'Error', data.message);
-        }
-      })
-      .catch(error => {
-        showToast('error', 'Error', 'Hubo un error al procesar la solicitud');
+    // Prevenir espacios
+    if (!rules.allowSpaces) {
+      field.addEventListener('keydown', e => e.key === ' ' && e.preventDefault());
+      field.addEventListener('paste', e => {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text');
+        field.value = text.replace(/\s/g, '');
       });
+    }
   });
 
-  // Función para mostrar notificaciones tipo toast
-  function showToast(type, title, message) {
-    const toast = document.getElementById('notificationToast');
-    const toastTitle = document.getElementById('toastTitle');
-    const toastMessage = document.getElementById('toastMessage');
-    const toastInstance = new bootstrap.Toast(toast, {
-      autohide: true,
-      delay: 5000 // El toast se oculta automáticamente después de 5 segundos
-    });
+  // Manejo del formulario
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    if (isSubmitting) return;
 
-    // Configura el icono y color según el tipo de notificación
-    let icon = '';
-    let headerClass = '';
+    const isValid = Object.keys(validationRules).every(fieldId =>
+      validateField(fieldId, document.getElementById(fieldId).value)
+    );
+
+    if (!isValid) return;
+    isSubmitting = true;
+    const submitButton = this.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
+    try {
+      const formData = new URLSearchParams(new FormData(this));
+      const response = await fetch('/TuRifadigi/registro_usuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData.toString(),
+        credentials: 'same-origin',
+        mode: 'same-origin'
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw data;
+
+      showToast('success', 'Éxito', data.message);
+      Array.from(form.getElementsByTagName('input')).forEach(input => input.disabled = true);
+      setTimeout(() => window.location.href = data.redirect, 1500);
+
+    } catch (error) {
+      console.error('Error:', error);
+      showToast('error', 'Error', error.message || 'Hubo un error al procesar la solicitud');
+    } finally {
+      isSubmitting = false;
+      submitButton.disabled = false;
+    }
+  });
+
+  function showToast(type, title, message) {
     switch (type) {
       case 'success':
-        icon = '<i class="fas fa-check-circle text-white me-2"></i>';
-        headerClass = 'bg-success text-white';
+        ToastPersonalizado.exito(title, message);
         break;
       case 'error':
-        icon = '<i class="fas fa-exclamation-circle text-white me-2"></i>';
-        headerClass = 'bg-danger text-white';
+        ToastPersonalizado.error(title, message);
         break;
       case 'warning':
-        icon = '<i class="fas fa-exclamation-triangle text-white me-2"></i>';
-        headerClass = 'bg-warning text-white';
+        ToastPersonalizado.advertencia(title, message);
         break;
-      default:
-        icon = '<i class="fas fa-info-circle text-white me-2"></i>';
-        headerClass = 'bg-info text-white';
+      case 'info':
+        ToastPersonalizado.info(title, message);
+        break;
     }
-
-    // Actualiza el contenido del toast
-    toastTitle.innerHTML = icon + title;
-    const header = toast.querySelector('.toast-header');
-    header.className = `toast-header ${headerClass}`;
-    toastMessage.textContent = message;
-
-    // Muestra el toast
-    toastInstance.show();
   }
 </script>
-
-<style>
-  .toast-container {
-    position: static !important;
-    padding: 1rem;
-  }
-
-  .toast {
-    background: white;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    opacity: 1 !important;
-    margin: 0 auto;
-  }
-
-  .toast-header {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom: none;
-    padding: 0.75rem;
-  }
-
-  .toast-body {
-    padding: 1rem;
-    font-size: 0.95rem;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    word-wrap: break-word;
-  }
-
-  .btn-close {
-    filter: brightness(0) invert(1);
-    opacity: 0.8;
-    padding: 0.5rem;
-  }
-
-  .btn-close:hover {
-    opacity: 1;
-  }
-
-  /* Responsive styles */
-
-  @media (max-width: 768px) {
-    .toast-container {
-      padding: 0.5rem;
-    }
-
-    .toast {
-      width: 100% !important;
-      max-width: none;
-      margin: 0;
-    }
-
-    .toast-header {
-      padding: 0.5rem;
-    }
-
-    .toast-body {
-      padding: 0.75rem;
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .toast-container {
-      padding: 0.25rem;
-    }
-
-    .toast-header {
-      padding: 0.5rem;
-    }
-
-    .toast-body {
-      padding: 0.5rem;
-      font-size: 0.85rem;
-    }
-
-    #toastTitle {
-      font-size: 0.9rem;
-    }
-  }
-
-  /* Asegurar que el toast no se salga de la pantalla en dispositivos muy pequeños */
-  @media (max-width: 320px) {
-    .toast {
-      min-width: auto;
-    }
-
-    .toast-body {
-      font-size: 0.8rem;
-    }
-  }
-</style>
-
 
 <?php if (!empty($_SESSION['mensaje'])) {
   echo $_SESSION['mensaje'];
