@@ -20,7 +20,7 @@
           <div class="section-title text-left">
             <div class="section-title__tagline-box">
               <div class="section-title__tagline-shape">
-                <!-- <img src="assets/images/shapes/section-title-tagline-shape.png" alt=""> -->
+              
               </div>
               <span class="section-title__tagline"></span>
             </div>
