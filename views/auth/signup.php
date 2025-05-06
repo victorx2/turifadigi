@@ -3,6 +3,71 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <!-- Agregar CSS personalizado -->
 <link rel="stylesheet" type="text/css" href="assets/css/ToastPersonalizado.css">
+<!-- Agregar Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<!-- Estilos personalizados para los iconos del signup -->
+<style>
+  .icon-signup {
+    padding-right: 8px;
+    opacity: 0.8;
+    font-size: 1.1em;
+    vertical-align: middle;
+    transition: color 0.2s;
+  }
+
+  .icon-signup.nombre {
+    color: #2962ff;
+  }
+
+  .icon-signup.apellido {
+    color: #4173ff;
+  }
+
+  .icon-signup.cedula {
+    color: #5a85ff;
+  }
+
+  .icon-signup.ubicacion {
+    color: #7296ff;
+  }
+
+  .icon-signup.usuario {
+    color: #8aa7ff;
+  }
+
+  .icon-signup.password {
+    color: #a2b8ff;
+  }
+
+  .icon-signup.telefono {
+    color: #baccff;
+  }
+
+  .icon-signup.correo {
+    color: #d1deff;
+  }
+
+  /* Estilo de error personalizado para los inputs del signup */
+  .input-error-signup {
+    border: 2px solid #2962ff !important;
+    background: rgba(41, 98, 255, 0.07) !important;
+    box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.12);
+    transition: all 500ms ease;
+  }
+
+  /* Efecto hover/focus para los inputs del signup (diferente al error) */
+  .input-hover-signup {
+    transition: all 500ms ease;
+  }
+
+  .input-hover-signup:focus,
+  .input-hover-signup:hover {
+    border: 1.5px solid #90caf9;
+    background: #f5f8ff;
+    box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.08);
+    outline: none;
+  }
+</style>
 <!-- Agregar JS de Toastify -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <!-- Agregar JS personalizado -->
@@ -29,43 +94,57 @@
           <form id="form-registro" class="contact-form-validated contact-two__form" action="registro_usuario" method="post">
             <div class="row">
               <div class="col-xl-6 col-lg-6">
-                <label for="nombre_signup" class="form-label" style="font-weight: bold;">Nombre *</label>
+                <label for="nombre_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-person-fill icon-signup nombre"></i> Nombre *
+                </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="nombre" id="nombre_signup" placeholder="Ingrese su nombre" title="El nombre es requerido" required>
+                  <input type="text" name="nombre" id="nombre_signup" placeholder="Ingrese su nombre" title="El nombre es requerido" required class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="apellido_signup" class="form-label" style="font-weight: bold;">Apellido *</label>
+                <label for="apellido_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-person-badge-fill icon-signup apellido"></i> Apellido *
+                </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="apellido" id="apellido_signup" placeholder="Ingrese su apellido" title="El apellido es requerido" required>
+                  <input type="text" name="apellido" id="apellido_signup" placeholder="Ingrese su apellido" title="El apellido es requerido" required class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="cedula_signup" class="form-label" style="font-weight: bold;">Cédula *</label>
+                <label for="cedula_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-card-text icon-signup cedula"></i> Cédula *
+                </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="cedula" id="cedula_signup" placeholder="Ingrese su cédula" title="La cédula es requerida" required>
+                  <input type="text" name="cedula" id="cedula_signup" placeholder="Ingrese su cédula" title="La cédula es requerida" required class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">Ubicación *</label>
+                <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> Ubicación *
+                </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion_signup" placeholder="E.J: País, estado, dirección" title="La ubicación es requerida" required>
+                  <input type="text" name="ubicacion" id="ubicacion_signup" placeholder="E.J: País, estado, dirección" title="La ubicación es requerida" required class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="usuario_signup" class="form-label" style="font-weight: bold;">Nombre de usuario *</label>
+                <label for="usuario_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-person-circle icon-signup usuario"></i> Nombre de usuario *
+                </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="usuario" id="usuario_signup" placeholder="Cree un nombre de usuario" title="El nombre de usuario es requerido" required>
+                  <input type="text" name="usuario" id="usuario_signup" placeholder="Cree un nombre de usuario" title="El nombre de usuario es requerido" required class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="password_signup" class="form-label" style="font-weight: bold;">Contraseña *</label>
+                <label for="password_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-lock-fill icon-signup password"></i> Contraseña *
+                </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="password" id="password_signup" placeholder="Cree una contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;">
+                  <input type="text" name="password" id="password_signup" placeholder="Cree una contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;" class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="telefono_signup" class="form-label" style="font-weight: bold;">Teléfono *</label>
+                <label for="telefono_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-telephone-fill icon-signup telefono"></i> Teléfono *
+                </label>
                 <div class="contact-two__input-box">
                   <input type="text"
                     name="telefono"
@@ -74,18 +153,20 @@
                     pattern="[0-9]{20}"
                     maxlength="20"
                     title="El número de teléfono es requerido"
-                    required>
+                    required class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="correo_signup" class="form-label" style="font-weight: bold;">Correo electrónico *</label>
+                <label for="correo_signup" class="form-label" style="font-weight: bold;">
+                  <i class="bi bi-envelope-fill icon-signup correo"></i> Correo electrónico *
+                </label>
                 <div class="contact-two__input-box">
                   <input type="email"
                     name="correo"
                     id="correo_signup"
                     placeholder="Ingrese su correo electrónico"
                     title="El correo electrónico es requerido"
-                    required>
+                    required class="input-hover-signup">
                 </div>
               </div>
               <div class="col-xl-12 text-center">
@@ -142,172 +223,60 @@
   let telefono_signup = document.getElementById('telefono_signup');
   let correo_signup = document.getElementById('correo_signup');
 
-
-  // ? [Array de inputs] - Seleccionamos los elementos del formulario que queremos validar
-  [nombre_signup, apellido_signup, cedula_signup, usuario_signup, password_signup, telefono_signup, correo_signup].forEach(input => {
-
-    // ? [Evento keydown] - Escuchamos cuando se presiona una tecla en el input
-    input.addEventListener('keydown', function(e) {
-
-      // ! [Validación de espacio] - Si la tecla presionada es un espacio, prevenimos la acción por defecto
-      if (e.key === ' ') {
-        e.preventDefault();
-      }
-    });
-
-    // ? [Evento paste específico] - Maneja la acción de pegar con validaciones por campo
-    input.addEventListener('paste', function(e) {
-      e.preventDefault();
-      let text = (e.clipboardData || window.clipboardData).getData('text');
-
-      // * [Validación campos nombre/apellido] - Permite pegar solo texto (sin espacios)
-      if (this.id === 'nombre_signup' || this.id === 'apellido_signup') {
-        if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/.test(text)) {
-          this.value = text;
-        }
-      }
-      // * [Validación campos cédula/teléfono] - Permite pegar solo números
-      else if (this.id === 'cedula_signup' || this.id === 'telefono_signup') {
-        if (/^\d+$/.test(text)) {
-          this.value = text;
-        }
-      }
-      // * [Validación campo correo] - Permite pegar cualquier texto, símbolos, números y espacios
-      else if (this.id === 'correo_signup') {
-        this.value = text;
-      }
-      // ! [Restricción campos usuario/contraseña] - Bloquea completamente pegar texto
-      else if (this.id === 'usuario_signup' || this.id === 'password_signup') {
-        return false;
-      }
-    });
-  });
-
-
-  // Función genérica para validar campos
-  const validarCampo = (campo, minLength = 1, regex = null) => {
-    const valor = campo.value.trim();
-    const vacio = valor === '';
-    const longitudInvalida = valor.length < minLength;
-    const formatoInvalido = regex && !regex.test(valor);
-
-    if (vacio || longitudInvalida || formatoInvalido) {
-      const mensaje = vacio ? 'Campo vacío' :
-        longitudInvalida ? `Mínimo ${minLength} caracteres` :
-        'Formato inválido';
-      showToast('warning', 'Error', `El campo ${campo.name} ${mensaje}`);
-      campo.style.border = "2px solid red";
-      campo.focus();
-      return false;
-    }
-    campo.style.border = "2px solid #4a90e2";
-    return true;
-  };
-
-  // Configuración de validaciones por campo
-  const validaciones = {
-    nombre_signup: {
-      minLength: 1
-    },
-    apellido_signup: {
-      minLength: 1
-    },
-    cedula_signup: {
-      minLength: 1
-    },
-    ubicacion_signup: {
-      minLength: 1
-    },
-    usuario_signup: {
-      minLength: 3
-    },
-    password_signup: {
-      minLength: 6
-    },
-    telefono_signup: {
-      minLength: 1
-    },
-    correo_signup: {
-      minLength: 1,
-      regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    }
-  };
-
-  // Aplicar eventos a todos los campos
-  Object.keys(validaciones).forEach(id => {
-    const campo = document.getElementById(id);
-    const {
-      minLength,
-      regex
-    } = validaciones[id];
-
-    campo.addEventListener('input', () => validarCampo(campo, minLength, regex));
-
-    campo.addEventListener('focus', () => {
-      if (campo.value.trim() !== '') {
-        campo.style.border = "2px solid #4a90e2";
-      }
-    });
-
-    campo.addEventListener('blur', () => {
-      if (campo.value.trim() !== '') {
-        campo.style.border = "";
-      }
-    });
-  });
-
-
-  const form = document.getElementById('form-registro');
-  let isSubmitting = false;
-
   // Objeto con las reglas de validación
   const validationRules = {
     nombre_signup: {
       pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/,
-      message: 'El nombre solo debe contener letras'
+      message: 'El nombre solo debe contener letras',
+      minLength: 1
     },
     apellido_signup: {
       pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/,
-      message: 'El apellido solo debe contener letras'
+      message: 'El apellido solo debe contener letras',
+      minLength: 1
     },
     cedula_signup: {
       pattern: /^\d+$/,
-      message: 'La cédula solo debe contener números'
+      message: 'La cédula solo debe contener números',
+      minLength: 1
     },
     ubicacion_signup: {
       allowSpaces: true,
       pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s,.-]+$/,
-      message: 'La ubicación contiene caracteres no válidos'
+      message: 'La ubicación contiene caracteres no válidos',
+      minLength: 1
     },
     usuario_signup: {
-      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/,
+      pattern: /^[A-Za-z0-9_-]+$/,
       minLength: 8,
-      message: 'El usuario debe contener mayúsculas, minúsculas, números y caracteres especiales',
+      message: 'El usuario debe contener letras, números y opcionalmente los símbolos (_-)',
       strengthChecks: {
         lowercase: /[a-z]/,
         uppercase: /[A-Z]/,
         numbers: /[0-9]/,
-        special: /[$@$!%*?&]/
+        special: /[_-]/
       }
     },
     password_signup: {
-      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/,
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.%$#"@*&%/(._-])[A-Za-z\d.%$#"@*&%/(._-]{8,}/,
       minLength: 8,
       message: 'La contraseña debe contener mayúsculas, minúsculas, números y caracteres especiales',
       strengthChecks: {
         lowercase: /[a-z]/,
         uppercase: /[A-Z]/,
         numbers: /[0-9]/,
-        special: /[$@$!%*?&]/
+        special: /[.%$#"@*&%/(._-]/
       }
     },
     telefono_signup: {
       pattern: /^\d+$/,
-      message: 'El teléfono solo debe contener números'
+      message: 'El teléfono solo debe contener números',
+      minLength: 1
     },
     correo_signup: {
       pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
-      message: 'Formato inválido (ejemplo: usuario@dominio.com)'
+      message: 'Formato inválido (ejemplo: usuario@dominio.com)',
+      minLength: 1
     }
   };
 
@@ -315,41 +284,65 @@
   function checkStrength(value, checks) {
     let strength = 0;
     let feedback = [];
-    const requirements = {
-      'minúsculas': checks.lowercase,
-      'mayúsculas': checks.uppercase,
-      'números': checks.numbers,
-      'caracteres especiales ($@$!%*?&)': checks.special
-    };
+    let totalChecks = 0;
 
-    for (const [requirement, regex] of Object.entries(requirements)) {
-      if (regex.test(value)) {
-        strength += 25;
-      } else {
-        feedback.push(requirement);
+    // Para usuario_signup, solo requerimos letras y números
+    if (checks === validationRules.usuario_signup.strengthChecks) {
+      const requirements = {
+        'minúsculas': checks.lowercase,
+        'mayúsculas': checks.uppercase,
+        'números': checks.numbers
+      };
+      totalChecks = 3; // Solo 3 requisitos para usuario
+
+      for (const [requirement, regex] of Object.entries(requirements)) {
+        if (regex.test(value)) {
+          strength += 33.33; // 100/3 para distribuir el peso entre los 3 requisitos
+        } else {
+          feedback.push(requirement);
+        }
+      }
+    } else {
+      // Para password_signup y otros campos que requieren todos los checks
+      const requirements = {
+        'minúsculas': checks.lowercase,
+        'mayúsculas': checks.uppercase,
+        'números': checks.numbers,
+        'caracteres especiales': checks.special
+      };
+      totalChecks = 4; // 4 requisitos para contraseña
+
+      for (const [requirement, regex] of Object.entries(requirements)) {
+        if (regex.test(value)) {
+          strength += 25; // 100/4 para distribuir el peso entre los 4 requisitos
+        } else {
+          feedback.push(requirement);
+        }
       }
     }
 
     return {
       strength,
-      color: strength < 50 ? '#ff4d4d' : strength < 75 ? '#ffd700' : '#4CAF50',
-      message: `${strength < 50 ? 'débil' : strength < 75 ? 'medio' : 'fuerte'}${feedback.length ? ` (falta: ${feedback.join(', ')})` : ''}`
+      color: strength < (100 / totalChecks) ? '#ff4d4d' : strength < (100 / totalChecks * 2) ? '#ffd700' : '#4CAF50',
+      message: `${strength < (100/totalChecks) ? 'débil' : strength < (100/totalChecks * 2) ? 'medio' : 'fuerte'}${feedback.length ? ` (falta: ${feedback.join(', ')})` : ''}`
     };
   }
 
   // Función para validar un campo
-  function validateField(fieldId, value) {
+  function validateField(fieldId, value, autoRemoveError = false) {
     const field = document.getElementById(fieldId);
     const rules = validationRules[fieldId];
 
     if (!value.trim()) {
-      field.style.border = "2px solid red";
+      field.classList.add('input-error-signup');
+      if (autoRemoveError) setTimeout(() => field.classList.remove('input-error-signup'), 2000);
       showToast('warning', 'Campo vacío', `El campo ${fieldId.split('_')[0]} es requerido`);
       return false;
     }
 
     if (rules.minLength && value.length < rules.minLength) {
-      field.style.border = "2px solid red";
+      field.classList.add('input-error-signup');
+      if (autoRemoveError) setTimeout(() => field.classList.remove('input-error-signup'), 2000);
       showToast('warning', 'Campo inválido', `Mínimo ${rules.minLength} caracteres requeridos`);
       return false;
     }
@@ -359,7 +352,8 @@
     }
 
     if (rules.pattern && !rules.pattern.test(value.trim())) {
-      field.style.border = "2px solid red";
+      field.classList.add('input-error-signup');
+      if (autoRemoveError) setTimeout(() => field.classList.remove('input-error-signup'), 2000);
       showToast('warning', 'Formato inválido', rules.message);
       return false;
     }
@@ -367,6 +361,7 @@
     if (rules.strengthChecks) {
       const strengthResult = checkStrength(value, rules.strengthChecks);
       field.style.border = `2px solid ${strengthResult.color}`;
+      field.classList.remove('input-error-signup');
 
       const strengthMessage = document.getElementById(`${fieldId}_strength`);
       if (strengthMessage) {
@@ -378,10 +373,11 @@
     }
 
     field.style.border = "2px solid #4a90e2";
+    field.classList.remove('input-error-signup');
     return true;
   }
 
-  // Inicialización de campos
+  // Inicialización y eventos de los campos
   Object.keys(validationRules).forEach(fieldId => {
     const field = document.getElementById(fieldId);
     const rules = validationRules[fieldId];
@@ -394,21 +390,51 @@
       field.parentElement.appendChild(strengthDiv);
     }
 
-    // Event listeners
-    ['input', 'blur', 'keyup'].forEach(event => {
-      field.addEventListener(event, () => validateField(fieldId, field.value));
+    // Event listeners para validación
+    ['input', 'keyup'].forEach(event => {
+      field.addEventListener(event, () => {
+        validateField(fieldId, field.value);
+        // Remueve el error visual si el campo es válido
+        if (field.classList.contains('input-error-signup') && validateField(fieldId, field.value)) {
+          field.classList.remove('input-error-signup');
+        }
+      });
+    });
+    // Al perder el foco, si el campo es válido, remueve el error
+    field.addEventListener('blur', () => {
+      if (validateField(fieldId, field.value)) {
+        field.classList.remove('input-error-signup');
+      }
+    });
+    // Al hacer focus, si hay error, lo remueve a los 5 segundos si no se corrige antes
+    field.addEventListener('focus', () => {
+      if (field.classList.contains('input-error-signup')) {
+        setTimeout(() => {
+          if (field.classList.contains('input-error-signup')) {
+            field.classList.remove('input-error-signup');
+          }
+        }, 5000);
+      }
+    });
+    // Prevenir espacios y manejar pegado
+    field.addEventListener('keydown', e => {
+      if (e.key === ' ' && !rules.allowSpaces) {
+        e.preventDefault();
+      }
     });
 
-    // Prevenir espacios
-    if (!rules.allowSpaces) {
-      field.addEventListener('keydown', e => e.key === ' ' && e.preventDefault());
-      field.addEventListener('paste', e => {
-        e.preventDefault();
-        const text = (e.clipboardData || window.clipboardData).getData('text');
-        field.value = text.replace(/\s/g, '');
-      });
-    }
+    field.addEventListener('paste', e => {
+      e.preventDefault();
+      let text = (e.clipboardData || window.clipboardData).getData('text');
+
+      if (rules.pattern.test(text.trim())) {
+        field.value = rules.allowSpaces ? text : text.replace(/\s/g, '');
+      }
+    });
   });
+
+  const form = document.getElementById('form-registro');
+  let isSubmitting = false;
 
   // Manejo del formulario
   form.addEventListener('submit', async function(event) {
@@ -416,7 +442,7 @@
     if (isSubmitting) return;
 
     const isValid = Object.keys(validationRules).every(fieldId =>
-      validateField(fieldId, document.getElementById(fieldId).value)
+      validateField(fieldId, document.getElementById(fieldId).value, true)
     );
 
     if (!isValid) return;
@@ -459,16 +485,16 @@
   function showToast(type, title, message) {
     switch (type) {
       case 'success':
-        ToastPersonalizado.exito(title, message);
+        ToastPersonalizado.exito(title, message, 5000);
         break;
       case 'error':
-        ToastPersonalizado.error(title, message);
+        ToastPersonalizado.error(title, message, 5000);
         break;
       case 'warning':
-        ToastPersonalizado.advertencia(title, message);
+        ToastPersonalizado.advertencia(title, message, 5000);
         break;
       case 'info':
-        ToastPersonalizado.info(title, message);
+        ToastPersonalizado.info(title, message, 5000);
         break;
     }
   }

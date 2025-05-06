@@ -6,17 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title> TuRifaDigi </title>
   <!-- favicons Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.jpg" />
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/apple-touch-icon-180x180.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/favicon-16x16.png" />
+ -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/TuRifaDigi.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/TuRifaDigi.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.png" />
   <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
-  <meta name="description" content="zefxa HTML 5 Template " />
+  <meta name="description" content="TuRifaDigital" />
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-  <!-- Lista de boletos -->
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -61,8 +64,18 @@
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
-
   <link rel="stylesheet" href="assets/css/dropdown-search.css">
+
+  <!-- Scripts adicionales CSS -->
+  <link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+  <link rel="stylesheet" href="vendor/select2/css/select2.min.css">
+  <link rel="stylesheet" href="vendor/datatables/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="vendor/dropzone/dropzone.css">
+  <link rel="stylesheet" href="vendor/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
 </head>
 
 <body class="custom-cursor">

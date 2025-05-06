@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title> TuRifaDigi </title>
   <!-- favicons Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/TuRifaDigi.jpg" />
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.jpg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/ico/TuRifadigi.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/ico/TuRifadigi.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/ico/TuRifadigi.ico" />
   <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
-  <meta name="description" content="zefxa HTML 5 Template " />
+  <meta name="description" content="TuRifaDigital" />
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,8 +61,18 @@
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
-
   <link rel="stylesheet" href="assets/css/dropdown-search.css">
+
+  <!-- Scripts adicionales CSS -->
+  <link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+  <link rel="stylesheet" href="vendor/select2/css/select2.min.css">
+  <link rel="stylesheet" href="vendor/datatables/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="vendor/dropzone/dropzone.css">
+  <link rel="stylesheet" href="vendor/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
 </head>
 
 <body class="custom-cursor">
