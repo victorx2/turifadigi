@@ -78,61 +78,124 @@
           <div class="main-menu__top-inner">
             <div class="main-menu__top-left">
               <div class="main-menu__social">
+                <a href="#"><i class="icon-facebook"></i></a>
+                <a href="#"><i class="icon-google-plus-logo"></i></a>
+                <a href="#"><i class="icon-twitter"></i></a>
               </div>
               <ul class="list-unstyled main-menu__contact-list">
                 <li>
                   <div class="icon">
+                    <i class="icon-phone-call"></i>
                   </div>
                   <div class="text">
+                    <p><a href="tel:0012346823705">+00 (1234) 682 3705</a>
+                    </p>
                   </div>
                 </li>
                 <li>
                   <div class="icon">
-
+                    <i class="icon-mail"></i>
                   </div>
                   <div class="text">
+                    <p><a href="mailto:needhelp@company.com">needhelp@company.com</a>
+                    </p>
                   </div>
                 </li>
                 <li>
                   <div class="icon">
+                    <i class="icon-maps-and-flags"></i>
                   </div>
                   <div class="text">
-
+                    <p>80 Broklyn Golden Street UK</p>
                   </div>
                 </li>
               </ul>
             </div>
             <div class="main-menu__top-right">
-
+              <p class="main-menu__top-text">We Provide High Quality & Cost Effective Services</p>
             </div>
           </div>
         </div>
       </div>
       <nav class="main-menu">
-        <div class="main-menu__wrapper">
+        <div class="main-menu__wrapper" style="background-color: #201f23;">
           <div class="container">
             <div class="main-menu__wrapper-inner">
               <div class="main-menu__left">
-                <!-- <div class="main-menu__logo">
-
-                </div> -->
+                <div class="main-menu__logo">
+                </div>
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
+                  <ul class="main-menu__list">
+                    <li class="dropdown">
+                      <a href="/TuRifadigi/">Inicio
+                        <span class="main-menu-border"></span>
+                      </a>
+                      <ul>
+                        <li class="dropdown">
+                          <a href="/TuRifadigi/rifa_config">El lado del admin</a>
+                        </li>
+                        <li class="dropdown">
+                          <a href="/TuRifadigi/boletos">Vista de boletos</a>
+                        </li>
+                        <li class="dropdown">
+                          <a href="/TuRifadigi/main_config">Editar el main</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#">Cuentas de pago
+                        <span class="main-menu-border"></span>
+                      </a>
+                      <ul>
+                        <li><a href="">Cuentas de pago</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#">Contacto
+                        <span class="main-menu-border"></span>
+                      </a>
+                      <ul>
+                        <li><a href="">Contacto</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="/TuRifadigi/sorteo">SORTEOS
+                        <span class="main-menu-border"></span>
+                      </a>
+                    </li>
+                    <?php
+
+                    if ($route === '/login') {
+                      echo '
+                      <li class="dropdown">
+                        <a href="/TuRifadigi/signup">crear cuenta
+                          <span class="main-menu-border"></span>
+                        </a>
+                      </li>';
+                    } ?>
+                  </ul>
                 </div>
               </div>
-              <div class="main-menu__right">
-                <div class="main-menu__cart-search-box">
 
-                </div>
-                <div class="main-menu__btn-box">
-
-                </div>
-              </div>
+              <?php
+              if ($route === '/signup') {
+                echo '
+                <div class="main-menu__right">
+                  <div class="main-menu__cart-search-box">
+                  </div>
+                  <div class="main-menu__btn-box">
+                    <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
+                  </div>
+                </div>';
+              }
+              ?>
             </div>
           </div>
         </div>
       </nav>
     </header>
+
 
     <div class="stricky-header stricked-menu main-menu">
       <div class="sticky-header__content"></div>
@@ -153,12 +216,11 @@
 
         .page-header__bg2 {
           position: absolute;
-          top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background-image: url(assets/img/backgrounds/MotoYorsi.jpeg);
-          background-size: contain;
+          background-image: url(assets/img/backgrounds/MotoYorsi.webp);
+          background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
           filter: brightness(0.4);

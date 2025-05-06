@@ -134,60 +134,61 @@
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
                   <ul class="main-menu__list">
+                    <li class="dropdown"></li>
                     <li class="dropdown">
-                      <a href="/TuRifadigi/">Inicio
+                      <a href="/turifadigi/">Inicio
                         <span class="main-menu-border"></span>
                       </a>
-                      <ul>
-                        <li class="dropdown">
-                          <a href="/TuRifadigi/rifa_config">El lado del admin</a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="/TuRifadigi/boletos">Vista de boletos</a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="/TuRifadigi/main_config">Editar el main</a>
-                        </li>
+                      <ul class="dropdown-menu">
+                        <li><a href="/TuRifadigi/rifa_config">Acceso administrador</a></li>
+                        <li><a href="/TuRifadigi/boletos">Verificación de boletos</a></li>
+                        <li><a href="/TuRifadigi/main_config">Crear sorteo</a></li>
                       </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="element">
                       <a href="#">Cuentas de pago
                         <span class="main-menu-border"></span>
                       </a>
-                      <ul>
-                        <li><a href="">Cuentas de pago</a></li>
-                      </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="element">
                       <a href="#">Contacto
                         <span class="main-menu-border"></span>
                       </a>
-                      <ul>
-                        <li><a href="">Contacto</a></li>
-                      </ul>
                     </li>
-                    <li class="dropdown">
-                      <a href="/TuRifadigi/sorteo">SORTEOS
+                    <li class="element">
+                      <a href="/TuRifadigi/sorteo">Sorteo
                         <span class="main-menu-border"></span>
                       </a>
+                    </li>
+                    <?php
 
-                    </li>
-                    <li class="dropdown">
-                      <a href="/TuRifadigi/signup">crear cuenta
-                        <span class="main-menu-border"></span>
-                      </a>
-                    </li>
+                    $session = $_SESSION['usuario'] ?? '';
+
+                    if ($session === '') {
+                      echo '
+                      <li class="element">
+                        <a href="/TuRifadigi/signup">Crear Cuenta
+                          <span class="main-menu-border"></span>
+                        </a>
+                      </li>';
+                    } ?>
                   </ul>
                 </div>
               </div>
-              <div class="main-menu__right">
-                <div class="main-menu__cart-search-box">
-                </div>
-                <div class="main-menu__btn-box">
-                  <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
-                </div>
-              </div>
             </div>
+
+            <?php
+            if ($session === '') {
+              echo '
+                <div class="main-menu__right">
+                  <div class="main-menu__cart-search-box">
+                  </div>
+                  <div class="main-menu__btn-box">
+                    <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
+                  </div>
+                </div>';
+            }
+            ?>
           </div>
         </div>
       </nav>

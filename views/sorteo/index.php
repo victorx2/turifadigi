@@ -213,6 +213,7 @@
 </script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+
     // Configuración global para Semantic UI Transitions
     $.fn.transition.settings.silent = true;
 

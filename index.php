@@ -166,6 +166,8 @@ if ($request_method === 'POST' && $route === '/banner_update') {
 
 // Enrutamiento principal de la aplicación
 
+print_r($_SESSION);
+
 switch ($route) {
     case '/':
         require_once 'views/main.php';
