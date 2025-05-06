@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "minify": "node assets/js/minify.js"
+    "minify": "node assets/js/minify.js",
+    "minify:css": "cleancss -o assets/css/custom.min.css assets/css/custom.css && cleancss -o assets/css/custom_responsive.min.css assets/css/custom_responsive.css",
+    "minify:all": "npm run minify && npm run minify:css"
   },
   "repository": {
     "type": "git",
@@ -23,7 +25,9 @@
   },
   "homepage": "https://github.com/victorx2/turifadigi#readme",
   "devDependencies": {
+    "clean-css-cli": "^5.6.3",
     "cssnano": "^7.0.6",
+    "postcss": "^8.5.3",
     "terser": "^5.39.0"
   },
   "dependencies": {
