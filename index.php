@@ -41,10 +41,6 @@ if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
 
-if ($request_method === 'POST' && $route === '/procesarCompra') {
-    (new BoletoController())->procesarCompra();
-}
-
 if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
     header('Content-Type: application/json');
     try {
@@ -168,7 +164,7 @@ if ($request_method === 'POST' && $route === '/banner_update') {
 
 // print_r($_SESSION);
 
-switch ($route) {
+switch (strtok($route, '?')) {
     case '/':
         require_once 'views/main.php';
         break;
@@ -203,13 +199,6 @@ switch ($route) {
         require_once 'views/auth/forgot-password.php';
         break;
 
-    case '/boletos/obtenerBoletos':
-        require_once 'src/API/boletosDisponibility.php';
-        break;
-
-    case '/procesarCompra':
-        break;
-
     case '/sorteo':
         (new BoletoController())->index();
         break;
@@ -232,7 +221,18 @@ switch ($route) {
         break;
 
     case '/api/recovery_password':
-        require_once 'src/API/password_recovery.php';
+        require_once 'src/API/passwordRecovery.php';
+        break;
+    case '/api/session_verfication':
+        require_once 'src/API/sessionVerify.php';
+        break;
+
+    case '/api/get_tickets':
+        require_once 'src/API/boletosDisponibility.php';
+        break;
+
+    case '/process_purchase':
+        require_once 'src/API/procesarCompra.php';
         break;
 
     default:

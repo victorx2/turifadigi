@@ -128,7 +128,7 @@
     <div class="total-info">
       Total: <span id="totalBSDisplay">4252.40 BS</span> (1 boletos)
     </div>
-    <div class="form-section">
+    <!-- <div class="form-section">
       <h2 class="form-section-title" style="color: #2962ff; font-weight: bold; font-size: 24px;">
         <i class="fas fa-user" style="color: #2962ff;"></i>
         DATOS PERSONALES
@@ -165,7 +165,7 @@
       <br>
       <br>
 
-    </div>
+    </div> -->
 
     <?php require_once 'views/sorteo/datos_personales/modo_de_pago.php'; ?>
 
@@ -360,7 +360,7 @@
       mostrarCargando(); // Mostrar el texto de carga
       let comprados = 0;
 
-      await fetch('./boletos/obtenerBoletos') // Petición al backend
+      await fetch('./api/get_tickets') // Petición al backend
         .then(response => response.json())
         .then(data => {
           if (data && Array.isArray(data['data'])) {
@@ -649,121 +649,150 @@
         alert('Debe seleccionar al menos 2 boletos para continuar');
         return;
       }
-      document.getElementById('datosPersonales').style.display = 'block';
-      this.parentElement.style.display = 'none';
+
+      fetch('./api/session_verfication', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            boletos: Array.from(boletosSeleccionados)
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.session) {
+            document.getElementById('datosPersonales').style.display = 'block';
+            this.parentElement.style.display = 'none';
+          } else {
+            window.location.href = '/TuRifadigi/login';
+          }
+        })
+        .catch(error => {
+          console.error('Error al verificar disponibilidad:', error);
+        });
     };
 
     // Manejar el envío del formulario
     document.querySelector('.btn-confirmar').onclick = async function(e) {
       e.preventDefault();
 
-      // Función auxiliar para obtener valor seguro
-      const getInputValue = (selector) => {
-        const element = document.querySelector(selector);
-        return element ? element.value.trim() : '';
-      };
-
-      // Obtener valores de forma segura
-      const formData = {
-        nombre: getInputValue('#nombre'),
-        cedula: getInputValue('#cedula'),
-        telefono: getInputValue('#telefono'),
-        prefijo: $('input[name="prefijo"]').val(),
-        estado: $('input[name="estado_venezuela"]').val() || $('input[name="pais_internacional"]').val(),
-        titular: getInputValue('#titular'),
-        referencia: getInputValue('#referencia'),
-        metodoPago: $('input[name="payment_method"]').val()
-      };
-
-      // Validar que todos los campos requeridos tengan valor
-      const camposRequeridos = [{
-          campo: 'nombre',
-          mensaje: 'Nombre'
-        },
-        {
-          campo: 'cedula',
-          mensaje: 'Cédula'
-        },
-        {
-          campo: 'telefono',
-          mensaje: 'Teléfono'
-        },
-        {
-          campo: 'prefijo',
-          mensaje: 'Prefijo telefónico'
-        },
-        {
-          campo: 'estado',
-          mensaje: 'Ubicación'
-        },
-        {
-          campo: 'titular',
-          mensaje: 'Titular'
-        },
-        {
-          campo: 'referencia',
-          mensaje: 'Referencia'
-        },
-        {
-          campo: 'metodoPago',
-          mensaje: 'Método de pago'
-        }
-      ];
-
-      const camposFaltantes = camposRequeridos
-        .filter(({
-          campo
-        }) => !formData[campo])
-        .map(({
-          mensaje
-        }) => mensaje);
-
-      if (camposFaltantes.length > 0) {
-        alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
-        return;
-      }
-
-      const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
-      const totalBS = totalUSD * tasaUSD;
-      const boletosCargar = Array.from(boletosSeleccionados)
-
-      try {
-        // Preparar datos de la compra
-        const datosCompra = {
-          boletos: boletosCargar,
-          ...formData,
-          total: totalBS
-        };
-
-        const responseCompra = await fetch('/TuRifadigi/procesarCompra', {
+      await fetch('./api/session_verfication?t=1', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(datosCompra)
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+
+          if (!data.session) {
+            window.location.href = '/TuRifadigi/login';
+            return;
+          }
+
+          let value = data.user;
+          // Función auxiliar para obtener valor seguro
+          const getInputValue = (selector) => {
+            const element = document.querySelector(selector);
+            return element ? element.value.trim() : '';
+          };
+
+          // Obtener valores de forma segura
+          const formData = {
+            nombre: value.nombre + ' ' + value.apellido,
+            cedula: value.cedula,
+            telefono: value.telefono,
+            ubicacion: value.ubicacion,
+            id_usuario: value.id_usuario,
+            titular: getInputValue('#titular'),
+            referencia: getInputValue('#referencia'),
+            metodoPago: $('input[name="payment_method"]').val()
+          };
+
+          // Validar que todos los campos requeridos tengan valor
+          const camposRequeridos = [{
+              campo: 'titular',
+              mensaje: 'Titular'
+            },
+            {
+              campo: 'referencia',
+              mensaje: 'Referencia'
+            },
+            {
+              campo: 'metodoPago',
+              mensaje: 'Método de pago'
+            }
+          ];
+
+          const camposFaltantes = camposRequeridos
+            .filter(({
+              campo
+            }) => !formData[campo])
+            .map(({
+              mensaje
+            }) => mensaje);
+
+          if (camposFaltantes.length > 0) {
+            alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
+            return;
+          }
+
+
+
+          const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
+          const totalBS = totalUSD * tasaUSD;
+          const boletosCargar = Array.from(boletosSeleccionados)
+
+          try {
+            // Preparar datos de la compra
+            const datosCompra = {
+              boletos: boletosCargar,
+              ...formData,
+              total: totalBS
+            };
+            const responseCompra = fetch('./api/session_verfication?t=1', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json());
+
+            // const responseCompra = fetch('./api/process_purchase', {
+            //   method: 'POST',
+            //   headers: {
+            //     'Content-Type': 'application/json'
+            //   },
+            //   body: JSON.stringify(datosCompra)
+            // });
+
+            const dataCompra = responseCompra.json();
+
+            if (dataCompra.success) {
+
+              generarEnlaceWhatsApp({
+                nombre: formData.nombre,
+                cedula: formData.cedula,
+                telefono: formData.telefono
+              }, boletosCargar);
+
+              alert('¡Compra procesada correctamente!');
+
+              window.location.reload();
+
+            } else {
+              alert(dataCompra.rroer || 'Error al procesar la compra');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Ocurrió un error al procesar la solicitud');
+          }
+
+        })
+        .catch(error => {
+          console.error('Error al verificar sesión:', error);
         });
-
-        const dataCompra = await responseCompra.json();
-
-        if (dataCompra.success) {
-
-          generarEnlaceWhatsApp({
-            nombre: formData.nombre,
-            cedula: formData.cedula,
-            telefono: formData.telefono
-          }, boletosCargar);
-
-          alert('¡Compra procesada correctamente!');
-
-          window.location.reload();
-
-        } else {
-          alert(dataCompra.rroer || 'Error al procesar la compra');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Ocurrió un error al procesar la solicitud');
-      }
     };
 
     // Conversor de moneda

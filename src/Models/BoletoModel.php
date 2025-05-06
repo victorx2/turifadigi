@@ -47,7 +47,6 @@ class BoletoModel
       if (!$resultRifa) {
         throw new Exception("No se encontró una rifa activa");
       }
-
     } catch (Exception $e) {
       throw new Exception("Error al inicializar boletos: " . $e->getMessage());
     }
@@ -135,13 +134,13 @@ class BoletoModel
     }
   }
 
-  public function procesarCompraConJoin($boletos, $nombre, $cedula, $telefono, $ubicacion, $total, $titular, $referencia, $metodoPago)
+  public function procesarCompraConJoin($id_usuario, $boletos, $nombre, $cedula, $telefono, $ubicacion, $total, $titular, $referencia, $metodoPago)
   {
     try {
       // 1. Primero verificamos la disponibilidad de todos los boletos
       $boletosVerificar = [];
       foreach ($boletos as $numeroBoleto) {
-        $sqlBoleto = "SELECT id_boleto FROM boletos WHERE numero_boleto = :numero AND estado = 'disponible'";
+        $sqlBoleto = "SELECT b.id_boleto FROM boletos b INNER JOIN rifas r INNER JOIN configuracion c WHERE b.numero_boleto = :numero AND b.estado = 'disponible' AND c.estado= 1";
         $resultBoleto = $this->db->consultar($sqlBoleto, [':numero' => $numeroBoleto]);
 
         if (empty($resultBoleto)) {
@@ -151,28 +150,25 @@ class BoletoModel
       }
 
       // 2. Si llegamos aquí, todos los boletos están disponibles. Creamos la compra
-      $sqlCompra = "INSERT INTO compras_boletos (id_rifa, total, estado, fecha_compra) 
-                    VALUES (1, :total, 'pendiente', NOW())";
+      $rifa = $this->db->consultar("SELECT id_rifa FROM rifas r INNER JOIN configuracion c WHERE c.estado= 1", []);
+
+      $sqlCompra = "INSERT INTO compras_boletos (id_rifa, fecha_compra, estado,total) 
+                    VALUES (:id_rifa, NOW(), 'pendiente', :total)";
+
+      if (empty($rifa)) {
+        throw new Exception("No se encontró una rifa activa");
+      }
+
+      $id_rifa_activa = $rifa[0]['id_rifa'];
 
       $idCompra = $this->db->ejecutar($sqlCompra, [
+        ':id_rifa' => $id_rifa_activa,
         ':total' => $total
       ]);
 
       if (!$idCompra) {
         throw new Exception("Error al crear la compra");
       }
-
-      // 3. Insertamos datos personales
-      $sqlDatosPersonales = "INSERT INTO datos_personales (id_compra, nombre, cedula, telefono, ubicacion) 
-                            VALUES (:id_compra, :nombre, :cedula, :telefono, :ubicacion)";
-
-      $this->db->ejecutar($sqlDatosPersonales, [
-        ':id_compra' => $idCompra,
-        ':nombre' => $nombre,
-        ':cedula' => $cedula,
-        ':telefono' => $telefono,
-        ':ubicacion' => $ubicacion
-      ]);
 
       // 4. Marcamos los boletos como reservados y creamos el detalle
       $precioUnitario = $total / count($boletos);
@@ -202,8 +198,8 @@ class BoletoModel
       }
 
       // 5. Registrar el pago como pendiente
-      $sqlPago = "INSERT INTO pagos (id_compra, titular, referencia, metodo, monto, fecha, estado) 
-                  VALUES (:id_compra, :titular, :referencia, :metodo, :monto, NOW(), 'pendiente')";
+      $sqlPago = "INSERT INTO pagos (id_compra, titular, referencia, metodo) 
+                  VALUES (:id_compra, :titular, :referencia, :metodo, :monto)";
 
       $this->db->ejecutar($sqlPago, [
         ':id_compra' => $idCompra,
