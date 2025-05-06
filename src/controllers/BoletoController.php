@@ -48,6 +48,7 @@ class BoletoController
 
       // Validar datos requeridos
       $camposRequeridos = [
+        'id_usuario' => 'ID de usuario',
         'boletos' => 'Boletos seleccionados',
         'nombre' => 'Nombre completo',
         'cedula' => 'Cédula',
@@ -67,6 +68,7 @@ class BoletoController
 
       // Procesar la compra usando una única transacción con INNER JOIN
       $result = $this->model->procesarCompraConJoin(
+        $data['id_usuario'],
         $data['boletos'],
         $data['nombre'],
         $data['cedula'],

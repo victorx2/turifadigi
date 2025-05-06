@@ -4,25 +4,48 @@ header('Content-Type: application/json');
 @session_start();
 
 use App\Models\Usuario;
+use App\Models\DatosPersonales;
 
 $sesion = $_SESSION['usuario'] ?? '';
+$t = $_GET['t'] ?? '';
 
-print_r($sesion);
 try {
-    if ($sesion === '') {
+    if ($sesion == '') {
         header("Location: /TuRifadigi/login");
         json_encode(["session" => false]);
+
         exit;
     } else {
+
         $usuario = new Usuario();
         $username = $_SESSION['usuario'];
 
         $result = $usuario->getByUsername($username);
 
         if ($result !== null) {
-            json_encode([$result]);
+            // VERIFICA SI SE REQUIEREN DATOS PERSONALES
+            if ($t) {
+                $personal = new DatosPersonales();
+
+                $result = $personal->getByUsuarioId($result['id_usuario']);
+                echo json_encode([
+                    "user" => [
+                        "id_usuario" => $result['id_usuario'],
+                        "nombre" => $result['nombre'],
+                        "apellido" => $result['apellido'],
+                        "cedula" => $result['cedula'],
+                        "telefono" => $result['telefono'],
+                        "ubicacion" => $result['ubicacion']
+                    ],
+                    "session" => true
+                ]);
+                exit;
+            }
+            echo json_encode([
+                "session" => true
+            ]);
         } else {
-            json_encode(["session" => false]);
+            echo json_encode(["session" => false]);
         }
     }
 } catch (Exception $e) {
