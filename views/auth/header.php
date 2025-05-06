@@ -167,7 +167,7 @@
 
                     if ($route === '/login') {
                       echo '
-                      <li class="dropdown">
+                      <li class="element">
                         <a href="/TuRifadigi/signup">crear cuenta
                           <span class="main-menu-border"></span>
                         </a>
@@ -297,7 +297,7 @@
 
           .page-header__bg2 {
             background-size: cover;
-            background-position: 65% center;
+            background-position: 40% center;
           }
         }
 
@@ -308,7 +308,7 @@
 
           .page-header__bg2 {
             background-size: cover;
-            background-position: 75% center;
+            background-position: 50% center;
           }
         }
 

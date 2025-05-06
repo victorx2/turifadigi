@@ -184,20 +184,19 @@
                   </ul>
                 </div>
               </div>
+              <?php
+              if ($session === '') {
+                echo '
+              <div class="main-menu__right">
+              <div class="main-menu__cart-search-box">
+              </div>
+              <div class="main-menu__btn-box">
+              <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
+              </div>
+              </div>';
+              }
+              ?>
             </div>
-
-            <?php
-            if ($session === '') {
-              echo '
-                <div class="main-menu__right">
-                  <div class="main-menu__cart-search-box">
-                  </div>
-                  <div class="main-menu__btn-box">
-                    <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
-                  </div>
-                </div>';
-            }
-            ?>
           </div>
         </div>
       </nav>
