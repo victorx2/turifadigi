@@ -198,7 +198,7 @@ require_once 'views/layouts/header.php';
     }
 
     .services-one__text {
-      margin: 5px 0;
+      margin: 25px 0 0;
       opacity: 0.9;
     }
   </style>
@@ -221,8 +221,8 @@ require_once 'views/layouts/header.php';
             </div>
           </div>
           <div class="services-one__content-wrap">
-            <h3 class="services-one__title">Zelle</h3>
             <div class="services-one__content">
+              <h3 class="services-one__title">Zelle</h3>
               <p class="services-one__text">Número de telefono: +1 4074287580</p>
             </div>
           </div>
@@ -238,8 +238,8 @@ require_once 'views/layouts/header.php';
             </div>
           </div>
           <div class="services-one__content-wrap">
-            <h3 class="services-one__title">Nesqui</h3>
             <div class="services-one__content">
+              <h3 class="services-one__title">Nequi</h3>
               <p class="services-one__text">Información próximamente</p>
             </div>
           </div>
@@ -255,8 +255,8 @@ require_once 'views/layouts/header.php';
             </div>
           </div>
           <div class="services-one__content-wrap">
-            <h3 class="services-one__title">Paypal</h3>
             <div class="services-one__content">
+              <h3 class="services-one__title">Paypal</h3>
               <p class="services-one__text">Nombre: Yorsin Cruz Osorio</p>
               <p class="services-one__text">Correo: Yorsincruz1995@gmail.com</p>
               <p class="services-one__text">Usuario: @Yorsin0506</p>
@@ -275,8 +275,8 @@ require_once 'views/layouts/header.php';
             </div>
           </div>
           <div class="services-one__content-wrap">
-            <h3 class="services-one__title">Banco de Venezuela</h3>
             <div class="services-one__content">
+              <h3 class="services-one__title">Banco de Venezuela</h3>
               <p class="services-one__text">Teléfono: 04124124923</p>
               <p class="services-one__text">Cédula: 28517267</p>
             </div>

@@ -665,12 +665,10 @@
             document.getElementById('datosPersonales').style.display = 'block';
             this.parentElement.style.display = 'none';
           } else {
+            alert('No se pudo verificar la sesión. Por favor, inicie sesión nuevamente. else');
             window.location.href = '/TuRifadigi/login';
           }
         })
-        .catch(error => {
-          console.error('Error al verificar disponibilidad:', error);
-        });
     };
 
     // Manejar el envío del formulario
@@ -683,10 +681,16 @@
             'Content-Type': 'application/json'
           }
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
 
           if (!data.session) {
+            alert('No se pudo verificar la sesión. Por favor, inicie sesión nuevamente. 3');
             window.location.href = '/TuRifadigi/login';
             return;
           }

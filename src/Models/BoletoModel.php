@@ -198,7 +198,7 @@ class BoletoModel
       }
 
       // 5. Registrar el pago como pendiente
-      $sqlPago = "INSERT INTO pagos (id_compra, titular, referencia, metodo) 
+      $sqlPago = "INSERT INTO pagos (id_compra, titular, referencia, metodo, monto_pagado) 
                   VALUES (:id_compra, :titular, :referencia, :metodo, :monto)";
 
       $this->db->ejecutar($sqlPago, [
