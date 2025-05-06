@@ -652,7 +652,7 @@
 
       fetch('./api/session_verfication', {
           method: 'POST',
-          headers: {
+          header: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -665,10 +665,15 @@
             document.getElementById('datosPersonales').style.display = 'block';
             this.parentElement.style.display = 'none';
           } else {
-            alert('No se pudo verificar la sesión. Por favor, inicie sesión nuevamente. else');
-            window.location.href = '/TuRifadigi/login';
+            alert('No haz iniciado sesion, redireccionando...');
+            setTimeout(() => {
+              window.location.href = '/TuRifadigi/login';
+            }, 1000);
           }
         })
+        .catch(error => {
+          console.error('Error al verificar sesión:', error);
+        });
     };
 
     // Manejar el envío del formulario
@@ -681,18 +686,12 @@
             'Content-Type': 'application/json'
           }
         })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
 
           if (!data.session) {
-            alert('No se pudo verificar la sesión. Por favor, inicie sesión nuevamente. 3');
             window.location.href = '/TuRifadigi/login';
-            return;
+            return;S
           }
 
           let value = data.user;

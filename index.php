@@ -231,8 +231,11 @@ switch (strtok($route, '?')) {
         require_once 'src/API/boletosDisponibility.php';
         break;
 
-    case '/process_purchase':
+    case '/api/process_purchase':
         require_once 'src/API/procesarCompra.php';
+        break;
+    case '/api/session_destroy':
+        require_once 'src/API/destruirSesion.php';
         break;
 
     default:

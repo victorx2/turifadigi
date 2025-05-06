@@ -67,7 +67,6 @@ class Auth
 
       if ($result && count($result) > 0) {
         $lomo = $this->ctf->desencriptacion($result[0]["password"]);
-        var_dump($lomo, $request['password']);
         if ($lomo != (int)$request['password']) {
           return self::ERROR_INVALID_DATA;
         }

@@ -190,7 +190,7 @@
 
     if (valid) {
       const formData = new FormData(this);
-      fetch('/TuRifadigi/api/login', {
+      fetch('./api/login', {
           method: 'POST',
           body: new URLSearchParams(formData)
         })
@@ -199,7 +199,7 @@
           if (data.success) {
             showToast('success', 'Éxito', data.message);
             setTimeout(() => {
-              window.location.href = '/TuRifadigi/home';
+              window.location.href = '/TuRifadigi/sorteo';
             }, 2000);
           } else {
             showToast('error', 'Error', data.message);

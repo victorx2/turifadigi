@@ -185,12 +185,38 @@
               <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
               </div>
               </div>';
-              }
-              ?>
+              } else {
+                echo '<div class="main-menu__right">
+              <div class="main-menu__cart-search-box">
+              </div>
+              <div class="main-menu__btn-box">
+              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy>Cerrar Sesión</a>
+              </div>
+              </div>';
+              } ?>
             </div>
           </div>
         </div>
       </nav>
+      <script>
+        function session_destroy() {
+          $.ajax({
+            url: './api/session_destroy',
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+              if (response.status === 'success') {
+                window.location.href = './';
+              } else {
+                alert('Error al cerrar sesión. Inténtalo de nuevo.');
+              }
+            },
+            error: function () {
+              alert('Error en la solicitud. Inténtalo de nuevo.');
+            }
+          });
+        }
+      </script>
     </header>
 
     <div class="stricky-header stricked-menu main-menu">

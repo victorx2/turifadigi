@@ -11,9 +11,7 @@ $t = $_GET['t'] ?? '';
 
 try {
     if ($sesion == '') {
-        header("Location: /TuRifadigi/login");
-        json_encode(["session" => false]);
-
+        echo json_encode(["session" => false]);
         exit;
     } else {
 

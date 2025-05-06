@@ -20,7 +20,7 @@
           <div class="section-title text-left">
             <div class="section-title__tagline-box">
               <div class="section-title__tagline-shape">
-              
+
               </div>
               <span class="section-title__tagline"></span>
             </div>
@@ -443,7 +443,9 @@
 
       showToast('success', 'Éxito', data.message);
       Array.from(form.getElementsByTagName('input')).forEach(input => input.disabled = true);
-      setTimeout(() => window.location.href = data.redirect, 1500);
+      setTimeout(() => {
+        window.location.href = '/TuRifadigi/sorteo';
+      }, 2000);
 
     } catch (error) {
       console.error('Error:', error);
