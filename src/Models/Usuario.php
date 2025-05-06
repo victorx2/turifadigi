@@ -209,7 +209,7 @@ class Usuario
    * @param string $username - Nombre de usuario
    * @return bool - true si existe, false en caso contrario
    */
-  private function existeUsuario(string $username): bool
+  public function existeUsuario(string $username): bool
   {
     $result = $this->db->consultar(
       "SELECT COUNT(*) as count FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_NAME . " = :username",
