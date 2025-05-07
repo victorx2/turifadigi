@@ -212,7 +212,7 @@ class Auth
       case self::ERROR_INVALID_CREDENTIALS:
         return [
           'success' => false,
-          'message' => 'No se encontró ninguna cuenta activa asociada a este correo electrónico. Por favor, verifica el correo ingresado.',
+          'message' => 'No se encontró ninguna cuenta asociada a este usuario. Por favor, verifica el usuario ingresado.',
           'type' => 'error'
         ];
       case self::ERROR_INVALID_DATA:

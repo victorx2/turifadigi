@@ -134,7 +134,7 @@ class BoletoModel
     }
   }
 
-  public function procesarCompraConJoin($id_usuario, $boletos, $nombre, $cedula, $telefono, $ubicacion, $total, $titular, $referencia, $metodoPago)
+  public function procesarCompraConJoin($id_usuario, $boletos, $montoPagado, $titular, $referencia, $metodoPago)
   {
     try {
       // 1. Primero verificamos la disponibilidad de todos los boletos
@@ -150,9 +150,9 @@ class BoletoModel
       }
 
       // 2. Si llegamos aquí, todos los boletos están disponibles. Creamos la compra
-      $rifa = $this->db->consultar("SELECT id_rifa FROM rifas r INNER JOIN configuracion c WHERE c.estado= 1", []);
+      $rifa = $this->db->consultar("SELECT r.id_rifa, c.precio FROM rifas r INNER JOIN configuracion c WHERE c.estado= 1", []);
 
-      $sqlCompra = "INSERT INTO compras_boletos (id_rifa, fecha_compra, estado,total) 
+      $sqlCompra = "INSERT INTO compras_boletos (id_rifa, fecha_compra, estado, total_compra) 
                     VALUES (:id_rifa, NOW(), 'pendiente', :total)";
 
       if (empty($rifa)) {
@@ -160,10 +160,12 @@ class BoletoModel
       }
 
       $id_rifa_activa = $rifa[0]['id_rifa'];
+      $precioUnitario = $rifa[0]['precio'];
+      $totalCompra = count($boletosVerificar) * $precioUnitario;
 
       $idCompra = $this->db->ejecutar($sqlCompra, [
         ':id_rifa' => $id_rifa_activa,
-        ':total' => $total
+        ':total' => $totalCompra
       ]);
 
       if (!$idCompra) {
@@ -171,17 +173,17 @@ class BoletoModel
       }
 
       // 4. Marcamos los boletos como reservados y creamos el detalle
-      $precioUnitario = $total / count($boletos);
       $boletosInsertados = [];
 
       foreach ($boletosVerificar as $index => $idBoleto) {
         // Actualizar estado del boleto a reservado
         $sqlUpdateBoleto = "UPDATE boletos 
-                           SET estado = 'reservado' 
+                           SET estado = 'reservado', id_usuario = :id_usuario 
                            WHERE id_boleto = :id_boleto";
 
         $this->db->ejecutar($sqlUpdateBoleto, [
-          ':id_boleto' => $idBoleto
+          ':id_boleto' => $idBoleto,
+          ':id_usuario' => $id_usuario
         ]);
 
         // Insertar detalle de compra
@@ -206,14 +208,14 @@ class BoletoModel
         ':titular' => $titular,
         ':referencia' => $referencia,
         ':metodo' => $metodoPago,
-        ':monto' => $total
+        ':monto' => $montoPagado
       ]);
 
       return [
         'success' => true,
         'id_compra' => $idCompra,
         'boletos' => $boletosInsertados,
-        'mensaje' => 'Compra procesada correctamente. Los boletos quedarán reservados hasta que se confirme el pago.'
+        'mensaje' => 'Compra procesada correctamente.'
       ];
     } catch (Exception $e) {
       throw $e;

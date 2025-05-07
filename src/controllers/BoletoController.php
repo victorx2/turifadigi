@@ -50,11 +50,7 @@ class BoletoController
       $camposRequeridos = [
         'id_usuario' => 'ID de usuario',
         'boletos' => 'Boletos seleccionados',
-        'nombre' => 'Nombre completo',
-        'cedula' => 'Cédula',
-        'telefono' => 'Teléfono',
-        'estado' => 'Ubicación',
-        'total' => 'Total a pagar',
+        'monto_pago' => 'Nombre completo',
         'titular' => 'Titular de la cuenta',
         'referencia' => 'Referencia de pago',
         'metodoPago' => 'Método de pago'
@@ -70,11 +66,7 @@ class BoletoController
       $result = $this->model->procesarCompraConJoin(
         $data['id_usuario'],
         $data['boletos'],
-        $data['nombre'],
-        $data['cedula'],
-        $data['telefono'],
-        $data['estado'],
-        $data['total'],
+        $data['monto_pago'],
         $data['titular'],
         $data['referencia'],
         $data['metodoPago']
@@ -82,7 +74,7 @@ class BoletoController
 
       echo json_encode([
         'success' => true,
-        'message' => 'Compra procesada correctamente'
+        'message' => 'Compra procesada correctamente. Los boletos quedarán reservados hasta que se confirme el pago'
       ]);
     } catch (Exception $e) {
       http_response_code(500);

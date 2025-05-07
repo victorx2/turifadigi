@@ -10,9 +10,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/favicon-16x16.png" />
  -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/backgrounds/TuRifaDigi.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/backgrounds/TuRifaDigi.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/backgrounds/TuRifaDigi.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/ico/TuRifadigi.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/ico/TuRifadigi.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/ico/TuRifadigi.ico" />
   <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
   <meta name="description" content="TuRifaDigital" />
   <!-- fonts -->
@@ -217,14 +217,14 @@
             url: './api/session_destroy',
             type: 'POST',
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
               if (response.status === 'success') {
                 window.location.href = './';
               } else {
                 alert('Error al cerrar sesión. Inténtalo de nuevo.');
               }
             },
-            error: function () {
+            error: function() {
               alert('Error en la solicitud. Inténtalo de nuevo.');
             }
           });

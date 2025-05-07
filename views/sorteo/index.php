@@ -120,7 +120,7 @@
       <span class="seleccionados-text">SELECCIONADOS</span>
       <div class="contador">0</div>
       <div class="boletos-seleccionados-chips"></div>
-      <button class="btn-continuar">CONTINUAR</button>
+      <button class="btn btn-continuar">CONTINUAR</button>
     </div>
   </div>
 
@@ -216,80 +216,7 @@
 
     // Configuración global para Semantic UI Transitions
     $.fn.transition.settings.silent = true;
-
-    // Inicializar el dropdown con configuración optimizada
-    const $dropdown = $('#payment-method-dropdown').dropdown({
-      onChange: function(value, text, $selectedItem) {
-        mostrarDatosPago(value);
-      },
-      // Desactivar animaciones y transiciones
-      transition: 'none',
-      duration: 0,
-      animation: 'none',
-      // Configuración adicional para evitar problemas de DOM
-      allowReselection: true,
-      forceSelection: false,
-      selectOnKeydown: false,
-      fullTextSearch: false,
-      // Evitar que el menú se oculte automáticamente
-      hideOnScroll: false,
-      allowTab: false,
-      // Configuración de rendimiento
-      throttle: 0,
-      // Configuración de búsqueda
-      match: 'text',
-      preserveHTML: false,
-      sortSelect: false,
-      // Configuración de visualización
-      direction: 'auto',
-      keepOnScreen: true
-    });
-
-    // Asegurarse de que el dropdown esté visible
-    $dropdown.css({
-      'display': 'block',
-      'visibility': 'visible',
-      'opacity': '1'
-    });
-
-    // Función para mostrar los detalles del método de pago seleccionado
-    function mostrarDatosPago(metodo) {
-      const paymentTitle = document.getElementById('paymentTitle');
-      const paymentDetails = document.getElementById('paymentDetails');
-
-      if (!paymentTitle || !paymentDetails) return;
-
-      switch (metodo) {
-        case 'zelle':
-          paymentTitle.textContent = 'ZELLE';
-          paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Número de teléfono: +1 4074287580</p>
-          `;
-          break;
-
-        case 'paypal':
-          paymentTitle.textContent = 'PAYPAL';
-          paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Nombre: Yorsin Cruz Osorio</p>
-            <p>Correo Electrónico: Yorsincruz1995@gmail.com</p>
-            <p>Usuario: @Yorsin0506</p>
-            <p>Número teléfono: +1 4074287580</p>
-          `;
-          break;
-
-        case 'banco_venezuela':
-          paymentTitle.textContent = 'BANCO DE VENEZUELA';
-          paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Número de teléfono: 04124124923</p>
-            <p>Cédula de identidad: 28517267</p>
-          `;
-          break;
-      }
-    }
-
+    
     const boletosSeleccionados = new Set();
     const minBoletos = 2;
     let cantidadSeleccion = 2;
@@ -489,6 +416,7 @@
       const contenedor = document.querySelector('.boletos-grid');
       const boletos = contenedor.querySelectorAll('.selected');
       const selectedContainer = document.querySelector('.seleccionados-container');
+      document.querySelector('.btn.btn-continuar').disabled = false;
 
       if (boletos.length >= 2) {
         selectedContainer.style.display = 'block'; // Hacer visible
@@ -632,6 +560,8 @@
 
         if (boletosNoDisponibles.length > 0) {
           alert(`Los siguientes boletos no están disponibles: ${boletosNoDisponibles.join(', ')}`);
+          document.querySelector('.btn.btn-continuar').disabled = false;
+
           return false;
         }
 
@@ -644,12 +574,12 @@
     }
 
     // Continuar con el proceso
-    document.querySelector('.btn-continuar').onclick = function() {
+    document.querySelector('.btn.btn-continuar').onclick = function() {
       if (boletosSeleccionados.size < minBoletos) {
         alert('Debe seleccionar al menos 2 boletos para continuar');
         return;
       }
-
+      document.querySelector('.btn.btn-continuar').disabled = true;
       fetch('./api/session_verfication', {
           method: 'POST',
           header: {
@@ -691,7 +621,7 @@
 
           if (!data.session) {
             window.location.href = '/TuRifadigi/login';
-            return;S
+            return;
           }
 
           let value = data.user;
@@ -708,6 +638,7 @@
             telefono: value.telefono,
             ubicacion: value.ubicacion,
             id_usuario: value.id_usuario,
+            monto_pago: getInputValue('#monto_pagado'),
             titular: getInputValue('#titular'),
             referencia: getInputValue('#referencia'),
             metodoPago: $('input[name="payment_method"]').val()
@@ -741,10 +672,8 @@
             return;
           }
 
-
-
-          const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
-          const totalBS = totalUSD * tasaUSD;
+          // const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
+          // const totalBS = totalUSD * tasaUSD;
           const boletosCargar = Array.from(boletosSeleccionados)
 
           try {
@@ -752,44 +681,37 @@
             const datosCompra = {
               boletos: boletosCargar,
               ...formData,
-              total: totalBS
+              // total: totalBS
             };
-            const responseCompra = fetch('./api/session_verfication?t=1', {
+
+            fetch('./api/process_purchase', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datosCompra)
+              })
+              .then(response => response.json())
+              .then(dataCompra => {
+                if (dataCompra.success) {
+
+                  generarEnlaceWhatsApp({
+                    nombre: formData.nombre,
+                    cedula: formData.cedula,
+                    telefono: formData.telefono
+                  }, boletosCargar);
+
+                  alert('¡Compra procesada correctamente!');
+                  window.location.reload();
                 }
               })
-              .then(response => response.json());
+              .catch(error => {
+                alert(dataCompra.error || 'Error al procesar la compra');
+                console.error('Error al procesar la compra:', error);
+              });
 
-            // const responseCompra = fetch('./api/process_purchase', {
-            //   method: 'POST',
-            //   headers: {
-            //     'Content-Type': 'application/json'
-            //   },
-            //   body: JSON.stringify(datosCompra)
-            // });
-
-            const dataCompra = responseCompra.json();
-
-            if (dataCompra.success) {
-
-              generarEnlaceWhatsApp({
-                nombre: formData.nombre,
-                cedula: formData.cedula,
-                telefono: formData.telefono
-              }, boletosCargar);
-
-              alert('¡Compra procesada correctamente!');
-
-              window.location.reload();
-
-            } else {
-              alert(dataCompra.rroer || 'Error al procesar la compra');
-            }
           } catch (error) {
             console.error('Error:', error);
-            alert('Ocurrió un error al procesar la solicitud');
           }
 
         })
@@ -812,19 +734,19 @@
       };
     });
 
-    // Subir comprobante
-    document.querySelector('.btn-upload').onclick = function() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (file) {
-          console.log('Imagen seleccionada:', file.name);
-        }
-      };
-      input.click();
-    };
+    // // Subir comprobante
+    // document.querySelector('.btn-upload').onclick = function() {
+    //   const input = document.createElement('input');
+    //   input.type = 'file';
+    //   input.accept = 'image/*';
+    //   input.onchange = function(e) {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //       console.log('Imagen seleccionada:', file.name);
+    //     }
+    //   };
+    //   input.click();
+    // };
 
     // Actualizar estilos para el botón de remover en el chip
     const styles = document.createElement('style');
@@ -861,7 +783,6 @@
   });
 </script>
 <link rel="stylesheet" href="assets/css/dropdown-search-method.css">
-
 
 <head>
   <link rel="stylesheet" href="/TuRifadigi/assets/css/payment.css">

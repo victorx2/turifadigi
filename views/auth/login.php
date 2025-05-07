@@ -40,7 +40,7 @@
             </div>
 
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-primary w-100">
+              <button type="submit" class="btn btn-primary w-100" id="btn-login">
                 Iniciar Sesión
               </button>
             </div>
@@ -172,6 +172,7 @@
   document.getElementById('form-login').addEventListener('submit', function(event) {
     event.preventDefault();
 
+    let boton = document.getElementById('btn-login');
     const usuario = document.getElementById('usuario');
     const password = document.getElementById('password');
     let valid = true;
@@ -189,6 +190,9 @@
     }
 
     if (valid) {
+      boton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+      boton.disabled = true;
+
       const formData = new FormData(this);
       fetch('./api/login', {
           method: 'POST',
@@ -203,10 +207,14 @@
             }, 2000);
           } else {
             showToast('error', 'Error', data.message);
+            boton.innerHTML = 'Iniciar Sesión';
+            boton.disabled = false;
           }
         })
         .catch(error => {
           showToast('error', 'Error', 'Hubo un problema al procesar la solicitud');
+          boton.innerHTML = 'Iniciar Sesión';
+          boton.disabled = false;
         });
     }
   });
