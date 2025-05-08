@@ -35,6 +35,8 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $base_path = "/TuRifadigi";
 $route = str_replace($base_path, '', $request_uri);
 
+// print_r($_SESSION);
+
 if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
@@ -49,6 +51,31 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
 }
+
+// if ($request_method === 'GET' && $route === '/inicializarBoletos') {
+//     (new BoletoController())->inicializarBoletos();
+// }
+
+// Manejo de solicitudes POST
+//if ($request_method === 'POST') {
+//    if ($route === '/login') {
+//        $authController = (new AuthController())->login($_REQUEST['user'], $_REQUEST['password']);
+//        if (!$authController) {
+//            $error = true;
+//            require_once 'views/auth/login.php';
+//        }
+//        exit;
+//    }
+//
+//    if ($route === '/guardarComprador') {
+//        (new BoletoController())->procesarCompra();
+//        exit;
+//    }
+//}
+
+// if ($request_method === 'POST' && $route === '/procesarCompra') {
+//     (new BoletoController())->show();
+// }
 
 if ($request_method === 'POST' && $route === '/login') {
     exit;
@@ -82,6 +109,13 @@ if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
     exit;
 }
 
+if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
+    $id = intval(substr($route, strlen('/confirmarBoleto/')));
+    (new BoletoController())->confirmarPago($id);
+    exit;
+}
+
+
 if ($request_method === 'GET' && $route === '/main_config') {
     (new ConfigMainController())->index();
     exit;
@@ -91,6 +125,44 @@ if ($request_method === 'POST' && $route === '/banner_update') {
     (new ConfigMainController())->actualizarBanner();
     exit;
 }
+
+/* if ($request_method === 'GET' && $route === '/cuentas_pago/listar') { */
+/*     (new ConfigMainController())->listar(); */
+/*     exit; */
+/* } */
+/* if ($request_method === 'POST' && $route === '/cuentas_pago/guardar') { */
+/*     (new ConfigMainController())->guardar(); */
+/*     exit; */
+/* } */
+/* if ($request_method === 'POST' && $route === '/cuentas_pago/eliminar') { */
+/*     (new ConfigMainController())->eliminar(); */
+/*     exit; */
+/* } */
+
+/* if ($request_method === 'GET' && $route === '/main_config') { */
+/*     (new ConfigMainController())->index(); */
+/*     exit; */
+/* } */
+
+//if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
+//    $id = intval(substr($route, strlen('/confirmarBoleto/')));
+//    (new BoletoController())->verificarDisponibilidad($id);
+//    exit;
+//}
+
+// Validación de sesión
+//if (empty($_SESSION)) {
+//    require_once 'views/auth/login.php';
+//    exit;
+
+//} else if ((isset($_SESSION['usuario']) && $route === '/login') || (isset($_SESSION['usuario']) && $route === '/')) {
+//    (new HomeController())->index();
+//    exit;
+//}
+
+// Enrutamiento principal de la aplicación
+
+// print_r($_SESSION);
 
 switch (strtok($route, '?')) {
     case '/':
