@@ -15,7 +15,7 @@ class ConfigMain
 
   public function obtenerRifaActiva()
   {
-    $sql = "SELECT * FROM rifas WHERE estado = 'activa' LIMIT 1";
+    $sql = "SELECT * FROM rifas r INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado = 'activa'";
     $result = $this->db->consultar($sql, []);
     return $result ? $result[0] : null;
   }

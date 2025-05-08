@@ -15,7 +15,7 @@ class BoletoController
   {
     $this->model = new BoletoModel();
     // Asegurarnos de que existan los boletos en la base de datos
-    $this->model->inicializarBoletos();
+    // $this->model->inicializarBoletos();
   }
 
   public function index()
@@ -184,6 +184,14 @@ class BoletoController
     try {
 
       $boletos = $this->model->obtenerBoletos();
+
+      if ($boletos['success'] == false) {
+        echo json_encode([
+          'success' => false,
+          'data' => $boletos['data'],
+        ]);
+        exit;
+      }
 
       echo json_encode([
         'success' => true,

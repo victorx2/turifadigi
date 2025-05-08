@@ -216,7 +216,7 @@
 
     // Configuración global para Semantic UI Transitions
     $.fn.transition.settings.silent = true;
-    
+
     const boletosSeleccionados = new Set();
     const minBoletos = 2;
     let cantidadSeleccion = 2;
@@ -290,41 +290,45 @@
       await fetch('./api/get_tickets') // Petición al backend
         .then(response => response.json())
         .then(data => {
-          if (data && Array.isArray(data['data'])) {
-            const boletos = data['data'];
+          const boletos = data['data'];
+          const success = data['success'];
 
-            if (boletos.rifa_estado == 0) {
-              const nuevoBoleto = document.createElement('div');
-              boletosList.style.display = 'flex';
-              nuevoBoleto.classList.add('no-sort-activ');
-              nuevoBoleto.textContent = "Sin sorteos activos";
-              fragment.appendChild(nuevoBoleto);
-              return
-            }
-
-            boletos.forEach(boleto => {
-              const nuevoBoleto = document.createElement('div');
-              if (boleto.estado == "reservado") {
-                nuevoBoleto.classList.add('boleto', 'disabled');
-                comprados++;
-              } else {
-                nuevoBoleto.className = 'boleto';
-                nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero_boleto);
+          try {
+            if (!success) {
+              if (boletos.rifa_estado == 0) {
+                const nuevoBoleto = document.createElement('div');
+                boletosList.style.display = 'flex';
+                nuevoBoleto.classList.add('no-sort-activ');
+                nuevoBoleto.textContent = "Sin sorteos activos";
+                fragment.appendChild(nuevoBoleto);
+                return
               }
-              nuevoBoleto.dataset.numero = boleto.numero_boleto;
-              nuevoBoleto.textContent = boleto.numero_boleto;
-              fragment.appendChild(nuevoBoleto);
-              todosLosBoletos.push(nuevoBoleto);
-            });
-
-            setTimeout(() => {
-              animateProgressBar(boletos.length, comprados) //Llama a la función de animación con el total y el número de boletos comprados
-            }, 1000);
-
-            boletosList.appendChild(fragment);
-          } else {
-            console.error('Formato de respuesta inválido:', data);
+            }
+          } catch (error) {
+            console.error('Error al cargar los boletos:', error);
           }
+
+          boletos.forEach(boleto => {
+            const nuevoBoleto = document.createElement('div');
+            if (boleto.estado == "reservado") {
+              nuevoBoleto.classList.add('boleto', 'disabled');
+              comprados++;
+            } else {
+              nuevoBoleto.className = 'boleto';
+              nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero_boleto);
+            }
+            nuevoBoleto.dataset.numero = boleto.numero_boleto;
+            nuevoBoleto.textContent = boleto.numero_boleto;
+            fragment.appendChild(nuevoBoleto);
+            todosLosBoletos.push(nuevoBoleto);
+          });
+
+          setTimeout(() => {
+            animateProgressBar(boletos.length, comprados) //Llama a la función de animación con el total y el número de boletos comprados
+          }, 1000);
+
+          boletosList.appendChild(fragment);
+
         })
         .catch(error => {
           console.error('Error al cargar los boletos:', error);
