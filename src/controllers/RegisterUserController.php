@@ -41,6 +41,7 @@ class RegisterUserController
 
       // Verificar si el usuario existe antes de intentar insertar
       if ($this->usuario->existeUsuario($datosUsuario['usuario'])) {
+
         http_response_code(409);
         echo json_encode([
           'success' => false,
@@ -65,6 +66,7 @@ class RegisterUserController
 
       // Registrar datos personales
       if ($this->usuario->registrarDatosPersonales($idUsuario, $datosPersonales)) {
+
         http_response_code(201);
         echo json_encode([
           'success' => true,

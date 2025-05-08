@@ -17,7 +17,7 @@
             </div>
             <h2 class="section-title__title">Restablecer Contraseña</h2>
           </div>
-          <form id="form-reset-password" class="contact-form-validated contact-two__form" action="reset_password" method="post">
+          <form id="form-reset-password" class="  contact-two__form" action="reset_password" method="post">
             <div class="row">
               <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
               <div class="col-xl-12">

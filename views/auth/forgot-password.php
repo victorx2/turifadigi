@@ -17,7 +17,7 @@
             </div>
             <h2 class="section-title__title">Recuperar Contraseña</h2>
           </div>
-          <form id="form-recuperacion" class="contact-form-validated contact-two__form" action="recuperar_password" method="post">
+          <form id="form-recuperacion" class="  contact-two__form" action="recuperar_password" method="post">
             <div class="row">
               <div class="col-xl-12">
                 <div class="contact-two__input-box">
