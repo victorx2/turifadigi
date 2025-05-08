@@ -143,18 +143,13 @@
                         <span class="main-menu-border"></span>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="/TuRifadigi/rifa_config">Acceso administrador</a></li>
-                        <li><a href="/TuRifadigi/boletos">Verificación de boletos</a></li>
+                        <li><a href="/TuRifadigi/boletos">Verificar compras</a></li>
+                        <li><a href="/TuRifadigi/rifa_config">Editar sorteo</a></li>
                         <li><a href="/TuRifadigi/main_config">Crear sorteo</a></li>
                       </ul>
                     </li>
                     <li class="element">
-                      <a href="#">Cuentas de pago
-                        <span class="main-menu-border"></span>
-                      </a>
-                    </li>
-                    <li class="element">
-                      <a href="#">Contacto
+                      <a href="#">Compras
                         <span class="main-menu-border"></span>
                       </a>
                     </li>
