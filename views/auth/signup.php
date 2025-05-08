@@ -98,7 +98,8 @@
                   <i class="bi bi-person-fill icon-signup nombre"></i> Nombre *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="nombre" id="nombre_signup" placeholder="Ingrese su nombre" title="El nombre es requerido" required class="input-hover-signup">
+                  <input type="text" name="nombre" id="nombre_signup" placeholder="Ingrese su nombre" class="input-hover-signup">
+                  <span id="nombre_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -106,7 +107,8 @@
                   <i class="bi bi-person-badge-fill icon-signup apellido"></i> Apellido *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="apellido" id="apellido_signup" placeholder="Ingrese su apellido" title="El apellido es requerido" required class="input-hover-signup">
+                  <input type="text" name="apellido" id="apellido_signup" placeholder="Ingrese su apellido" class="input-hover-signup">
+                  <span id="apellido_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -114,7 +116,8 @@
                   <i class="bi bi-card-text icon-signup cedula"></i> Cédula *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="cedula" id="cedula_signup" placeholder="Ingrese su cédula" title="La cédula es requerida" required class="input-hover-signup">
+                  <input type="text" name="cedula" id="cedula_signup" placeholder="Ingrese su cédula" class="input-hover-signup">
+                  <span id="cedula_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -122,7 +125,8 @@
                   <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> Ubicación *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion_signup" placeholder="E.J: País, estado, dirección" title="La ubicación es requerida" required class="input-hover-signup">
+                  <input type="text" name="ubicacion" id="ubicacion_signup" placeholder="E.J: País, estado, dirección" class="input-hover-signup">
+                  <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -130,7 +134,8 @@
                   <i class="bi bi-person-circle icon-signup usuario"></i> Nombre de usuario *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="usuario" id="usuario_signup" placeholder="Cree un nombre de usuario" title="El nombre de usuario es requerido" required class="input-hover-signup">
+                  <input type="text" name="usuario" id="usuario_signup" placeholder="Cree un nombre de usuario" class="input-hover-signup">
+                  <span id="usuario_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -138,7 +143,8 @@
                   <i class="bi bi-lock-fill icon-signup password"></i> Contraseña *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="password" id="password_signup" placeholder="Cree una contraseña" title="Debe rellenar el campo contraseña" required style="-webkit-text-security: disc;" class="input-hover-signup">
+                  <input type="text" name="password" id="password_signup" placeholder="Cree una contraseña" style="-webkit-text-security: disc;" class="input-hover-signup">
+                  <span id="password_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -146,13 +152,8 @@
                   <i class="bi bi-telephone-fill icon-signup telefono"></i> Teléfono *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text"
-                    name="telefono"
-                    id="telefono_signup"
-                    placeholder="Ingrese su número de teléfono"
-                    maxlength="20"
-                    title="El número de teléfono es requerido"
-                    required class="input-hover-signup">
+                  <input type="text" name="telefono" id="telefono_signup" placeholder="Ingrese su número de teléfono" class="input-hover-signup">
+                  <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -160,12 +161,8 @@
                   <i class="bi bi-envelope-fill icon-signup correo"></i> Correo electrónico *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="email"
-                    name="correo"
-                    id="correo_signup"
-                    placeholder="Ingrese su correo electrónico"
-                    title="El correo electrónico es requerido"
-                    required class="input-hover-signup">
+                  <input type="text" name="correo" id="correo_signup" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
+                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-12 text-center">
@@ -256,6 +253,199 @@
         break;
     }
   }
+
+  // Objeto para almacenar el estado de validación de cada campo
+  const estadoValidacionCampos = {
+    nombre: false,
+    apellido: false,
+    cedula: false,
+    ubicacion: false,
+    usuario: false,
+    password: false,
+    telefono: false,
+    correo: false
+  };
+
+  // Función para verificar el estado general de validación
+  function verificarEstadoValidacionGeneral() {
+    const todosValidos = Object.values(estadoValidacionCampos).every(val => val === true);
+    console.log('Estado de validación de campos:', estadoValidacionCampos);
+    console.log(todosValidos ? '✅ Todos los campos son válidos' : '❌ Algunos campos no son válidos');
+    return todosValidos;
+  }
+
+  const inputNombre = document.getElementById('nombre_signup');
+  const spanMsg = document.getElementById('nombre_signup_msg');
+
+  inputNombre.addEventListener('keyup', function() {
+    const valor = this.value;
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}$/.test(valor);
+    estadoValidacionCampos.nombre = esValido;
+
+    if (valor.length === 0) {
+      spanMsg.textContent = '';
+      spanMsg.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsg.textContent = 'El nombre debe tener al menos 3 letras y solo puede contener letras y espacios.';
+      spanMsg.style.color = '#e53935';
+    } else {
+      spanMsg.textContent = '¡Nombre válido!';
+      spanMsg.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
+
+  const inputApellido = document.getElementById('apellido_signup');
+  const spanMsgApellido = document.getElementById('apellido_signup_msg');
+
+  inputApellido.addEventListener('keyup', function() {
+    const valor = this.value;
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}$/.test(valor);
+    estadoValidacionCampos.apellido = esValido;
+
+    if (valor.length === 0) {
+      spanMsgApellido.textContent = '';
+      spanMsgApellido.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsgApellido.textContent = 'El apellido debe tener al menos 3 letras y solo puede contener letras y espacios.';
+      spanMsgApellido.style.color = '#e53935';
+    } else {
+      spanMsgApellido.textContent = '¡Apellido válido!';
+      spanMsgApellido.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
+
+  const inputCedula = document.getElementById('cedula_signup');
+  const spanMsgCedula = document.getElementById('cedula_signup_msg');
+
+  inputCedula.addEventListener('keyup', function() {
+    const valor = this.value;
+    const esValido = /^\d{6,}$/.test(valor);
+    estadoValidacionCampos.cedula = esValido;
+
+    if (valor.length === 0) {
+      spanMsgCedula.textContent = '';
+      spanMsgCedula.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsgCedula.textContent = 'La cédula debe tener al menos 6 números y solo puede contener dígitos.';
+      spanMsgCedula.style.color = '#e53935';
+    } else {
+      spanMsgCedula.textContent = '¡Cédula válida!';
+      spanMsgCedula.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
+
+  const inputUbicacion = document.getElementById('ubicacion_signup');
+  const spanMsgUbicacion = document.getElementById('ubicacion_signup_msg');
+
+  inputUbicacion.addEventListener('keyup', function() {
+    const valor = this.value;
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ,.]{3,}$/.test(valor);
+    estadoValidacionCampos.ubicacion = esValido;
+
+    if (valor.length === 0) {
+      spanMsgUbicacion.textContent = '';
+      spanMsgUbicacion.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsgUbicacion.textContent = 'La ubicación debe tener al menos 3 caracteres y solo puede contener letras, espacios, comas y puntos.';
+      spanMsgUbicacion.style.color = '#e53935';
+    } else {
+      spanMsgUbicacion.textContent = '¡Ubicación válida!';
+      spanMsgUbicacion.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
+
+  const inputUsuario = document.getElementById('usuario_signup');
+  const spanMsgUsuario = document.getElementById('usuario_signup_msg');
+
+  inputUsuario.addEventListener('keyup', function() {
+    const valor = this.value;
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ_-]{3,}$/.test(valor);
+    estadoValidacionCampos.usuario = esValido;
+
+    if (valor.length === 0) {
+      spanMsgUsuario.textContent = '';
+      spanMsgUsuario.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsgUsuario.textContent = 'El nombre de usuario debe tener al menos 3 caracteres y solo puede contener letras, guiones bajos (_) y guiones medios (-).';
+      spanMsgUsuario.style.color = '#e53935';
+    } else {
+      spanMsgUsuario.textContent = '¡Nombre de usuario válido!';
+      spanMsgUsuario.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
+
+  const inputPassword = document.getElementById('password_signup');
+  const spanMsgPassword = document.getElementById('password_signup_msg');
+
+  inputPassword.addEventListener('keyup', function() {
+    const valor = this.value;
+    const tieneMayuscula = /[A-Z]/.test(valor);
+    const tieneMinuscula = /[a-z]/.test(valor);
+    const tieneNumero = /[0-9]/.test(valor);
+    const tieneSimbolo = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(valor);
+    const longitudValida = valor.length >= 8;
+    const esValido = longitudValida && tieneMayuscula && tieneMinuscula && tieneNumero && tieneSimbolo;
+    estadoValidacionCampos.password = esValido;
+
+    if (valor.length === 0) {
+      spanMsgPassword.textContent = '';
+      spanMsgPassword.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsgPassword.textContent = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.';
+      spanMsgPassword.style.color = '#e53935';
+    } else {
+      spanMsgPassword.textContent = '¡Contraseña válida!';
+      spanMsgPassword.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
+
+  const inputTelefono = document.getElementById('telefono_signup');
+  const spanMsgTelefono = document.getElementById('telefono_signup_msg');
+
+  inputTelefono.addEventListener('keyup', function() {
+    const valor = this.value;
+    const esValido = /^\d{10,}$/.test(valor);
+    estadoValidacionCampos.telefono = esValido;
+
+    if (valor.length === 0) {
+      spanMsgTelefono.textContent = '';
+      spanMsgTelefono.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsgTelefono.textContent = 'El teléfono debe tener al menos 10 números y solo puede contener dígitos.';
+      spanMsgTelefono.style.color = '#e53935';
+    } else {
+      spanMsgTelefono.textContent = '¡Teléfono válido!';
+      spanMsgTelefono.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
+
+  const inputCorreo = document.getElementById('correo_signup');
+  const spanMsgCorreo = document.getElementById('correo_signup_msg');
+
+  inputCorreo.addEventListener('keyup', function() {
+    const valor = this.value;
+    const esValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+    estadoValidacionCampos.correo = esValido;
+
+    if (valor.length === 0) {
+      spanMsgCorreo.textContent = '';
+      spanMsgCorreo.style.color = '#e53935';
+    } else if (!esValido) {
+      spanMsgCorreo.textContent = 'El correo electrónico debe ser válido.';
+      spanMsgCorreo.style.color = '#e53935';
+    } else {
+      spanMsgCorreo.textContent = '¡Correo electrónico válido!';
+      spanMsgCorreo.style.color = '#43a047';
+    }
+    verificarEstadoValidacionGeneral();
+  });
 </script>
 
 <?php if (!empty($_SESSION['mensaje'])) {
