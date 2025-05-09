@@ -13,7 +13,7 @@ class ConfigMain
     $this->db = new Conexion();
   }
 
-  public function crearSorteo($id_usuario, $titulo, $fecha_inicio, $fecha_final, $precio_boleto, $boletos_minimos, $boletos_maximos, $numero_contacto, $url_rifa, $texto_ejemplo, $premios, $crear_rifa = false)
+  public function crearSorteo($id_usuario, $titulo, $fecha_inicio, $fecha_final, $precio_boleto, $boletos_minimos, $boletos_maximos, $numero_contacto, $url_rifa, $texto_ejemplo, $premios, $rutaImagen, $crear_rifa = false)
   {
     try {
       // 1. Insertar en configuracion
@@ -38,8 +38,8 @@ class ConfigMain
       $paramsRifa = [
         ':id_configuracion' => $id_configuracion,
         ':titulo' => $titulo,
-        ':descripcion' => $texto_ejemplo, // O lo que quieras poner como descripción
-        ':imagen' => 'assets/img/backgrounds/sorteo.jpg' // O el valor por defecto
+        ':descripcion' => $texto_ejemplo,
+        ':imagen' => $rutaImagen
       ];
       $id_rifa = $this->db->ejecutar($sqlRifa, $paramsRifa);
 

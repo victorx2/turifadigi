@@ -169,50 +169,77 @@ Este premio se activa con el 50% de los boletos vendidos</textarea>
 
               <button type="submit" class="btn btn-primary">Crear Sorteo</button>
             </form>
+
           </div>
         </div>
       </div>
     </div>
+
+    <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto" id="toastTitle"></strong>
+        <small class="text-muted" id="toastTime"></small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toastMessage"></div>
+    </div>
+
   </div>
 
 </section>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('form-config');
+    const submitBtn = form.querySelector('button[type="submit"]');
 
     form.onsubmit = function(e) {
       e.preventDefault();
 
+      // Deshabilitar el botón
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creando sorteo...';
+
       const formData = new FormData(form);
-      console.log('Formulario enviado, datos:', formData);
 
       fetch('/TuRifadigi/crear_sorteo', {
           method: 'POST',
           body: formData
         })
-        .then(response => {
-          // Si la respuesta es una redirección, lo sabrás aquí
-          if (response.redirected) {
-            console.log('Redirección detectada a:', response.url);
-            alert('El servidor intentó redirigir. Revisa el backend para que solo responda JSON.');
-            return;
-          }
-          return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-          console.log('Datos procesados:', data);
-          if (data && data.success) {
-            alert(data.message || 'Sorteo creado exitosamente');
-            location.reload(); // Recarga la página si todo salió bien
+          if (data.success) {
+            showToast('success', 'Éxito', data.message || 'Sorteo creado exitosamente');
           } else {
-            alert(data && data.error ? data.error : 'Error al crear el sorteo');
+            showToast('error', 'Error', data.error || 'Error al crear el sorteo');
           }
         })
         .catch(error => {
-          console.error('Error en la solicitud:', error);
-          alert('Ocurrió un error al procesar la solicitud');
+          showToast('error', 'Error', 'Ocurrió un error al procesar la solicitud');
+          console.error(error);
+        })
+        .finally(() => {
+          // Habilitar el botón nuevamente
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Crear Sorteo';
         });
     };
+
+    // Función para mostrar notificaciones
+    function showToast(type, title, message) {
+      const toast = document.getElementById('notificationToast');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastMessage = document.getElementById('toastMessage');
+
+      if (!toast || !toastTitle || !toastMessage) {
+        alert(message); // Fallback si no existe el toast
+        return;
+      }
+
+      toastTitle.textContent = title;
+      toastMessage.textContent = message;
+
+      new bootstrap.Toast(toast).show();
+    }
   });
 </script>
 

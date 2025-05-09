@@ -37,6 +37,7 @@ class ConfigMainController
       $urlRifa = $_POST['url_rifa'] ?? '';
       $textoEjemplo = $_POST['texto_ejemplo'] ?? '';
       $premios = $_POST['premios'] ?? [];
+      $imagen = $_FILES['imagen'] ?? null;
 
       // Validaciones básicas
       if (empty($titulo) || empty($fechaInicio) || empty($fechaFin)) {
@@ -59,6 +60,18 @@ class ConfigMainController
         throw new Exception('La cantidad mínima no puede ser mayor a la máxima');
       }
 
+      // Procesar imagen si existe
+      $rutaImagen = 'assets/img/backgrounds/sorteo.jpg'; // Ruta por defecto
+      if ($imagen && $imagen['error'] === UPLOAD_ERR_OK) {
+        $extension = $this->extencion($imagen['name']);
+        $nombreArchivo = 'banner_' . time() . '.' . $extension;
+        $destino = 'assets/img/backgrounds/';
+
+        if ($this->moveFile($imagen['tmp_name'], $destino, $nombreArchivo)) {
+          $rutaImagen = $destino . $nombreArchivo;
+        }
+      }
+
       // Crear el sorteo usando el modelo
       $idSorteo = $this->model->crearSorteo(
         $idUsuario,
@@ -71,7 +84,8 @@ class ConfigMainController
         $numeroContacto,
         $urlRifa,
         $textoEjemplo,
-        $premios
+        $premios,
+        $rutaImagen
       );
 
       if ($idSorteo) {
@@ -88,5 +102,21 @@ class ConfigMainController
       echo json_encode(['success' => false, 'error' => $e->getMessage()]);
       exit();
     }
+  }
+
+  private function moveFile($archivo, $destino, $nombreDelArchivo = 'sin_nombre')
+  {
+    if (!file_exists($destino)) {
+      mkdir($destino, 0755, true);
+    }
+
+    $rutaCompleta = $destino . $nombreDelArchivo;
+    return move_uploaded_file($archivo, $rutaCompleta);
+  }
+
+  private function extencion($name)
+  {
+    $info = pathinfo($name);
+    return $info['extension'] ?? 'no_espesificado';
   }
 }
