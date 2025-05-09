@@ -143,9 +143,9 @@
                         <span class="main-menu-border"></span>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="/TuRifadigi/boletos">Verificar compras</a></li>
-                        <li><a href="/TuRifadigi/rifa_config">Editar sorteo</a></li>
-                        <li><a href="/TuRifadigi/main_config">Crear sorteo</a></li>
+                        <li><a href="/TuRifadigi/admin_compra_verificacion">Verificar compras</a></li>
+                        <li><a href="/TuRifadigi/admin_rifa_config">Editar sorteo</a></li>
+                        <li><a href="/TuRifadigi/admin_main_config">Crear sorteo</a></li>
                       </ul>
                     </li>
                     <li class="element">

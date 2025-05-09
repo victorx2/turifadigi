@@ -289,28 +289,30 @@ class BoletoModel
     }
   }
 
-  public function show()
+  public function obtenerCompras()
   {
     try {
-      $sql = "SELECT 
-                cb.id_compra,
-                b.numero_boleto,
-                dp.nombre as cliente,
-                p.metodo as metodo_pago,
-                cb.total_compra,
-                cb.estado,
-                cb.fecha_compra,
-                TIMESTAMPADD(HOUR, 24, cb.fecha_compra) as fecha_limite,
-                p.validacion as estado_pago,
-                p.titular,
-                p.referencia
+      $sql = "SELECT
+              cb.id_compra,
+              b.numero_boleto,
+              dp.nombre AS cliente,
+              dp.apellido AS a_cliente,
+              p.metodo AS metodo_pago,
+              cb.total_compra,
+              cb.estado,
+              cb.fecha_compra,
+              TIMESTAMPADD(HOUR, 24, cb.fecha_compra) AS fecha_limite,
+              p.validacion AS estado_pago,
+              p.titular,
+              p.referencia, 
+              p.monto_pagado
               FROM compras_boletos cb
               INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra
               INNER JOIN boletos b ON dc.id_boleto = b.id_boleto
-              INNER JOIN datos_personales dp ON cb.id_compra = dc.id_compra
+              INNER JOIN datos_personales dp ON b.id_usuario = dp.id_usuario  
               INNER JOIN pagos p ON cb.id_compra = p.id_compra
-              WHERE cb.estado = 'pendiente'
-              ORDER BY cb.fecha_compra DESC";
+              ORDER BY
+                cb.fecha_compra DESC";
 
       $result = $this->db->consultar($sql, []);
 
@@ -327,16 +329,148 @@ class BoletoModel
 
           $compras[$id_compra] = [
             'id_compra' => $id_compra,
-            'cliente' => $row['cliente'],
+            'cliente' => ucwords(strtolower($row['cliente'] . " " . $row['a_cliente'])),
             'metodo_pago' => $row['metodo_pago'],
             'total' => $row['total_compra'],
+            'monto_pagado' => $row['monto_pagado'],
             'estado' => $row['estado'],
             'fecha_compra' => $row['fecha_compra'],
-            'tiempo_restante' => [
-              'horas' => $tiempo_restante->h + ($tiempo_restante->days * 24),
-              'minutos' => $tiempo_restante->i,
-              'expirado' => $ahora > $fecha_limite
-            ],
+            'estado_pago' => $row['estado_pago'],
+            'titular' => $row['titular'],
+            'referencia' => $row['referencia'],
+            'boletos' => []
+          ];
+        }
+
+        // Agregar el número de boleto a la compra
+        $compras[$id_compra]['boletos'][] = $row['numero_boleto'];
+      }
+
+      return array_values($compras);
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener los datos de compras: " . $e->getMessage());
+    }
+  }
+
+  public function obtenerComprasByID($id_entrada)
+  {
+    try {
+      $sql = "SELECT
+              cb.id_compra,
+              b.numero_boleto,
+              dp.nombre AS cliente,
+              dp.apellido AS a_cliente,
+              p.metodo AS metodo_pago,
+              cb.total_compra,
+              cb.estado,
+              cb.fecha_compra,
+              TIMESTAMPADD(HOUR, 24, cb.fecha_compra) AS fecha_limite,
+              p.validacion AS estado_pago,
+              p.titular,
+              p.referencia, 
+              p.monto_pagado
+              FROM compras_boletos cb
+              INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra
+              INNER JOIN boletos b ON dc.id_boleto = b.id_boleto
+              INNER JOIN datos_personales dp ON b.id_usuario = dp.id_usuario  
+              INNER JOIN pagos p ON cb.id_compra = p.id_compra
+              WHERE
+                cb.id_compra = :id_entrada
+              ORDER BY
+                cb.fecha_compra DESC";
+
+      $result = $this->db->consultar(
+        $sql,
+        [':id_entrada' => $id_entrada]
+      );
+
+      // Procesar los resultados para agrupar boletos por compra
+      $compras = [];
+      foreach ($result as $row) {
+        $id_compra = $row['id_compra'];
+
+        if (!isset($compras[$id_compra])) {
+          // Primera vez que vemos esta compra
+          $fecha_limite = new \DateTime($row['fecha_limite']);
+          $ahora = new \DateTime();
+          $tiempo_restante = $fecha_limite->diff($ahora);
+
+          $compras[$id_compra] = [
+            'id_compra' => $id_compra,
+            'cliente' => ucwords(strtolower($row['cliente'] . " " . $row['a_cliente'])),
+            'metodo_pago' => $row['metodo_pago'],
+            'total' => $row['total_compra'],
+            'monto_pagado' => $row['monto_pagado'],
+            'estado' => $row['estado'],
+            'fecha_compra' => $row['fecha_compra'],
+            'estado_pago' => $row['estado_pago'],
+            'titular' => $row['titular'],
+            'referencia' => $row['referencia'],
+            'boletos' => []
+          ];
+        }
+
+        // Agregar el número de boleto a la compra
+        $compras[$id_compra]['boletos'][] = $row['numero_boleto'];
+      }
+
+      return array_values($compras);
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener los datos de compras: " . $e->getMessage());
+    }
+  }
+
+  public function obtenerComprasByUser($id_entrada)
+  {
+    try {
+      $sql = "SELECT
+              cb.id_compra,
+              b.numero_boleto,
+              dp.nombre AS cliente,
+              dp.apellido AS a_cliente,
+              p.metodo AS metodo_pago,
+              cb.total_compra,
+              cb.estado,
+              cb.fecha_compra,
+              TIMESTAMPADD(HOUR, 24, cb.fecha_compra) AS fecha_limite,
+              p.validacion AS estado_pago,
+              p.titular,
+              p.referencia, 
+              p.monto_pagado
+              FROM compras_boletos cb
+              INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra
+              INNER JOIN boletos b ON dc.id_boleto = b.id_boleto
+              INNER JOIN datos_personales dp ON b.id_usuario = dp.id_usuario  
+              INNER JOIN pagos p ON cb.id_compra = p.id_compra
+              WHERE
+                b.id_usuario = :id_entrada
+              ORDER BY
+                cb.fecha_compra DESC";
+
+      $result = $this->db->consultar(
+        $sql,
+        [':id_entrada' => $id_entrada]
+      );
+
+      // Procesar los resultados para agrupar boletos por compra
+      $compras = [];
+      foreach ($result as $row) {
+        $id_compra = $row['id_compra'];
+
+        if (!isset($compras[$id_compra])) {
+          // Primera vez que vemos esta compra
+          $fecha_limite = new \DateTime($row['fecha_limite']);
+          $ahora = new \DateTime();
+          $tiempo_restante = $fecha_limite->diff($ahora);
+
+          $compras[$id_compra] = [
+            'id_compra' => $id_compra,
+            'cliente' => ucwords(strtolower($row['cliente'] . " " . $row['a_cliente'])),
+            'metodo_pago' => $row['metodo_pago'],
+            'total' => $row['total_compra'],
+            'monto_pagado' => $row['monto_pagado'],
+            'estado' => $row['estado'],
+            'fecha_compra' => $row['fecha_compra'],
             'estado_pago' => $row['estado_pago'],
             'titular' => $row['titular'],
             'referencia' => $row['referencia'],

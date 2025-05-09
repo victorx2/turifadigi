@@ -20,16 +20,31 @@ class BoletoController
 
   public function index()
   {
-
     require_once 'views/rifa/sorteo.php';
   }
 
-  public function indexAdmin()
+  public function obtenerCompra($id_compra = null, $id_usuario = null)
   {
     try {
-      $data = $this->model->show();
-      $dataJSON = json_encode($data);
-      require_once 'views/administracion/boletos/index.php';
+      if ($id_usuario !== null) {
+        $data = $this->model->obtenerComprasByUser($id_usuario);
+        return ([
+          "success" => true,
+          "data" => $data
+        ]);
+      }
+      if ($id_compra !== null) {
+        $data = $this->model->obtenerComprasByID($id_compra);
+        return ([
+          "success" => true,
+          "data" => $data
+        ]);
+      }
+      $data = $this->model->obtenerCompras();
+      return ([
+        "success" => true,
+        "data" => $data
+      ]);
     } catch (Exception $e) {
       $_SESSION['mensaje'] = '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
       require_once 'views/administracion/boletos/index.php';
