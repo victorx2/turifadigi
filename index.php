@@ -217,7 +217,7 @@ switch (strtok($route, '?')) {
         if (!isset($_SESSION['usuario'])) {
             require_once 'views/auth/login.php';
         } else {
-            header("Location: /TuRifadigi/home");
+            header("Location: /TuRifadigi/sorteo");
             exit;
         }
         break;
@@ -251,13 +251,50 @@ switch (strtok($route, '?')) {
         require_once 'views/admin/rifa_config.php';
         break;
 
-    case '/boletos':
-        (new BoletoController())->indexAdmin();
+    case '/compras':
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: /TuRifadigi/login");
+            exit;
+        }
+        require_once 'views/compras/index.php';
         break;
 
     case '/main_config':
         (new ConfigMainController())->index();
         break;
+
+    //SECCION DE ADMINISTRADOR
+    case '/admin_compra_verificacion':
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: /TuRifadigi/login");
+            exit;
+        }
+        require_once 'views/admin/compra.index.php';
+        break;
+    case '/admin_rifa_config':
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: /TuRifadigi/login");
+            exit;
+        }
+        require_once 'views/admin/rifa_config.php';
+        break;
+    case '/admin_main_config':
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: /TuRifadigi/login");
+            exit;
+        }
+        (new ConfigMainController())->index();
+        break;
+
+    //SECCION PANTALLAS DE SWEET ALERT
+    case '/compras/view/accions_view':
+        require_once 'views/compras/view/vistaAcciones.php';
+        break;
+
+    case '/admin/view/compra/accions_view':
+        require_once 'views/admin/views/compra/vistaAcciones.php';
+        break;
+
 
     //SECCIONES API
     case '/api/login':
@@ -280,6 +317,9 @@ switch (strtok($route, '?')) {
         break;
     case '/api/session_destroy':
         require_once 'src/API/destruirSesion.php';
+        break;
+    case '/api/get_purchase':
+        require_once 'src/API/obtenerCompras.php';
         break;
 
     default:

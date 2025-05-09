@@ -599,10 +599,34 @@
             document.getElementById('datosPersonales').style.display = 'block';
             this.parentElement.style.display = 'none';
           } else {
-            alert('No haz iniciado sesion, redireccionando...');
-            setTimeout(() => {
-              window.location.href = '/TuRifadigi/login';
-            }, 1000);
+            // Si no hay sesión, redirigir al login
+            let timerInterval;
+            Swal.fire({
+              title: "¡Inicia sesion para continuar!",
+              html: "redireccionando en <b></b> milliseconds.",
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                  timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+                window.location.href = '/TuRifadigi/login';
+              }
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+            // alert('No haz iniciado sesion, redireccionando...');
+            // setTimeout(() => {
+            //   window.location.href = '/TuRifadigi/login';
+            // }, 1000);
           }
         })
         .catch(error => {

@@ -110,7 +110,7 @@
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 mb-4">
-      <h1 style="color: #5497CC;" class=" text-center">Administración de Boletos</h1>
+      <h1 style="color: #5497CC;" class=" text-center">Boletos Comprados</h1>
       <h5 class=" text-center"> <strong>- Gestión de Boletos de Rifa -</strong> </h5>
     </div>
     <div class="col-lg-2"></div>
@@ -146,80 +146,125 @@
 <script>
   // CARGA DE LA TABLA
 
-  let dataD = JSON.parse('<?php echo $dataJSON; ?>');
-  let i = 0;
-
-  dataD.forEach((elemento, index) => {
-    let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
-    let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
-                        <div data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="${elemento['estado'] === 'Pagado' ? 'Botón Bloqueado' : 'Editar'}">
-                        </div>
-                        <button type="button" class="btn btn-success btn-sm" onclick="pregunta(${elemento['id_compra']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
-                            <i class="fa-solid fa-check"></i>
-                        </button>
-                    </div>`;
-    dataD[i]['contador'] = (i + 1);
-    dataD[i]['boletos'] = boletos;
-    dataD[i]['acciones'] = acciones;
-    dataD[i]['estado'] = elemento['estado'] === 'Pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
-    i++;
-  })
-
-  const datos = {
-    'id_tabla': '#tabla',
-    'data': dataD,
-    'columns': [{
-        'data': 'contador',
-        'title': '#',
-        'className': 'text-center'
-      },
-      {
-        'data': 'fecha_compra',
-        'title': 'FECHA DE COMPRA',
-        'className': 'text-center'
-      },
-      {
-        'data': 'cliente',
-        'title': 'COMPRADOR',
-        'className': 'text-center'
-      },
-      {
-        'data': 'boletos',
-        'title': 'BOLETOS',
-        'className': 'text-center'
-      },
-      {
-        'data': 'total',
-        'title': 'MONTO',
-        'className': 'text-center'
-      },
-      {
-        'data': 'estado',
-        'title': 'ESTADO',
-        'className': 'text-center'
-      },
-      {
-        'data': 'acciones',
-        'title': 'ACCIONES',
-        'className': 'text-center'
+  fetch('./api/get_purchase', {
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json'
       }
-    ]
-  };
+    }).then(response => response.json())
+    .then(dataD => {
+      if (dataD.success) {
 
-  cargar_tabla_boletos(datos);
+        let i = 0;
+        let data = dataD.data;
 
+        data.forEach((elemento, index) => {
+          let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
+          let acciones = elemento['estado'] == 'pagado' ? `<div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, 1,1)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
+                          <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
+                        </button>
+                    </div>` : `<div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_compra']}, 1,0)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>`;
+          data[i]['contador'] = (i + 1);
+          data[i]['boletos'] = boletos;
+          data[i]['acciones'] = acciones;
+          data[i]['estado'] = elemento['estado'] == 'pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
+          i++;
+        })
 
-  function pregunta(id) {
+        const datos = {
+          'id_tabla': '#tabla',
+          'data': data,
+          'columns': [{
+              'data': 'contador',
+              'title': '#',
+              'className': 'text-center'
+            },
+            {
+              'data': 'fecha_compra',
+              'title': 'FECHA DE COMPRA',
+              'className': 'text-center'
+            },
+            {
+              'data': 'cliente',
+              'title': 'COMPRADOR',
+              'className': 'text-center'
+            },
+            {
+              'data': 'boletos',
+              'title': 'BOLETOS',
+              'className': 'text-center'
+            },
+            {
+              'data': 'total',
+              'title': 'MONTO',
+              'className': 'text-center'
+            },
+            {
+              'data': 'estado',
+              'title': 'ESTADO',
+              'className': 'text-center'
+            },
+            {
+              'data': 'acciones',
+              'title': 'ACCIONES',
+              'className': 'text-center'
+            }
+          ]
+        };
+
+        cargar_tabla_boletos(datos);
+
+      } else {
+        console.error('Error al cargar los datos de la tabla:', data.error);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+
+  // SWEETAL ALERT PARA CONFIRMAR PAGO
+
+  async function pregunta(id, condition = false, pagdo = null) {
+
+    const response = await fetch('./compras/view/accions_view?acvi=' + id, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const htmlPersonalizado = await response.text();
+
+    if (condition) {
+      let title = pagdo == null ? '' : '<h5><span class="pago-confirmado">Pago Confirmado<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>';
+      Swal.fire({
+        title: title,
+        html: htmlPersonalizado,
+        showCloseButton: true,
+        focusConfirm: false,
+        confirmButtonText: `
+        cerrar`,
+      });
+      return;
+    }
     Swal.fire({
-      title: "Pregunta",
-      text: "¿Está seguro de que verifico este código?",
-      icon: "question",
+      html: htmlPersonalizado,
+      showCloseButton: true,
       showCancelButton: true,
-      confirmButtonText: "Si, estoy seguro!",
-      confirmButtonColor: "#28A745",
-      cancelButtonText: "No, no estoy seguro.",
-      cancelButtonColor: "#d33",
-      reverseButtons: "true"
+      showDenyButton: true,
+      focusConfirm: false,
+      confirmButtonText: `
+              verificar`,
+      denyButtonText: `
+              rechazar`,
+      cancelButtonText: `
+              cancelar `,
+
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.href = "/TuRifadigi/confirmarBoleto/" + id;
@@ -227,7 +272,50 @@
     });
   }
 </script>
+<style>
+  .form-section-title {
+    justify-content: center;
+  }
 
+  .alerta.danger {
+    margin: 21px 21px 0;
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    position: relative;
+    padding: 1rem 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+  }
+
+  .pago-confirmado {
+    background-color: #d4edda;
+    /* Verde claro de fondo */
+    color: #155724;
+    /* Verde oscuro del texto */
+    padding: 10px 20px;
+    /* Espacio interior */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    border: 1px solid #c3e6cb;
+    /* Borde sutil */
+    display: inline-block;
+    /* Para que el ancho se ajuste al contenido */
+    font-weight: bold;
+    /* Texto en negrita */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+  }
+
+  .icono-confirmado {
+    margin-right: 8px;
+    /* Espacio entre el icono y el texto */
+    font-size: 1.2em;
+    /* Tamaño del icono */
+    vertical-align: middle;
+    /* Alineación vertical con el texto */
+  }
+</style>
 <?php if (!empty($_SESSION['mensaje'])) {
   echo $_SESSION['mensaje'];
   unset($_SESSION['mensaje']);
