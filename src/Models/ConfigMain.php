@@ -16,34 +16,9 @@ class ConfigMain
   public function crearSorteo($id_usuario, $titulo, $fecha_inicio, $fecha_final, $precio_boleto, $boletos_minimos, $boletos_maximos, $numero_contacto, $url_rifa, $texto_ejemplo, $premios, $crear_rifa = false)
   {
     try {
-      $id_configuracion = null;
-
-      // Si se requiere crear una nueva rifa
-      if ($crear_rifa) {
-        $sqlRifa = "INSERT INTO rifas (id_usuario, titulo, fecha_inicio, fecha_final, precio_boleto, boletos_minimos, boletos_maximos, numero_contacto, url_rifa, texto_ejemplo) 
-                  VALUES (:id_usuario, :titulo, :fecha_inicio, :fecha_final, :precio_boleto, :boletos_minimos, :boletos_maximos, :numero_contacto, :url_rifa, :texto_ejemplo)";
-
-        $paramsRifa = [
-          ':id_usuario' => $id_usuario,
-          ':titulo' => $titulo,
-          ':fecha_inicio' => $fecha_inicio,
-          ':fecha_final' => $fecha_final,
-          ':precio_boleto' => $precio_boleto,
-          ':boletos_minimos' => $boletos_minimos,
-          ':boletos_maximos' => $boletos_maximos,
-          ':numero_contacto' => $numero_contacto,
-          ':url_rifa' => $url_rifa,
-          ':texto_ejemplo' => $texto_ejemplo
-        ];
-
-        $id_rifa = $this->db->ejecutar($sqlRifa, $paramsRifa);
-        $id_configuracion = $id_rifa;
-      }
-
-      // Insertar en tabla configuracion
+      // 1. Insertar en configuracion
       $sqlConfig = "INSERT INTO configuracion (id_usuario, titulo, fecha_inicio, fecha_final, precio_boleto, boletos_minimos, boletos_maximos, numero_contacto, url_rifa, texto_ejemplo) 
                     VALUES (:id_usuario, :titulo, :fecha_inicio, :fecha_final, :precio_boleto, :boletos_minimos, :boletos_maximos, :numero_contacto, :url_rifa, :texto_ejemplo)";
-
       $paramsConfig = [
         ':id_usuario' => $id_usuario,
         ':titulo' => $titulo,
@@ -56,35 +31,41 @@ class ConfigMain
         ':url_rifa' => $url_rifa,
         ':texto_ejemplo' => $texto_ejemplo
       ];
+      $id_configuracion = $this->db->ejecutar($sqlConfig, $paramsConfig);
 
-      $this->db->ejecutar($sqlConfig, $paramsConfig);
+      // 2. Insertar en rifas
+      $sqlRifa = "INSERT INTO rifas (id_configuracion, titulo, descripcion, imagen) VALUES (:id_configuracion, :titulo, :descripcion, :imagen)";
+      $paramsRifa = [
+        ':id_configuracion' => $id_configuracion,
+        ':titulo' => $titulo,
+        ':descripcion' => $texto_ejemplo, // O lo que quieras poner como descripción
+        ':imagen' => 'assets/img/backgrounds/sorteo.jpg' // O el valor por defecto
+      ];
+      $id_rifa = $this->db->ejecutar($sqlRifa, $paramsRifa);
 
-      // Insertar premios
+      // 3. Insertar premios
       foreach ($premios as $premio) {
-        $sqlPremio = "INSERT INTO premios (id_rifa, nombre, descripcion) 
-                      VALUES (:id_rifa, :nombre, :descripcion)";
-
+        $sqlPremio = "INSERT INTO premios (id_rifa, nombre, descripcion) VALUES (:id_rifa, :nombre, :descripcion)";
         $paramsPremio = [
-          ':id_rifa' => $id_configuracion,
+          ':id_rifa' => $id_rifa,
           ':nombre' => $premio['nombre'],
           ':descripcion' => $premio['descripcion']
         ];
-
         $this->db->ejecutar($sqlPremio, $paramsPremio);
       }
 
-      // Insertar boletos para la rifa creada
+      // 4. Insertar boletos
       for ($i = 1; $i <= $boletos_maximos; $i++) {
-        $numero_boleto = str_pad($i, 4, '0', STR_PAD_LEFT); // Formato 0001, 0002, ...
+        $numero_boleto = str_pad($i, 4, '0', STR_PAD_LEFT);
         $sqlBoleto = "INSERT INTO boletos (id_rifa, numero_boleto, estado) VALUES (:id_rifa, :numero_boleto, 'disponible')";
         $paramsBoleto = [
-          ':id_rifa' => $id_configuracion,
+          ':id_rifa' => $id_rifa,
           ':numero_boleto' => $numero_boleto
         ];
         $this->db->ejecutar($sqlBoleto, $paramsBoleto);
       }
 
-      return $id_configuracion;
+      return $id_rifa;
     } catch (\Exception $e) {
       throw new \Exception("Error al guardar el sorteo: " . $e->getMessage());
     }

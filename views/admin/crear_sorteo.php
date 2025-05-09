@@ -184,29 +184,32 @@ Este premio se activa con el 50% de los boletos vendidos</textarea>
       e.preventDefault();
 
       const formData = new FormData(form);
-      console.log('Formulario enviado, datos:', formData); // Log para verificar envío
+      console.log('Formulario enviado, datos:', formData);
 
       fetch('/TuRifadigi/crear_sorteo', {
           method: 'POST',
           body: formData
         })
         .then(response => {
-          console.log('Respuesta recibida del servidor:', response); // Log de respuesta
+          // Si la respuesta es una redirección, lo sabrás aquí
+          if (response.redirected) {
+            console.log('Redirección detectada a:', response.url);
+            alert('El servidor intentó redirigir. Revisa el backend para que solo responda JSON.');
+            return;
+          }
           return response.json();
         })
         .then(data => {
-          console.log('Datos procesados:', data); // Log de datos procesados
-          if (data.success) {
-            console.log('Sorteo creado con éxito'); // Log de éxito
-            alert('Sorteo creado exitosamente');
-            form.reset();
+          console.log('Datos procesados:', data);
+          if (data && data.success) {
+            alert(data.message || 'Sorteo creado exitosamente');
+            location.reload(); // Recarga la página si todo salió bien
           } else {
-            console.log('Error al crear sorteo, datos:', data); // Log de error
-            alert('Error al crear el sorteo');
+            alert(data && data.error ? data.error : 'Error al crear el sorteo');
           }
         })
         .catch(error => {
-          console.error('Error en la solicitud:', error); // Log de error en la solicitud
+          console.error('Error en la solicitud:', error);
           alert('Ocurrió un error al procesar la solicitud');
         });
     };
