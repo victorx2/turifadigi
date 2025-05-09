@@ -22,6 +22,23 @@ class ConfigMainController
   public function crearSorteo()
   {
     try {
+      // Debug: Mostrar datos recibidos
+      echo '<pre>Datos POST recibidos: ';
+      print_r($_POST);
+      echo '</pre>';
+
+      echo '<pre>Datos SESSION: ';
+      print_r($_SESSION);
+      echo '</pre>';
+
+      echo '<pre>Var dump POST: ';
+      var_dump($_POST);
+      echo '</pre>';
+
+      echo '<pre>Var dump SESSION: ';
+      var_dump($_SESSION);
+      echo '</pre>';
+
       // Obtener datos del formulario
       $idUsuario = $_SESSION['id_usuario'] ?? 0;
       $titulo = $_POST['titulo'] ?? '';
@@ -74,10 +91,21 @@ class ConfigMainController
       );
 
       if ($idSorteo) {
+        // Si la petición es AJAX/fetch, responde JSON
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+          header('Content-Type: application/json');
+          echo json_encode(['success' => true]);
+          exit();
+        }
         $_SESSION['success'] = 'Sorteo creado exitosamente';
-        header('Location: /TuRifadigi/main_config');
+        header('Location: /TuRifadigi/crear_sorteo');
         exit();
       } else {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+          header('Content-Type: application/json');
+          echo json_encode(['success' => false, 'error' => 'Error al crear el sorteo']);
+          exit();
+        }
         throw new Exception('Error al crear el sorteo');
       }
     } catch (Exception $e) {

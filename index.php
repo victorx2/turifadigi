@@ -134,7 +134,7 @@ if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
 
 
 if ($request_method === 'POST' && $route === '/crear_sorteo') {
-    (new ConfigMainController())->index();
+    (new ConfigMainController())->crearSorteo();
     exit;
 }
 
@@ -164,10 +164,10 @@ if ($request_method === 'POST' && $route === '/crear_sorteo') {
 
 
 
-if ($request_method === 'GET' && $route === '/main_config') {
-    (new ConfigMainController())->index();
-    exit;
-}
+/* if ($request_method === 'GET' && $route === '/rifa_config') { */
+/*     (new ConfigMainController())->index(); */
+/*     exit; */
+/* } */
 
 
 
@@ -285,9 +285,9 @@ switch (strtok($route, '?')) {
         require_once 'views/compras/index.php';
         break;
 
-    case '/main_config':
-        (new ConfigMainController())->index();
-        break;
+    /* case '/main_config': */
+    /*     (new ConfigMainController())->index(); */
+    /*     break; */
 
     //SECCION DE ADMINISTRADOR
     case '/admin_compra_verificacion':
@@ -297,13 +297,15 @@ switch (strtok($route, '?')) {
         }
         require_once 'views/admin/compra.index.php';
         break;
-    case '/admin_rifa_config':
+
+    case '/editar_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /TuRifadigi/login");
             exit;
         }
-        require_once 'views/admin/rifa_config.php';
+        require_once 'views/admin/editar_sorteo.php';
         break;
+
     case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /TuRifadigi/login");

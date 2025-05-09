@@ -175,36 +175,43 @@ Este premio se activa con el 50% de los boletos vendidos</textarea>
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('form-config');
-
-      form.onsubmit = function(e) {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-
-        fetch('/crear_sorteo', {
-            method: 'POST',
-            body: formData
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Sorteo creado exitosamente');
-              form.reset();
-            } else {
-              alert('Error al crear el sorteo');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Ocurrió un error al procesar la solicitud');
-          });
-      };
-    });
-  </script>
 </section>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('form-config');
+
+    form.onsubmit = function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      console.log('Formulario enviado, datos:', formData); // Log para verificar envío
+
+      fetch('/TuRifadigi/crear_sorteo', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => {
+          console.log('Respuesta recibida del servidor:', response); // Log de respuesta
+          return response.json();
+        })
+        .then(data => {
+          console.log('Datos procesados:', data); // Log de datos procesados
+          if (data.success) {
+            console.log('Sorteo creado con éxito'); // Log de éxito
+            alert('Sorteo creado exitosamente');
+            form.reset();
+          } else {
+            console.log('Error al crear sorteo, datos:', data); // Log de error
+            alert('Error al crear el sorteo');
+          }
+        })
+        .catch(error => {
+          console.error('Error en la solicitud:', error); // Log de error en la solicitud
+          alert('Ocurrió un error al procesar la solicitud');
+        });
+    };
+  });
+</script>
 
 <?php
 require_once 'views/layouts/footer.php';
