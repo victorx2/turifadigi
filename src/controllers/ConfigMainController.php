@@ -22,6 +22,116 @@ class ConfigMainController
     require_once 'views/admin/main.config.php';
   }
 
+  public function actualizarConfig()
+  {
+    $titulo = $_POST['titulo'] ?? '';
+    $precioBoleto = $_POST['precio_boleto'] ?? 0;
+    $boletosMinimos = $_POST['boletos_minimos'] ?? 0;
+    $boletosMaximos = $_POST['boletos_maximos'] ?? 0;
+    $fechaInicio = $_POST['fecha_inicio'] ?? '';
+    $fechaFin = $_POST['fecha_fin'] ?? '';
+
+    $this->model->actualizarConfig($titulo, $precioBoleto, $boletosMinimos, $boletosMaximos, $fechaInicio, $fechaFin);
+    $this->model->eliminarRifasPorCantidad($boletosMinimos, $boletosMaximos);
+
+    $_SESSION['success'] = 'Configuración actualizada correctamente';
+    header('Location: /TuRifadigi/main_config');
+    exit();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   public function actualizarBanner()
   {
     try {

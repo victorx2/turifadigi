@@ -31,18 +31,42 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                  <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio"
+                    value="<?php echo htmlspecialchars($config['fecha_inicio'] ?? ''); ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+                  <input type="date" class="form-control" id="fecha_fin" name="fecha_fin"
+                    value="<?php echo htmlspecialchars($config['fecha_fin'] ?? ''); ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4">
                 <div class="mb-3">
                   <label for="precio_boleto" class="form-label">Precio del Boleto ($)</label>
                   <input type="number" step="0.01" class="form-control" id="precio_boleto" name="precio_boleto"
                     value="<?php echo htmlspecialchars($config['precio_boleto'] ?? '3'); ?>" required>
                 </div>
               </div>
-              <div class="col-md-6">
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
                 <div class="mb-3">
                   <label for="boletos_minimos" class="form-label">Compra Mínima de Boletos</label>
                   <input type="number" class="form-control" id="boletos_minimos" name="boletos_minimos"
                     value="<?php echo htmlspecialchars($config['boletos_minimos'] ?? '2'); ?>" required>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label for="boletos_maximos" class="form-label">Compra Máxima de Boletos</label>
+                  <input type="number" class="form-control" id="boletos_maximos" name="boletos_maximos"
+                    value="<?php echo htmlspecialchars($config['boletos_maximos'] ?? '500'); ?>" required>
                 </div>
               </div>
             </div>

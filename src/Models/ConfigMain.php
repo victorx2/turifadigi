@@ -13,6 +13,23 @@ class ConfigMain
     $this->db = new Conexion();
   }
 
+
+  public function actualizarConfig($titulo, $precioBoleto, $boletosMinimos, $boletosMaximos, $fechaInicio, $fechaFin, $id_rifa = null, $imagen = null)
+  {
+    $sql = "UPDATE configuracion SET titulo = :titulo, precio_boleto = :precio_boleto, boletos_minimos = :boletos_minimos, boletos_maximos = :boletos_maximos, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin";
+    $this->db->ejecutar($sql, [
+      ':titulo' => $titulo,
+      ':precio_boleto' => $precioBoleto,
+      ':boletos_minimos' => $boletosMinimos,
+      ':boletos_maximos' => $boletosMaximos,
+      ':fecha_inicio' => $fechaInicio,
+      ':fecha_fin' => $fechaFin
+    ]);
+    if ($id_rifa && $imagen) {
+      $this->actualizarBanner($id_rifa, $imagen);
+    }
+  }
+
   public function obtenerRifaActiva()
   {
     $sql = "SELECT * FROM rifas r INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado = 'activa'";
@@ -20,6 +37,29 @@ class ConfigMain
     return $result ? $result[0] : null;
   }
 
+
+  public function eliminarRifasPorCantidad($min, $max)
+  {
+    $sql = "DELETE FROM rifas WHERE total_boletos < :min OR total_boletos > :max";
+    return $this->db->ejecutar($sql, [':min' => $min, ':max' => $max]);
+  }
+
+  public function obtenerRifasActivas()
+  {
+    $sql = "SELECT * FROM rifas WHERE estado = 1";
+    return $this->db->consultar($sql, []);
+  }
+
+
+
+
+
+
+
+
+  
+
+  
   public function actualizarBanner($id_rifa, $imagen)
   {
     try {
@@ -72,7 +112,6 @@ class ConfigMain
       throw $e;
     }
   }
-
 
 
 

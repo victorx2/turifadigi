@@ -126,6 +126,50 @@ if ($request_method === 'POST' && $route === '/banner_update') {
     exit;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if ($request_method === 'POST' && $route === '/rifa_config') {
+    (new ConfigMainController())->actualizarConfig();
+    exit;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* if ($request_method === 'GET' && $route === '/cuentas_pago/listar') { */
 /*     (new ConfigMainController())->listar(); */
 /*     exit; */
