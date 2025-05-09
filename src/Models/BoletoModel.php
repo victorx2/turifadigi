@@ -294,6 +294,7 @@ class BoletoModel
     try {
       $sql = "SELECT
               cb.id_compra,
+              b.id_rifa,
               b.numero_boleto,
               dp.nombre AS cliente,
               dp.apellido AS a_cliente,
@@ -337,6 +338,7 @@ class BoletoModel
             'fecha_compra' => $row['fecha_compra'],
             'estado_pago' => $row['estado_pago'],
             'titular' => $row['titular'],
+            'id_rifa' => $row['id_rifa'],
             'referencia' => $row['referencia'],
             'boletos' => []
           ];
@@ -357,6 +359,7 @@ class BoletoModel
     try {
       $sql = "SELECT
               cb.id_compra,
+              b.id_rifa,
               b.numero_boleto,
               dp.nombre AS cliente,
               dp.apellido AS a_cliente,
@@ -406,6 +409,7 @@ class BoletoModel
             'estado_pago' => $row['estado_pago'],
             'titular' => $row['titular'],
             'referencia' => $row['referencia'],
+            'id_rifa' => $row['id_rifa'],
             'boletos' => []
           ];
         }
@@ -425,6 +429,7 @@ class BoletoModel
     try {
       $sql = "SELECT
               cb.id_compra,
+              b.id_rifa,
               b.numero_boleto,
               dp.nombre AS cliente,
               dp.apellido AS a_cliente,
@@ -474,6 +479,7 @@ class BoletoModel
             'estado_pago' => $row['estado_pago'],
             'titular' => $row['titular'],
             'referencia' => $row['referencia'],
+            'id_rifa' => $row['id_rifa'],
             'boletos' => []
           ];
         }

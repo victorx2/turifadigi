@@ -317,7 +317,7 @@ switch (strtok($route, '?')) {
         require_once 'views/compras/view/vistaAcciones.php';
         break;
 
-    case '/admin/view/compra/accions_view':
+    case '/admin/views/compra/accions_view':
         require_once 'views/admin/views/compra/vistaAcciones.php';
         break;
 
