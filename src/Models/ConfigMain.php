@@ -13,30 +13,89 @@ class ConfigMain
     $this->db = new Conexion();
   }
 
-
-  public function actualizarConfig($titulo, $precioBoleto, $boletosMinimos, $boletosMaximos, $fechaInicio, $fechaFin, $id_rifa = null, $imagen = null)
+  public function crearSorteo($id_usuario, $titulo, $fecha_inicio, $fecha_final, $precio_boleto, $boletos_minimos, $boletos_maximos, $numero_contacto, $url_rifa, $texto_ejemplo, $premios, $crear_rifa = false)
   {
-    $sql = "UPDATE configuracion SET titulo = :titulo, precio_boleto = :precio_boleto, boletos_minimos = :boletos_minimos, boletos_maximos = :boletos_maximos, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin";
-    $this->db->ejecutar($sql, [
-      ':titulo' => $titulo,
-      ':precio_boleto' => $precioBoleto,
-      ':boletos_minimos' => $boletosMinimos,
-      ':boletos_maximos' => $boletosMaximos,
-      ':fecha_inicio' => $fechaInicio,
-      ':fecha_fin' => $fechaFin
-    ]);
-    if ($id_rifa && $imagen) {
-      $this->actualizarBanner($id_rifa, $imagen);
+    try {
+      $id_configuracion = null;
+
+      // Si se requiere crear una nueva rifa
+      if ($crear_rifa) {
+        $sqlRifa = "INSERT INTO rifas (id_usuario, titulo, fecha_inicio, fecha_final, precio_boleto, boletos_minimos, boletos_maximos, numero_contacto, url_rifa, texto_ejemplo) 
+                  VALUES (:id_usuario, :titulo, :fecha_inicio, :fecha_final, :precio_boleto, :boletos_minimos, :boletos_maximos, :numero_contacto, :url_rifa, :texto_ejemplo)";
+
+        $paramsRifa = [
+          ':id_usuario' => $id_usuario,
+          ':titulo' => $titulo,
+          ':fecha_inicio' => $fecha_inicio,
+          ':fecha_final' => $fecha_final,
+          ':precio_boleto' => $precio_boleto,
+          ':boletos_minimos' => $boletos_minimos,
+          ':boletos_maximos' => $boletos_maximos,
+          ':numero_contacto' => $numero_contacto,
+          ':url_rifa' => $url_rifa,
+          ':texto_ejemplo' => $texto_ejemplo
+        ];
+
+        $id_rifa = $this->db->ejecutar($sqlRifa, $paramsRifa);
+        $id_configuracion = $id_rifa;
+      }
+
+      // Insertar en tabla configuracion
+      $sqlConfig = "INSERT INTO configuracion (id_usuario, titulo, fecha_inicio, fecha_final, precio_boleto, boletos_minimos, boletos_maximos, numero_contacto, url_rifa, texto_ejemplo) 
+                    VALUES (:id_usuario, :titulo, :fecha_inicio, :fecha_final, :precio_boleto, :boletos_minimos, :boletos_maximos, :numero_contacto, :url_rifa, :texto_ejemplo)";
+
+      $paramsConfig = [
+        ':id_usuario' => $id_usuario,
+        ':titulo' => $titulo,
+        ':fecha_inicio' => $fecha_inicio,
+        ':fecha_final' => $fecha_final,
+        ':precio_boleto' => $precio_boleto,
+        ':boletos_minimos' => $boletos_minimos,
+        ':boletos_maximos' => $boletos_maximos,
+        ':numero_contacto' => $numero_contacto,
+        ':url_rifa' => $url_rifa,
+        ':texto_ejemplo' => $texto_ejemplo
+      ];
+
+      $this->db->ejecutar($sqlConfig, $paramsConfig);
+
+      // Insertar premios
+      foreach ($premios as $premio) {
+        $sqlPremio = "INSERT INTO premios (id_rifa, nombre, descripcion) 
+                      VALUES (:id_rifa, :nombre, :descripcion)";
+
+        $paramsPremio = [
+          ':id_rifa' => $id_configuracion,
+          ':nombre' => $premio['nombre'],
+          ':descripcion' => $premio['descripcion']
+        ];
+
+        $this->db->ejecutar($sqlPremio, $paramsPremio);
+      }
+
+      // Insertar boletos para la rifa creada
+      for ($i = 1; $i <= $boletos_maximos; $i++) {
+        $numero_boleto = str_pad($i, 4, '0', STR_PAD_LEFT); // Formato 0001, 0002, ...
+        $sqlBoleto = "INSERT INTO boletos (id_rifa, numero_boleto, estado) VALUES (:id_rifa, :numero_boleto, 'disponible')";
+        $paramsBoleto = [
+          ':id_rifa' => $id_configuracion,
+          ':numero_boleto' => $numero_boleto
+        ];
+        $this->db->ejecutar($sqlBoleto, $paramsBoleto);
+      }
+
+      return $id_configuracion;
+    } catch (\Exception $e) {
+      throw new \Exception("Error al guardar el sorteo: " . $e->getMessage());
     }
   }
 
   public function obtenerRifaActiva()
   {
-    $sql = "SELECT * FROM rifas r INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado = 'activa'";
+    $sql = "SELECT * FROM rifas r INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion LIMIT 1";
     $result = $this->db->consultar($sql, []);
     return $result ? $result[0] : null;
   }
-
 
   public function eliminarRifasPorCantidad($min, $max)
   {
@@ -50,16 +109,6 @@ class ConfigMain
     return $this->db->consultar($sql, []);
   }
 
-
-
-
-
-
-
-
-  
-
-  
   public function actualizarBanner($id_rifa, $imagen)
   {
     try {
@@ -112,96 +161,4 @@ class ConfigMain
       throw $e;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /* public function getAllCuentas() */
-  /* { */
-  /*   $sql = "SELECT * FROM cuentas_pago"; */
-  /*   return $this->db->consultar($sql, []); */
-  /* } */
-
-  /* public function getCuenta($id) */
-  /* { */
-  /*   $sql = "SELECT * FROM cuentas_pago WHERE id = ?"; */
-  /*   $result = $this->db->consultar($sql, [$id]); */
-  /*   return $result ? $result[0] : null; */
-  /* } */
-
-  /* public function addCuenta($data) */
-  /* { */
-  /*   $sql = "INSERT INTO cuentas_pago (nombre, tipo, correo, usuario, telefono, cedula, imagen)  */
-  /*           VALUES (:nombre, :tipo, :correo, :usuario, :telefono, :cedula, :imagen)"; */
-  /*   return $this->db->ejecutar($sql, [ */
-  /*     ':nombre' => $data['nombre'], */
-  /*     ':tipo' => $data['tipo'], */
-  /*     ':correo' => $data['correo'], */
-  /*     ':usuario' => $data['usuario'], */
-  /*     ':telefono' => $data['telefono'], */
-  /*     ':cedula' => $data['cedula'], */
-  /*     ':imagen' => $data['imagen'] */
-  /*   ]); */
-  /* } */
-
-  /* public function updateCuenta($id, $data) */
-  /* { */
-  /*   $sql = "UPDATE cuentas_pago  */
-  /*           SET nombre = :nombre,  */
-  /*               tipo = :tipo, */
-  /*               correo = :correo,  */
-  /*               usuario = :usuario,  */
-  /*               telefono = :telefono,  */
-  /*               cedula = :cedula,  */
-  /*               imagen = :imagen  */
-  /*           WHERE id = :id"; */
-
-  /*   return $this->db->ejecutar($sql, [ */
-  /*     ':nombre' => $data['nombre'], */
-  /*     ':tipo' => $data['tipo'], */
-  /*     ':correo' => $data['correo'], */
-  /*     ':usuario' => $data['usuario'], */
-  /*     ':telefono' => $data['telefono'], */
-  /*     ':cedula' => $data['cedula'], */
-  /*     ':imagen' => $data['imagen'], */
-  /*     ':id' => $id */
-  /*   ]); */
-  /* } */
-
-  /* public function deleteCuenta($id) */
-  /* { */
-  /*   $sql = "DELETE FROM cuentas_pago WHERE id=:id"; */
-  /*   $this->db->ejecutar($sql, [':id' => $id]); */
-  /* } */
 }

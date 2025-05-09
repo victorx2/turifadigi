@@ -116,38 +116,64 @@ if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if ($request_method === 'POST' && $route === '/crear_sorteo') {
+    (new ConfigMainController())->index();
+    exit;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if ($request_method === 'GET' && $route === '/main_config') {
     (new ConfigMainController())->index();
     exit;
 }
 
-if ($request_method === 'POST' && $route === '/banner_update') {
-    (new ConfigMainController())->actualizarBanner();
-    exit;
-}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if ($request_method === 'POST' && $route === '/rifa_config') {
-    (new ConfigMainController())->actualizarConfig();
-    exit;
-}
 
 
 
@@ -278,7 +304,7 @@ switch (strtok($route, '?')) {
         }
         require_once 'views/admin/rifa_config.php';
         break;
-    case '/admin_main_config':
+    case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /TuRifadigi/login");
             exit;

@@ -5,7 +5,7 @@
     <div class="col-12">
       <div class="card" style="margin-top: 120px;">
         <div class="card-header">
-          <h3 class="card-title">Configuración de la Rifa</h3>
+          <h3 class="card-title">Configuración del Sorteo</h3>
         </div>
         <div class="card-body">
           <?php if (isset($_SESSION['success'])): ?>
@@ -23,9 +23,8 @@
           <?php endif; ?>
 
           <form id="form-config" action="/TuRifadigi/rifa_config" method="POST">
-            <!-- Configuración básica -->
             <div class="mb-3">
-              <label for="titulo" class="form-label">Título de la Rifa</label>
+              <label for="titulo" class="form-label">Título del Sorteo</label>
               <input type="text" class="form-control" id="titulo" name="titulo"
                 value="<?php echo htmlspecialchars($config['titulo'] ?? '🎉 ¡POR EL SUPERGANA! 🎉'); ?>" required>
             </div>
@@ -40,9 +39,9 @@
               </div>
               <div class="col-md-4">
                 <div class="mb-3">
-                  <label for="fecha_fin" class="form-label">Fecha de Fin</label>
-                  <input type="date" class="form-control" id="fecha_fin" name="fecha_fin"
-                    value="<?php echo htmlspecialchars($config['fecha_fin'] ?? ''); ?>" required>
+                  <label for="fecha_final" class="form-label">Fecha de Fin</label>
+                  <input type="date" class="form-control" id="fecha_final" name="fecha_final"
+                    value="<?php echo htmlspecialchars($config['fecha_final'] ?? ''); ?>" required>
                 </div>
               </div>
               <div class="col-md-4">

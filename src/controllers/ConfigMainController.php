@@ -16,198 +16,74 @@ class ConfigMainController
 
   public function index()
   {
-    $rifaActiva = $this->model->obtenerRifaActiva();
-    $imagenFondo = $rifaActiva ? $rifaActiva['imagen'] : 'assets/img/backgrounds/sorteo.jpg';
-    extract(compact('imagenFondo'));
-    require_once 'views/admin/main.config.php';
+    require_once 'views/admin/crear_sorteo.php';
   }
 
-  public function actualizarConfig()
-  {
-    $titulo = $_POST['titulo'] ?? '';
-    $precioBoleto = $_POST['precio_boleto'] ?? 0;
-    $boletosMinimos = $_POST['boletos_minimos'] ?? 0;
-    $boletosMaximos = $_POST['boletos_maximos'] ?? 0;
-    $fechaInicio = $_POST['fecha_inicio'] ?? '';
-    $fechaFin = $_POST['fecha_fin'] ?? '';
-
-    $this->model->actualizarConfig($titulo, $precioBoleto, $boletosMinimos, $boletosMaximos, $fechaInicio, $fechaFin);
-    $this->model->eliminarRifasPorCantidad($boletosMinimos, $boletosMaximos);
-
-    $_SESSION['success'] = 'Configuración actualizada correctamente';
-    header('Location: /TuRifadigi/main_config');
-    exit();
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  public function actualizarBanner()
+  public function crearSorteo()
   {
     try {
-      if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
-        throw new \Exception('No se ha seleccionado ningún archivo o hubo un error en la subida');
+      // Obtener datos del formulario
+      $idUsuario = $_SESSION['id_usuario'] ?? 0;
+      $titulo = $_POST['titulo'] ?? '';
+      $precioBoleto = $_POST['precio_boleto'] ?? 0;
+      $boletosMinimos = $_POST['boletos_minimos'] ?? 0;
+      $boletosMaximos = $_POST['boletos_maximos'] ?? 0;
+      $fechaInicio = $_POST['fecha_inicio'] ?? '';
+      $fechaFin = $_POST['fecha_final'] ?? '';
+      $numeroContacto = $_POST['numero_contacto'] ?? '';
+      $urlRifa = $_POST['url_rifa'] ?? '';
+      $textoEjemplo = $_POST['texto_ejemplo'] ?? '';
+      $premios = $_POST['premios'] ?? [];
+
+      // Validar datos requeridos
+      if (empty($titulo) || empty($fechaInicio) || empty($fechaFin)) {
+        throw new Exception('Todos los campos son requeridos');
       }
 
-      $rifaActiva = $this->model->obtenerRifaActiva();
-      if (!$rifaActiva) {
-        throw new \Exception('No hay una rifa activa');
+      // Validar fechas
+      if (strtotime($fechaInicio) > strtotime($fechaFin)) {
+        throw new Exception('La fecha de inicio no puede ser mayor a la fecha final');
       }
 
-      $this->model->actualizarBanner($rifaActiva['id_rifa'], $_FILES['imagen']);
-      $_SESSION['success'] = 'Banner actualizado correctamente';
-    } catch (\Exception $e) {
+      // Validar precios y cantidades
+      if ($precioBoleto <= 0) {
+        throw new Exception('El precio del boleto debe ser mayor a 0');
+      }
+
+      if ($boletosMinimos <= 0 || $boletosMaximos <= 0) {
+        throw new Exception('Las cantidades de boletos deben ser mayores a 0');
+      }
+
+      if ($boletosMinimos > $boletosMaximos) {
+        throw new Exception('La cantidad mínima no puede ser mayor a la máxima');
+      }
+
+      // Crear el sorteo en la base de datos
+      $idSorteo = $this->model->crearSorteo(
+        $idUsuario,
+        $titulo,
+        $fechaInicio,
+        $fechaFin,
+        $precioBoleto,
+        $boletosMinimos,
+        $boletosMaximos,
+        $numeroContacto,
+        $urlRifa,
+        $textoEjemplo,
+        $premios
+      );
+
+      if ($idSorteo) {
+        $_SESSION['success'] = 'Sorteo creado exitosamente';
+        header('Location: /TuRifadigi/main_config');
+        exit();
+      } else {
+        throw new Exception('Error al crear el sorteo');
+      }
+    } catch (Exception $e) {
       $_SESSION['error'] = $e->getMessage();
+      header('Location: /TuRifadigi/main_config');
+      exit();
     }
-
-    header('Location: /TuRifadigi/main_config');
-    exit();
   }
-
-  /* public function listar() */
-  /* { */
-  /*   $cuentas = $this->model->getAllCuentas(); */
-  /*   header('Content-Type: application/json'); */
-  /*   echo json_encode($cuentas); */
-  /* } */
-
-  /* public function guardar() */
-  /* { */
-  /*   try { */
-  /*     $data = [ */
-  /*       'nombre' => $_POST['nombre'] ?? '', */
-  /*       'tipo' => $_POST['tipo'] ?? '', */
-  /*       'correo' => $_POST['correo'] ?? null, */
-  /*       'usuario' => $_POST['usuario'] ?? null, */
-  /*       'telefono' => $_POST['telefono'] ?? null, */
-  /*       'cedula' => $_POST['cedula'] ?? null, */
-  /*       'imagen' => null */
-  /*     ]; */
-
-  /*     // Manejo de imagen */
-  /*     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) { */
-  /*       $nombreImg = uniqid() . '_' . $_FILES['imagen']['name']; */
-  /*       $rutaDestino = 'assets/img/backgrounds/' . $nombreImg; */
-
-  /*       if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) { */
-  /*         $data['imagen'] = $rutaDestino; */
-  /*       } */
-  /*     } */
-
-  /*     if (!empty($_POST['id'])) { */
-  /*       $this->model->updateCuenta($_POST['id'], $data); */
-  /*       $mensaje = 'Cuenta actualizada exitosamente'; */
-  /*     } else { */
-  /*       $this->model->addCuenta($data); */
-  /*       $mensaje = 'Cuenta agregada exitosamente'; */
-  /*     } */
-
-  /*     echo json_encode([ */
-  /*       'success' => true, */
-  /*       'mensaje' => $mensaje */
-  /*     ]); */
-  /*   } catch (Exception $e) { */
-  /*     echo json_encode([ */
-  /*       'success' => false, */
-  /*       'mensaje' => 'Error al procesar la solicitud: ' . $e->getMessage() */
-  /*     ]); */
-  /*   } */
-  /* } */
-
-  /* public function eliminar() */
-  /* { */
-  /*   $id = $_POST['id'] ?? 0; */
-  /*   $this->model->deleteCuenta($id); */
-  /*   echo json_encode(['success' => true]); */
-  /* } */
 }
