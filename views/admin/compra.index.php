@@ -146,7 +146,7 @@
 <script>
   // CARGA DE LA TABLA
 
-  fetch('./api/get_purchase', {
+  fetch('./api/get_purchase?cmp=1', {
       method: 'POST',
       header: {
         'Content-Type': 'application/json'
@@ -169,6 +169,7 @@
                             <i class="fa-solid fa-pen"></i>
                         </button>`;
           data[i]['contador'] = (i + 1);
+          data[i]['sorteo'] = elemento['id_rifa'];
           data[i]['boletos'] = boletos;
           data[i]['acciones'] = acciones;
           data[i]['estado'] = elemento['estado'] == 'pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
@@ -193,6 +194,11 @@
               'title': 'COMPRADOR',
               'className': 'text-center'
             },
+            {
+              'data': 'sorteo',
+              'title': 'SORTEO',
+              'className': 'text-center'
+            }, 
             {
               'data': 'boletos',
               'title': 'BOLETOS',
@@ -228,7 +234,7 @@
 
   async function pregunta(id, condition = false) {
 
-    const response = await fetch('./admin/compra/view/accions_view?acvi=' + id, {
+    const response = await fetch('./admin/views/compra/accions_view?acvi=' + id, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

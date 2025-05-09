@@ -290,7 +290,7 @@ switch (strtok($route, '?')) {
     /*     break; */
 
     //SECCION DE ADMINISTRADOR
-    case '/admin_compra_verificacion':
+    case '/compra_verificacion':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /TuRifadigi/login");
             exit;
@@ -319,7 +319,7 @@ switch (strtok($route, '?')) {
         require_once 'views/compras/view/vistaAcciones.php';
         break;
 
-    case '/admin/view/compra/accions_view':
+    case '/admin/views/compra/accions_view':
         require_once 'views/admin/views/compra/vistaAcciones.php';
         break;
 
@@ -347,6 +347,11 @@ switch (strtok($route, '?')) {
         require_once 'src/API/destruirSesion.php';
         break;
     case '/api/get_purchase':
+        $cmp = $_GET["cmp"] ?? '';
+        if ($cmp !='') {
+            require_once 'src/API/admin.obtenerCompras.php';
+            break;
+        }
         require_once 'src/API/obtenerCompras.php';
         break;
 

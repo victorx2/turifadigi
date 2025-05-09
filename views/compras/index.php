@@ -161,14 +161,15 @@
         data.forEach((elemento, index) => {
           let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
           let acciones = elemento['estado'] == 'pagado' ? `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, 1,1)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, 1, 1)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
                           <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
                         </button>
                     </div>` : `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_compra']}, 1,0)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago">
+                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_compra']}, 1, null)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago">
                             <i class="fa-solid fa-pen"></i>
                         </button>`;
           data[i]['contador'] = (i + 1);
+          data[i]['sorteo'] = elemento['id_rifa'];
           data[i]['boletos'] = boletos;
           data[i]['acciones'] = acciones;
           data[i]['estado'] = elemento['estado'] == 'pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
@@ -196,6 +197,11 @@
             {
               'data': 'boletos',
               'title': 'BOLETOS',
+              'className': 'text-center'
+            },
+            {
+              'data': 'sorteo',
+              'title': 'SORTEO',
               'className': 'text-center'
             },
             {

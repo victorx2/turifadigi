@@ -73,6 +73,7 @@ class Auth
         // Guardar datos en sesión
         $_SESSION['id_usuario'] = $result[0]['id_usuario'];
         $_SESSION['usuario'] = $result[0]['usuario'];
+        $_SESSION['rol_usuario'] = $result[0]['nivel'];
         $_SESSION['logged_in'] = true;
         return self::LOGIN_SUCCESS;
       }
@@ -198,7 +199,7 @@ class Auth
     }
   }
 
-  
+
 
   public function getStatusMessage(int $status): array
   {
@@ -218,7 +219,7 @@ class Auth
       case self::ERROR_INVALID_DATA:
         return [
           'success' => false,
-            'message' => 'La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.',
+          'message' => 'La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.',
           'type' => 'error'
         ];
       case self::ERROR_DATABASE:

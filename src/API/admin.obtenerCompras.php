@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 header('Content-Type: application/json');
 
@@ -6,8 +6,7 @@ use App\Controllers\BoletoController;
 
 try {
 	$controller = new BoletoController();
-	$ede  = $controller->obtenerCompra(null, $_SESSION['id_usuario']);
-
+	$ede  = $controller->obtenerCompra();
 
 	$data = $ede['data'];
 
