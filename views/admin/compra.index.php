@@ -146,7 +146,7 @@
 <script>
   // CARGA DE LA TABLA
 
-  fetch('./api/get_purchase', {
+  fetch('./api/get_purchase?cmp=1', {
       method: 'POST',
       header: {
         'Content-Type': 'application/json'

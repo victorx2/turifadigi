@@ -152,11 +152,20 @@
                       <a href="/turifadigi/">Inicio
                         <span class="main-menu-border"></span>
                       </a>
-                      <ul class="dropdown-menu">
-                        <li><a href="/TuRifadigi/admin_compra_verificacion">Verificar compras</a></li>
-                        <li><a href="/TuRifadigi/editar_sorteo">Editar sorteo</a></li>
-                        <li><a href="/TuRifadigi/crear_sorteo">Crear sorteo</a></li>
-                      </ul>
+
+                      <?php
+
+                      $session = $_SESSION['usuario'] ?? '';
+                      $sessionRol = $_SESSION['rol_usuario'] ?? '';
+
+                      if ($session !== '' && $sessionRol == 2 ) {
+                        echo '
+                        <ul class="dropdown-menu">
+                          <li><a href="/TuRifadigi/compra_verificacion">Verificar compras</a></li>
+                          <li><a href="/TuRifadigi/editar_sorteo">Editar sorteo</a></li>
+                          <li><a href="/TuRifadigi/crear_sorteo">Crear sorteo</a></li>
+                        </ul>';
+                      } ?>
                     </li>
                     <li class="element">
                       <a href="/TuRifadigi/compras">Compras
