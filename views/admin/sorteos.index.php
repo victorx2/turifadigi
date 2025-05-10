@@ -127,9 +127,10 @@
           <tr>
             <th class="text-center bg-body-tertiary" width="1%">#</th>
             <th class="text-center bg-body-tertiary" width="20%">FECHA DE CREACION</th>
-            <th class="text-center bg-body-tertiary" width="25%">COMPRADOR</th>
-            <th class="text-center bg-body-tertiary" width="20%">BOLETOS</th>
-            <th class="text-center bg-body-tertiary" width="10%">MONTO</th>
+            <th class="text-center bg-body-tertiary" width="25%">TITULO</th>
+            <th class="text-center bg-body-tertiary" width="10%">ID SORTEO</th>
+            <th class="text-center bg-body-tertiary" width="20%">BOLETOS MAXIMOS</th>
+            <th class="text-center bg-body-tertiary" width="10%">PRECIO BOLETO</th>
             <th class="text-center bg-body-tertiary" width="10%">ESTADO</th>
             <th class="text-center bg-body-tertiary" width="14%">ACCIONES</th>
           </tr>
@@ -146,7 +147,7 @@
 <script>
   // CARGA DE LA TABLA
 
-  fetch('./api/get_purchase?cmp=1', {
+  fetch('./api/get_sorteo?cmp=1', {
       method: 'POST',
       header: {
         'Content-Type': 'application/json'
@@ -158,21 +159,27 @@
         let i = 0;
         let data = dataD.data;
 
+        console.log("Datos recibidos de la API:", dataD); // Log de los datos recibidos
+
         data.forEach((elemento, index) => {
-          let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
-          let acciones = elemento['estado'] == 'pagado' ? `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, 1)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
-                          <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
-                        </button>
-                    </div>` : `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_compra']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago">
+          let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
                             <i class="fa-solid fa-pen"></i>
-                        </button>`;
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="cambiarEstado(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Cambiar Estado">
+                            <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
+                        </button>
+                    </div>`;
+
           data[i]['contador'] = (i + 1);
-          data[i]['sorteo'] = elemento['id_rifa'];
-          data[i]['boletos'] = boletos;
-          data[i]['acciones'] = acciones;
-          data[i]['estado'] = elemento['estado'] == 'pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
+          data[i]['id_rifa'] = elemento['id_rifa'];
+          data[i]['titulo'] = elemento['titulo'];
+          data[i]['fecha_creacion'] = elemento['fecha_creacion'];
+          data[i]['boletos_maximos'] = elemento['configuracion']['boletos_maximos'];
+          data[i]['precio_boleto'] = elemento['configuracion']['precio_boleto'];
+          data[i]['estado'] = elemento['estado'];
+
+          console.log(`Procesando sorteo ${i+1}:`, data[i]); // Log de cada sorteo procesado
           i++;
         })
 
@@ -185,28 +192,28 @@
               'className': 'text-center'
             },
             {
-              'data': 'fecha_compra',
-              'title': 'FECHA DE COMPRA',
+              'data': 'fecha_creacion',
+              'title': 'FECHA DE CREACION',
               'className': 'text-center'
             },
             {
-              'data': 'cliente',
-              'title': 'COMPRADOR',
+              'data': 'titulo',
+              'title': 'TITULO',
               'className': 'text-center'
             },
             {
-              'data': 'sorteo',
-              'title': 'SORTEO',
-              'className': 'text-center'
-            }, 
-            {
-              'data': 'boletos',
-              'title': 'BOLETOS',
+              'data': 'id_rifa',
+              'title': 'ID SORTEO',
               'className': 'text-center'
             },
             {
-              'data': 'total',
-              'title': 'MONTO',
+              'data': 'boletos_maximos',
+              'title': 'BOLETOS MAXIMOS',
+              'className': 'text-center'
+            },
+            {
+              'data': 'precio_boleto',
+              'title': 'PRECIO BOLETO',
               'className': 'text-center'
             },
             {
@@ -218,10 +225,16 @@
               'data': 'acciones',
               'title': 'ACCIONES',
               'className': 'text-center'
+            },
+            {
+              'data': 'total',
+              'title': 'MONTO',
+              'className': 'text-center'
             }
           ]
         };
 
+        console.log("Datos preparados para la tabla:", datos); // Log de los datos finales
         cargar_tabla_boletos(datos);
 
       } else {
@@ -230,49 +243,69 @@
     })
     .catch(error => console.error('Error:', error));
 
-  // SWEETAL ALERT PARA CONFIRMAR PAGO
-
-  async function pregunta(id, condition = false) {
-
-    const response = await fetch('./admin/views/compra/accions_view?acvi=' + id, {
+  // FUNCION PARA CAMBIAR ESTADO DEL SORTEO
+  async function cambiarEstado(id) {
+    console.log(`Intentando cambiar estado del sorteo ID: ${id}`); // Log de la acción
+    const response = await fetch('./admin/views/sorteo/cambiar_estado?id=' + id, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("Resultado del cambio de estado:", result); // Log del resultado
+
+    if (result.success) {
+      Swal.fire({
+        title: 'Estado actualizado',
+        text: 'El estado del sorteo ha sido modificado correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        location.reload();
+      });
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: result.message,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
+  }
+
+  // FUNCION PARA EDITAR SORTEO
+  async function pregunta(id) {
+    console.log(`Intentando editar sorteo ID: ${id}`); // Log de la acción
+    const response = await fetch('./admin/views/sorteo/editar?id=' + id, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const htmlPersonalizado = await response.text();
+    console.log("HTML recibido para edición:", htmlPersonalizado); // Log del HTML recibido
 
-    if (condition) {
-      Swal.fire({
-        title: '<h5><span class="pago-confirmado">Pago Confirmado<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>',
-        html: htmlPersonalizado,
-        showCloseButton: true,
-        focusConfirm: false,
-        confirmButtonText: `
-        cerrar`,
-      });
-      return;
-    }
     Swal.fire({
       html: htmlPersonalizado,
       showCloseButton: true,
-      showCancelButton: true,
-      showDenyButton: true,
       focusConfirm: false,
-      confirmButtonText: `
-              verificar`,
-      denyButtonText: `
-              rechazar`,
-      cancelButtonText: `
-              cancelar `,
-
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "/TuRifadigi/confirmarBoleto/" + id;
+        // Lógica para guardar los cambios
       }
     });
   }
