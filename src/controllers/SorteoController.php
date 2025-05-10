@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-require_once __DIR__ . '/../Models/SorteoModel.php';
+require_once __DIR__ . '/../Models/Sorteo.php';
 
 use App\Models\SorteoModel;
 use Exception;
@@ -40,8 +40,9 @@ class SorteoController
         "data" => $data
       ]);
     } catch (Exception $e) {
-      $_SESSION['mensaje'] = '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
-      require_once 'views/administracion/boletos/index.php';
+      
+      echo '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
+      exit;
     }
   }
 }

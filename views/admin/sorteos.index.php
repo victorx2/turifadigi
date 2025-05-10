@@ -178,6 +178,7 @@
           data[i]['boletos_maximos'] = elemento['configuracion']['boletos_maximos'];
           data[i]['precio_boleto'] = elemento['configuracion']['precio_boleto'];
           data[i]['estado'] = elemento['estado'];
+          data[i]['acciones'] = acciones;
 
           console.log(`Procesando sorteo ${i+1}:`, data[i]); // Log de cada sorteo procesado
           i++;
@@ -224,11 +225,6 @@
             {
               'data': 'acciones',
               'title': 'ACCIONES',
-              'className': 'text-center'
-            },
-            {
-              'data': 'total',
-              'title': 'MONTO',
               'className': 'text-center'
             }
           ]
@@ -279,35 +275,45 @@
     }
   }
 
-  // FUNCION PARA EDITAR SORTEO
-  async function pregunta(id) {
-    console.log(`Intentando editar sorteo ID: ${id}`); // Log de la acción
-    const response = await fetch('./admin/views/sorteo/editar?id=' + id, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
+  // FUNCION PARA VER DETALLES DEL SORTEO
+  async function pregunta(id, condition = false) {
+    console.log(`Obteniendo detalles del sorteo ID: ${id}`); // Log de la acción
+    try {
+      const response = await fetch('./admin/views/sorteo/accion_view?acvi=' + id, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const htmlPersonalizado = await response.text();
-    console.log("HTML recibido para edición:", htmlPersonalizado); // Log del HTML recibido
-
-    Swal.fire({
-      html: htmlPersonalizado,
-      showCloseButton: true,
-      focusConfirm: false,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-      showCancelButton: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Lógica para guardar los cambios
+      if (!response.ok) {
+        throw new Error(`Error HTTP! estado: ${response.status}`);
       }
-    });
+
+      const htmlPersonalizado = await response.text();
+      console.log("HTML recibido para vista de acciones:", htmlPersonalizado); // Log del HTML recibido
+
+      Swal.fire({
+        title: '<h5><span class="pago-confirmado">Sorteo<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>',
+        html: htmlPersonalizado,
+        showCloseButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'Aceptar',
+        showCancelButton: false,
+        width: '800px'
+      });
+
+      return;
+
+    } catch (error) {
+      console.error('Error al obtener los detalles:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudieron obtener los detalles del sorteo',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
   }
 </script>
 <style>

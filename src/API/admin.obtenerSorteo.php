@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 use App\Controllers\SorteoController;
 
 try {
-  $controller = new SorteoController();
+  $controller = new SorteoController(); 
   $ede  = $controller->obtenerSorteo();
 
   $data = $ede['data'];

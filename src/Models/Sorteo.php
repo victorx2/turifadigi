@@ -24,7 +24,7 @@ class SorteoModel
               r.descripcion,
               r.imagen,
               r.fecha_creacion,
-              r.estado,
+              c.estado,
               c.id_configuracion,
               c.boletos_maximos,
               c.precio_boleto
@@ -53,7 +53,6 @@ class SorteoModel
               'boletos_maximos' => $row['boletos_maximos'],
               'precio_boleto' => $row['precio_boleto'],
             ],
-            'total' => '',
           ];
         }
       }
@@ -73,7 +72,7 @@ class SorteoModel
               r.descripcion,
               r.imagen,
               r.fecha_creacion,
-              r.estado,
+              c.estado,
               c.id_configuracion,
               c.boletos_maximos,
               c.precio_boleto
@@ -105,7 +104,6 @@ class SorteoModel
               'boletos_maximos' => $row['boletos_maximos'],
               'precio_boleto' => $row['precio_boleto'],
             ],
-            'total' => '',
           ];
         }
       }
@@ -125,7 +123,7 @@ class SorteoModel
               r.descripcion,
               r.imagen,
               r.fecha_creacion,
-              r.estado,
+              c.estado,
               c.id_configuracion,
               c.boletos_maximos,
               c.precio_boleto
@@ -160,7 +158,6 @@ class SorteoModel
               'boletos_maximos' => $row['boletos_maximos'],
               'precio_boleto' => $row['precio_boleto'],
             ],
-            'total' => '',
           ];
         }
       }

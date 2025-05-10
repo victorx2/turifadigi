@@ -35,7 +35,7 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $base_path = "/TuRifadigi";
 $route = str_replace($base_path, '', $request_uri);
 
-// print_r($_SESSION);
+//print_r($_SESSION);
 
 if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
@@ -179,6 +179,16 @@ switch (strtok($route, '?')) {
 
     case '/admin/views/compra/accions_view':
         require_once 'views/admin/views/compra/vistaAcciones.php';
+        break;
+
+    //SECCION PANTALLAS DE SWEET ALERT DE SORTEO
+
+    case '/sorteo/view/accion_view':
+        require_once 'views/sorteo/view/vistaAcciones.php';
+        break;
+
+    case '/admin/views/sorteo/accion_view':
+        require_once 'views/admin/views/sorteo/vistaAcciones.php';
         break;
 
 
