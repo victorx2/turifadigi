@@ -66,8 +66,9 @@ class Auth
       error_log('Query result: ' . json_encode($result));
 
       if ($result && count($result) > 0) {
-        $lomo = $this->ctf->desencriptacion($result[0]["password"]);
-        if ($lomo != (int)$request['password']) {
+        $lomo = $result[0]["password"];
+
+        if (password_verify($request['password'], $lomo) != $request['password']) {
           return self::ERROR_INVALID_DATA;
         }
         // Guardar datos en sesión
@@ -198,8 +199,6 @@ class Auth
       return false;
     }
   }
-
-
 
   public function getStatusMessage(int $status): array
   {
