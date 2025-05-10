@@ -68,7 +68,7 @@ class Auth
       if ($result && count($result) > 0) {
         $lomo = $result[0]["password"];
 
-        if (password_verify($request['password'], $lomo) != $request['password']) {
+        if (password_verify($request['password'], $lomo)) {
           return self::ERROR_INVALID_DATA;
         }
         // Guardar datos en sesión
