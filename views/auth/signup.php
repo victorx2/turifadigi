@@ -167,7 +167,7 @@
               </div>
               <div class="col-xl-12 text-center">
                 <div class="contact-two__btn-box">
-                  <button type="submit" class="thm-btn contact-two__btn">Registrarme</button>
+                  <button type="submit" class="thm-btn contact-two__btn" id="buttonForm" disabled>Registrarme</button>
                 </div>
               </div>
             </div>
@@ -182,13 +182,18 @@
     </div>
   </div>
 </section>
-
+<style>
+  button#buttonForm {
+    display: inline;
+  }
+</style>
 <script>
   // Eliminar todas las validaciones de campos y reglas
   // Solo dejar el envío simple del formulario
 
   const form = document.getElementById('form-registro');
   let isSubmitting = false;
+  let boton = document.getElementById('buttonForm');
 
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -199,6 +204,9 @@
     submitButton.disabled = true;
 
     try {
+      boton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+      boton.disabled = true;
+
       const formData = new URLSearchParams(new FormData(this));
       console.log('Datos a enviar:', formData.toString());
       const response = await fetch('/TuRifadigi/registro_usuario', {
@@ -230,9 +238,13 @@
     } catch (error) {
       console.error('Error en el catch:', error);
       showToast('error', 'Error', error.message || 'Hubo un error al procesar la solicitud');
+      boton.innerHTML = 'Registrarme';
+      boton.disabled = false;
     } finally {
       isSubmitting = false;
       submitButton.disabled = false;
+      boton.innerHTML = 'Registrarme';
+      boton.disabled = false;
       console.log('Finalizó el submit');
     }
   });
@@ -271,6 +283,9 @@
     const todosValidos = Object.values(estadoValidacionCampos).every(val => val === true);
     console.log('Estado de validación de campos:', estadoValidacionCampos);
     console.log(todosValidos ? '✅ Todos los campos son válidos' : '❌ Algunos campos no son válidos');
+    if (todosValidos) {
+      boton.disabled = false;
+    }
     return todosValidos;
   }
 

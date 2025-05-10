@@ -162,6 +162,7 @@
                         echo '
                         <ul class="dropdown-menu">
                           <li><a href="/TuRifadigi/compra_verificacion">Verificar compras</a></li>
+                          <li><a href="/TuRifadigi/sorteo_verificacion">Verificar sorteos</a></li>
                           <li><a href="/TuRifadigi/editar_sorteo">Editar sorteo</a></li>
                           <li><a href="/TuRifadigi/crear_sorteo">Crear sorteo</a></li>
                         </ul>';

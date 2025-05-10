@@ -52,35 +52,6 @@ if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginado
     }
 }
 
-// if ($request_method === 'GET' && $route === '/inicializarBoletos') {
-//     (new BoletoController())->inicializarBoletos();
-// }
-
-// Manejo de solicitudes POST
-//if ($request_method === 'POST') {
-//    if ($route === '/login') {
-//        $authController = (new AuthController())->login($_REQUEST['user'], $_REQUEST['password']);
-//        if (!$authController) {
-//            $error = true;
-//            require_once 'views/auth/login.php';
-//        }
-//        exit;
-//    }
-//
-//    if ($route === '/guardarComprador') {
-//        (new BoletoController())->procesarCompra();
-//        exit;
-//    }
-//}
-
-// if ($request_method === 'POST' && $route === '/procesarCompra') {
-//     (new BoletoController())->show();
-// }
-
-if ($request_method === 'POST' && $route === '/login') {
-    exit;
-}
-
 if ($request_method === 'POST' && $route === '/reset_password') {
     (new AuthController())->resetPassword([
         'token' => $_REQUEST['token'],
@@ -115,124 +86,10 @@ if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
     exit;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if ($request_method === 'POST' && $route === '/crear_sorteo') {
     (new ConfigMainController())->crearSorteo();
     exit;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* if ($request_method === 'GET' && $route === '/rifa_config') { */
-/*     (new ConfigMainController())->index(); */
-/*     exit; */
-/* } */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* if ($request_method === 'GET' && $route === '/cuentas_pago/listar') { */
-/*     (new ConfigMainController())->listar(); */
-/*     exit; */
-/* } */
-/* if ($request_method === 'POST' && $route === '/cuentas_pago/guardar') { */
-/*     (new ConfigMainController())->guardar(); */
-/*     exit; */
-/* } */
-/* if ($request_method === 'POST' && $route === '/cuentas_pago/eliminar') { */
-/*     (new ConfigMainController())->eliminar(); */
-/*     exit; */
-/* } */
-
-/* if ($request_method === 'GET' && $route === '/main_config') { */
-/*     (new ConfigMainController())->index(); */
-/*     exit; */
-/* } */
-
-//if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
-//    $id = intval(substr($route, strlen('/confirmarBoleto/')));
-//    (new BoletoController())->verificarDisponibilidad($id);
-//    exit;
-//}
-
-// Validación de sesión
-//if (empty($_SESSION)) {
-//    require_once 'views/auth/login.php';
-//    exit;
-
-//} else if ((isset($_SESSION['usuario']) && $route === '/login') || (isset($_SESSION['usuario']) && $route === '/')) {
-//    (new HomeController())->index();
-//    exit;
-//}
-
-// Enrutamiento principal de la aplicación
-
-// print_r($_SESSION);
 
 switch (strtok($route, '?')) {
     case '/':
@@ -285,10 +142,6 @@ switch (strtok($route, '?')) {
         require_once 'views/compras/index.php';
         break;
 
-    /* case '/main_config': */
-    /*     (new ConfigMainController())->index(); */
-    /*     break; */
-
     //SECCION DE ADMINISTRADOR
     case '/compra_verificacion':
         if (!isset($_SESSION['usuario'])) {
@@ -297,7 +150,13 @@ switch (strtok($route, '?')) {
         }
         require_once 'views/admin/compra.index.php';
         break;
-
+    case '/sorteo_verificacion':
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: /TuRifadigi/login");
+            exit;
+        }
+        require_once 'views/admin/sorteos.index.php';
+        break;
     case '/editar_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /TuRifadigi/login");
@@ -305,7 +164,6 @@ switch (strtok($route, '?')) {
         }
         require_once 'views/admin/editar_sorteo.php';
         break;
-
     case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /TuRifadigi/login");
@@ -348,11 +206,14 @@ switch (strtok($route, '?')) {
         break;
     case '/api/get_purchase':
         $cmp = $_GET["cmp"] ?? '';
-        if ($cmp !='') {
+        if ($cmp != '') {
             require_once 'src/API/admin.obtenerCompras.php';
             break;
         }
         require_once 'src/API/obtenerCompras.php';
+        break;
+    case '/api/coin_update':
+        require_once 'src/API/actualizar_coin.php';
         break;
 
     default:

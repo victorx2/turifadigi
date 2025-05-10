@@ -190,6 +190,9 @@
     }
 
     if (valid) {
+      if (boton.disabled) {
+        return;
+      }
       boton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
       boton.disabled = true;
 

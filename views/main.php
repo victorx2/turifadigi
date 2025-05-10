@@ -209,7 +209,7 @@ require_once 'views/layouts/header.php';
         <div class="section-title__tagline-shape"></div>
         <span class="section-title__tagline"></span>
       </div>
-      <h2 class="section-title__title">Cuentas de pagos</h2>
+      <h2 class="section-title__title">Metodos de Pago</h2>
     </div>
     <div class="row">
       <!-- Zelle -->
