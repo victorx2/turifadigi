@@ -212,6 +212,9 @@ switch (strtok($route, '?')) {
         }
         require_once 'src/API/obtenerCompras.php';
         break;
+    case '/api/exchange_rate':
+        require_once 'src/API/verificar.tasa.php';
+        break;
     case '/api/coin_update':
         require_once 'src/API/actualizar_coin.php';
         break;

@@ -17,15 +17,18 @@ class MonedaModel
     public function getPrecioActual(string $moneda)
     {
         try {
-            $sql = "SELECT precio, ultima_actualizacion FROM moneda_actual WHERE moneda = :moneda";
+            $sql = "SELECT * FROM moneda_actual WHERE moneda = :moneda";
             $stmt = $this->db->consultar(
                 $sql,
                 [':moneda' => $moneda]
             );
 
             return [
-                "success" => true,
-                "data" => [$stmt],
+                "data" => [
+                    "moneda" => $stmt[0]['moneda'],
+                    "precio" => $stmt[0]['precio'],
+                    "ultima_actualizacion" => $stmt[0]['ultima_actualizacion'],
+                            ],
                 "message" => "Precios actuales obtenidos exitosamente."
             ];
         } catch (Exception $e) {

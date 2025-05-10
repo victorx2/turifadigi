@@ -16,14 +16,34 @@ class MonedaController
 
     public function mostrarPrecioActual(string $moneda = '')
     {
+
+        if ($moneda == '') {
+            $precioDataCOP = $this->monedaModel->getPrecioActual('COP');
+            $precioDataVES = $this->monedaModel->getPrecioActual('VES');
+            if ($precioDataVES && $precioDataCOP) {
+                // Formatear la salida como necesites (HTML, JSON, etc.)
+                echo json_encode([
+                    "success" => true,
+                    "data" => [
+                       "COP" => $precioDataCOP["data"],
+                       "VES" => $precioDataVES["data"]
+                    ]
+                ]);
+            } else {
+                echo "No se pudo obtener el precio actual para {$moneda}.";
+            }
+            exit;
+        }
+
         $precioData = $this->monedaModel->getPrecioActual($moneda);
 
         if ($precioData) {
             // Formatear la salida como necesites (HTML, JSON, etc.)
             echo json_encode([
-                "success" => $precioData['success'],
-                "precio" => number_format($precioData['precio'], 2),
-                "Última actualización" => $precioData['ultima_actualizacion']
+                "success" => true,
+                "moneda" => $precioData["data"]['moneda'],
+                "precio" => number_format($precioData["data"]['precio'], 2),
+                "Última actualización" => $precioData["data"]['ultima_actualizacion']
             ]);
         } else {
             echo "No se pudo obtener el precio actual para {$moneda}.";

@@ -34,37 +34,37 @@
   </div>
 
   <div class="converter-container">
-    <h3 class="text-center">Conversor USD a BS</h3>
-    <div class="converter-controls">
-      <button class="btn-circle-custom">-</button>
-      <input type="text" value="1" readonly>
-      <button class="btn-circle-custom">+</button>
-    </div>
-
-    <div class="currency-options">
-      <label class="currency-option">
-        <input type="radio" name="currency" value="BS" checked> BS
-      </label>
-      <label class="currency-option">
-        <input type="radio" name="currency" value="COP"> COP
-      </label>
-    </div>
-
+    <h3 class="text-center">Total</h3>
     <div class="conversion-result">
       <div class="amount">
-        <span>USD</span>
-        <span>40.00</span>
-      </div>
-      <div class="amount">
-        <span>BS</span>
-        <span>4252.40</span>
+        <span id="mapr">6 $</span>
       </div>
     </div>
-    <p class="exchange-rate">Tasa de cambio: 1 USD = 106.31 BS</p>
+    <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 106.31 BS</p>
+    <div class="currency-options">
+      <label class="currency-option">
+        <input type="radio" name="currency" value="BS" onclick="convertirMoneda(6, 106.31, 'BS')"> BS
+      </label>
+      <label class="currency-option">
+        <input type="radio" name="currency" value="COP" onclick="convertirMoneda(6, 4305.80, 'COP')"> COP
+      </label>
+      <label class="currency-option">
+        <input type="radio" name="currency" value="COP" onclick="convertirMoneda(6, 1, 'USD')" checked> USD
+      </label>
+    </div>
   </div>
 </div>
 
 <script>
+  function convertirMoneda(valorUSD, tasaCambio, moneda) {
+    const inputMapr = document.getElementById('mapr');
+    const tasaEx = document.getElementById('tasaEx');
+    const valorConvertido = (valorUSD * tasaCambio).toFixed(2);
+
+    inputMapr.textContent = `${valorConvertido} ${moneda}`;
+    tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaCambio} ${moneda}`;
+  }
+
   function mostrarDatosDePago(metodo) {
     const paymentTitle = document.getElementById('paymentTitle');
     const paymentDetails = document.getElementById('paymentDetails');

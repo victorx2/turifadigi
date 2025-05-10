@@ -150,7 +150,7 @@ class BoletoModel
       }
 
       // 2. Si llegamos aquí, todos los boletos están disponibles. Creamos la compra
-      $rifa = $this->db->consultar("SELECT r.id_rifa, c.precio FROM rifas r INNER JOIN configuracion c WHERE c.estado= 1", []);
+      $rifa = $this->db->consultar("SELECT r.id_rifa, c.precio_boleto FROM rifas r INNER JOIN configuracion c WHERE c.estado= 1", []);
 
       $sqlCompra = "INSERT INTO compras_boletos (id_rifa, fecha_compra, estado, total_compra) 
                     VALUES (:id_rifa, NOW(), 'pendiente', :total)";
@@ -160,7 +160,7 @@ class BoletoModel
       }
 
       $id_rifa_activa = $rifa[0]['id_rifa'];
-      $precioUnitario = $rifa[0]['precio'];
+      $precioUnitario = $rifa[0]['precio_boleto'];
       $totalCompra = count($boletosVerificar) * $precioUnitario;
 
       $idCompra = $this->db->ejecutar($sqlCompra, [

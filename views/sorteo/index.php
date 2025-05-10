@@ -52,6 +52,32 @@
         .progress-label {
           margin: 0 5px;
         }
+
+        @media (max-width: 480px) {
+          .progress-value {
+            animation: load 2s normal forwards;
+            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 10px 40px -10px #414141;
+            border-radius: 100px;
+            background: linear-gradient(45deg, #00bcd4, #2196f3);
+            height: 20px;
+            width: 0;
+          }
+
+          .progress {
+            background: rgba(0, 0, 0, 0.137);
+            justify-content: flex-start;
+            border-radius: 100px;
+            align-items: center;
+            position: relative;
+            padding: 0 5px;
+            display: flex;
+            height: 30px;
+            width: 50%;
+            margin: 20px 0 5px;
+          }
+
+        }
       </style>
 
       <div class="progress">
@@ -65,8 +91,16 @@
       function animateProgressBar(total, comprado) {
         const progressValue = document.querySelector('.progress-value');
         const progressLabel = document.querySelector('.progress-label');
+        let marc = window.innerWidth;
 
-        let width = 5; // Valor inicial de la barra de progreso
+        var width = marc > 480 ? 5 : 12; // Valor inicial de la barra de progreso
+
+        if (marc > 480 && 900 > marc) {
+
+          width = 10; // Valor inicial de la barra de progreso
+
+        }
+
         let totalWidth = comprado / total * 100;
 
         if (totalWidth > width) { // Cambia el valor de 100 por el total real de boletos
@@ -80,7 +114,7 @@
             }
           }, 30); // Cambia el tiempo para ajustar la velocidad de la animación
         } else if (totalWidth > 0 && totalWidth < 5) {
-          progressValue.style.width = '5%';
+          progressValue.style.width = width + '%';
           progressLabel.textContent = '1%';
         } else {
           progressValue.style.width = width + '%';
@@ -125,54 +159,56 @@
   </div>
 
   <div id="datosPersonales" class="form-personal" style="display: none;">
-    <div class="total-info">
-      Total: <span id="totalBSDisplay">4252.40 BS</span> (1 boletos)
+    <div class="payment-section">
+      <div class="payment-title">
+        <i class="fas fa-money-bill"></i>
+        METODO DE PAGO
+      </div>
+      <div class="payment-subtitle">Transferencia o depósito</div>
+
+      <div class="payment-methods">
+        <div class="payment-method" onclick="mostrarDatosDePago('pago_movil')">
+          <img src="assets/img/webp/pago_movil.webp" alt="pago movil">
+        </div>
+        <div class="payment-method" onclick="mostrarDatosDePago('zelle')">
+          <img src="assets/img/webp/zelle.webp" alt="zelle">
+        </div>
+        <div class="payment-method" onclick="mostrarDatosDePago('davivienda')">
+          <img src="assets/img/webp/davivienda.webp" alt="davivienda">
+        </div>
+        <div class="payment-method" onclick="mostrarDatosDePago('paypal')">
+          <img src="assets/img/webp/paypal.webp" alt="paypal">
+        </div>
+        <div class="payment-method" onclick="mostrarDatosDePago('banco_venezuela')">
+          <img src="assets/img/webp/banco_venezuela.webp" alt="banco_de_Venezuela">
+        </div>
+        <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
+          <img src="assets/img/webp/bancolombia.webp" alt="bancolombia">
+        </div>
+      </div>
+
+      <div class="payment-info">
+        <p id="paymentTitle"></p>
+        <div id="paymentDetails">
+          <!-- Los detalles se cargarán dinámicamente -->
+        </div>
+      </div>
+
+      <div class="converter-container">
+        <h3 class="text-center">Total</h3>
+        <div class="conversion-result">
+          <div class="amount">
+            <span id="mapr"></span>
+          </div>
+        </div>
+        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 106.31 BS</p>
+        <div class="currency-option-conten" id="currency-option-conten">
+          <!-- carga dinamicamente -->
+        </div>
+      </div>
     </div>
-    <!-- <div class="form-section">
-      <h2 class="form-section-title" style="color: #2962ff; font-weight: bold; font-size: 24px;">
-        <i class="fas fa-user" style="color: #2962ff;"></i>
-        DATOS PERSONALES
-      </h2>
-      <div class="form-group-custom" style="margin-bottom: 20px;">
-        <label class="required" style="color: #2962ff; font-weight: bold;">Nombres y Apellidos</label>
-        <input type="text" class="form-control-custom" id="nombre" placeholder="Nombre Apellido" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
-      </div>
-      <div class="form-group-custom" style="margin-bottom: 20px;">
-        <label class="required" style="color: #2962ff; font-weight: bold;">Cédula</label>
-        <input type="text" class="form-control-custom" id="cedula" placeholder="9384235" style="border: 2px solid #2962ff; padding: 10px; border-radius: 5px;">
-      </div>
-
-
-      <?php require_once 'views/sorteo/datos_personales/celular.php'; ?>
-
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-
-      <?php require_once 'views/sorteo/datos_personales/ubicaciones.php'; ?>
-
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-
-    </div> -->
-
-    <?php require_once 'views/sorteo/datos_personales/modo_de_pago.php'; ?>
-
     <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
-
     <button type="submit" class="btn-confirmar">CONFIRMAR</button>
-
   </div>
 </div>
 
@@ -439,9 +475,11 @@
         boletosSeleccionados.add(numero);
       }
       toggleSelectedContainer();
+
       actualizarContador();
       actualizarTotal();
       actualizarChipsBoletos();
+      // Ejemplo de cómo usar la función después de obtener los datos del fetch:
     }
 
     // Función para elegir boletos al azar
@@ -523,7 +561,7 @@
     // Actualizar el contador de boletos
     function actualizarContador() {
       const contador = document.getElementsByClassName('.contador');
-      contador.textContent = `${boletosSeleccionados.size} de ${cantidadSeleccion}`;
+      contador.textContent = `${boletosSeleccionados.size}`;
     }
 
     // Verificar disponibilidad de boletos seleccionados
@@ -583,6 +621,36 @@
         alert('Debe seleccionar al menos 2 boletos para continuar');
         return;
       }
+
+      const inputMapr = document.getElementById('mapr');
+      const tasaEx = document.getElementById('tasaEx');
+
+      // data de moneda
+      fetch('./api/exchange_rate') // Asumiendo que esta API te da las tasas
+        .then(response => response.json())
+        .then(data => {
+          // Ajusta estas líneas según la estructura de la respuesta de tu API
+          const tasaBS = data.data.VES.precio;
+          const tasaCOP = data.data.COP.precio;
+
+          const opcionesMonedaHTML = crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, boletosSeleccionados.size);
+
+          // Agrega la sección de opciones de moneda al elemento deseado en tu HTML
+          const contenedorOpciones = document.getElementById('currency-option-conten'); // Reemplaza con el ID de tu contenedor
+          if (contenedorOpciones) {
+            let dc = precioUnitarioUSD * boletosSeleccionados.size;
+            const valorConvertido = dc;
+
+            inputMapr.textContent = `${valorConvertido} $`;
+            tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaBS} BS`;
+            contenedorOpciones.innerHTML = "";
+            contenedorOpciones.appendChild(opcionesMonedaHTML);
+          }
+        })
+        .catch(error => {
+          console.error('Error al obtener las tasas de cambio:', error);
+        });
+
       document.querySelector('.btn.btn-continuar').disabled = true;
       fetch('./api/session_verfication', {
           method: 'POST',
@@ -748,34 +816,6 @@
         });
     };
 
-    // Conversor de moneda
-    document.querySelectorAll('.conversor-controls .btn-circle-custom').forEach(btn => {
-      btn.onclick = function() {
-        const input = this.parentElement.querySelector('input');
-        const valor = parseInt(input.value);
-        if (this.textContent === '+' && valor < 500) {
-          input.value = valor + 1;
-        } else if (this.textContent === '-' && valor > 1) {
-          input.value = valor - 1;
-        }
-        actualizarTotal();
-      };
-    });
-
-    // // Subir comprobante
-    // document.querySelector('.btn-upload').onclick = function() {
-    //   const input = document.createElement('input');
-    //   input.type = 'file';
-    //   input.accept = 'image/*';
-    //   input.onchange = function(e) {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //       console.log('Imagen seleccionada:', file.name);
-    //     }
-    //   };
-    //   input.click();
-    // };
-
     // Actualizar estilos para el botón de remover en el chip
     const styles = document.createElement('style');
     styles.textContent = `
@@ -809,6 +849,134 @@
     `;
     document.head.appendChild(styles);
   });
+
+  function crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, cantidadUSD) {
+    const currencyOptionsDiv = document.createElement('div');
+    currencyOptionsDiv.classList.add('currency-option');
+
+    // Opción BS
+    const bsOptionLabel = document.createElement('label');
+    bsOptionLabel.classList.add('currency-option');
+    const bsRadio = document.createElement('input');
+    bsRadio.type = 'radio';
+    bsRadio.name = 'currency';
+    bsRadio.value = 'BS';
+    bsRadio.onclick = function() {
+      convertirMoneda(precioUnitarioUSD, cantidadUSD, tasaBS, 'BS');
+    };
+    bsOptionLabel.appendChild(bsRadio);
+    bsOptionLabel.appendChild(document.createTextNode(' BS'));
+    currencyOptionsDiv.appendChild(bsOptionLabel);
+
+    // Opción COP
+    const copOptionLabel = document.createElement('label');
+    copOptionLabel.classList.add('currency-option');
+    const copRadio = document.createElement('input');
+    copRadio.type = 'radio';
+    copRadio.name = 'currency';
+    copRadio.value = 'COP';
+    copRadio.onclick = function() {
+      convertirMoneda(precioUnitarioUSD, cantidadUSD, tasaCOP, 'COP');
+    };
+    copOptionLabel.appendChild(copRadio);
+    copOptionLabel.appendChild(document.createTextNode(' COP'));
+    currencyOptionsDiv.appendChild(copOptionLabel);
+
+    // Opción USD (marcado por defecto)
+    const usdOptionLabel = document.createElement('label');
+    usdOptionLabel.classList.add('currency-option');
+    const usdRadio = document.createElement('input');
+    usdRadio.type = 'radio';
+    usdRadio.name = 'currency';
+    usdRadio.value = 'USD';
+    usdRadio.onclick = function() {
+      convertirMoneda(precioUnitarioUSD, cantidadUSD, 1, 'USD'); // Tasa de cambio USD a USD es 1
+    };
+    usdRadio.checked = true;
+    usdOptionLabel.appendChild(usdRadio);
+    usdOptionLabel.appendChild(document.createTextNode(' USD'));
+    currencyOptionsDiv.appendChild(usdOptionLabel);
+
+    return currencyOptionsDiv;
+  }
+
+  function convertirMoneda(precioUnitarioUSD, cantidadV, tasaCambio, moneda) {
+    let dc = precioUnitarioUSD * cantidadV;
+    console.log(dc);
+    const inputMapr = document.getElementById('mapr');
+    const tasaEx = document.getElementById('tasaEx');
+    const valorConvertido = (dc * tasaCambio).toFixed(2);
+
+    inputMapr.textContent = `${valorConvertido} ${moneda}`;
+    tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaCambio} ${moneda}`;
+  }
+
+  function mostrarDatosDePago(metodo) {
+    const paymentTitle = document.getElementById('paymentTitle');
+    const paymentDetails = document.getElementById('paymentDetails');
+    switch (metodo) {
+      case 'zelle':
+        paymentTitle.textContent = 'ZELLE';
+        paymentDetails.innerHTML = `
+            <p class="subtitle">Datos de la cuenta</p>
+            <p>Número de teléfono: +1 4074287580</p>
+          `;
+        break;
+
+      case 'paypal':
+        paymentTitle.textContent = 'PAYPAL';
+        paymentDetails.innerHTML = `
+            <p class="subtitle">Datos de la cuenta</p>
+            <p>Nombre: Yorsin Cruz Osorio</p>
+            <p>Correo Electrónico: Yorsincruz1995@gmail.com</p>
+            <p>Usuario: @Yorsin0506</p>
+            <p>Número teléfono: +1 4074287580</p>
+          `;
+        break;
+
+      case 'banco_venezuela':
+        paymentTitle.textContent = 'BANCO DE VENEZUELA';
+        paymentDetails.innerHTML = `
+            <p class="subtitle">Datos de la cuenta</p>
+            <p>Nombre: Yorsin Cruz Osorio</p>
+            <p>Cédula de identidad: 28517267</p>
+            <p>numero de cuenta: 01021234567891234567</p>
+          `;
+        break
+
+      case 'davivienda':
+        paymentTitle.textContent = 'DAVIVIENDA COLOMBIA';
+        paymentDetails.innerHTML = `
+            <p class="subtitle">Datos de la cuenta</p>
+            <p>Cédula de identidad: 123456789</p>
+            <p>numero de cuenta: 4884 5018 1679</p>
+
+          `;
+        break;
+
+      case 'pago_movil':
+        paymentTitle.textContent = 'PAGO MOVIL';
+        paymentDetails.innerHTML = `
+              <p class="subtitle">Datos de la cuenta</p>
+              <p>Número de teléfono: 04124124923</p>
+              <p>Cédula de identidad: 28517267</p>
+              <p>Banco: 0102 - Banco de Venezuela</p>  
+            `;
+        break;
+      case 'bancolombia':
+        paymentTitle.textContent = 'BANCOLOMBIA';
+        paymentDetails.innerHTML = `
+              <p class="subtitle">Datos de la cuenta</p>
+              <p>Cédula de identidad: 28517267</p>
+              <p>numero de cuenta: 123456789</p>
+              `;
+        break;
+      default:
+        paymentTitle.textContent = 'Seleccione un método de pago';
+        paymentDetails.innerHTML = '';
+        break;
+    }
+  }
 </script>
 <link rel="stylesheet" href="assets/css/dropdown-search-method.css">
 
