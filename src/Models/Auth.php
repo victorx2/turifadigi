@@ -68,7 +68,7 @@ class Auth
       if ($result && count($result) > 0) {
         $lomo = $result[0]["password"];
 
-        if (!password_verify($request['password'], $lomo)) {
+        if (password_verify($request['password'], $lomo) == false) {
           return self::ERROR_INVALID_DATA;
         }
 
