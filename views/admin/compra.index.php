@@ -299,7 +299,7 @@
           didOpen: () => {
             Swal.showLoading();
 
-            fetch("/TuRifadigi/confirmarBoleto/" + id, {
+            fetch("./api/change_purchase_status?est=enabled&id=" + id, {
                 method: 'POST', // O el método HTTP que necesites
                 headers: {
                   'Content-Type': 'application/json'
@@ -358,7 +358,7 @@
           didOpen: () => {
             Swal.showLoading();
 
-            fetch("/TuRifadigi/rechazarBoleto/" + id, {
+            fetch("./api/change_purchase_status?est=enabled&id=" + id, {
                 method: 'POST', // O el método HTTP que necesites
                 body: JSON.stringify({
                   /* tus datos a enviar */

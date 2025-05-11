@@ -32,8 +32,11 @@ $request_method = $_SERVER['REQUEST_METHOD'];
 $request_uri = $_SERVER['REQUEST_URI'];
 
 // Normalización de la ruta
-$base_path = "/TuRifadigi";
-$route = str_replace($base_path, '', $request_uri);
+$base_path1 = "/turifadigi";
+$base_path2 = "/TuRifadigi";
+
+$preroute = str_replace($base_path2, '', $request_uri);
+$route = str_replace($base_path1, '', $preroute);
 
 //print_r($_SESSION);
 
@@ -62,7 +65,7 @@ if ($request_method === 'POST' && $route === '/reset_password') {
 
 if ($request_method === 'GET' && $route === '/reset-password') {
     if (!isset($_GET['token'])) {
-        header('Location: /TuRifadigi/login');
+        header('Location: /turifadigi/login');
         exit;
     }
     require_once 'views/auth/reset-password.php';
@@ -71,20 +74,6 @@ if ($request_method === 'GET' && $route === '/reset-password') {
 
 if ($request_method === 'POST' && $route === '/registro_usuario') {
     (new RegisterUserController())->insert($_POST);
-    exit;
-}
-
-if ($request_method === 'POST' && strpos($route, '/confirmarBoleto/') === 0) {
-    header('Content-Type: application/json');
-    $id = intval(substr($route, strlen('/confirmarBoleto/')));
-    echo json_encode((new BoletoController())->confirmarPago($id));
-    exit;
-}
-
-if ($request_method === 'POST' && strpos($route, '/rechazarBoleto/') === 0) {
-    header('Content-Type: application/json');
-    $id = intval(substr($route, strlen('/rechazarBoleto/')));
-    echo json_encode((new BoletoController())->rechazarPago($id));
     exit;
 }
 
@@ -102,7 +91,7 @@ switch (strtok($route, '?')) {
         if (!isset($_SESSION['usuario'])) {
             require_once 'views/auth/login.php';
         } else {
-            header("Location: /TuRifadigi/sorteo");
+            header("Location: /turifadigi/sorteo");
             exit;
         }
         break;
@@ -111,7 +100,7 @@ switch (strtok($route, '?')) {
         if (isset($_SESSION['usuario'])) {
             (new HomeController())->index();
         } else {
-            header("Location: /TuRifadigi/login");
+            header("Location: /turifadigi/login");
             exit;
         }
         break;
@@ -138,7 +127,7 @@ switch (strtok($route, '?')) {
 
     case '/compras':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /TuRifadigi/login");
+            header("Location: /turifadigi/login");
             exit;
         }
         require_once 'views/compras/index.php';
@@ -147,28 +136,28 @@ switch (strtok($route, '?')) {
     //SECCION DE ADMINISTRADOR
     case '/compra_verificacion':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /TuRifadigi/login");
+            header("Location: /turifadigi/login");
             exit;
         }
         require_once 'views/admin/compra.index.php';
         break;
     case '/sorteo_verificacion':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /TuRifadigi/login");
+            header("Location: /turifadigi/login");
             exit;
         }
         require_once 'views/admin/sorteos.index.php';
         break;
     case '/editar_sorteo':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /TuRifadigi/login");
+            header("Location: /turifadigi/login");
             exit;
         }
         require_once 'views/admin/editar_sorteo.php';
         break;
     case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /TuRifadigi/login");
+            header("Location: /turifadigi/login");
             exit;
         }
         (new ConfigMainController())->index();
@@ -189,7 +178,6 @@ switch (strtok($route, '?')) {
 
 
     //SECCION PANTALLAS DE SWEET ALERT DE SORTEO
-
     case '/sorteo/view/accion_view':
         require_once 'views/sorteo/view/vistaAcciones.php';
         break;
@@ -215,12 +203,22 @@ switch (strtok($route, '?')) {
         require_once 'src/API/boletosDisponibility.php';
         break;
 
+    case '/api/change_purchase_status':
+        require_once 'src/API/admin.cambiarEstadoCompra.php';
+        break;
+
+    case '/api/change_draw_status':
+        require_once 'src/API/admin.cambiarEstadoSorteo.php';
+        break;
+
     case '/api/process_purchase':
         require_once 'src/API/procesarCompra.php';
         break;
+
     case '/api/session_destroy':
         require_once 'src/API/destruirSesion.php';
         break;
+
     case '/api/get_purchase':
         $cmp = $_GET["cmp"] ?? '';
         if ($cmp != '') {

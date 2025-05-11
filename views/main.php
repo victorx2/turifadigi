@@ -223,77 +223,74 @@ require_once 'views/layouts/header.php';
   <div class="container">
 
 
-  <div class="section-title text-center">
-    <div class="section-title__tagline-box">
-      <div class="section-title__tagline-shape"></div>
-      <span class="section-title__tagline"></span>
+    <div class="section-title text-center">
+      <div class="section-title__tagline-box">
+        <div class="section-title__tagline-shape"></div>
+        <span class="section-title__tagline"></span>
+      </div>
+      <h2 class="section-title__title">Métodos de Pago</h2>
     </div>
-    <h2 class="section-title__title">Métodos de Pago</h2>
-  </div>
-  
-  <div class="payment-subtitle">Transferencia o depósito</div>
-  
-  <div class="payment-methods row">
-    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="100ms">
-      <div class="payment-method" onclick="mostrarDatosDePago('pago_movil')">
-        <div class="services-one__img-box">
-          <div class="services-one__img">
-            <img src="assets/img/webp/pago_movil.webp" alt="Pago Móvil">
+    <div class="payment-methods row">
+      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="100ms">
+        <div class="payment-method" onclick="mostrarDatosDePago('pago_movil')">
+          <div class="services-one__img-box">
+            <div class="services-one__img">
+              <img src="assets/img/webp/pago_movil.webp" alt="Pago Móvil">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="200ms">
+        <div class="payment-method" onclick="mostrarDatosDePago('zelle')">
+          <div class="services-one__img-box">
+            <div class="services-one__img">
+              <img src="assets/img/webp/zelle.webp" alt="Zelle">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="300ms">
+        <div class="payment-method" onclick="mostrarDatosDePago('davivienda')">
+          <div class="services-one__img-box">
+            <div class="services-one__img">
+              <img src="assets/img/webp/davivienda.webp" alt="Davivienda">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="400ms">
+        <div class="payment-method" onclick="mostrarDatosDePago('paypal')">
+          <div class="services-one__img-box">
+            <div class="services-one__img">
+              <img src="assets/img/webp/paypal.webp" alt="Paypal">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="500ms">
+        <div class="payment-method" onclick="mostrarDatosDePago('banco_venezuela')">
+          <div class="services-one__img-box">
+            <div class="services-one__img">
+              <img src="assets/img/webp/banco_venezuela.webp" alt="Banco de Venezuela">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="600ms">
+        <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
+          <div class="services-one__img-box">
+            <div class="services-one__img">
+              <img src="assets/img/webp/bancolombia.webp" alt="Bancolombia">
+            </div>
           </div>
         </div>
       </div>
     </div>
-    
-    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="200ms">
-      <div class="payment-method" onclick="mostrarDatosDePago('zelle')">
-        <div class="services-one__img-box">
-          <div class="services-one__img">
-            <img src="assets/img/webp/zelle.webp" alt="Zelle">
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="300ms">
-      <div class="payment-method" onclick="mostrarDatosDePago('davivienda')">
-        <div class="services-one__img-box">
-          <div class="services-one__img">
-            <img src="assets/img/webp/davivienda.webp" alt="Davivienda">
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="400ms">
-      <div class="payment-method" onclick="mostrarDatosDePago('paypal')">
-        <div class="services-one__img-box">
-          <div class="services-one__img">
-            <img src="assets/img/webp/paypal.webp" alt="Paypal">
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="500ms">
-      <div class="payment-method" onclick="mostrarDatosDePago('banco_venezuela')">
-        <div class="services-one__img-box">
-          <div class="services-one__img">
-            <img src="assets/img/webp/banco_venezuela.webp" alt="Banco de Venezuela">
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="600ms">
-      <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
-        <div class="services-one__img-box">
-          <div class="services-one__img">
-            <img src="assets/img/webp/bancolombia.webp" alt="Bancolombia">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
     <!-- <div class="section-title text-center">
@@ -397,6 +394,33 @@ require_once 'views/layouts/header.php';
       });
     });
   </script>
+  <style>
+    .payment-methods .payment-method {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      transition: all 0.3s ease;
+      height: 150px;
+      width: 100%;
+      margin: 10px 0 10px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-methods .payment-method:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .payment-methods .payment-method img {
+      max-height: 100px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+  </style>
 </section>
 <!--Services One End-->
 <?php

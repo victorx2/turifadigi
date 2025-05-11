@@ -78,6 +78,33 @@ class ConfigMain
     return $result ? $result[0] : null;
   }
 
+  public function actualizarRifa($id_rifa, $estado)
+  {
+    try {
+      $sql = "UPDATE `configuracion` c INNER JOIN rifas r on r.id_configuracion = c.id_configuracion SET `estado` = :estado WHERE r.id_rifa = :id_rifa";
+      $result = $this->db->consultar($sql, [
+        ':id_rifa' => $id_rifa,
+        ':estado' => $estado,
+      ]);
+      return true;
+    } catch (\Exception $th) {
+      throw new \Exception("Error al actualizar el sorteo: " . $th->getMessage());
+    }
+  }
+
+  public function desactivarRifas()
+  {
+
+    try {
+      $sql = "UPDATE `configuracion` SET `estado` = 0";
+      $result = $this->db->consultar($sql, []);
+
+      return true;
+    } catch (\Exception $th) {
+      throw new \Exception("Error al desactivar sorteos: " . $th->getMessage());
+    }
+  }
+
   public function eliminarRifasPorCantidad($min, $max)
   {
     $sql = "DELETE FROM rifas WHERE total_boletos < :min OR total_boletos > :max";

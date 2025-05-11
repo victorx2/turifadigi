@@ -104,6 +104,27 @@ class ConfigMainController
     }
   }
 
+  public function actualizarSorteo($id, $estado)
+  {
+    $this->model->desactivarRifas();
+
+    if ($id != null && $estado != null) {
+
+      try {
+        $mrc = $this->model->actualizarRifa($id, $estado);
+
+        if ($mrc == true) {
+          return [
+            'success' => $mrc,
+            'mensaje' => 'estado actualizado correctamente'
+          ];
+        }
+      } catch (\Exception $th) {
+        throw new \Exception("Error al actualizar el sorteo: " . $th->getMessage());
+      }
+    }
+  }
+
   private function moveFile($archivo, $destino, $nombreDelArchivo = 'sin_nombre')
   {
     if (!file_exists($destino)) {
