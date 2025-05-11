@@ -64,7 +64,12 @@
                 <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
                 <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
                 <div class="main-slider__btn-box">
-                  <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Regístrate gratis</a>
+                  <?php
+                  $session = $_SESSION['usuario'] ?? '';
+                  if ($session === '') {
+                      echo '<a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Regístrate gratis</a>';
+                  }
+                  ?>
                 </div>
               </div>
             </div>

@@ -149,9 +149,13 @@
                   <ul class="main-menu__list">
                     <li class="dropdown"></li>
                     <li class="dropdown">
-                      <a href="/turifadigi/">Inicio
-                        <span class="main-menu-border"></span>
-                      </a>
+                      <?php
+                      if (strtolower('TuRifadigi') == 'turifadigi') {
+                        echo '<a href="/turifadigi/">Inicio
+                          <span class="main-menu-border"></span>
+                        </a>';
+                      }
+                      ?>
 
                       <?php
 
