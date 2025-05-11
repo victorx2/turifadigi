@@ -798,7 +798,6 @@
                   }, boletosCargar);
 
                   alert('¡Compra procesada correctamente!');
-                  window.location.reload();
                 }
               })
               .catch(error => {

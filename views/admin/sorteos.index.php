@@ -164,10 +164,10 @@
         data.forEach((elemento, index) => {
           let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-info btn-sm" onclick="obsSorteo(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
-                            <i class="fa-solid fa-pen"></i>
+                           <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" onclick="cambiarEstado(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Cambiar Estado">
-                            <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
+                            <i class="fa-solid fa-pen"></i>
                         </button>
                     </div>`;
 
@@ -240,14 +240,148 @@
     .catch(error => console.error('Error:', error));
 
   // FUNCION PARA CAMBIAR ESTADO DEL SORTEO
+
   async function cambiarEstado(id) {
-    console.log(`Intentando cambiar estado del sorteo ID: ${id}`); // Log de la acción
-    const response = await fetch('./admin/views/sorteo/cambiar_estado?id=' + id, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+    Swal.fire({
+      title: 'Cambio de estado',
+      text: 'Al activar este sorteo, se desactivarán automáticamente los demás sorteos activos. ¿Deseas continuar?',
+      showCloseButton: true,
+      showCancelButton: true,
+      showDenyButton: true,
+      focusConfirm: false,
+      confirmButtonText: `
+              activar`,
+      denyButtonText: `
+              finalizar`,
+      cancelButtonText: `
+              cancelar `,
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "¡Procesando!",
+          html: "Por favor, espera mientras se completa la operación...",
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+
+            fetch("./api/change_draw_status?est=enabled&id=" + id, {
+                method: 'POST', // O el método HTTP que necesites
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json()) // O response.text() si esperas texto plano
+              .then(data => {
+                Swal.close(); // Cierra el SweetAlert de "Procesando"
+
+                let timerInterval;
+                Swal.fire({
+                  icon: 'success', // 'success' O 'error', 'warning', 'info', 'question' según el resultado
+                  title: '¡Éxito al activar!', // O el título que corresponda
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                    window.location.href = '/TuRifadigi/sorteo_verificacion';
+                  }
+                }).then((result) => {
+                  /* Read more about handling dismissals below */
+                  if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                  }
+                });
+
+              })
+              .catch((error) => {
+                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
+                console.error('Error en la petición:', error);
+                Swal.fire({
+                  icon: 'error',
+                  title: '¡Error!',
+                  text: 'Hubo un problema al procesar la solicitud.',
+                  timer: 3000,
+                  showConfirmButton: false
+                });
+              });
+
+          },
+        });
+
+        // window.location.href = "/TuRifadigi/confirmarBoleto/" + id;
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "¡Procesando!",
+          html: "Por favor, espera mientras se completa la operación...",
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+
+            fetch("./api/change_draw_status?est=disabled&id=" + id, {
+                method: 'POST', // O el método HTTP que necesites
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json()) // O response.text() si esperas texto plano
+              .then(data => {
+                Swal.close(); // Cierra el SweetAlert de "Procesando"
+
+                let timerInterval;
+                Swal.fire({
+                  icon: 'info', // 'success' O 'error', 'warning', 'info', 'question' según el resultado
+                  title: '¡Éxito al finalizar!', // O el título que corresponda
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                    window.location.href = '/TuRifadigi/sorteo_verificacion';
+                  }
+                }).then((result) => {
+                  /* Read more about handling dismissals below */
+                  if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                  }
+                });
+
+              })
+              .catch((error) => {
+                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
+                console.error('Error en la petición:', error);
+                Swal.fire({
+                  icon: 'error',
+                  title: '¡Error!',
+                  text: 'Hubo un problema al procesar la solicitud.',
+                  timer: 3000,
+                  showConfirmButton: false
+                });
+              });
+
+          },
+        });
+      }
     });
+
+    // const response = await fetch('./admin/views/sorteo/cambiar_estado?id=' + id, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    // });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -314,7 +448,6 @@
       });
     }
   }
-  
 </script>
 <style>
   .form-section-title {
