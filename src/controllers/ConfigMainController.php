@@ -61,11 +61,11 @@ class ConfigMainController
       }
 
       // Procesar imagen si existe
-      $rutaImagen = 'assets/img/backgrounds/sorteo.jpg'; // Ruta por defecto
+      $rutaImagen = 'assets/img/banners/'; // Ruta por defecto
       if ($imagen && $imagen['error'] === UPLOAD_ERR_OK) {
         $extension = $this->extencion($imagen['name']);
         $nombreArchivo = 'banner_' . time() . '.' . $extension;
-        $destino = 'assets/img/backgrounds/';
+        $destino = 'assets/img/banners/';
 
         if ($this->moveFile($imagen['tmp_name'], $destino, $nombreArchivo)) {
           $rutaImagen = $destino . $nombreArchivo;

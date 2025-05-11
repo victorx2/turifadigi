@@ -163,7 +163,7 @@
 
         data.forEach((elemento, index) => {
           let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
+                        <button type="button" class="btn btn-info btn-sm" onclick="obsSorteo(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
                             <i class="fa-solid fa-pen"></i>
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" onclick="cambiarEstado(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Cambiar Estado">
@@ -276,10 +276,10 @@
   }
 
   // FUNCION PARA VER DETALLES DEL SORTEO
-  async function pregunta(id, condition = false) {
+  async function obsSorteo(id, condition = false) {
     console.log(`Obteniendo detalles del sorteo ID: ${id}`); // Log de la acción
     try {
-      const response = await fetch('./admin/views/sorteo/accion_view?acvi=' + id, {
+      const response = await fetch('./admin/views/sorteo/only_view?acvi=' + id, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -294,11 +294,10 @@
       console.log("HTML recibido para vista de acciones:", htmlPersonalizado); // Log del HTML recibido
 
       Swal.fire({
-        title: '<h5><span class="pago-confirmado">Sorteo<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>',
         html: htmlPersonalizado,
         showCloseButton: true,
         focusConfirm: false,
-        confirmButtonText: 'Aceptar',
+        confirmButtonText: 'cerrar',
         showCancelButton: false,
         width: '800px'
       });
@@ -315,6 +314,7 @@
       });
     }
   }
+  
 </script>
 <style>
   .form-section-title {

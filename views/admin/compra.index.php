@@ -160,8 +160,8 @@
 
         data.forEach((elemento, index) => {
           let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
-          let acciones = elemento['estado'] == 'pagado' ? `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, 1)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
+          let acciones = elemento['estado'] == 'pagado' || elemento['estado'] == 'rechazado' ? `<div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, '${elemento['estado']}')" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
                           <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
                         </button>
                     </div>` : `<div class="btn-group" role="group" aria-label="Basic example">
@@ -172,7 +172,15 @@
           data[i]['sorteo'] = elemento['id_rifa'];
           data[i]['boletos'] = boletos;
           data[i]['acciones'] = acciones;
-          data[i]['estado'] = elemento['estado'] == 'pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
+
+          if (elemento['estado'] == 'pagado') {
+            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>`;
+          } else if (elemento['estado'] == 'rechazado') {
+            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Rechazado</small>`;
+          } else {
+            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-info-emphasis bg-info-subtle border border-info-subtle rounded-2">Pendiente</small>`;
+          }
+
           i++;
         })
 
@@ -198,7 +206,7 @@
               'data': 'sorteo',
               'title': 'SORTEO',
               'className': 'text-center'
-            }, 
+            },
             {
               'data': 'boletos',
               'title': 'BOLETOS',
@@ -246,7 +254,7 @@
 
     const htmlPersonalizado = await response.text();
 
-    if (condition) {
+    if (condition == 'pagado') {
       Swal.fire({
         title: '<h5><span class="pago-confirmado">Pago Confirmado<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>',
         html: htmlPersonalizado,
@@ -257,6 +265,18 @@
       });
       return;
     }
+    if (condition == 'rechazado') {
+      Swal.fire({
+        title: '<h5><span class="pago-rechazado">Pago Rechazado<span class="icono-rechazado"></span><i class="fa-solid fa-circle-xmark"></i></span></h5>',
+        html: htmlPersonalizado,
+        showCloseButton: true,
+        focusConfirm: false,
+        confirmButtonText: `
+        cerrar`,
+      });
+      return;
+    }
+
     Swal.fire({
       html: htmlPersonalizado,
       showCloseButton: true,
@@ -272,7 +292,122 @@
 
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "/TuRifadigi/confirmarBoleto/" + id;
+        Swal.fire({
+          title: "¡Procesando!",
+          html: "Por favor, espera mientras se completa la operación...",
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+
+            fetch("/TuRifadigi/confirmarBoleto/" + id, {
+                method: 'POST', // O el método HTTP que necesites
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json()) // O response.text() si esperas texto plano
+              .then(data => {
+                Swal.close(); // Cierra el SweetAlert de "Procesando"
+
+                let timerInterval;
+                Swal.fire({
+                  icon: 'success', // 'success' O 'error', 'warning', 'info', 'question' según el resultado
+                  title: '¡Éxito al aceptar!', // O el título que corresponda
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                    window.location.href = '/TuRifadigi/compra_verificacion';
+                  }
+                }).then((result) => {
+                  /* Read more about handling dismissals below */
+                  if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                  }
+                });
+
+              })
+              .catch((error) => {
+                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
+                console.error('Error en la petición:', error);
+                Swal.fire({
+                  icon: 'error',
+                  title: '¡Error!',
+                  text: 'Hubo un problema al procesar la solicitud.',
+                  timer: 3000,
+                  showConfirmButton: false
+                });
+              });
+
+          },
+        });
+
+        // window.location.href = "/TuRifadigi/confirmarBoleto/" + id;
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "¡Procesando!",
+          html: "Por favor, espera mientras se completa la operación...",
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+
+            fetch("/TuRifadigi/rechazarBoleto/" + id, {
+                method: 'POST', // O el método HTTP que necesites
+                body: JSON.stringify({
+                  /* tus datos a enviar */
+                }),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json()) // O response.text() si esperas texto plano
+              .then(data => {
+                Swal.close(); // Cierra el SweetAlert de "Procesando"
+                let timerInterval;
+                Swal.fire({
+                  icon: 'warning', // O 'error', 'warning', 'info', 'question' según el resultado
+                  title: '¡Éxito al rechazar!', // O el título que corresponda
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                    window.location.href = '/TuRifadigi/compra_verificacion';
+                  }
+                }).then((result) => {
+                  /* Read more about handling dismissals below */
+                  if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                  }
+                });
+              })
+              .catch((error) => {
+                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
+                console.error('Error en la petición:', error);
+                Swal.fire({
+                  icon: 'error',
+                  title: '¡Error!',
+                  text: 'Hubo un problema al procesar la solicitud.',
+                  timer: 3000,
+                  showConfirmButton: false
+                });
+              });
+          },
+        });
+
       }
     });
   }
@@ -293,10 +428,30 @@
     border-radius: .25rem;
   }
 
+  .pago-rechazado {
+    background-color: #f8d7da;
+    /* rojo claro de fondo */
+    color: #842029;
+    margin: 20px 0px -20px;
+    /* rojo oscuro del texto */
+    padding: 10px 20px;
+    /* Espacio interior */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    border: 1px solid #f5c2c7;
+    /* Borde sutil */
+    display: inline-block;
+    /* Para que el ancho se ajuste al contenido */
+    font-weight: bold;
+    /* Texto en negrita */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
   .pago-confirmado {
     background-color: #d4edda;
     /* Verde claro de fondo */
     color: #155724;
+    margin: 20px 0px -20px;
     /* Verde oscuro del texto */
     padding: 10px 20px;
     /* Espacio interior */
@@ -313,6 +468,15 @@
   }
 
   .icono-confirmado {
+    margin-right: 8px;
+    /* Espacio entre el icono y el texto */
+    font-size: 1.2em;
+    /* Tamaño del icono */
+    vertical-align: middle;
+    /* Alineación vertical con el texto */
+  }
+
+  .icono-rechazado {
     margin-right: 8px;
     /* Espacio entre el icono y el texto */
     font-size: 1.2em;
