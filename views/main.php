@@ -114,19 +114,19 @@ require_once 'views/layouts/header.php';
         <div class="why-we-are__left">
           <div class="section-title text-left">
             <div class="section-title__tagline-box">
-              <span class="section-title__tagline">¿Quiénes Somos?</span>
+              <span class="section-title__tagline">¿Qué es TuRifaDigital?</span>
             </div>
-            <h2 class="section-title__title">Tu plataforma confiable <br> para rifas digitales</h2>
+            <h2 class="section-title__title">Tu plataforma para <br> seleccionar boletos y pagar</h2>
           </div>
-          <p class="why-we-are__text">TuRifaDigital es la solución perfecta para crear y gestionar rifas de manera segura y eficiente. Nuestra plataforma está diseñada para ofrecerte las mejores herramientas y garantizar la transparencia en cada sorteo.</p>
+          <p class="why-we-are__text">TuRifaDigital es la herramienta perfecta para participar en sorteos de manera sencilla. Nuestra plataforma te permite seleccionar tus boletos favoritos y realizar el pago de forma segura y rápida.</p>
           <ul class="why-we-are__points-box list-unstyled">
             <li>
               <div class="icon">
                 <span class="icon-tiles"></span>
               </div>
               <div class="content">
-                <h3>Fácil de Usar</h3>
-                <p>Crea y gestiona tus rifas en minutos con nuestra interfaz intuitiva y amigable.</p>
+                <h3>Selección de Boletos</h3>
+                <p>Elige los números que prefieras de manera fácil e intuitiva.</p>
               </div>
             </li>
             <li>
@@ -134,8 +134,8 @@ require_once 'views/layouts/header.php';
                 <span class="icon-analytics1"></span>
               </div>
               <div class="content">
-                <h3>Seguridad Garantizada</h3>
-                <p>Sistema de pagos seguro y transacciones protegidas para tu tranquilidad.</p>
+                <h3>Pago Seguro</h3>
+                <p>Realiza tus pagos con total confianza y protección.</p>
               </div>
             </li>
           </ul>
@@ -150,7 +150,24 @@ require_once 'views/layouts/header.php';
       </div>
     </div>
   </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <br>
+        <br>
+        <br>
+        <!--  
+        <div class="section-title text-center">
+          <h2 class="section-title__title">Metodos de Pago</h2>
+        </div> 
+        -->
+      </div>
+    </div>
+  </div>
+
 </section>
+
+
 
 <!--Why We Are End-->
 
@@ -204,7 +221,82 @@ require_once 'views/layouts/header.php';
   </style>
 
   <div class="container">
-    <div class="section-title text-center">
+
+
+  <div class="section-title text-center">
+    <div class="section-title__tagline-box">
+      <div class="section-title__tagline-shape"></div>
+      <span class="section-title__tagline"></span>
+    </div>
+    <h2 class="section-title__title">Métodos de Pago</h2>
+  </div>
+  
+  <div class="payment-subtitle">Transferencia o depósito</div>
+  
+  <div class="payment-methods row">
+    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="100ms">
+      <div class="payment-method" onclick="mostrarDatosDePago('pago_movil')">
+        <div class="services-one__img-box">
+          <div class="services-one__img">
+            <img src="assets/img/webp/pago_movil.webp" alt="Pago Móvil">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="200ms">
+      <div class="payment-method" onclick="mostrarDatosDePago('zelle')">
+        <div class="services-one__img-box">
+          <div class="services-one__img">
+            <img src="assets/img/webp/zelle.webp" alt="Zelle">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="300ms">
+      <div class="payment-method" onclick="mostrarDatosDePago('davivienda')">
+        <div class="services-one__img-box">
+          <div class="services-one__img">
+            <img src="assets/img/webp/davivienda.webp" alt="Davivienda">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="400ms">
+      <div class="payment-method" onclick="mostrarDatosDePago('paypal')">
+        <div class="services-one__img-box">
+          <div class="services-one__img">
+            <img src="assets/img/webp/paypal.webp" alt="Paypal">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="500ms">
+      <div class="payment-method" onclick="mostrarDatosDePago('banco_venezuela')">
+        <div class="services-one__img-box">
+          <div class="services-one__img">
+            <img src="assets/img/webp/banco_venezuela.webp" alt="Banco de Venezuela">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="600ms">
+      <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
+        <div class="services-one__img-box">
+          <div class="services-one__img">
+            <img src="assets/img/webp/bancolombia.webp" alt="Bancolombia">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- <div class="section-title text-center">
       <div class="section-title__tagline-box">
         <div class="section-title__tagline-shape"></div>
         <span class="section-title__tagline"></span>
@@ -212,7 +304,7 @@ require_once 'views/layouts/header.php';
       <h2 class="section-title__title">Metodos de Pago</h2>
     </div>
     <div class="row">
-      <!-- Zelle -->
+     
       <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="100ms">
         <div class="services-one__single">
           <div class="services-one__img-box">
@@ -229,7 +321,7 @@ require_once 'views/layouts/header.php';
         </div>
       </div>
 
-      <!-- Nesqui -->
+     
       <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="300ms">
         <div class="services-one__single">
           <div class="services-one__img-box">
@@ -246,7 +338,7 @@ require_once 'views/layouts/header.php';
         </div>
       </div>
 
-      <!-- Paypal -->
+      
       <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="600ms">
         <div class="services-one__single">
           <div class="services-one__img-box">
@@ -266,7 +358,7 @@ require_once 'views/layouts/header.php';
         </div>
       </div>
 
-      <!-- Banco de Venezuela -->
+       
       <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="900ms">
         <div class="services-one__single">
           <div class="services-one__img-box">
@@ -283,7 +375,7 @@ require_once 'views/layouts/header.php';
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <script>
