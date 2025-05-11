@@ -166,6 +166,7 @@ switch (strtok($route, '?')) {
         }
         require_once 'views/admin/editar_sorteo.php';
         break;
+        
     case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /TuRifadigi/login");
