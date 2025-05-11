@@ -84,7 +84,7 @@
   <div class="page-wrapper">
     <header class="main-header">
       <div class="main-menu__top">
-        <div class="container">
+       <!--  <div class="container">
           <div class="main-menu__top-inner">
             <div class="main-menu__top-left">
               <div class="main-menu__social">
@@ -125,7 +125,7 @@
               <p class="main-menu__top-text">We Provide High Quality & Cost Effective Services</p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <nav class="main-menu">
         <div class="main-menu__wrapper" style="background-color: #201f23;">
