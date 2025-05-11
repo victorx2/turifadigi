@@ -504,4 +504,15 @@ class BoletoModel
       throw new Exception("Error al actualizar el estado: " . $e->getMessage());
     }
   }
+
+  public function marcarCompraComoRechazada($id_compra)
+  {
+    try {
+      $sql = "UPDATE compras_boletos SET estado = 'rechazado' WHERE id_compra = :id_compra";
+      $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
+      return true;
+    } catch (Exception $e) {
+      throw new Exception("Error al actualizar el estado: " . $e->getMessage());
+    }
+  }
 }

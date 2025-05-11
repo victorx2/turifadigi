@@ -262,11 +262,32 @@ class BoletoController
   {
     try {
       $this->model->marcarCompraComoPagada($id_compra);
-      $_SESSION['mensaje'] = '<div class="alert alert-success">¡Compra confirmada como pagada!</div>';
+      return [
+        'success' => true,
+        'mensaje' => '<div class="alert alert-success">¡Compra confirmada como pagada!'
+      ];
     } catch (Exception $e) {
-      $_SESSION['mensaje'] = '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
+      return [
+        'success' => false,
+        'mensaje' => 'Error: ' . $e->getMessage(),
+      ];
     }
-    header('Location: /TuRifadigi/boletos');
-    exit;
+  }
+
+  public function rechazarPago($id_compra)
+  {
+    try {
+      $r = $this->model->marcarCompraComoRechazada($id_compra);
+      return [
+        'success' => true,
+        'mensaje' => '¡Compra confirmada como rechazada!',
+        'marc' => $r,
+      ];
+    } catch (Exception $e) {
+      return [
+        'success' => false,
+        'mensaje' => 'Error: ' . $e->getMessage(),
+      ];
+    }
   }
 }

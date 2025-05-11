@@ -74,15 +74,17 @@ if ($request_method === 'POST' && $route === '/registro_usuario') {
     exit;
 }
 
-if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
+if ($request_method === 'POST' && strpos($route, '/confirmarBoleto/') === 0) {
+    header('Content-Type: application/json');
     $id = intval(substr($route, strlen('/confirmarBoleto/')));
-    (new BoletoController())->confirmarPago($id);
+    echo json_encode((new BoletoController())->confirmarPago($id));
     exit;
 }
 
-if ($request_method === 'GET' && strpos($route, '/confirmarBoleto/') === 0) {
-    $id = intval(substr($route, strlen('/confirmarBoleto/')));
-    (new BoletoController())->confirmarPago($id);
+if ($request_method === 'POST' && strpos($route, '/rechazarBoleto/') === 0) {
+    header('Content-Type: application/json');
+    $id = intval(substr($route, strlen('/rechazarBoleto/')));
+    echo json_encode((new BoletoController())->rechazarPago($id));
     exit;
 }
 
@@ -177,9 +179,14 @@ switch (strtok($route, '?')) {
         require_once 'views/compras/view/vistaAcciones.php';
         break;
 
+    case '/admin/views/sorteo/only_view':
+        require_once 'views/admin/views/sorteo/vistaAcciones.php';
+        break;
+
     case '/admin/views/compra/accions_view':
         require_once 'views/admin/views/compra/vistaAcciones.php';
         break;
+
 
     //SECCION PANTALLAS DE SWEET ALERT DE SORTEO
 

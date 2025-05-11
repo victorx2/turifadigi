@@ -71,11 +71,11 @@ $montoa_pagar = $data["total"] ?? '';
     ];
 
     $moneda = [
-      "pago_movil" => "Bs",
       "zelle" => "$",
-      "davivienda" => "COP",
       "paypal" => "$",
-      "banco_venezuela" => "Bs",
+      "pago_movil" => "BS",
+      "banco_venezuela" => "BS",
+      "davivienda" => "COP",
       "bancolombia" => "COP"
     ];
 
@@ -128,5 +128,4 @@ $montoa_pagar = $data["total"] ?? '';
 <head>
   <link rel="stylesheet" href="/TuRifadigi/assets/css/payment.css">
   <link rel="stylesheet" href="/TuRifadigi/assets/css/datos_personales.css">
-
 </head>
