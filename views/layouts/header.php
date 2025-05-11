@@ -147,21 +147,17 @@
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
                   <ul class="main-menu__list">
-                    <li class="dropdown"></li>
-                    <li class="dropdown">
+                    <li class="dropdown" style="display: none;"></li>
+                    <?php
+                    $session = $_SESSION['usuario'] ?? '';
+                    $sessionRol = $_SESSION['rol_usuario'] ?? '';
+                    $class = $session == '' ? 'element' : 'dropdown';
+                    ?>
+                    <li class="<?php $class ?>">
+                      <a href="/turifadigi/">Inicio
+                        <span class="main-menu-border"></span>
+                      </a>
                       <?php
-                      if (strtolower('TuRifadigi') == 'turifadigi') {
-                        echo '<a href="/turifadigi/">Inicio
-                          <span class="main-menu-border"></span>
-                        </a>';
-                      }
-                      ?>
-
-                      <?php
-
-                      $session = $_SESSION['usuario'] ?? '';
-                      $sessionRol = $_SESSION['rol_usuario'] ?? '';
-
                       if ($session !== '' && $sessionRol == 2) {
                         echo '
                         <ul class="dropdown-menu">
@@ -172,20 +168,23 @@
                         </ul>';
                       } ?>
                     </li>
+                    <?php
+                    if ($session !== '') {
+                      echo '
                     <li class="element">
-                      <a href="/TuRifadigi/compras">Compras
+                      <a href="#">Compras
                         <span class="main-menu-border"></span>
                       </a>
-                    </li>
+                    </li>';
+                    } ?>
                     <li class="element">
                       <a href="/TuRifadigi/sorteo">Sorteo
                         <span class="main-menu-border"></span>
                       </a>
+
                     </li>
                     <?php
-
                     $session = $_SESSION['usuario'] ?? '';
-
                     if ($session === '') {
                       echo '
                       <li class="element">
@@ -193,8 +192,14 @@
                           <span class="main-menu-border"></span>
                         </a>
                       </li>';
+                    }
+                    if ($session === '') {
+                      echo '<a href="/TuRifadigi/login" class="main-menu__btn thm-btn inic" id="inicMob">Iniciar Sesión</a>';
+                    } else {
+                      echo '<a href="" class="main-menu__btn thm-btn inic" onclick=session_destroy() id="inicMob">Cerrar Sesión</a>';
                     } ?>
                   </ul>
+
                 </div>
               </div>
               <?php
@@ -240,6 +245,19 @@
         }
       </script>
     </header>
+    <style>
+      #inicMob {
+        margin: 20px 0;
+        display: none;
+      }
+
+      @media (max-width: 765px) {
+        #inicMob {
+          margin: 20px 0;
+          display: block;
+        }
+      }
+    </style>
 
     <div class="stricky-header stricked-menu main-menu">
       <div class="sticky-header__content"></div><!-- /.sticky-header__content -->

@@ -159,14 +159,12 @@
                     </li>
                     <?php
                     if ($session !== '') {
-                        if ($sessionRol == 1 || $sessionRol == 2) {
-                            echo '
+                      echo '
                             <li class="element">
                               <a href="#">Compras
                                 <span class="main-menu-border"></span>
                               </a>
                             </li>';
-                        }
                     }
                     ?>
                     <li class="element">

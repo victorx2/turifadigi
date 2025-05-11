@@ -140,7 +140,7 @@ class BoletoModel
       // 1. Primero verificamos la disponibilidad de todos los boletos
       $boletosVerificar = [];
       foreach ($boletos as $numeroBoleto) {
-        $sqlBoleto = "SELECT b.id_boleto FROM boletos b INNER JOIN rifas r INNER JOIN configuracion c WHERE b.numero_boleto = :numero AND b.estado = 'disponible' AND c.estado= 1";
+        $sqlBoleto = "SELECT b.id_boleto FROM boletos b INNER JOIN rifas r ON b.id_rifa = r.id_rifa INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE b.numero_boleto = :numero AND b.estado ='disponible' AND c.estado= 1";
         $resultBoleto = $this->db->consultar($sqlBoleto, [':numero' => $numeroBoleto]);
 
         if (empty($resultBoleto)) {
@@ -150,7 +150,7 @@ class BoletoModel
       }
 
       // 2. Si llegamos aquí, todos los boletos están disponibles. Creamos la compra
-      $rifa = $this->db->consultar("SELECT r.id_rifa, c.precio_boleto FROM rifas r INNER JOIN configuracion c WHERE c.estado= 1", []);
+      $rifa = $this->db->consultar("SELECT r.id_rifa, c.precio_boleto FROM rifas r INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado= 1", []);
 
       $sqlCompra = "INSERT INTO compras_boletos (id_rifa, fecha_compra, estado, total_compra) 
                     VALUES (:id_rifa, NOW(), 'pendiente', :total)";

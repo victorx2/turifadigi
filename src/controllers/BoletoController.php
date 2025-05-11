@@ -77,20 +77,28 @@ class BoletoController
         }
       }
 
-      // Procesar la compra usando una única transacción con INNER JOIN
-      $result = $this->model->procesarCompraConJoin(
-        $data['id_usuario'],
-        $data['boletos'],
-        $data['monto_pago'],
-        $data['titular'],
-        $data['referencia'],
-        $data['metodoPago']
-      );
+      try {
+        // Procesar la compra usando una única transacción con INNER JOIN
+        $result = $this->model->procesarCompraConJoin(
+          $data['id_usuario'],
+          $data['boletos'],
+          $data['monto_pago'],
+          $data['titular'],
+          $data['referencia'],
+          $data['metodoPago']
+        );
 
-      echo json_encode([
-        'success' => true,
-        'message' => 'Compra procesada correctamente. Los boletos quedarán reservados hasta que se confirme el pago'
-      ]);
+        echo json_encode([
+          'success' => $result['success'],
+          'message' => 'Compra procesada correctamente. Los boletos quedarán reservados hasta que se confirme el pago'
+        ]);
+      } catch (\Throwable $th) {
+        http_response_code(500);
+        echo json_encode([
+          'success' => false,
+          'error' => $th->getMessage()
+        ]);
+      }
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode([
