@@ -84,7 +84,7 @@
   <div class="page-wrapper">
     <header class="main-header">
       <div class="main-menu__top">
-       <!--  <div class="container">
+        <!--  <div class="container">
           <div class="main-menu__top-inner">
             <div class="main-menu__top-left">
               <div class="main-menu__social">
@@ -157,11 +157,18 @@
                         </ul>';
                       } ?>
                     </li>
-                    <li class="element">
-                      <a href="#">Compras
-                        <span class="main-menu-border"></span>
-                      </a>
-                    </li>
+                    <?php
+                    if ($session !== '') {
+                        if ($sessionRol == 1 || $sessionRol == 2) {
+                            echo '
+                            <li class="element">
+                              <a href="#">Compras
+                                <span class="main-menu-border"></span>
+                              </a>
+                            </li>';
+                        }
+                    }
+                    ?>
                     <li class="element">
                       <a href="/TuRifadigi/sorteo">Sorteo
                         <span class="main-menu-border"></span>
@@ -331,8 +338,8 @@
 
       <div class="page-header__content">
         <h1 class="page-header__title">TuRifaDigital</h1>
-        <h2 class="page-header__subtitle">Tu Mejor Opción</h2>
-        <p class="page-header__text">Crea y gestiona tus rifas de manera fácil y segura.</p>
+        <h2 class="page-header__subtitle">Empieza ahora y comienza a participar en emocionantes sorteos!</h2>
+        <p class="page-header__text">¡Sorpresa! 🎉 Descubre la forma más emocionante de participar en sorteos. ¡Tu próxima gran oportunidad está a solo un clic de distancia!</p>
       </div>
 
     </section>

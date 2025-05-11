@@ -59,9 +59,14 @@ require_once 'views/layouts/header.php';
               <div class="main-slider__content">
                 <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
                 <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Regístrate gratis</a>
-                </div>
+                <?php
+                $session = $_SESSION['usuario'] ?? '';
+                if ($session === '') {
+                    echo '<div class="main-slider__btn-box">
+                            <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Regístrate gratis</a>
+                          </div>';
+                }
+                ?>
               </div>
             </div>
           </div>

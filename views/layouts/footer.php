@@ -19,7 +19,7 @@
         <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
           <div class="footer-widget__column footer-widget__link">
             <div class="footer-widget__title-box">
-              <h3 class="footer-widget__title">Nosotros</h3>
+              <h3 class="footer-widget__title"></h3>
             </div>
             <ul class="footer-widget__link-list list-unstyled">
               <!--  -->
@@ -142,19 +142,16 @@
     <ul class="mobile-nav__contact list-unstyled">
       <li>
         <i class="fa fa-envelope"></i>
-        <a href="mailto:needhelp@packageName__.com">needhelp@zefxa.com</a>
+        <a href="mailto:needhelp@packageName__.com">turifadigitalx2@gmail.com</a>
       </li>
       <li>
         <i class="fa fa-phone-alt"></i>
-        <a href="tel:666-888-0000">666 888 0000</a>
+        <a href="tel:+1 4074287580">+1 4074287580</a>
       </li>
     </ul><!-- /.mobile-nav__contact -->
     <div class="mobile-nav__top">
       <div class="mobile-nav__social">
-        <a href="#" class="fab fa-twitter"></a>
-        <a href="#" class="fab fa-facebook-square"></a>
-        <a href="#" class="fab fa-pinterest-p"></a>
-        <a href="#" class="fab fa-instagram"></a>
+        <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" class="fab fa-instagram"></a>
       </div><!-- /.mobile-nav__social -->
     </div><!-- /.mobile-nav__top -->
 
