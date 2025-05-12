@@ -1,4 +1,4 @@
-<?php require_once 'views/auth/header.php'; ?>
+<?php require_once 'views/layouts/header.php'; ?>
 
 <section class="login-section">
   <div class="container">
@@ -235,4 +235,4 @@
   }
 </script>
 
-<?php require_once 'views/auth/footer.php'; ?>
+<?php require_once 'views/layouts/footer.php'; ?>
