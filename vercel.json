@@ -1,0 +1,12 @@
+{
+  "builds": [
+    {
+      "src": ".",
+      "use": "@vercel/php",
+      "installCommand": "composer install --no-dev --optimize-autoloader"
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/api/$1" }
+  ]
+}
