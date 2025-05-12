@@ -142,8 +142,11 @@
                 <label for="password_signup" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-lock-fill icon-signup password"></i> Contraseña *
                 </label>
-                <div class="contact-two__input-box">
-                  <input type="text" name="password" id="password_signup" placeholder="Cree una contraseña" style="-webkit-text-security: disc;" class="input-hover-signup">
+                <div class="contact-two__input-box" style="position: relative;">
+                  <input type="password" name="password" id="password_signup" placeholder="Cree una contraseña" class="input-hover-signup">
+                  <span class="password-toggle" onclick="togglePasswordVisibilitySignup()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                    <i class="bi bi-eye-fill" id="icon-eye-signup"></i>
+                  </span>
                   <span id="password_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
@@ -461,6 +464,21 @@
     }
     verificarEstadoValidacionGeneral();
   });
+
+  // Función para alternar visibilidad de la contraseña en el signup
+  function togglePasswordVisibilitySignup() {
+    const passwordInput = document.getElementById('password_signup');
+    const icon = document.getElementById('icon-eye-signup');
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      icon.classList.remove('bi-eye-fill');
+      icon.classList.add('bi-eye-slash-fill');
+    } else {
+      passwordInput.type = 'password';
+      icon.classList.remove('bi-eye-slash-fill');
+      icon.classList.add('bi-eye-fill');
+    }
+  }
 </script>
 
 <?php if (!empty($_SESSION['mensaje'])) {
