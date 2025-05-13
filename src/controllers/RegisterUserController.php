@@ -72,7 +72,7 @@ class RegisterUserController
           'success' => true,
           'message' => 'Registro exitoso',
           'type' => 'success',
-          'redirect' => '/TuRifadigi/login'
+          'redirect' => '/login'
         ]);
         return;
       } else {

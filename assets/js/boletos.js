@@ -296,7 +296,7 @@ class BoletosManager {
    */
   async verificarDisponibilidad(numero) {
     try {
-      const response = await fetch("/TuRifadigi/boletos/verificar", {
+      const response = await fetch("/boletos/verificar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -319,7 +319,7 @@ class BoletosManager {
    */
   async cargarEstadoBoletos() {
     try {
-      const response = await fetch("/TuRifadigi/boletos/estado");
+      const response = await fetch("/boletos/estado");
       if (!response.ok) throw new Error("Error al obtener estado de boletos");
 
       const data = await response.json();
@@ -483,7 +483,7 @@ class BoletosManager {
     const total = boletos.length * this.state.pricePerBoleto;
 
     try {
-      const response = await fetch("/TuRifadigi/boletos/procesar", {
+      const response = await fetch("/boletos/procesar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

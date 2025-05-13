@@ -63,7 +63,7 @@ if ($request_method === 'POST' && $route === '/reset_password') {
 
 if ($request_method === 'GET' && $route === '/reset-password') {
     if (!isset($_GET['token'])) {
-        header('Location: /turifadigi/login');
+        header('Location: /login');
         exit;
     }
     require_once 'views/auth/reset-password.php';
@@ -89,7 +89,7 @@ switch (strtok($route, '?')) {
         if (!isset($_SESSION['usuario'])) {
             require_once 'views/auth/login.php';
         } else {
-            header("Location: /turifadigi/sorteo");
+            header("Location: /sorteo");
             exit;
         }
         break;
@@ -98,7 +98,7 @@ switch (strtok($route, '?')) {
         if (isset($_SESSION['usuario'])) {
             (new HomeController())->index();
         } else {
-            header("Location: /turifadigi/login");
+            header("Location: /login");
             exit;
         }
         break;
@@ -125,7 +125,7 @@ switch (strtok($route, '?')) {
 
     case '/compras':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /turifadigi/login");
+            header("Location: /login");
             exit;
         }
         require_once 'views/compras/index.php';
@@ -134,21 +134,21 @@ switch (strtok($route, '?')) {
     //SECCION DE ADMINISTRADOR
     case '/compra_verificacion':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /turifadigi/login");
+            header("Location: /login");
             exit;
         }
         require_once 'views/admin/compra.index.php';
         break;
     case '/sorteo_verificacion':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /turifadigi/login");
+            header("Location: /login");
             exit;
         }
         require_once 'views/admin/sorteos.index.php';
         break;
     case '/editar_sorteo':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /turifadigi/login");
+            header("Location: /login");
             exit;
         }
         require_once 'views/admin/editar_sorteo.php';
@@ -156,7 +156,7 @@ switch (strtok($route, '?')) {
         
     case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /turifadigi/login");
+            header("Location: /login");
             exit;
         }
         (new ConfigMainController())->index();
