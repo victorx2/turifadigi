@@ -22,7 +22,7 @@
             </div>
           <?php endif; ?>
 
-          <form id="form-config" action="/TuRifadigi/rifa_config" method="POST">
+          <form id="form-config" action="/rifa_config" method="POST">
             <div class="mb-3">
               <label for="titulo" class="form-label">Título del Sorteo</label>
               <input type="text" class="form-control" id="titulo" name="titulo"
@@ -147,7 +147,7 @@
     let formData = new FormData(this);
 
     // Envía los datos al servidor usando fetch
-    fetch('/TuRifadigi/rifa_config', {
+    fetch('/rifa_config', {
         method: 'POST',
         body: new URLSearchParams(formData)
       })

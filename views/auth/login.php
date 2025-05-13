@@ -48,10 +48,10 @@
 
           <div class="text-center mt-4">
             <p class="register-link">
-              ¿No tienes cuenta? <a href="/TuRifadigi/signup">Regístrate aquí</a>
+              ¿No tienes cuenta? <a href="/signup">Regístrate aquí</a>
             </p>
             <p class="forgot-password-link mt-2">
-              <a href="/TuRifadigi/forgot-password">¿Olvidaste tu contraseña?</a>
+              <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
             </p>
           </div>
 
@@ -206,7 +206,7 @@
           if (data.success) {
             showToast('success', 'Éxito', data.message);
             setTimeout(() => {
-              window.location.href = '/TuRifadigi/sorteo';
+              window.location.href = '/sorteo';
             }, 2000);
           } else {
             showToast('error', 'Error', data.message);

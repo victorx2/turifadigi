@@ -178,7 +178,7 @@
 
           <div class="result"></div>
 
-          <p class="contact-two__left-text" style="margin-top: 20px;">¿Ya tienes una cuenta? &nbsp;&nbsp;&nbsp;<a href="/TuRifadigi/login">Inicia sesión</a></p>
+          <p class="contact-two__left-text" style="margin-top: 20px;">¿Ya tienes una cuenta? &nbsp;&nbsp;&nbsp;<a href="/login">Inicia sesión</a></p>
 
         </div>
       </div>
@@ -212,7 +212,7 @@
 
       const formData = new URLSearchParams(new FormData(this));
       console.log('Datos a enviar:', formData.toString());
-      const response = await fetch('/TuRifadigi/registro_usuario', {
+      const response = await fetch('/registro_usuario', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -232,10 +232,10 @@
 
       showToast('success', 'Éxito', data.message);
       Array.from(form.getElementsByTagName('input')).forEach(input => input.disabled = true);
-      console.log('Redirigiendo a /TuRifadigi/login en 2 segundos...');
+      console.log('Redirigiendo a /login en 2 segundos...');
       setTimeout(() => {
-        console.log('Redirigiendo ahora a /TuRifadigi/login');
-        window.location.href = '/TuRifadigi/login';
+        console.log('Redirigiendo ahora a /login');
+        window.location.href = '/login';
       }, 2000);
 
     } catch (error) {

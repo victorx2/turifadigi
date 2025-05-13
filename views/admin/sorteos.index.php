@@ -39,7 +39,7 @@
                 <h2 class="main-slider__title">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
                 <p class="main-slider__text">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
                 <div class="main-slider__btn-box">
-                  <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Comenzar ahora</a>
+                  <a href="/login" class="main-slider__btn thm-btn">Comenzar ahora</a>
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@
                 <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
                 <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
                 <div class="main-slider__btn-box">
-                  <!-- <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Regístrate gratis</a> -->
+                  <!-- <a href="/login" class="main-slider__btn thm-btn">Regístrate gratis</a> -->
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@
                 <h2 class="main-slider__title">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
                 <p class="main-slider__text">Múltiples métodos de pago <br> y transacciones seguras.</p>
                 <div class="main-slider__btn-box">
-                  <a href="/TuRifadigi/login" class="main-slider__btn thm-btn">Conoce más</a>
+                  <a href="/login" class="main-slider__btn thm-btn">Conoce más</a>
                 </div>
               </div>
             </div>
@@ -290,7 +290,7 @@
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-                    window.location.href = '/TuRifadigi/sorteo_verificacion';
+                    window.location.href = '/sorteo_verificacion';
                   }
                 }).then((result) => {
                   /* Read more about handling dismissals below */
@@ -315,7 +315,7 @@
           },
         });
 
-        // window.location.href = "/TuRifadigi/confirmarBoleto/" + id;
+        // window.location.href = "/confirmarBoleto/" + id;
       } else if (result.isDenied) {
         Swal.fire({
           title: "¡Procesando!",
@@ -349,7 +349,7 @@
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-                    window.location.href = '/TuRifadigi/sorteo_verificacion';
+                    window.location.href = '/sorteo_verificacion';
                   }
                 }).then((result) => {
                   /* Read more about handling dismissals below */

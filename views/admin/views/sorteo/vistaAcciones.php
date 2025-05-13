@@ -90,7 +90,7 @@ $estado = $data["estado"] ?? '';
     <input type="text" class="form-control-custom" disabled value="<?php echo htmlspecialchars($estado); ?>">
   </div>
 </div>
-<link rel="stylesheet" href="/TuRifadigi/assets/css/datos_personales.css">
+<link rel="stylesheet" href="/assets/css/datos_personales.css">
 <?php if (!empty($_SESSION['mensaje'])) {
   echo $_SESSION['mensaje'];
   unset($_SESSION['mensaje']);

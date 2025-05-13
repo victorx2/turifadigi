@@ -570,7 +570,7 @@
       console.log('Boletos seleccionados para verificar:', boletosArray);
 
       try {
-        const response = await fetch('/TuRifadigi/verificarDisponibilidad', {
+        const response = await fetch('/verificarDisponibilidad', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -683,7 +683,7 @@
               },
               willClose: () => {
                 clearInterval(timerInterval);
-                window.location.href = '/TuRifadigi/login';
+                window.location.href = '/login';
               }
             }).then((result) => {
               /* Read more about handling dismissals below */
@@ -693,7 +693,7 @@
             });
             // alert('No haz iniciado sesion, redireccionando...');
             // setTimeout(() => {
-            //   window.location.href = '/TuRifadigi/login';
+            //   window.location.href = '/login';
             // }, 1000);
           }
         })
@@ -716,7 +716,7 @@
         .then(data => {
 
           if (!data.session) {
-            window.location.href = '/TuRifadigi/login';
+            window.location.href = '/login';
             return;
           }
 
@@ -980,6 +980,6 @@
 <link rel="stylesheet" href="assets/css/dropdown-search-method.css">
 
 <head>
-  <link rel="stylesheet" href="/TuRifadigi/assets/css/payment.css">
-  <script src="/TuRifadigi/assets/js/payment.js"></script>
+  <link rel="stylesheet" href="/assets/css/payment.css">
+  <script src="/assets/js/payment.js"></script>
 </head>
