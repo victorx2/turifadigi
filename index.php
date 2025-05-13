@@ -116,7 +116,7 @@ switch (strtok($route, '?')) {
         break;
 
     case '/sorteo':
-        (new BoletoController())->index();
+            require_once 'views/rifa/sorteo.php';
         break;
 
     case '/rifa_config':
@@ -153,13 +153,13 @@ switch (strtok($route, '?')) {
         }
         require_once 'views/admin/editar_sorteo.php';
         break;
-        
+
     case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /login");
             exit;
         }
-        (new ConfigMainController())->index();
+        require_once 'views/admin/crear_sorteo.php';
         break;
 
     //SECCION PANTALLAS DE SWEET ALERT
