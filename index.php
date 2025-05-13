@@ -14,7 +14,7 @@ date_default_timezone_set('America/Caracas');
 setlocale(LC_TIME, 'Spanish');
 
 // Carga las variables de entorno desde el archivo .env
-$dotenv = Dotenv::createImmutable(__DIR__)->load();
+// $dotenv = Dotenv::createImmutable(__DIR__)->load();
 
 // Configuración de cookies para mayor seguridad
 $cookie_duration = 30 * 24 * 60 * 60; // Duración de 30 días
@@ -37,8 +37,6 @@ $base_path2 = "/TuRifadigi";
 
 $preroute = str_replace($base_path2, '', $request_uri);
 $route = str_replace($base_path1, '', $preroute);
-
-//print_r($_SESSION);
 
 if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();

@@ -201,7 +201,7 @@ Este premio se activa con el 50% de los boletos vendidos</textarea>
 
       const formData = new FormData(form);
 
-      fetch('/TuRifadigi/crear_sorteo', {
+      fetch('/crear_sorteo', {
           method: 'POST',
           body: formData
         })

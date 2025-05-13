@@ -154,17 +154,17 @@
                     $class = $session == '' ? 'element' : 'dropdown';
                     ?>
                     <li class="<?php $class ?>">
-                      <a href="/turifadigi/">Inicio
+                      <a href="/">Inicio
                         <span class="main-menu-border"></span>
                       </a>
                       <?php
                       if ($session !== '' && $sessionRol == 2) {
                         echo '
                         <ul class="dropdown-menu">
-                          <li><a href="/TuRifadigi/compra_verificacion">Verificar compras</a></li>
-                          <li><a href="/TuRifadigi/sorteo_verificacion">Verificar sorteos</a></li>
-                          <li><a href="/TuRifadigi/editar_sorteo">Editar sorteo</a></li>
-                          <li><a href="/TuRifadigi/crear_sorteo">Crear sorteo</a></li>
+                          <li><a href="/compra_verificacion">Verificar compras</a></li>
+                          <li><a href="/sorteo_verificacion">Verificar sorteos</a></li>
+                          <li><a href="/editar_sorteo">Editar sorteo</a></li>
+                          <li><a href="/crear_sorteo">Crear sorteo</a></li>
                         </ul>';
                       } ?>
                     </li>
@@ -178,7 +178,7 @@
                     </li>';
                     } ?>
                     <li class="element">
-                      <a href="/TuRifadigi/sorteo">Sorteo
+                      <a href="/sorteo">Sorteo
                         <span class="main-menu-border"></span>
                       </a>
 
@@ -188,13 +188,13 @@
                     if ($session === '') {
                       echo '
                       <li class="element">
-                        <a href="/TuRifadigi/signup">Crear Cuenta
+                        <a href="/signup">Crear Cuenta
                           <span class="main-menu-border"></span>
                         </a>
                       </li>';
                     }
                     if ($session === '') {
-                      echo '<a href="/TuRifadigi/login" class="main-menu__btn thm-btn inic" id="inicMob">Iniciar Sesión</a>';
+                      echo '<a href="/login" class="main-menu__btn thm-btn inic" id="inicMob">Iniciar Sesión</a>';
                     } else {
                       echo '<a href="" class="main-menu__btn thm-btn inic" onclick=session_destroy() id="inicMob">Cerrar Sesión</a>';
                     } ?>
@@ -209,7 +209,7 @@
               <div class="main-menu__cart-search-box">
               </div>
               <div class="main-menu__btn-box">
-              <a href="/TuRifadigi/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
+              <a href="/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
               </div>
               </div>';
               } else {

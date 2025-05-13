@@ -1,4 +1,4 @@
-<?php require_once 'views/auth/header.php'; ?>
+<?php require_once 'views/layouts/header.php'; ?>
 <section class="contact-two">
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
@@ -108,7 +108,7 @@
 
     let formData = new FormData(this);
 
-    fetch('/TuRifadigi/reset_password', {
+    fetch('/reset_password', {
         method: 'POST',
         body: new URLSearchParams(formData)
       })
@@ -117,7 +117,7 @@
         if (data.success) {
           showToast('success', 'Éxito', data.message);
           setTimeout(() => {
-            window.location.href = '/TuRifadigi/login';
+            window.location.href = '/login';
           }, 3000);
         } else {
           showToast('error', 'Error', data.message);
@@ -172,4 +172,4 @@
   unset($_SESSION['mensaje']);
 } ?>
 
-<?php require_once 'views/auth/footer.php'; ?>
+<?php require_once 'views/layouts/footer.php'; ?>

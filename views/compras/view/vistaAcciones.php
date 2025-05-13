@@ -129,7 +129,7 @@ $montoa_pagar = $data["total"] ?? '';
 <link rel="stylesheet" href="assets/css/dropdown-search-method.css">
 
 <head>
-  <link rel="stylesheet" href="/TuRifadigi/assets/css/payment.css">
-  <link rel="stylesheet" href="/TuRifadigi/assets/css/datos_personales.css">
+  <link rel="stylesheet" href="/assets/css/payment.css">
+  <link rel="stylesheet" href="/assets/css/datos_personales.css">
 
 </head>

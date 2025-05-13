@@ -1,4 +1,4 @@
-<?php require_once 'views/auth/header.php'; ?>
+<?php require_once 'views/layouts/header.php'; ?>
 <section class="contact-two">
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
@@ -39,7 +39,7 @@
 
           <div class="result"></div>
 
-          <p class="contact-two__left-text" style="margin-top: 20px;">¿Recordaste tu contraseña? &nbsp;&nbsp;&nbsp;<a href="/TuRifadigi/login">Inicia sesión</a></p>
+          <p class="contact-two__left-text" style="margin-top: 20px;">¿Recordaste tu contraseña? &nbsp;&nbsp;&nbsp;<a href="/login">Inicia sesión</a></p>
 
           <!-- Toast ubicado debajo del formulario -->
           <div class="toast-container mt-3 mx-auto" style="width: 100%; max-width: 600px;">
@@ -99,7 +99,7 @@
     let formData = new FormData(this);
 
     // Envía los datos al servidor usando fetch
-    fetch('/TuRifadigi/recovery_password', {
+    fetch('/recovery_password', {
         method: 'POST',
         body: new URLSearchParams(formData)
       })
@@ -108,7 +108,7 @@
         if (data.success) {
           showToast(data.type, 'Éxito', data.message);
           // setTimeout(() => {
-          //   window.location.href = '/TuRifadigi/login'; // Redirige después de 3 segundos
+          //   window.location.href = '/login'; // Redirige después de 3 segundos
           // }, 6000);
         } else {
           showToast(data.type, 'Error', data.message);
@@ -259,4 +259,4 @@
   unset($_SESSION['mensaje']);
 } ?>
 
-<?php require_once 'views/auth/footer.php'; ?>
+<?php require_once 'views/layouts/footer.php'; ?>
