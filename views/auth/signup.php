@@ -1,4 +1,4 @@
-<?php require_once 'views/auth/header.php'; ?>
+<?php require_once 'views/layouts/header.php'; ?>
 <!-- Agregar CSS de Toastify -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <!-- Agregar CSS personalizado -->
@@ -486,4 +486,4 @@
   unset($_SESSION['mensaje']);
 } ?>
 
-<?php require_once 'views/auth/footer.php'; ?>
+<?php require_once 'views/layouts/footer.php'; ?>

@@ -11,10 +11,8 @@
         "psr-4": {
             "App\\": [
                 "src/",
-                "config/",
-                "backend/",
-                "backend/src/",
-                "frontend/src/"
+                "views/",
+                "assets"
             ]
         }
     }
