@@ -38,8 +38,6 @@ $base_path2 = "/TuRifadigi";
 $preroute = str_replace($base_path2, '', $request_uri);
 $route = str_replace($base_path1, '', $preroute);
 
-//print_r($_SESSION);
-
 if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
