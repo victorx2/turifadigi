@@ -21,7 +21,7 @@
       console.log("Boletos seleccionados para verificar:", boletosArray);
 
       try {
-        const response = await fetch("/TuRifadigi/verificarDisponibilidad", {
+        const response = await fetch("/verificarDisponibilidad", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +75,7 @@
 
     procesarCompra: async function (datosCompra) {
       try {
-        const responseCompra = await fetch("/TuRifadigi/procesarCompra", {
+        const responseCompra = await fetch("/procesarCompra", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -86,18 +86,15 @@
         const dataCompra = await responseCompra.json();
 
         if (dataCompra.success) {
-          const responseVerificacion = await fetch(
-            "/TuRifadigi/verificarDisponibilidad",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                boletos: Array.from(app.config.boletosSeleccionados),
-              }),
-            }
-          );
+          const responseVerificacion = await fetch("/verificarDisponibilidad", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              boletos: Array.from(app.config.boletosSeleccionados),
+            }),
+          });
 
           const dataVerificacion = await responseVerificacion.json();
           const boletosNoDisponibles = dataVerificacion.disponibles
