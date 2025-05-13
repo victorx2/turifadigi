@@ -65,7 +65,7 @@ class RaffleConfigController
       $_SESSION['error'] = 'Error al actualizar la configuración';
     }
 
-    header('Location: /TuRifadigi/rifa_config');
+    header('Location: /rifa_config');
     exit();
   }
 }

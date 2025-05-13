@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Boletos seleccionados para verificar:", boletosArray);
 
     try {
-      const response = await fetch("/TuRifadigi/verificarDisponibilidad", {
+      const response = await fetch("/verificarDisponibilidad", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -364,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function () {
         metodo_pago: metodoPago,
       };
 
-      const responseCompra = await fetch("/TuRifadigi/procesarCompra", {
+      const responseCompra = await fetch("/procesarCompra", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -376,18 +376,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (dataCompra.success) {
         // Después de procesar la compra, verificamos la disponibilidad
-        const responseVerificacion = await fetch(
-          "/TuRifadigi/verificarDisponibilidad",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              boletos: Array.from(boletosSeleccionados),
-            }),
-          }
-        );
+        const responseVerificacion = await fetch("/verificarDisponibilidad", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            boletos: Array.from(boletosSeleccionados),
+          }),
+        });
 
         const dataVerificacion = await responseVerificacion.json();
         const boletosNoDisponibles = dataVerificacion.disponibles
