@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Config\Conexion;
+use App\config\Conexion;
 
 class ConfigMain
 {

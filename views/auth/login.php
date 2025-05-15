@@ -197,7 +197,7 @@
       boton.disabled = true;
 
       const formData = new FormData(this);
-      fetch('./api/login', {
+      fetch('/api/login', {
           method: 'POST',
           body: new URLSearchParams(formData)
         })
