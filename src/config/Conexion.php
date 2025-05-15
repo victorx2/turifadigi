@@ -18,10 +18,10 @@ class Conexion
   public function __construct()
   {
 
-    $this->dbname = $_ENV['DB_DATABASE'];
-    $this->servidor = $_ENV['DB_HOST'];
-    $this->usuario = $_ENV['DB_USERNAME'];
-    $this->password = $_ENV['DB_PASSWORD'];
+    $this->dbname = 'turifadigi';
+    $this->servidor = 'localhost';
+    $this->usuario = 'turif';
+    $this->password = 'Viki321.';
     try {
       $this->conexion = new PDO("mysql:host=$this->servidor;dbname=$this->dbname;charset=utf8mb4", $this->usuario, $this->password);
       $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

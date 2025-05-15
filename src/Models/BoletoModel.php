@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Config\Conexion;
+use App\config\Conexion;
 use Exception;
 use PDO;
 use PhpOption\None;

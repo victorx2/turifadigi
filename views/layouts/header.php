@@ -1,3 +1,9 @@
+<?php 
+
+ echo $_SESSION['usuario'];
+ echo $_SESSION['rol_usuario'];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -153,7 +159,7 @@
                     $sessionRol = $_SESSION['rol_usuario'] ?? '';
                     $class = $session == '' ? 'element' : 'dropdown';
                     ?>
-                    <li class="<?php $class ?>">
+                    <li class="<?php echo $class ?>">
                       <a href="/">Inicio
                         <span class="main-menu-border"></span>
                       </a>
@@ -172,7 +178,7 @@
                     if ($session !== '') {
                       echo '
                     <li class="element">
-                      <a href="#">Compras
+                      <a href="/compras">Compras
                         <span class="main-menu-border"></span>
                       </a>
                     </li>';

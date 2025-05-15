@@ -1,4 +1,5 @@
 <?php
+
 // Carga las dependencias necesarias usando Composer
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -184,61 +185,6 @@ switch (strtok($route, '?')) {
     case '/admin/views/sorteo/accion_view':
         require_once 'views/admin/views/sorteo/vistaAcciones.php';
         break;
-
-
-    //SECCIONES API
-    case '/api/login':
-        require_once 'src/API/login.php';
-        break;
-
-    case '/api/recovery_password':
-        require_once 'src/API/passwordRecovery.php';
-        break;
-    case '/api/session_verfication':
-        require_once 'src/API/sessionVerify.php';
-        break;
-
-    case '/api/get_tickets':
-        require_once 'src/API/boletosDisponibility.php';
-        break;
-
-    case '/api/change_purchase_status':
-        require_once 'src/API/admin.cambiarEstadoCompra.php';
-        break;
-
-    case '/api/change_draw_status':
-        require_once 'src/API/admin.cambiarEstadoSorteo.php';
-        break;
-
-    case '/api/process_purchase':
-        require_once 'src/API/procesarCompra.php';
-        break;
-
-    case '/api/session_destroy':
-        require_once 'src/API/destruirSesion.php';
-        break;
-
-    case '/api/get_purchase':
-        $cmp = $_GET["cmp"] ?? '';
-        if ($cmp != '') {
-            require_once 'src/API/admin.obtenerCompras.php';
-            break;
-        }
-    case '/api/get_sorteo':
-        $cmp = $_GET["cmp"] ?? '';
-        if ($cmp != '') {
-            require_once 'src/API/admin.obtenerSorteo.php';
-            break;
-        }
-        require_once 'src/API/obtenerCompras.php';
-        break;
-    case '/api/exchange_rate':
-        require_once 'src/API/verificar.tasa.php';
-        break;
-    case '/api/coin_update':
-        require_once 'src/API/actualizar_coin.php';
-        break;
-
     default:
         require_once 'views/main.php';
         break;

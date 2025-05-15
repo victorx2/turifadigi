@@ -9,11 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": [
-                "src/",
-                "views/",
-                "assets"
-            ]
+            "App\\": "src/"
         }
     }
 }
