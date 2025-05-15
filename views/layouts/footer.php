@@ -60,7 +60,7 @@
             <ul class="footer-widget__Gallery-list list-unstyled clearfix">
               <li>
                 <div class="footer-widget__Gallery-img">
-                  <img src="assets/images/project/footer-widget-Gallery-img-1.jpg" loading="lazy" alt="">
+                  <!-- <img src="assets/images/project/footer-widget-Gallery-img-1.jpg" loading="lazy" alt=""> -->
                   <a href="#"><span class="fab fa-instagram"></span></a>
                 </div>
               </li>
