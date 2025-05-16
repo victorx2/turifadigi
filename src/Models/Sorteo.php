@@ -190,14 +190,26 @@ class SorteoModel
         c.precio_boleto,
         GROUP_CONCAT(p.nombre SEPARATOR ' - ') AS nombres_premios,
         GROUP_CONCAT(p.descripcion SEPARATOR ' || ') AS descripciones_premios
-        FROM
-        rifas r
-        INNER JOIN
-        configuracion c ON r.id_configuracion = c.id_configuracion
-        INNER JOIN
-        premios p ON r.id_rifa = p.id_rifa
-        WHERE
-        c.estado = 1";
+	FROM rifas r
+	INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+	INNER JOIN premios p ON r.id_rifa = p.id_rifa
+	WHERE
+        c.estado = 1
+	GROUP BY
+	r.id_rifa,
+        r.titulo,
+        r.descripcion,
+        r.imagen,
+        r.fecha_creacion,
+        c.estado,
+        c.url_rifa,
+        c.texto_ejemplo,
+        c.numero_contacto,
+        c.id_configuracion,
+        c.boletos_maximos,
+        c.boletos_minimos,
+        c.precio_boleto
+	";
 
       $result = $this->db->consultar($sql, []);
 
