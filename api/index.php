@@ -69,6 +69,7 @@ switch (strtok($route, '?')) {
             require_once '../src/API/admin.obtenerCompras.php';
             break;
         }
+        require_once '../src/API/obtenerCompras.php';
 	break;
     case '/api/get_sorteo':
         $cmp = $_GET["cmp"] ?? '';

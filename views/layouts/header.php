@@ -1,9 +1,3 @@
-<?php 
-
- echo $_SESSION['usuario'];
- echo $_SESSION['rol_usuario'];
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -155,8 +149,8 @@
                   <ul class="main-menu__list">
                     <li class="dropdown" style="display: none;"></li>
                     <?php
-                    $session = $_SESSION['usuario'] ?? '';
-                    $sessionRol = $_SESSION['rol_usuario'] ?? '';
+                    @$session = $_SESSION['usuario'] ?? '';
+                    @$sessionRol = $_SESSION['rol_usuario'] ?? '';
                     $class = $session == '' ? 'element' : 'dropdown';
                     ?>
                     <li class="<?php echo $class ?>">

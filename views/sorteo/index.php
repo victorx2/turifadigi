@@ -201,7 +201,7 @@
             <span id="mapr"></span>
           </div>
         </div>
-        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 106.31 BS</p>
+        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
           <!-- carga dinamicamente -->
         </div>
@@ -211,7 +211,6 @@
     <button type="submit" class="btn-confirmar">CONFIRMAR</button>
   </div>
 </div>
-
 
 <link rel="stylesheet" href="assets/css/buscar_boletos.css">
 <link rel="stylesheet" href="assets/css/datos_personales.css">
@@ -246,22 +245,18 @@
     // Eliminar el enlace del DOM (opcional, pero buena práctica)
     document.body.removeChild(enlace);
   }
-</script>
-<script>
+
   document.addEventListener('DOMContentLoaded', function() {
 
     // Configuración global para Semantic UI Transitions
     $.fn.transition.settings.silent = true;
 
     const boletosSeleccionados = new Set();
-    const minBoletos = 2;
+    const minBoletos = <?php echo $sorteo['data']['configuracion']['boletos_minimos']; ?>;
     let cantidadSeleccion = 2;
-    const tasaUSD = 106.31;
-    let precioUnitarioUSD = 3;
+    let precioUnitarioUSD = <?php echo $sorteo['data']['configuracion']['precio_boleto']; ?>;
     const todosLosBoletos = [];
     let cargandoBoletos = false;
-    const boletosPorPagina = 500;
-    const totalBoletos = 10000;
 
     // Referencias a elementos del DOM
     const boletosContainer = document.querySelector('.boletos-container');
@@ -406,16 +401,9 @@
     // Función para actualizar el total en USD
     function actualizarTotal() {
       const totalUSD = cantidadSeleccion * precioUnitarioUSD;
-      const totalBS = totalUSD * tasaUSD;
 
       // Actualizar el total en USD en el contador
       totalUSDSpan.textContent = `${totalUSD} USD`;
-
-      // Actualizar el total en BS en el formulario de datos personales
-      const totalBSDisplay = document.getElementById('totalBSDisplay');
-      if (totalBSDisplay) {
-        totalBSDisplay.textContent = `${totalBS.toFixed(2)} BS`;
-      }
     }
 
     // Función para actualizar los chips de boletos seleccionados
@@ -642,7 +630,7 @@
             const valorConvertido = dc;
 
             inputMapr.textContent = `${valorConvertido} $`;
-            tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaBS} BS`;
+            tasaEx.textContent = `Tasa de cambio: 1 USD = 1 USD`;
             contenedorOpciones.innerHTML = "";
             contenedorOpciones.appendChild(opcionesMonedaHTML);
           }
@@ -684,11 +672,6 @@
               willClose: () => {
                 clearInterval(timerInterval);
                 window.location.href = '/login';
-              }
-            }).then((result) => {
-              /* Read more about handling dismissals below */
-              if (result.dismiss === Swal.DismissReason.timer) {
-                console.log("I was closed by the timer");
               }
             });
             // alert('No haz iniciado sesion, redireccionando...');
@@ -768,8 +751,6 @@
             return;
           }
 
-          // const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
-          // const totalBS = totalUSD * tasaUSD;
           const boletosCargar = Array.from(boletosSeleccionados)
 
           try {
@@ -798,6 +779,7 @@
                   }, boletosCargar);
 
                   alert('¡Compra procesada correctamente!');
+                  window.location.href = '/sorteo';
                 }
               })
               .catch(error => {

@@ -201,27 +201,53 @@ Este premio se activa con el 50% de los boletos vendidos</textarea>
 
       const formData = new FormData(form);
 
-      fetch('/crear_sorteo', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            showToast('success', 'Éxito', data.message || 'Sorteo creado exitosamente');
-          } else {
-            showToast('error', 'Error', data.error || 'Error al crear el sorteo');
-          }
-        })
-        .catch(error => {
-          showToast('error', 'Error', 'Ocurrió un error al procesar la solicitud');
-          console.error(error);
-        })
-        .finally(() => {
-          // Habilitar el botón nuevamente
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Crear Sorteo';
-        });
+      Swal.fire({
+        title: "¡Procesando!",
+        html: "Por favor, espera mientras se completa la operación...",
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+
+          fetch('/crear_sorteo', {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                let timerInterval;
+                Swal.fire({
+                  title: "¡Sorteo creado exitosamente!",
+                  html: "redireccionando en <b></b> milliseconds.",
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                    window.location.href = '/sorteo_verificacion';
+                  }
+                });
+              } else {
+                showToast('error', 'Error', data.error || 'Error al crear el sorteo');
+              }
+            })
+            .catch(error => {
+              showToast('error', 'Error', 'Ocurrió un error al procesar la solicitud');
+              console.error(error);
+            })
+            .finally(() => {
+              // Habilitar el botón nuevamente
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Crear Sorteo';
+            });
+        },
+      });
     };
 
     // Función para mostrar notificaciones
