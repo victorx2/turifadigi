@@ -67,6 +67,31 @@
     box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.08);
     outline: none;
   }
+
+  input#password_signup {
+    height: 60px;
+    width: 100%;
+    background-color: var(--zefxa-white);
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 14px;
+    color: var(--zefxa-gray);
+    display: block;
+    font-weight: 500;
+    line-height: 60px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+    border-radius: 0px;
+ }
+ .password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 28%;
+    cursor: pointer;
+ }
 </style>
 <!-- Agregar JS de Toastify -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -91,7 +116,7 @@
             </div>
             <h2 class="section-title__title">Registrar Cuenta</h2>
           </div>
-          <form id="form-registro" class="contact-two__form" action="registro_usuario" method="post">
+          <form id="form-registro" class="contact-two__form" action="registro_usuario" method="post" autocomplete=off>
             <div class="row">
               <div class="col-xl-6 col-lg-6">
                 <label for="nombre_signup" class="form-label" style="font-weight: bold;">
@@ -143,8 +168,8 @@
                   <i class="bi bi-lock-fill icon-signup password"></i> Contraseña *
                 </label>
                 <div class="contact-two__input-box" style="position: relative;">
-                  <input type="password" name="password" id="password_signup" placeholder="Cree una contraseña" class="input-hover-signup">
-                  <span class="password-toggle" onclick="togglePasswordVisibilitySignup()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                  <input type="password" name="password" id="password_signup" placeholder="Cree una contraseña" class="input-hover-signup" autocomplete="off">
+                  <span class="password-toggle" id="password-togle" onclick="togglePasswordVisibilitySignup()">
                     <i class="bi bi-eye-fill" id="icon-eye-signup"></i>
                   </span>
                   <span id="password_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
@@ -399,7 +424,7 @@
 
   const inputPassword = document.getElementById('password_signup');
   const spanMsgPassword = document.getElementById('password_signup_msg');
-
+  const eyefcor = document.getElementById('password-togle');
   inputPassword.addEventListener('keyup', function() {
     const valor = this.value;
     const tieneMayuscula = /[A-Z]/.test(valor);
@@ -409,6 +434,12 @@
     const longitudValida = valor.length >= 8;
     const esValido = longitudValida && tieneMayuscula && tieneMinuscula && tieneNumero && tieneSimbolo;
     estadoValidacionCampos.password = esValido;
+
+    if (valor.length > 0) {
+      eyefcor.classList.add('password-toggle-correction');
+    } else {
+      eyefcor.classList.remove('password-toggle-correction');
+    }
 
     if (valor.length === 0) {
       spanMsgPassword.textContent = '';
@@ -485,5 +516,15 @@
   echo $_SESSION['mensaje'];
   unset($_SESSION['mensaje']);
 } ?>
+
+<style>
+ .password-toggle-correction{
+    position: absolute;
+    right: 10px;
+    top: 14%;
+    cursor: pointer;
+ }
+</style>
+
 
 <?php require_once 'views/layouts/footer.php'; ?>

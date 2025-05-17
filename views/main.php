@@ -193,16 +193,6 @@ require_once 'views/layouts/slider.php';
           </div>
         </div>
       </div>
-
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="600ms">
-        <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
-          <div class="services-one__img-box">
-            <div class="services-one__img">
-              <img src="assets/img/webp/bancolombia.webp" alt="Bancolombia">
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
 
@@ -332,6 +322,13 @@ require_once 'views/layouts/slider.php';
       max-height: 100px;
       max-width: 100%;
       object-fit: contain;
+    }
+    .payment-methods.row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      align-content: center;
     }
   </style>
 </section>

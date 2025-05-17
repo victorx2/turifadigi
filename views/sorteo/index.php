@@ -182,10 +182,10 @@
         <div class="payment-method" onclick="mostrarDatosDePago('banco_venezuela')">
           <img src="assets/img/webp/banco_venezuela.webp" alt="banco_de_Venezuela">
         </div>
-        <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
+        <!--<div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
           <img src="assets/img/webp/bancolombia.webp" alt="bancolombia">
-        </div>
-      </div>
+        </div>-->
+      </div> 
 
       <div class="payment-info">
         <p id="paymentTitle"></p>
@@ -203,7 +203,7 @@
         </div>
         <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
-          <!-- carga dinamicamente -->
+           <-- carga dinamicamente -->
         </div>
       </div>
     </div>
@@ -909,9 +909,7 @@
         paymentDetails.innerHTML = `
             <p class="subtitle">Datos de la cuenta</p>
             <p>Nombre: Yorsin Cruz Osorio</p>
-            <p>Correo Electrónico: Yorsincruz1995@gmail.com</p>
             <p>Usuario: @Yorsin0506</p>
-            <p>Número teléfono: +1 4074287580</p>
           `;
         break;
 
@@ -919,9 +917,9 @@
         paymentTitle.textContent = 'BANCO DE VENEZUELA';
         paymentDetails.innerHTML = `
             <p class="subtitle">Datos de la cuenta</p>
-            <p>Nombre: Yorsin Cruz Osorio</p>
+            <p>Nombre: Mailiny Cruz</p>
             <p>Cédula de identidad: 28517267</p>
-            <p>numero de cuenta: 01021234567891234567</p>
+            <p>Numero de cuenta: 01021234567891234567</p>
           `;
         break
 
@@ -929,8 +927,8 @@
         paymentTitle.textContent = 'DAVIVIENDA COLOMBIA';
         paymentDetails.innerHTML = `
             <p class="subtitle">Datos de la cuenta</p>
-            <p>Cédula de identidad: 123456789</p>
-            <p>numero de cuenta: 4884 5018 1679</p>
+            <p>Tipo de cuenta: Ahorros</p>
+            <p>Numero de cuenta: 4884 5018 1679</p>
 
           `;
         break;
@@ -943,14 +941,6 @@
               <p>Cédula de identidad: 28517267</p>
               <p>Banco: 0102 - Banco de Venezuela</p>  
             `;
-        break;
-      case 'bancolombia':
-        paymentTitle.textContent = 'BANCOLOMBIA';
-        paymentDetails.innerHTML = `
-              <p class="subtitle">Datos de la cuenta</p>
-              <p>Cédula de identidad: 28517267</p>
-              <p>numero de cuenta: 123456789</p>
-              `;
         break;
       default:
         paymentTitle.textContent = 'Seleccione un método de pago';

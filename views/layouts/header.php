@@ -163,7 +163,7 @@
                         <ul class="dropdown-menu">
                           <li><a href="/compra_verificacion">Verificar compras</a></li>
                           <li><a href="/sorteo_verificacion">Verificar sorteos</a></li>
-                          <li><a href="/editar_sorteo">Editar sorteo</a></li>
+                          <!-- <li><a href="/editar_sorteo">Editar sorteo</a></li> -->
                           <li><a href="/crear_sorteo">Crear sorteo</a></li>
                         </ul>';
                       } ?>
