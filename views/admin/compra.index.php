@@ -324,8 +324,7 @@
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-                    window.location.href = '/compra_verificacion';
-                  }
+		    window.location.href('/sorteo_verification');                  }
                 }).then((result) => {
                   /* Read more about handling dismissals below */
                   if (result.dismiss === Swal.DismissReason.timer) {
@@ -348,8 +347,6 @@
 
           },
         });
-
-        // window.location.href = "/confirmarBoleto/" + id;
       } else if (result.isDenied) {
         Swal.fire({
           title: "¡Procesando!",
@@ -357,8 +354,7 @@
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();
-
-            fetch("./api/change_purchase_status?est=enabled&id=" + id, {
+            fetch("./api/change_purchase_status?est=disabled&id=" + id, {
                 method: 'POST', // O el método HTTP que necesites
                 body: JSON.stringify({
                   /* tus datos a enviar */
@@ -385,7 +381,7 @@
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-                    window.location.href = '/compra_verificacion';
+		    window.location.href('/sorteo_verification');
                   }
                 }).then((result) => {
                   /* Read more about handling dismissals below */

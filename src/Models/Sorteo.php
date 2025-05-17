@@ -29,11 +29,13 @@ class SorteoModel
               c.precio_boleto
               FROM rifas r
               INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+		WHERE c.estado = 1
               ORDER BY
                 r.fecha_creacion DESC";
 
       $result = $this->db->consultar($sql, []);
 
+	var_dump($result);
       // Procesar los resultados
       $sorteos = [];
       foreach ($result as $row) {

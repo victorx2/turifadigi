@@ -78,6 +78,11 @@ switch (strtok($route, '?')) {
             break;
         }
         break;
+    case '/api/admin_password_reset':
+
+	    echo "ruta activa";
+
+	break;
     case '/api/exchange_rate':
         require_once '../src/API/verificar.tasa.php';
         break;

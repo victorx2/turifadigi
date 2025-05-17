@@ -151,7 +151,7 @@
                     <?php
                     @$session = $_SESSION['usuario'] ?? '';
                     @$sessionRol = $_SESSION['rol_usuario'] ?? '';
-                    $class = $session == '' ? 'element' : 'dropdown';
+                    $class = $sessionRol != 2 ? 'element' : 'dropdown';
                     ?>
                     <li class="<?php echo $class ?>">
                       <a href="/">Inicio

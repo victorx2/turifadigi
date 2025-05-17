@@ -95,15 +95,6 @@ switch (strtok($route, '?')) {
         }
         break;
 
-    case '/home':
-        if (isset($_SESSION['usuario'])) {
-            (new HomeController())->index();
-        } else {
-            header("Location: /login");
-            exit;
-        }
-        break;
-
     case '/signup':
         if (!isset($_SESSION['usuario'])) {
             require_once 'views/auth/signup.php';
@@ -138,6 +129,11 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
+	if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
         require_once 'views/admin/compra.index.php';
         break;
     case '/sorteo_verificacion':
@@ -145,6 +141,11 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
+	if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
         require_once 'views/admin/sorteos.index.php';
         break;
     case '/editar_sorteo':
@@ -152,6 +153,11 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
+	if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
         require_once 'views/admin/editar_sorteo.php';
         break;
 
@@ -160,8 +166,26 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
+	if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
         require_once 'views/admin/crear_sorteo.php';
         break;
+
+    case '/restablecer_contrasena':
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: /login");
+            exit;
+        }
+	if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
+        require_once 'views/admin/resetear_contra.php';
+	break;
 
     //SECCION PANTALLAS DE SWEET ALERT
     case '/compras/view/accions_view':

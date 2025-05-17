@@ -29,6 +29,17 @@
                 <a href="tel:14074287580">+1 4074287580</a>
               </div>
 	      <style>
+		.main-menu .mobile-nav__toggler {
+    			font-size: 30px;
+    			margin: 10px 0px 10px 10px;
+		}
+		.main-menu__wrapper .container {
+    			height: 50px;
+    			display: flex;
+    			flex-direction: row-reverse;
+    			align-content: center;
+    			align-items: center;
+		}
 		.phone.number {
     			font-size: 24px;
     			font-weight: 600;

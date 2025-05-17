@@ -184,15 +184,6 @@
                   <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
-              <div class="col-xl-6 col-lg-6">
-                <label for="correo_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-envelope-fill icon-signup correo"></i> Correo electrónico *
-                </label>
-                <div class="contact-two__input-box">
-                  <input type="text" name="correo" id="correo_signup" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
-                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
-                </div>
-              </div>
               <div class="col-xl-12 text-center">
                 <div class="contact-two__btn-box">
                   <button type="submit" class="thm-btn contact-two__btn" id="buttonForm" disabled>Registrarme</button>
@@ -303,7 +294,6 @@
     usuario: false,
     password: false,
     telefono: false,
-    correo: false
   };
 
   // Función para verificar el estado general de validación
@@ -385,7 +375,7 @@
 
   inputUbicacion.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ,.]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.]{3,}$/.test(valor);
     estadoValidacionCampos.ubicacion = esValido;
 
     if (valor.length === 0) {
@@ -406,7 +396,7 @@
 
   inputUsuario.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ_-]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9_-]{3,}$/.test(valor);
     estadoValidacionCampos.usuario = esValido;
 
     if (valor.length === 0) {
@@ -427,12 +417,8 @@
   const eyefcor = document.getElementById('password-togle');
   inputPassword.addEventListener('keyup', function() {
     const valor = this.value;
-    const tieneMayuscula = /[A-Z]/.test(valor);
-    const tieneMinuscula = /[a-z]/.test(valor);
-    const tieneNumero = /[0-9]/.test(valor);
-    const tieneSimbolo = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(valor);
     const longitudValida = valor.length >= 8;
-    const esValido = longitudValida && tieneMayuscula && tieneMinuscula && tieneNumero && tieneSimbolo;
+    const esValido = longitudValida;
     estadoValidacionCampos.password = esValido;
 
     if (valor.length > 0) {
@@ -445,7 +431,7 @@
       spanMsgPassword.textContent = '';
       spanMsgPassword.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgPassword.textContent = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.';
+      spanMsgPassword.textContent = 'La contraseña debe tener al menos 8 caracteres.';
       spanMsgPassword.style.color = '#e53935';
     } else {
       spanMsgPassword.textContent = '¡Contraseña válida!';
@@ -471,27 +457,6 @@
     } else {
       spanMsgTelefono.textContent = '¡Teléfono válido!';
       spanMsgTelefono.style.color = '#43a047';
-    }
-    verificarEstadoValidacionGeneral();
-  });
-
-  const inputCorreo = document.getElementById('correo_signup');
-  const spanMsgCorreo = document.getElementById('correo_signup_msg');
-
-  inputCorreo.addEventListener('keyup', function() {
-    const valor = this.value;
-    const esValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
-    estadoValidacionCampos.correo = esValido;
-
-    if (valor.length === 0) {
-      spanMsgCorreo.textContent = '';
-      spanMsgCorreo.style.color = '#e53935';
-    } else if (!esValido) {
-      spanMsgCorreo.textContent = 'El correo electrónico debe ser válido.';
-      spanMsgCorreo.style.color = '#e53935';
-    } else {
-      spanMsgCorreo.textContent = '¡Correo electrónico válido!';
-      spanMsgCorreo.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
   });
