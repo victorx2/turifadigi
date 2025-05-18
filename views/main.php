@@ -29,19 +29,19 @@ require_once 'views/layouts/slider.php';
         <div class="why-we-are__left">
           <div class="section-title text-left">
             <div class="section-title__tagline-box">
-              <span class="section-title__tagline">¿Qué es TuRifaDigital?</span>
+              <span class="section-title__tagline" data-i18n="what_is_turifadigital">¿Qué es TuRifaDigital?</span>
             </div>
-            <h2 class="section-title__title">Tu plataforma para <br> seleccionar boletos y pagar</h2>
+            <h2 class="section-title__title" data-i18n="platform_select_pay">Tu plataforma para <br> seleccionar boletos y pagar</h2>
           </div>
-          <p class="why-we-are__text">TuRifaDigital es la herramienta perfecta para participar en sorteos de manera sencilla. Nuestra plataforma te permite seleccionar tus boletos favoritos y realizar el pago de forma segura y rápida.</p>
+          <p class="why-we-are__text" data-i18n="turifadigital_desc">TuRifaDigital es la herramienta perfecta para participar en sorteos de manera sencilla. Nuestra plataforma te permite seleccionar tus boletos favoritos y realizar el pago de forma segura y rápida.</p>
           <ul class="why-we-are__points-box list-unstyled">
             <li>
               <div class="icon">
                 <span class="icon-tiles"></span>
               </div>
               <div class="content">
-                <h3>Selección de Boletos</h3>
-                <p>Elige los números que prefieras de manera fácil e intuitiva.</p>
+                <h3 data-i18n="ticket_selection">Selección de Boletos</h3>
+                <p data-i18n="choose_numbers">Elige los números que prefieras de manera fácil e intuitiva.</p>
               </div>
             </li>
             <li>
@@ -49,8 +49,8 @@ require_once 'views/layouts/slider.php';
                 <span class="icon-analytics1"></span>
               </div>
               <div class="content">
-                <h3>Pago Seguro</h3>
-                <p>Realiza tus pagos con total confianza y protección.</p>
+                <h3 data-i18n="secure_payment">Pago Seguro</h3>
+                <p data-i18n="pay_confidence">Realiza tus pagos con total confianza y protección.</p>
               </div>
             </li>
           </ul>
@@ -62,7 +62,7 @@ require_once 'views/layouts/slider.php';
           <div class="why-we-are__img wow slideInRight animated" data-wow-delay="0.1s" data-wow-duration="1500ms">
             <img src="<?php echo $ruta_img; ?>" alt="TuRifaDigital" style="display: block; margin: 0 auto;">
           </div>
-          <button class="btn btn-primary mt-4" style="margin-top: 30px;" onclick="window.location.href='/sorteo'">Comenzar</button>
+          <button class="btn btn-primary mt-4" style="margin-top: 30px;" onclick="window.location.href='/sorteo'" data-i18n="start_now">Comenzar</button>
         </div>
       </div>
 
@@ -137,9 +137,9 @@ require_once 'views/layouts/slider.php';
     <div class="section-title text-center">
       <div class="section-title__tagline-box">
         <div class="section-title__tagline-shape"></div>
-        <span class="section-title__tagline"></span>
+
       </div>
-      <h2 class="section-title__title">Métodos de Pago</h2>
+      <h2 class="section-title__title" data-i18n="payment_methods">Métodos de Pago</h2>
     </div>
     <div class="payment-methods row">
       <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="100ms">
