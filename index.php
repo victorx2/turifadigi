@@ -21,6 +21,9 @@ setlocale(LC_TIME, 'Spanish');
 /* setlocale(LC_TIME, $preferred_language === 'en' ? 'English' : 'Spanish'); */
 /*  */
 
+
+
+
 // Carga las variables de entorno desde el archivo .env
 // $dotenv = Dotenv::createImmutable(__DIR__)->load();
 

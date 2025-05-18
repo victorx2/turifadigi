@@ -6,7 +6,7 @@
       <div class="col-lg-6 col-md-8">
         <div class="login-card">
           <div class="login-header text-center mb-4">
-            <h2 class="login-title">Iniciar Sesión</h2>
+            <h2 class="login-title" data-i18n="login_title">Iniciar Sesión</h2>
           </div>
 
           <form id="form-login" class="login-form" method="post">
@@ -17,6 +17,7 @@
                   name="usuario"
                   id="usuario"
                   class="form-control"
+                  data-i18n-placeholder="username_placeholder"
                   placeholder="Nombre de usuario"
                   required
                   autocomplete="username">
@@ -30,6 +31,7 @@
                   name="password"
                   id="password"
                   class="form-control"
+                  data-i18n-placeholder="password_placeholder"
                   placeholder="Contraseña"
                   required
                   autocomplete="current-password">
@@ -40,7 +42,7 @@
             </div>
 
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-primary w-100" id="btn-login">
+              <button type="submit" class="btn btn-primary w-100" id="btn-login" data-i18n="login_btn">
                 Iniciar Sesión
               </button>
             </div>
@@ -48,7 +50,7 @@
 
           <div class="text-center mt-4">
             <p class="register-link">
-              ¿No tienes cuenta? <a href="/signup">Regístrate aquí</a>
+              <span data-i18n="no_account">¿No tienes cuenta?</span> <a href="/signup" data-i18n="register_here">Regístrate aquí</a>
             </p>
             <!-- <p class="forgot-password-link mt-2">
               <a href="/forgot-password">¿Olvidaste tu contraseña?</a>

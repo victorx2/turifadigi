@@ -67,5 +67,10 @@
   "social_networks": "Redes sociales",
   "follow_instagram": "¡Síguenos en instagram!",
   "contact": "Contacto",
-  "phone_number": "+1 4074287580"
+  "phone_number": "+1 4074287580",
+  "login_title": "Iniciar Sesión",
+  "username_placeholder": "Nombre de usuario",
+  "password_placeholder": "Contraseña",
+  "no_account": "¿No tienes cuenta?",
+  "register_here": "Regístrate aquí"
 }
