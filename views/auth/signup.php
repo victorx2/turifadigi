@@ -164,8 +164,8 @@
                   <i class="bi bi-envelope-fill icon-signup correo"></i> Correo electrónico *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="correo" id="correo_signup" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
-                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <!-- <input type="text" name="correo" id="correo_signup" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
+                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span> -->
                 </div>
               </div>
               <div class="col-xl-12 text-center">
@@ -355,19 +355,24 @@
     verificarEstadoValidacionGeneral();
   });
 
+
+
+
+
   const inputUbicacion = document.getElementById('ubicacion_signup');
+  
   const spanMsgUbicacion = document.getElementById('ubicacion_signup_msg');
 
   inputUbicacion.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ,.]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.]{3,}$/.test(valor);
     estadoValidacionCampos.ubicacion = esValido;
 
     if (valor.length === 0) {
       spanMsgUbicacion.textContent = '';
       spanMsgUbicacion.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgUbicacion.textContent = 'La ubicación debe tener al menos 3 caracteres y solo puede contener letras, espacios, comas y puntos.';
+      spanMsgUbicacion.textContent = 'La ubicación debe tener al menos 3 caracteres y puede contener letras, números, espacios, comas y puntos.';
       spanMsgUbicacion.style.color = '#e53935';
     } else {
       spanMsgUbicacion.textContent = '¡Ubicación válida!';
@@ -376,19 +381,23 @@
     verificarEstadoValidacionGeneral();
   });
 
+
+
+
+
   const inputUsuario = document.getElementById('usuario_signup');
   const spanMsgUsuario = document.getElementById('usuario_signup_msg');
 
   inputUsuario.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ_-]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9_-]{3,}$/.test(valor);
     estadoValidacionCampos.usuario = esValido;
 
     if (valor.length === 0) {
       spanMsgUsuario.textContent = '';
       spanMsgUsuario.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgUsuario.textContent = 'El nombre de usuario debe tener al menos 3 caracteres y solo puede contener letras, guiones bajos (_) y guiones medios (-).';
+      spanMsgUsuario.textContent = 'El nombre de usuario debe tener al menos 3 caracteres y solo puede contener letras, números, guiones bajos (_) y guiones medios (-).';
       spanMsgUsuario.style.color = '#e53935';
     } else {
       spanMsgUsuario.textContent = '¡Nombre de usuario válido!';

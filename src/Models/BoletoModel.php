@@ -497,10 +497,24 @@ class BoletoModel
   public function marcarCompraComoPagada($id_compra)
   {
     try {
+      // Depuración: Verifica el valor recibido
+      error_log("Intentando actualizar compra: " . $id_compra);
+
       $sql = "UPDATE compras_boletos SET estado = 'pagado' WHERE id_compra = :id_compra";
-      $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
+      $result = $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
+
+      // Depuración: Verifica el resultado de la consulta
+      error_log("Resultado de ejecutar SQL: " . print_r($result, true));
+
+      // Si tu método ejecutar() retorna el número de filas afectadas, puedes comprobarlo:
+      if ($result === 0) {
+        error_log("No se actualizó ninguna fila. ¿El id_compra existe?");
+        throw new Exception("No se actualizó ninguna fila. ¿El id_compra existe?");
+      }
+
       return true;
     } catch (Exception $e) {
+      error_log("Error al actualizar el estado: " . $e->getMessage());
       throw new Exception("Error al actualizar el estado: " . $e->getMessage());
     }
   }

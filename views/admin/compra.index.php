@@ -20,6 +20,12 @@
 
     <div class="swiper-wrapper">
 
+      <script>
+        // Redireccionar a una nueva URL
+        function redireccionar(url) {
+          window.location.href = url;
+        }
+      </script>
 
       <div class="swiper-slide">
 
