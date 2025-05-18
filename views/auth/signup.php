@@ -113,7 +113,7 @@
               <div class="section-title__tagline-shape">
 
               </div>
-              <span class="section-title__tagline" data-i18n="create_account">Crear Cuenta</span>
+
             </div>
             <h2 class="section-title__title" data-i18n="register_account">Registrar Cuenta</h2>
           </div>
@@ -125,7 +125,7 @@
                 </label>
                 <div class="contact-two__input-box">
                   <input type="text" name="nombre" id="nombre_signup" data-i18n-placeholder="enter_first_name" placeholder="Ingrese su nombre" class="input-hover-signup">
-                  <span id="nombre_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="name_validation"></span>
+                  <span id="nombre_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -134,7 +134,7 @@
                 </label>
                 <div class="contact-two__input-box">
                   <input type="text" name="apellido" id="apellido_signup" data-i18n-placeholder="enter_last_name" placeholder="Ingrese su apellido" class="input-hover-signup">
-                  <span id="apellido_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="lastname_validation"></span>
+                  <span id="apellido_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -143,7 +143,7 @@
                 </label>
                 <div class="contact-two__input-box">
                   <input type="text" name="cedula" id="cedula_signup" data-i18n-placeholder="enter_id" placeholder="Ingrese su cédula" class="input-hover-signup">
-                  <span id="cedula_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="id_validation"></span>
+                  <span id="cedula_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -152,7 +152,7 @@
                 </label>
                 <div class="contact-two__input-box">
                   <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: País, estado, dirección" class="input-hover-signup">
-                  <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="location_validation"></span>
+                  <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -161,7 +161,7 @@
                 </label>
                 <div class="contact-two__input-box">
                   <input type="text" name="usuario" id="usuario_signup" data-i18n-placeholder="enter_username" placeholder="Cree un nombre de usuario" class="input-hover-signup">
-                  <span id="usuario_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="username_validation"></span>
+                  <span id="usuario_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -173,7 +173,7 @@
                   <span class="password-toggle" id="password-togle" onclick="togglePasswordVisibilitySignup()">
                     <i class="bi bi-eye-fill" id="icon-eye-signup"></i>
                   </span>
-                  <span id="password_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="password_validation"></span>
+                  <span id="password_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -182,7 +182,7 @@
                 </label>
                 <div class="contact-two__input-box">
                   <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su número de teléfono" class="input-hover-signup">
-                  <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="phone_validation"></span>
+                  <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -191,7 +191,7 @@
                 </label>
                 <div class="contact-two__input-box">
                   <input type="text" name="correo" id="correo_signup" data-i18n-placeholder="enter_email" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
-                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="email_validation"></span>
+                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-12 text-center">
@@ -327,12 +327,15 @@
 
     if (valor.length === 0) {
       spanMsg.textContent = '';
+      spanMsg.removeAttribute('data-msg-key');
       spanMsg.style.color = '#e53935';
     } else if (!esValido) {
       spanMsg.textContent = i18n.t('name_validation');
+      spanMsg.setAttribute('data-msg-key', 'name_validation');
       spanMsg.style.color = '#e53935';
     } else {
       spanMsg.textContent = i18n.t('valid_name');
+      spanMsg.setAttribute('data-msg-key', 'valid_name');
       spanMsg.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -348,12 +351,15 @@
 
     if (valor.length === 0) {
       spanMsgApellido.textContent = '';
+      spanMsgApellido.removeAttribute('data-msg-key');
       spanMsgApellido.style.color = '#e53935';
     } else if (!esValido) {
       spanMsgApellido.textContent = i18n.t('lastname_validation');
+      spanMsgApellido.setAttribute('data-msg-key', 'lastname_validation');
       spanMsgApellido.style.color = '#e53935';
     } else {
       spanMsgApellido.textContent = i18n.t('valid_lastname');
+      spanMsgApellido.setAttribute('data-msg-key', 'valid_lastname');
       spanMsgApellido.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -369,12 +375,15 @@
 
     if (valor.length === 0) {
       spanMsgCedula.textContent = '';
+      spanMsgCedula.removeAttribute('data-msg-key');
       spanMsgCedula.style.color = '#e53935';
     } else if (!esValido) {
       spanMsgCedula.textContent = i18n.t('id_validation');
+      spanMsgCedula.setAttribute('data-msg-key', 'id_validation');
       spanMsgCedula.style.color = '#e53935';
     } else {
       spanMsgCedula.textContent = i18n.t('valid_id');
+      spanMsgCedula.setAttribute('data-msg-key', 'valid_id');
       spanMsgCedula.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -391,12 +400,15 @@
 
     if (valor.length === 0) {
       spanMsgUbicacion.textContent = '';
+      spanMsgUbicacion.removeAttribute('data-msg-key');
       spanMsgUbicacion.style.color = '#e53935';
     } else if (!esValido) {
       spanMsgUbicacion.textContent = i18n.t('location_validation');
+      spanMsgUbicacion.setAttribute('data-msg-key', 'location_validation');
       spanMsgUbicacion.style.color = '#e53935';
     } else {
       spanMsgUbicacion.textContent = i18n.t('valid_location');
+      spanMsgUbicacion.setAttribute('data-msg-key', 'valid_location');
       spanMsgUbicacion.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -412,12 +424,15 @@
 
     if (valor.length === 0) {
       spanMsgUsuario.textContent = '';
+      spanMsgUsuario.removeAttribute('data-msg-key');
       spanMsgUsuario.style.color = '#e53935';
     } else if (!esValido) {
       spanMsgUsuario.textContent = i18n.t('username_validation');
+      spanMsgUsuario.setAttribute('data-msg-key', 'username_validation');
       spanMsgUsuario.style.color = '#e53935';
     } else {
       spanMsgUsuario.textContent = i18n.t('valid_username');
+      spanMsgUsuario.setAttribute('data-msg-key', 'valid_username');
       spanMsgUsuario.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -440,12 +455,15 @@
 
     if (valor.length === 0) {
       spanMsgPassword.textContent = '';
+      spanMsgPassword.removeAttribute('data-msg-key');
       spanMsgPassword.style.color = '#e53935';
     } else if (!esValido) {
       spanMsgPassword.textContent = i18n.t('password_validation');
+      spanMsgPassword.setAttribute('data-msg-key', 'password_validation');
       spanMsgPassword.style.color = '#e53935';
     } else {
       spanMsgPassword.textContent = i18n.t('valid_password');
+      spanMsgPassword.setAttribute('data-msg-key', 'valid_password');
       spanMsgPassword.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -461,12 +479,15 @@
 
     if (valor.length === 0) {
       spanMsgTelefono.textContent = '';
+      spanMsgTelefono.removeAttribute('data-msg-key');
       spanMsgTelefono.style.color = '#e53935';
     } else if (!esValido) {
       spanMsgTelefono.textContent = i18n.t('phone_validation');
+      spanMsgTelefono.setAttribute('data-msg-key', 'phone_validation');
       spanMsgTelefono.style.color = '#e53935';
     } else {
       spanMsgTelefono.textContent = i18n.t('valid_phone');
+      spanMsgTelefono.setAttribute('data-msg-key', 'valid_phone');
       spanMsgTelefono.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -486,6 +507,18 @@
       icon.classList.add('bi-eye-fill');
     }
   }
+
+  // Actualizar mensajes de validación al cambiar el idioma
+  const originalChangeLang = i18n.changeLang.bind(i18n);
+  i18n.changeLang = async function(lang) {
+    await originalChangeLang(lang);
+    document.querySelectorAll('span[data-msg-key]').forEach(span => {
+      const key = span.getAttribute('data-msg-key');
+      if (key) {
+        span.textContent = i18n.t(key);
+      }
+    });
+  };
 </script>
 
 <?php if (!empty($_SESSION['mensaje'])) {

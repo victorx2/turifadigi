@@ -1,4 +1,4 @@
- // Sistema de traducciones
+// Sistema de traducciones
 const i18n = {
   // Almacena las traducciones
   translations: {},
@@ -11,31 +11,33 @@ const i18n = {
     console.log("Inicializando sistema de traducciones...");
     // Verificar si existen los archivos JSON de traducción
     try {
-      const esResponse = await fetch('assets/language/es.json');
-      const enResponse = await fetch('assets/language/en.json');
-      
+      const esResponse = await fetch("assets/language/es.json");
+      const enResponse = await fetch("assets/language/en.json");
+
       if (!esResponse.ok || !enResponse.ok) {
-        throw new Error('No se encontraron los archivos de traducción');
+        throw new Error("No se encontraron los archivos de traducción");
       }
-      
-      console.log('Archivos de traducción encontrados: es.json y en.json');
-      
+
+      console.log("Archivos de traducción encontrados: es.json y en.json");
+
       // SIEMPRE usa español por defecto al cargar
       this.currentLang = "es";
       console.log(`Idioma actual: ${this.currentLang}`);
-      
+
       // Cargar las traducciones
       await this.loadTranslations(this.currentLang);
-      
+
       // Inicializar el selector de idioma
       this.initLanguageSwitcher();
-      
+
       // Traducir la página
       this.translatePage();
       console.log("Sistema de traducciones inicializado correctamente");
     } catch (error) {
-      console.error('Error verificando archivos de traducción:', error);
-      alert('No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/');
+      console.error("Error verificando archivos de traducción:", error);
+      alert(
+        "No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/"
+      );
     }
   },
 
@@ -51,7 +53,9 @@ const i18n = {
       console.log("Traducciones cargadas:", this.translations);
     } catch (error) {
       console.error("Error cargando traducciones:", error);
-      alert(`Error cargando traducciones para ${lang}. Verifica que el archivo ${lang}.json exista y tenga el formato correcto.`);
+      alert(
+        `Error cargando traducciones para ${lang}. Verifica que el archivo ${lang}.json exista y tenga el formato correcto.`
+      );
     }
   },
 
@@ -114,6 +118,15 @@ const i18n = {
       const key = element.getAttribute("data-i18n-html");
       element.innerHTML = this.t(key);
     });
+
+    // Traducir mensajes de validación dinámicos
+    document.querySelectorAll("span[data-msg-key]").forEach((span) => {
+      const key = span.getAttribute("data-msg-key");
+      if (key) {
+        span.textContent = this.t(key);
+      }
+    });
+
     console.log("Página traducida correctamente");
   },
 };
