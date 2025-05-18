@@ -138,15 +138,6 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
-                <label for="cedula_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-card-text icon-signup cedula"></i> <span data-i18n="id">Cédula</span> *
-                </label>
-                <div class="contact-two__input-box">
-                  <input type="text" name="cedula" id="cedula_signup" data-i18n-placeholder="enter_id" placeholder="Ingrese su cédula" class="input-hover-signup">
-                  <span id="cedula_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
-                </div>
-              </div>
-              <div class="col-xl-6 col-lg-6">
                 <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">Ubicación</span> *
                 </label>
@@ -183,15 +174,6 @@
                 <div class="contact-two__input-box">
                   <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su número de teléfono" class="input-hover-signup">
                   <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
-                </div>
-              </div>
-              <div class="col-xl-6 col-lg-6">
-                <label for="correo_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-envelope-fill icon-signup correo"></i> <span data-i18n="email">Correo electrónico</span> *
-                </label>
-                <div class="contact-two__input-box">
-                  <input type="text" name="correo" id="correo_signup" data-i18n-placeholder="enter_email" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
-                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
               <div class="col-xl-12 text-center">
@@ -299,7 +281,6 @@
   const estadoValidacionCampos = {
     nombre: false,
     apellido: false,
-    cedula: false,
     ubicacion: false,
     usuario: false,
     password: false,
@@ -365,32 +346,7 @@
     verificarEstadoValidacionGeneral();
   });
 
-  const inputCedula = document.getElementById('cedula_signup');
-  const spanMsgCedula = document.getElementById('cedula_signup_msg');
-
-  inputCedula.addEventListener('keyup', function() {
-    const valor = this.value;
-    const esValido = /^\d{6,}$/.test(valor);
-    estadoValidacionCampos.cedula = esValido;
-
-    if (valor.length === 0) {
-      spanMsgCedula.textContent = '';
-      spanMsgCedula.removeAttribute('data-msg-key');
-      spanMsgCedula.style.color = '#e53935';
-    } else if (!esValido) {
-      spanMsgCedula.textContent = i18n.t('id_validation');
-      spanMsgCedula.setAttribute('data-msg-key', 'id_validation');
-      spanMsgCedula.style.color = '#e53935';
-    } else {
-      spanMsgCedula.textContent = i18n.t('valid_id');
-      spanMsgCedula.setAttribute('data-msg-key', 'valid_id');
-      spanMsgCedula.style.color = '#43a047';
-    }
-    verificarEstadoValidacionGeneral();
-  });
-
   const inputUbicacion = document.getElementById('ubicacion_signup');
-
   const spanMsgUbicacion = document.getElementById('ubicacion_signup_msg');
 
   inputUbicacion.addEventListener('keyup', function() {
