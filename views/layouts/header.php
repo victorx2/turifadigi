@@ -73,6 +73,7 @@
   <link rel="stylesheet" href="vendor/dropzone/dropzone.css">
   <link rel="stylesheet" href="vendor/summernote/summernote-bs4.min.css">
   <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
+
 </head>
 
 <body class="custom-cursor">
@@ -156,12 +157,13 @@
               if ($session === '') {
                 echo '
               <div class="main-menu__right">
+              
               <div id="language-container">
-                <select id="language-switcher" class="form-select" onchange="i18n.changeLang(this.value)">
-                  <option value="es">Español</option>
-                  <option value="en">English</option>
-                </select>
-              </div>
+  <select id="language-switcher" onchange="i18n.changeLang(this.value)">
+    <option value="es">Español</option>
+    <option value="en">English</option>
+  </select>
+</div>
                
               <div class="main-menu__btn-box">
               <a href="/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
