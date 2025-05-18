@@ -41,6 +41,7 @@
                   line-height: 32px;
                   font-family: var(--zefxa-font-two);
                   -webkit-transition: all 500ms ease;
+                  transition: all 500ms ease;
                   align-content: center;
                   align-items: baseline;
                   flex-direction: row;
