@@ -108,9 +108,12 @@ switch (strtok($route, '?')) {
         break;
 
     case '/sorteo':
-            require_once 'views/rifa/sorteo.php';
+        require_once 'views/rifa/sorteo.php';
         break;
-
+        
+    case '/verificar_boleto':
+        require_once 'views/verificar/index.php';
+        break;
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
         break;
@@ -129,7 +132,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -141,7 +144,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -153,7 +156,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -166,7 +169,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -179,13 +182,13 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
 
         require_once 'views/admin/resetear_contra.php';
-	break;
+        break;
 
     //SECCION PANTALLAS DE SWEET ALERT
     case '/compras/view/accions_view':

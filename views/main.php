@@ -255,6 +255,14 @@ require_once 'views/layouts/slider.php';
       align-items: center;
       flex-wrap: wrap;
       align-content: center;
+      margin: 10px;
+
+    }
+
+    .site-footer__top {
+      position: relative;
+      display: block;
+      padding: 1rem;
     }
   </style>
 </section>

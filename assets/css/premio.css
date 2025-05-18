@@ -21,10 +21,17 @@
 }
 
 .supergana-content {
+  margin-top: 100px;
   background: var(--background-white);
   padding: 40px;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
+}
+
+@media (max-width: 768px) {
+  .supergana-content {
+    margin-top: 40px;
+  }
 }
 
 .prize-details {
@@ -131,4 +138,4 @@
   content: "•";
   position: absolute;
   left: 0;
-} 
+}

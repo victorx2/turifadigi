@@ -277,8 +277,8 @@ ul {
 .section-title {
   position: relative;
   display: block;
-  margin-top: -4px;
-  margin-bottom: 59px;
+  margin-top: -10px;
+  margin-bottom: 30px;
 }
 
 .section-title__tagline-box {
