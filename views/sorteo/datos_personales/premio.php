@@ -66,10 +66,12 @@ $sorteo = $sorteoController->obtenerSorteoActivo();
                   <strong>+1 <?php echo $sorteo['data']['numero_contacto']; ?></strong>
                 </a></p>
             </section>
-            <aside class="example-box" role="complementary">
+            <!--
+             <aside class="example-box" role="complementary">
               <h2>Información importante</h2>
               <p class="example-text"><?php echo $sorteo['data']['texto_importante']; ?></p>
-            </aside>
+            </aside> 
+            -->
           </div>
         </article>
       </div>
