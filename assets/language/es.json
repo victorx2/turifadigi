@@ -1,0 +1,22 @@
+{
+  "register_account": "Registrar Cuenta",
+  "first_name": "Nombre",
+  "last_name": "Apellido",
+  "enter_first_name": "Ingrese su nombre",
+  "enter_last_name": "Ingrese su apellido",
+  "id": "Cédula",
+  "enter_id": "Ingrese su cédula",
+  "location": "Ubicación",
+  "enter_location": "E.J: País, estado, dirección",
+  "username": "Nombre de usuario",
+  "enter_username": "Cree un nombre de usuario",
+  "password": "Contraseña",
+  "enter_password": "Cree una contraseña",
+  "phone": "Teléfono",
+  "enter_phone": "Ingrese su número de teléfono",
+  "email": "Correo electrónico",
+  "enter_email": "Ingrese su correo electrónico",
+  "register": "Registrarme",
+  "already_have_account": "¿Ya tienes una cuenta?",
+  "login": "Inicia sesión"
+}

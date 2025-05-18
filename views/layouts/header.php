@@ -152,7 +152,11 @@
               if ($session === '') {
                 echo '
               <div class="main-menu__right">
-              <div class="main-menu__cart-search-box">
+              <div id="language-container">
+                <select id="language-switcher" class="form-select">
+                  <option value="es">Español</option>
+                  <option value="en">English</option>
+                </select>
               </div>
               <div class="main-menu__btn-box">
               <a href="/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
@@ -203,8 +207,6 @@
           display: block;
         }
       }
-
-
     </style>
 
     <div class="stricky-header stricked-menu main-menu">

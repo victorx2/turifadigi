@@ -1,0 +1,22 @@
+{
+  "register_account": "Register Account",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "enter_first_name": "Enter your first name",
+  "enter_last_name": "Enter your last name",
+  "id": "ID",
+  "enter_id": "Enter your ID",
+  "location": "Location",
+  "enter_location": "E.g.: Country, state, address",
+  "username": "Username",
+  "enter_username": "Create a username",
+  "password": "Password",
+  "enter_password": "Create a password",
+  "phone": "Phone",
+  "enter_phone": "Enter your phone number",
+  "email": "Email",
+  "enter_email": "Enter your email",
+  "register": "Register",
+  "already_have_account": "Already have an account?",
+  "login": "Login"
+}
