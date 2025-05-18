@@ -35,5 +35,10 @@
   "valid_username": "¡Nombre de usuario válido!",
   "valid_password": "¡Contraseña válida!",
   "valid_phone": "¡Teléfono válido!",
-  "valid_email": "¡Correo electrónico válido!"
+  "valid_email": "¡Correo electrónico válido!",
+  "home": "Inicio",
+  "verify_ticket": "Verificar Boleto",
+  "raffle": "Sorteo",
+  "login_btn": "Iniciar Sesión",
+  "logout_btn": "Cerrar Sesión"
 }

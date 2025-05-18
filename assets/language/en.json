@@ -35,5 +35,10 @@
   "valid_username": "Valid username!",
   "valid_password": "Valid password!",
   "valid_phone": "Valid phone number!",
-  "valid_email": "Valid email!"
+  "valid_email": "Valid email!",
+  "home": "Home",
+  "verify_ticket": "Verify Ticket",
+  "raffle": "Raffle",
+  "login_btn": "Login",
+  "logout_btn": "Logout"
 }

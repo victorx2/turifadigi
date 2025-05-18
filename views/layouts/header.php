@@ -101,7 +101,7 @@
                     $class = $sessionRol != 2 ? 'element' : 'dropdown';
                     ?>
                     <li class="<?php echo $class ?>">
-                      <a href="/">Inicio
+                      <a href="/" data-i18n="home">Inicio
                         <span class="main-menu-border"></span>
                       </a>
                       <?php
@@ -125,12 +125,12 @@
                     </li>';
                     } ?>
                     <li class="element">
-                      <a href="/verificar_boleto">Verificar Boleto
+                      <a href="/verificar_boleto" data-i18n="verify_ticket">Verificar Boleto
                         <span class="main-menu-border"></span>
                       </a>
                     </li>
                     <li class="element">
-                      <a href="/sorteo">Sorteo
+                      <a href="/sorteo" data-i18n="raffle">Sorteo
                         <span class="main-menu-border"></span>
                       </a>
                     </li>
@@ -139,15 +139,15 @@
                     if ($session === '') {
                       echo '
                       <li class="element">
-                        <a href="/signup">Crear Cuenta
+                        <a href="/signup" data-i18n="create_account">Crear Cuenta
                           <span class="main-menu-border"></span>
                         </a>
                       </li>';
                     }
                     if ($session === '') {
-                      echo '<a href="/login" class="main-menu__btn thm-btn inic" id="inicMob">Iniciar Sesión</a>';
+                      echo '<a href="/login" class="main-menu__btn thm-btn inic" id="inicMob" data-i18n="login_btn">Iniciar Sesión</a>';
                     } else {
-                      echo '<a href="" class="main-menu__btn thm-btn inic" onclick=session_destroy() id="inicMob">Cerrar Sesión</a>';
+                      echo '<a href="" class="main-menu__btn thm-btn inic" onclick=session_destroy() id="inicMob" data-i18n="logout_btn">Cerrar Sesión</a>';
                     } ?>
                   </ul>
 
@@ -156,18 +156,19 @@
               <?php
               if ($session === '') {
                 echo '
-              <div class="main-menu__right">
-              
-              <div id="language-container">
-  <select id="language-switcher" onchange="i18n.changeLang(this.value)">
-    <option value="es">Español</option>
-    <option value="en">English</option>
-  </select>
-</div>
-               
+            <div class="main-menu__right">
+            
+            <div id="language-container">
+              <select id="language-switcher" class="form-select" onchange="i18n.changeLang(this.value)">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+
               <div class="main-menu__btn-box">
-              <a href="/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
+              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
               </div>
+
               </div>';
               } else {
                 echo '<div class="main-menu__right">
