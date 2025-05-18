@@ -124,10 +124,14 @@
                     </li>';
                     } ?>
                     <li class="element">
+                      <a href="/verificar_boleto">Verificar Boleto
+                        <span class="main-menu-border"></span>
+                      </a>
+                    </li>
+                    <li class="element">
                       <a href="/sorteo">Sorteo
                         <span class="main-menu-border"></span>
                       </a>
-
                     </li>
                     <?php
                     $session = $_SESSION['usuario'] ?? '';

@@ -117,7 +117,10 @@ switch (strtok($route, '?')) {
     case '/sorteo':
         require_once 'views/rifa/sorteo.php';
         break;
-
+        
+    case '/verificar_boleto':
+        require_once 'views/verificar/index.php';
+        break;
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
         break;
