@@ -244,8 +244,8 @@
 <footer class="site-footer">
   <div class="site-footer__top">
     <div class="container">
-      <div class="row">
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+    	<div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
           <div class="footer-widget__column footer-widget__about">
             <div class="footer-widget__logo">
             </div>
@@ -258,44 +258,57 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
-          <div class="footer-widget__column footer-widget__link">
+
+	<div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+          <div class="footer-widget__column footer-widget__about">
+            <div class="footer-widget__logo">
+            </div>
+            <p class="footer-widget__about-text"></p>
+            <div class="site-footer__social-box">
+              <h3 class="site-footer__social-title">Contacto</h3>
+              <div class="phone number">
+		<i class="fa-solid fa-phone-volume"></i>
+                <a href="tel:14074287580">+1 4074287580</a>
+              </div>
+	      <style>
+		.main-menu .mobile-nav__toggler {
+    			font-size: 30px;
+    			margin: 10px 0px 10px 10px;
+		}
+		.phone.number {
+    			font-size: 24px;
+    			font-weight: 600;
+    			color: #f51414;
+    			line-height: 32px;
+    			font-family: var(--zefxa-font-two);
+    			-webkit-transition: all 500ms ease;
+		}
+		.phone.number a, .phone.number a:focus, .phone.number a:visited {
+    			color: white;
+    			text-decoration: none;
+		}
+		.phone.number a:hover {
+   			color: var(--zefxa-base);
+    			text-decoration: none;
+		}
+
+	
+		i.fa-solid.fa-phone-volume {
+
+   			color: var(--zefxa-base);
+		}
+	      </style>
+            </div>
+          </div>
+        </div>
+	<div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="500ms" style="visibility: visible; animation-delay: 500ms; animation-name: fadeInUp;">
+          <div class="footer-widget__column footer-widget__Gallery">
             <div class="footer-widget__title-box">
               <h3 class="footer-widget__title"></h3>
             </div>
-            <ul class="footer-widget__link-list list-unstyled">
-              <!--  -->
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-            </ul>
           </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
-          <div class="footer-widget__column footer-widget__newsletter">
-            <div class="footer-widget__title-box">
-              <h3 class="footer-widget__title"> </h3>
-            </div>
-            <p class="footer-widget__newsletter-text"> </p>
-
-            <div class="mc-form__response"></div>
-            <ul class="footer-widget__Contact-list list-unstyled">
-              <li>
-                <div class="icon">
-                  <span class="icon-telephone"></span>
-                </div>
-                <div class="contact">
-                  <p>Llamar en cualquier momento</p>
-                  <a href="tel:12455689008">+1 4074287580</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="500ms">
-          <div class="footer-widget__column footer-widget__Gallery">
+        </div><div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="200ms" style="visibility: visible; animation-delay: 200ms; animation-name: fadeInUp;">
+          <div class="footer-widget__column footer-widget__link">
             <div class="footer-widget__title-box">
               <h3 class="footer-widget__title"></h3>
             </div>

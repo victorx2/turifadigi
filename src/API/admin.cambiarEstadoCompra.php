@@ -7,7 +7,7 @@ use App\Controllers\BoletoController;
 $get = $_GET['est'];
 $id = $_GET['id'];
 
-if ($get == 'disabled') {
+if ($get == 'enabled') {
     $rut = new BoletoController();
 
     $ext = $rut->confirmarPago($id);
@@ -15,7 +15,7 @@ if ($get == 'disabled') {
     exit;
 }
 
-if ($get == 'enabled') {
+if ($get == 'disabled') {
     $rut = new BoletoController();
 
     $ext = $rut->rechazarPago($id);

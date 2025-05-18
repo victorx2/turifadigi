@@ -69,6 +69,7 @@ switch (strtok($route, '?')) {
             require_once '../src/API/admin.obtenerCompras.php';
             break;
         }
+        require_once '../src/API/obtenerCompras.php';
 	break;
     case '/api/get_sorteo':
         $cmp = $_GET["cmp"] ?? '';
@@ -77,6 +78,11 @@ switch (strtok($route, '?')) {
             break;
         }
         break;
+    case '/api/admin_password_reset':
+
+	    echo "ruta activa";
+
+	break;
     case '/api/exchange_rate':
         require_once '../src/API/verificar.tasa.php';
         break;

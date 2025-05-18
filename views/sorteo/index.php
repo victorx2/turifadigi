@@ -182,10 +182,10 @@
         <div class="payment-method" onclick="mostrarDatosDePago('banco_venezuela')">
           <img src="assets/img/webp/banco_venezuela.webp" alt="banco_de_Venezuela">
         </div>
-        <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
+        <!--<div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
           <img src="assets/img/webp/bancolombia.webp" alt="bancolombia">
-        </div>
-      </div>
+        </div>-->
+      </div> 
 
       <div class="payment-info">
         <p id="paymentTitle"></p>
@@ -201,9 +201,9 @@
             <span id="mapr"></span>
           </div>
         </div>
-        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 106.31 BS</p>
+        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
-          <!-- carga dinamicamente -->
+           <-- carga dinamicamente -->
         </div>
       </div>
     </div>
@@ -211,7 +211,6 @@
     <button type="submit" class="btn-confirmar">CONFIRMAR</button>
   </div>
 </div>
-
 
 <link rel="stylesheet" href="assets/css/buscar_boletos.css">
 <link rel="stylesheet" href="assets/css/datos_personales.css">
@@ -226,7 +225,7 @@
     const numeroTelefono = "14077329524"; // Numero de la empresa en WhatsApp
     const listaTickets = ticketsComprados.join(', '); // Convierte el array de tickets en una cadena separada por comas
 
-    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}s.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 120 horas para realizarlo. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCedula: ${cedula}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODO CON TURIFADIGITAL!`;
+    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCedula: ${cedula}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
 
     const mensajeCodificado = encodeURIComponent(mensaje);
     const enlaceWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeCodificado}`;
@@ -246,22 +245,18 @@
     // Eliminar el enlace del DOM (opcional, pero buena práctica)
     document.body.removeChild(enlace);
   }
-</script>
-<script>
+
   document.addEventListener('DOMContentLoaded', function() {
 
     // Configuración global para Semantic UI Transitions
     $.fn.transition.settings.silent = true;
 
     const boletosSeleccionados = new Set();
-    const minBoletos = 2;
+    const minBoletos = <?php echo $sorteo['data']['configuracion']['boletos_minimos']; ?>;
     let cantidadSeleccion = 2;
-    const tasaUSD = 106.31;
-    let precioUnitarioUSD = 3;
+    let precioUnitarioUSD = <?php echo $sorteo['data']['configuracion']['precio_boleto']; ?>;
     const todosLosBoletos = [];
     let cargandoBoletos = false;
-    const boletosPorPagina = 500;
-    const totalBoletos = 10000;
 
     // Referencias a elementos del DOM
     const boletosContainer = document.querySelector('.boletos-container');
@@ -406,16 +401,9 @@
     // Función para actualizar el total en USD
     function actualizarTotal() {
       const totalUSD = cantidadSeleccion * precioUnitarioUSD;
-      const totalBS = totalUSD * tasaUSD;
 
       // Actualizar el total en USD en el contador
       totalUSDSpan.textContent = `${totalUSD} USD`;
-
-      // Actualizar el total en BS en el formulario de datos personales
-      const totalBSDisplay = document.getElementById('totalBSDisplay');
-      if (totalBSDisplay) {
-        totalBSDisplay.textContent = `${totalBS.toFixed(2)} BS`;
-      }
     }
 
     // Función para actualizar los chips de boletos seleccionados
@@ -642,7 +630,7 @@
             const valorConvertido = dc;
 
             inputMapr.textContent = `${valorConvertido} $`;
-            tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaBS} BS`;
+            tasaEx.textContent = `Tasa de cambio: 1 USD = 1 USD`;
             contenedorOpciones.innerHTML = "";
             contenedorOpciones.appendChild(opcionesMonedaHTML);
           }
@@ -684,11 +672,6 @@
               willClose: () => {
                 clearInterval(timerInterval);
                 window.location.href = '/login';
-              }
-            }).then((result) => {
-              /* Read more about handling dismissals below */
-              if (result.dismiss === Swal.DismissReason.timer) {
-                console.log("I was closed by the timer");
               }
             });
             // alert('No haz iniciado sesion, redireccionando...');
@@ -768,8 +751,6 @@
             return;
           }
 
-          // const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
-          // const totalBS = totalUSD * tasaUSD;
           const boletosCargar = Array.from(boletosSeleccionados)
 
           try {
@@ -798,6 +779,7 @@
                   }, boletosCargar);
 
                   alert('¡Compra procesada correctamente!');
+                  window.location.href = '/sorteo';
                 }
               })
               .catch(error => {
@@ -927,9 +909,7 @@
         paymentDetails.innerHTML = `
             <p class="subtitle">Datos de la cuenta</p>
             <p>Nombre: Yorsin Cruz Osorio</p>
-            <p>Correo Electrónico: Yorsincruz1995@gmail.com</p>
             <p>Usuario: @Yorsin0506</p>
-            <p>Número teléfono: +1 4074287580</p>
           `;
         break;
 
@@ -937,9 +917,9 @@
         paymentTitle.textContent = 'BANCO DE VENEZUELA';
         paymentDetails.innerHTML = `
             <p class="subtitle">Datos de la cuenta</p>
-            <p>Nombre: Yorsin Cruz Osorio</p>
+            <p>Nombre: Mailiny Cruz</p>
             <p>Cédula de identidad: 28517267</p>
-            <p>numero de cuenta: 01021234567891234567</p>
+            <p>Numero de cuenta: 01021234567891234567</p>
           `;
         break
 
@@ -947,8 +927,8 @@
         paymentTitle.textContent = 'DAVIVIENDA COLOMBIA';
         paymentDetails.innerHTML = `
             <p class="subtitle">Datos de la cuenta</p>
-            <p>Cédula de identidad: 123456789</p>
-            <p>numero de cuenta: 4884 5018 1679</p>
+            <p>Tipo de cuenta: Ahorros</p>
+            <p>Numero de cuenta: 4884 5018 1679</p>
 
           `;
         break;
@@ -961,14 +941,6 @@
               <p>Cédula de identidad: 28517267</p>
               <p>Banco: 0102 - Banco de Venezuela</p>  
             `;
-        break;
-      case 'bancolombia':
-        paymentTitle.textContent = 'BANCOLOMBIA';
-        paymentDetails.innerHTML = `
-              <p class="subtitle">Datos de la cuenta</p>
-              <p>Cédula de identidad: 28517267</p>
-              <p>numero de cuenta: 123456789</p>
-              `;
         break;
       default:
         paymentTitle.textContent = 'Seleccione un método de pago';

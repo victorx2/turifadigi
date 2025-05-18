@@ -1,109 +1,19 @@
 <?php
+
+use App\Controllers\SorteoController;
+
+$sorteoController = new SorteoController();
+
+$sorteo = $sorteoController->obtenerSorteoActivo();
+
+$ruta_img = $sorteo['data']['imagen'] ?? 'assets/img/backgrounds/images.png';
+
 require_once 'views/layouts/header.php';
+
+// <!--Main Slider Start-->
+require_once 'views/layouts/slider.php';
+// <!--Main Slider End-->
 ?>
-<!--Main Slider Start-->
-<section class="main-slider">
-  <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
-                "effect": "fade",
-                "pagination": {
-                "el": "#main-slider-pagination",
-                "type": "bullets",
-                "clickable": true
-                },
-                "navigation": {
-                "nextEl": "#main-slider__swiper-button-next",
-                "prevEl": "#main-slider__swiper-button-prev"
-                },
-                "autoplay": {
-                    "delay": 8000
-                } 
-            }'>
-    <div class="swiper-wrapper">
-
-      <div class="swiper-slide">
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/sorteo.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
-                <p class="main-slider__text">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn">Comenzar ahora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="swiper-slide">
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-2.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
-                <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
-                <?php
-                $session = $_SESSION['usuario'] ?? '';
-                if ($session === '') {
-                  echo '<div class="main-slider__btn-box">
-                            <a href="/login" class="main-slider__btn thm-btn">Regístrate gratis</a>
-                          </div>';
-                }
-                ?>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="swiper-slide">
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-3.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
-                <p class="main-slider__text">Múltiples métodos de pago <br> y transacciones seguras.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn">Conoce más</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="swiper-pagination" id="main-slider-pagination"></div>
-  </div>
-</section>
-<!--Main Slider End-->
-
 
 <!--Why We Are Start-->
 <section class="why-we-are">
@@ -146,33 +56,31 @@ require_once 'views/layouts/header.php';
           </ul>
         </div>
       </div>
+
       <div class="col-xl-7">
-        <div class="why-we-are__right">
+        <div class="why-we-are__right text-center">
           <div class="why-we-are__img wow slideInRight animated" data-wow-delay="0.1s" data-wow-duration="1500ms">
-            <img src="assets/img/backgrounds/sorteo.jpg" alt="TuRifaDigital">
+            <img src="<?php echo $ruta_img; ?>" alt="TuRifaDigital" style="display: block; margin: 0 auto;">
           </div>
+          <button class="btn btn-primary mt-4" style="margin-top: 30px;" onclick="window.location.href='/sorteo'">Comenzar</button>
         </div>
       </div>
+
     </div>
   </div>
   <div class="container">
     <div class="row">
       <div class="col-xl-12">
+
         <br>
         <br>
         <br>
-        <!--  
-        <div class="section-title text-center">
-          <h2 class="section-title__title">Metodos de Pago</h2>
-        </div> 
-        -->
+
       </div>
     </div>
   </div>
 
 </section>
-
-
 
 <!--Why We Are End-->
 
@@ -226,8 +134,6 @@ require_once 'views/layouts/header.php';
   </style>
 
   <div class="container">
-
-
     <div class="section-title text-center">
       <div class="section-title__tagline-box">
         <div class="section-title__tagline-shape"></div>
@@ -285,99 +191,16 @@ require_once 'views/layouts/header.php';
           </div>
         </div>
       </div>
-
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="600ms">
-        <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
-          <div class="services-one__img-box">
-            <div class="services-one__img">
-              <img src="assets/img/webp/bancolombia.webp" alt="Bancolombia">
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
-
-    <!-- <div class="section-title text-center">
-      <div class="section-title__tagline-box">
-        <div class="section-title__tagline-shape"></div>
-        <span class="section-title__tagline"></span>
-      </div>
-      <h2 class="section-title__title">Metodos de Pago</h2>
-    </div>
-    <div class="row">
-     
-      <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="100ms">
-        <div class="services-one__single">
-          <div class="services-one__img-box">
-            <div class="services-one__img">
-              <img src="assets/img/backgrounds/zelle.png" alt="Zelle">
-            </div>
-          </div>
-          <div class="services-one__content-wrap">
-            <div class="services-one__content">
-              <h3 class="services-one__title">Zelle</h3>
-              <p class="services-one__text">Número de telefono: +1 4074287580</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-     
-      <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="300ms">
-        <div class="services-one__single">
-          <div class="services-one__img-box">
-            <div class="services-one__img">
-              <img src="assets/img/backgrounds/Nesqui.png" alt="Nesqui">
-            </div>
-          </div>
-          <div class="services-one__content-wrap">
-            <div class="services-one__content">
-              <h3 class="services-one__title">Nequi</h3>
-              <p class="services-one__text">Información próximamente</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="600ms">
-        <div class="services-one__single">
-          <div class="services-one__img-box">
-            <div class="services-one__img">
-              <img src="assets/img/backgrounds/paypa.jpg" alt="Paypal">
-            </div>
-          </div>
-          <div class="services-one__content-wrap">
-            <div class="services-one__content">
-              <h3 class="services-one__title">Paypal</h3>
-              <p class="services-one__text">Nombre: Yorsin Cruz Osorio</p>
-              <p class="services-one__text">Correo: Yorsincruz1995@gmail.com</p>
-              <p class="services-one__text">Usuario: @Yorsin0506</p>
-              <p class="services-one__text">Teléfono: +1 4074287580</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-       
-      <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="900ms">
-        <div class="services-one__single">
-          <div class="services-one__img-box">
-            <div class="services-one__img">
-              <img src="assets/img/backgrounds/venezuela.jpg" alt="Banco de Venezuela">
-            </div>
-          </div>
-          <div class="services-one__content-wrap">
-            <div class="services-one__content">
-              <h3 class="services-one__title">Banco de Venezuela</h3>
-              <p class="services-one__text">Teléfono: 04124124923</p>
-              <p class="services-one__text">Cédula: 28517267</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
+    <style>
+      .services-one {
+        position: relative;
+        display: block;
+        padding: 0px 0 0px;
+        z-index: 1;
+      }
+    </style>
   </div>
 
   <script>
@@ -424,6 +247,14 @@ require_once 'views/layouts/header.php';
       max-height: 100px;
       max-width: 100%;
       object-fit: contain;
+    }
+
+    .payment-methods.row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      align-content: center;
     }
   </style>
 </section>

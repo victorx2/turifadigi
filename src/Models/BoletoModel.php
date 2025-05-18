@@ -501,6 +501,8 @@ class BoletoModel
       error_log("Intentando actualizar compra: " . $id_compra);
 
       $sql = "UPDATE compras_boletos SET estado = 'pagado' WHERE id_compra = :id_compra";
+      $this->db->consultar($sql, [':id_compra' => $id_compra]);
+
       $result = $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
 
       // Depuración: Verifica el resultado de la consulta
@@ -514,7 +516,6 @@ class BoletoModel
 
       return true;
     } catch (Exception $e) {
-      error_log("Error al actualizar el estado: " . $e->getMessage());
       throw new Exception("Error al actualizar el estado: " . $e->getMessage());
     }
   }
@@ -524,6 +525,7 @@ class BoletoModel
     try {
       $sql = "UPDATE compras_boletos SET estado = 'rechazado' WHERE id_compra = :id_compra";
       $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
+
       return true;
     } catch (Exception $e) {
       throw new Exception("Error al actualizar el estado: " . $e->getMessage());

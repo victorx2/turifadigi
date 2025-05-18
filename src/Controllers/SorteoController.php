@@ -40,9 +40,25 @@ class SorteoController
         "data" => $data
       ]);
     } catch (Exception $e) {
-      
+
       echo '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
       exit;
+    }
+  }
+
+  public function obtenerSorteoActivo()
+  {
+    try {
+      $data = $this->model->obtenerSorteosActivos();
+      return ([
+        "success" => true,
+        "data" => $data[0]
+      ]);
+    } catch (Exception $e) {
+      return ([
+        "success" => true,
+        "data" => 'Error: ' . $e->getMessage()
+      ]);
     }
   }
 }

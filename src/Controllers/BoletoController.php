@@ -269,10 +269,11 @@ class BoletoController
   public function confirmarPago($id_compra)
   {
     try {
-      $this->model->marcarCompraComoPagada($id_compra);
+      $r = $this->model->marcarCompraComoPagada($id_compra);
       return [
         'success' => true,
-        'mensaje' => '<div class="alert alert-success">¡Compra confirmada como pagada!'
+        'mensaje' => '¡Compra confirmada como pagada!',
+        'marc' => $r,
       ];
     } catch (Exception $e) {
       return [

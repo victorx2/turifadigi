@@ -50,9 +50,9 @@
             <p class="register-link">
               ¿No tienes cuenta? <a href="/signup">Regístrate aquí</a>
             </p>
-            <p class="forgot-password-link mt-2">
+            <!-- <p class="forgot-password-link mt-2">
               <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
-            </p>
+            </p> -->
           </div>
 
           <!-- Notificaciones Toast -->

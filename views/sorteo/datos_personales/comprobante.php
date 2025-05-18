@@ -4,18 +4,18 @@
     COMPROBANTE DE PAGO
   </h2>
   <div class="form-group-custom">
-    <label class="required">Titular</label>
-    <input type="text" class="form-control-custom" id="titular">
+    <label class="required">Titular del pago (Telefono del titular del pago, si es Pago Movil)</label>
+    <input type="text" class="form-control-custom" id="titular" placeholder="Nombre Apellido (o telefono)">
   </div>
 
   <div class="form-group-custom">
-    <label class="required">Referencia de pago (Últimos 4 dígitos)</label>
-    <input type="text" class="form-control-custom" id="referencia">
+    <label class="required">Referencia del pago</label>
+    <input type="text" class="form-control-custom" id="referencia" placeholder="123456"> 
   </div>
 
   <div class="form-group-custom">
     <label class="required">Monto Pagado</label>
-    <input type="text" class="form-control-custom" id="monto_pagado">
+    <input type="text" class="form-control-custom" id="monto_pagado" placeholder="0.00">
   </div>
 
   <div class="form-group-custom">
