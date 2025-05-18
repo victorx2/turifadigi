@@ -1,5 +1,6 @@
 {
   "register_account": "Registrar Cuenta",
+  "create_account": "Crear Cuenta",
   "first_name": "Nombre",
   "last_name": "Apellido",
   "enter_first_name": "Ingrese su nombre",
@@ -18,5 +19,21 @@
   "enter_email": "Ingrese su correo electrónico",
   "register": "Registrarme",
   "already_have_account": "¿Ya tienes una cuenta?",
-  "login": "Inicia sesión"
+  "login": "Inicia sesión",
+  "name_validation": "El nombre debe tener al menos 3 letras y solo puede contener letras y espacios.",
+  "lastname_validation": "El apellido debe tener al menos 3 letras y solo puede contener letras y espacios.",
+  "id_validation": "La cédula debe tener al menos 6 números y solo puede contener dígitos.",
+  "location_validation": "La ubicación debe tener al menos 3 caracteres y puede contener letras, números, espacios, comas y puntos.",
+  "username_validation": "El nombre de usuario debe tener al menos 3 caracteres y solo puede contener letras, números, guiones bajos (_) y guiones medios (-).",
+  "password_validation": "La contraseña debe tener al menos 8 caracteres.",
+  "phone_validation": "El teléfono debe tener al menos 10 números y solo puede contener dígitos.",
+  "email_validation": "Por favor ingrese un correo electrónico válido.",
+  "valid_name": "¡Nombre válido!",
+  "valid_lastname": "¡Apellido válido!",
+  "valid_id": "¡Cédula válida!",
+  "valid_location": "¡Ubicación válida!",
+  "valid_username": "¡Nombre de usuario válido!",
+  "valid_password": "¡Contraseña válida!",
+  "valid_phone": "¡Teléfono válido!",
+  "valid_email": "¡Correo electrónico válido!"
 }

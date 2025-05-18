@@ -153,11 +153,12 @@
                 echo '
               <div class="main-menu__right">
               <div id="language-container">
-                <select id="language-switcher" class="form-select">
+                <select id="language-switcher" class="form-select" onchange="i18n.changeLang(this.value)">
                   <option value="es">Español</option>
                   <option value="en">English</option>
                 </select>
               </div>
+               
               <div class="main-menu__btn-box">
               <a href="/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
               </div>

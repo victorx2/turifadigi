@@ -1,109 +1,125 @@
-// assets/js/i18n.js
+ // Sistema de traducciones
+const i18n = {
+  // Almacena las traducciones
+  translations: {},
 
-let translations = {};
+  // Idioma actual
+  currentLang: "es",
 
-function getCurrentLang() {
-  return (
-    document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("language="))
-      ?.split("=")[1] || "es"
-  );
-}
-
-async function loadTranslations(lang) {
-  const response = await fetch(`assets/language/${lang}.json`);
-  translations = await response.json();
-}
-
-function t(key) {
-  return translations[key] || key;
-}
-
-async function translateSignupForm() {
-  // Esperar a que se carguen las traducciones
-  await loadTranslations(getCurrentLang());
-
-  // Títulos y botones
-  const title = document.querySelector(".section-title__title");
-  if (title) title.textContent = t("register_account");
-  const btn = document.getElementById("buttonForm");
-  if (btn) btn.textContent = t("register");
-
-  // Labels e inputs
-  const map = [
-    { label: 'label[for="nombre_signup"]', key: "first_name" },
-    { label: 'label[for="apellido_signup"]', key: "last_name" },
-    { label: 'label[for="cedula_signup"]', key: "id" },
-    { label: 'label[for="ubicacion_signup"]', key: "location" },
-    { label: 'label[for="usuario_signup"]', key: "username" },
-    { label: 'label[for="password_signup"]', key: "password" },
-    { label: 'label[for="telefono_signup"]', key: "phone" },
-    { label: 'label[for="correo_signup"]', key: "email" },
-  ];
-  map.forEach(({ label, key }) => {
-    const el = document.querySelector(label);
-    if (el) {
-      // Mantener el icono
-      const icon = el.querySelector("i");
-      el.innerHTML = (icon ? icon.outerHTML + " " : "") + t(key) + " *";
+  // Inicializar el sistema
+  async init() {
+    console.log("Inicializando sistema de traducciones...");
+    // Verificar si existen los archivos JSON de traducción
+    try {
+      const esResponse = await fetch('assets/language/es.json');
+      const enResponse = await fetch('assets/language/en.json');
+      
+      if (!esResponse.ok || !enResponse.ok) {
+        throw new Error('No se encontraron los archivos de traducción');
+      }
+      
+      console.log('Archivos de traducción encontrados: es.json y en.json');
+      
+      // SIEMPRE usa español por defecto al cargar
+      this.currentLang = "es";
+      console.log(`Idioma actual: ${this.currentLang}`);
+      
+      // Cargar las traducciones
+      await this.loadTranslations(this.currentLang);
+      
+      // Inicializar el selector de idioma
+      this.initLanguageSwitcher();
+      
+      // Traducir la página
+      this.translatePage();
+      console.log("Sistema de traducciones inicializado correctamente");
+    } catch (error) {
+      console.error('Error verificando archivos de traducción:', error);
+      alert('No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/');
     }
-  });
+  },
 
-  // Placeholders
-  const placeholders = [
-    { input: "#nombre_signup", key: "enter_first_name" },
-    { input: "#apellido_signup", key: "enter_last_name" },
-    { input: "#cedula_signup", key: "enter_id" },
-    { input: "#ubicacion_signup", key: "enter_location" },
-    { input: "#usuario_signup", key: "enter_username" },
-    { input: "#password_signup", key: "enter_password" },
-    { input: "#telefono_signup", key: "enter_phone" },
-    { input: "#correo_signup", key: "enter_email" },
-  ];
-  placeholders.forEach(({ input, key }) => {
-    const el = document.querySelector(input);
-    if (el) el.placeholder = t(key);
-  });
+  // Cargar traducciones desde el archivo JSON
+  async loadTranslations(lang) {
+    console.log(`Cargando traducciones para el idioma: ${lang}`);
+    try {
+      const response = await fetch(`assets/language/${lang}.json`);
+      if (!response.ok) {
+        throw new Error(`No se encontró el archivo ${lang}.json`);
+      }
+      this.translations = await response.json();
+      console.log("Traducciones cargadas:", this.translations);
+    } catch (error) {
+      console.error("Error cargando traducciones:", error);
+      alert(`Error cargando traducciones para ${lang}. Verifica que el archivo ${lang}.json exista y tenga el formato correcto.`);
+    }
+  },
 
-  // Texto de abajo
-  const already = document.querySelector(".contact-two__left-text");
-  if (already) {
-    already.innerHTML = `${t("already_have_account")} <a href="/login">${t(
-      "login"
-    )}</a>`;
-  }
-}
+  // Obtener una traducción
+  t(key) {
+    const translation = this.translations[key] || key;
+    console.log(`Traduciendo clave: ${key} -> ${translation}`);
+    return translation;
+  },
 
-function setLanguageCookie(lang) {
-  document.cookie = `language=${lang}; path=/; max-age=${30 * 24 * 60 * 60}`;
-}
+  // Cambiar el idioma
+  async changeLang(lang) {
+    console.log(`Cambiando idioma a: ${lang}`);
+    this.currentLang = lang;
+    document.cookie = `language=${lang}; path=/; max-age=${30 * 24 * 60 * 60}`;
+    await this.loadTranslations(lang);
+    this.translatePage();
+    console.log(`Idioma cambiado exitosamente a: ${lang}`);
+  },
 
-function changeLanguage(lang) {
-  setLanguageCookie(lang);
-  // Si estamos en signup, traducir dinámicamente
-  if (window.location.pathname.includes("/signup")) {
-    translateSignupForm();
-  } else {
-    location.reload();
-  }
-}
+  // Inicializar el selector de idioma
+  initLanguageSwitcher() {
+    console.log("Inicializando selector de idioma...");
+    const switcher = document.getElementById("language-switcher");
+    if (switcher) {
+      switcher.value = this.currentLang;
+      switcher.addEventListener("change", (e) => {
+        console.log("Selección de idioma cambiada:", e.target.value);
+        this.changeLang(e.target.value);
+      });
+      console.log("Selector de idioma inicializado correctamente");
+    } else {
+      console.log("No se encontró el selector de idioma");
+    }
+  },
 
-function initLanguageSwitcher() {
-  const currentLang = getCurrentLang();
-  const switcher = document.getElementById("language-switcher");
-  if (switcher) {
-    switcher.value = currentLang;
-    switcher.addEventListener("change", (e) => {
-      changeLanguage(e.target.value);
+  // Traducir la página
+  translatePage() {
+    console.log("Iniciando traducción de la página...");
+    // Traducir elementos con atributo data-i18n
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+      const key = element.getAttribute("data-i18n");
+      element.textContent = this.t(key);
     });
-  }
-}
 
+    // Traducir placeholders
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+      const key = element.getAttribute("data-i18n-placeholder");
+      element.placeholder = this.t(key);
+    });
+
+    // Traducir títulos
+    document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+      const key = element.getAttribute("data-i18n-title");
+      element.title = this.t(key);
+    });
+
+    // Traducir contenido HTML
+    document.querySelectorAll("[data-i18n-html]").forEach((element) => {
+      const key = element.getAttribute("data-i18n-html");
+      element.innerHTML = this.t(key);
+    });
+    console.log("Página traducida correctamente");
+  },
+};
+
+// Inicializar cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
-  initLanguageSwitcher();
-  // Traducir siempre el signup si existe
-  if (window.location.pathname.includes("/signup")) {
-    translateSignupForm();
-  }
+  console.log("DOM cargado, inicializando traducciones...");
+  i18n.init();
 });

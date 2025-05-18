@@ -85,13 +85,14 @@
     border-image: initial;
     outline: none;
     border-radius: 0px;
- }
- .password-toggle {
+  }
+
+  .password-toggle {
     position: absolute;
     right: 10px;
     top: 28%;
     cursor: pointer;
- }
+  }
 </style>
 <!-- Agregar JS de Toastify -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -112,90 +113,90 @@
               <div class="section-title__tagline-shape">
 
               </div>
-              <span class="section-title__tagline"></span>
+              <span class="section-title__tagline" data-i18n="create_account">Crear Cuenta</span>
             </div>
-            <h2 class="section-title__title">Registrar Cuenta</h2>
+            <h2 class="section-title__title" data-i18n="register_account">Registrar Cuenta</h2>
           </div>
           <form id="form-registro" class="contact-two__form" action="registro_usuario" method="post" autocomplete=off>
             <div class="row">
               <div class="col-xl-6 col-lg-6">
                 <label for="nombre_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-person-fill icon-signup nombre"></i> Nombre *
+                  <i class="bi bi-person-fill icon-signup nombre"></i> <span data-i18n="first_name">Nombre</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="nombre" id="nombre_signup" placeholder="Ingrese su nombre" class="input-hover-signup">
-                  <span id="nombre_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <input type="text" name="nombre" id="nombre_signup" data-i18n-placeholder="enter_first_name" placeholder="Ingrese su nombre" class="input-hover-signup">
+                  <span id="nombre_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="name_validation"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="apellido_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-person-badge-fill icon-signup apellido"></i> Apellido *
+                  <i class="bi bi-person-badge-fill icon-signup apellido"></i> <span data-i18n="last_name">Apellido</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="apellido" id="apellido_signup" placeholder="Ingrese su apellido" class="input-hover-signup">
-                  <span id="apellido_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <input type="text" name="apellido" id="apellido_signup" data-i18n-placeholder="enter_last_name" placeholder="Ingrese su apellido" class="input-hover-signup">
+                  <span id="apellido_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="lastname_validation"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="cedula_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-card-text icon-signup cedula"></i> Cédula *
+                  <i class="bi bi-card-text icon-signup cedula"></i> <span data-i18n="id">Cédula</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="cedula" id="cedula_signup" placeholder="Ingrese su cédula" class="input-hover-signup">
-                  <span id="cedula_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <input type="text" name="cedula" id="cedula_signup" data-i18n-placeholder="enter_id" placeholder="Ingrese su cédula" class="input-hover-signup">
+                  <span id="cedula_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="id_validation"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> Ubicación *
+                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">Ubicación</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion_signup" placeholder="E.J: País, estado, dirección" class="input-hover-signup">
-                  <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: País, estado, dirección" class="input-hover-signup">
+                  <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="location_validation"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="usuario_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-person-circle icon-signup usuario"></i> Nombre de usuario *
+                  <i class="bi bi-person-circle icon-signup usuario"></i> <span data-i18n="username">Nombre de usuario</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="usuario" id="usuario_signup" placeholder="Cree un nombre de usuario" class="input-hover-signup">
-                  <span id="usuario_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <input type="text" name="usuario" id="usuario_signup" data-i18n-placeholder="enter_username" placeholder="Cree un nombre de usuario" class="input-hover-signup">
+                  <span id="usuario_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="username_validation"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="password_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-lock-fill icon-signup password"></i> Contraseña *
+                  <i class="bi bi-lock-fill icon-signup password"></i> <span data-i18n="password">Contraseña</span> *
                 </label>
                 <div class="contact-two__input-box" style="position: relative;">
-                  <input type="password" name="password" id="password_signup" placeholder="Cree una contraseña" class="input-hover-signup" autocomplete="off">
+                  <input type="password" name="password" id="password_signup" data-i18n-placeholder="enter_password" placeholder="Cree una contraseña" class="input-hover-signup" autocomplete="off">
                   <span class="password-toggle" id="password-togle" onclick="togglePasswordVisibilitySignup()">
                     <i class="bi bi-eye-fill" id="icon-eye-signup"></i>
                   </span>
-                  <span id="password_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <span id="password_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="password_validation"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="telefono_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-telephone-fill icon-signup telefono"></i> Teléfono *
+                  <i class="bi bi-telephone-fill icon-signup telefono"></i> <span data-i18n="phone">Teléfono</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="telefono" id="telefono_signup" placeholder="Ingrese su número de teléfono" class="input-hover-signup">
-                  <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su número de teléfono" class="input-hover-signup">
+                  <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="phone_validation"></span>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="correo_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-envelope-fill icon-signup correo"></i> Correo electrónico *
+                  <i class="bi bi-envelope-fill icon-signup correo"></i> <span data-i18n="email">Correo electrónico</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="correo" id="correo_signup" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
-                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
+                  <input type="text" name="correo" id="correo_signup" data-i18n-placeholder="enter_email" placeholder="Ingrese su correo electrónico" class="input-hover-signup">
+                  <span id="correo_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;" data-i18n="email_validation"></span>
                 </div>
               </div>
               <div class="col-xl-12 text-center">
                 <div class="contact-two__btn-box">
-                  <button type="submit" class="thm-btn contact-two__btn" id="buttonForm" disabled>Registrarme</button>
+                  <button type="submit" class="thm-btn contact-two__btn" id="buttonForm" data-i18n="register" disabled>Registrarme</button>
                 </div>
               </div>
             </div>
@@ -203,7 +204,7 @@
 
           <div class="result"></div>
 
-          <p class="contact-two__left-text" style="margin-top: 20px;">¿Ya tienes una cuenta? &nbsp;&nbsp;&nbsp;<a href="/login">Inicia sesión</a></p>
+          <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n-html="already_have_account">¿Ya tienes una cuenta? &nbsp;&nbsp;&nbsp;<a href="/login" data-i18n="login">Inicia sesión</a></p>
 
         </div>
       </div>
@@ -328,10 +329,10 @@
       spanMsg.textContent = '';
       spanMsg.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsg.textContent = 'El nombre debe tener al menos 3 letras y solo puede contener letras y espacios.';
+      spanMsg.textContent = i18n.t('name_validation');
       spanMsg.style.color = '#e53935';
     } else {
-      spanMsg.textContent = '¡Nombre válido!';
+      spanMsg.textContent = i18n.t('valid_name');
       spanMsg.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -349,10 +350,10 @@
       spanMsgApellido.textContent = '';
       spanMsgApellido.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgApellido.textContent = 'El apellido debe tener al menos 3 letras y solo puede contener letras y espacios.';
+      spanMsgApellido.textContent = i18n.t('lastname_validation');
       spanMsgApellido.style.color = '#e53935';
     } else {
-      spanMsgApellido.textContent = '¡Apellido válido!';
+      spanMsgApellido.textContent = i18n.t('valid_lastname');
       spanMsgApellido.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -370,21 +371,17 @@
       spanMsgCedula.textContent = '';
       spanMsgCedula.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgCedula.textContent = 'La cédula debe tener al menos 6 números y solo puede contener dígitos.';
+      spanMsgCedula.textContent = i18n.t('id_validation');
       spanMsgCedula.style.color = '#e53935';
     } else {
-      spanMsgCedula.textContent = '¡Cédula válida!';
+      spanMsgCedula.textContent = i18n.t('valid_id');
       spanMsgCedula.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
   });
 
-
-
-
-
   const inputUbicacion = document.getElementById('ubicacion_signup');
-  
+
   const spanMsgUbicacion = document.getElementById('ubicacion_signup_msg');
 
   inputUbicacion.addEventListener('keyup', function() {
@@ -396,18 +393,14 @@
       spanMsgUbicacion.textContent = '';
       spanMsgUbicacion.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgUbicacion.textContent = 'La ubicación debe tener al menos 3 caracteres y puede contener letras, números, espacios, comas y puntos.';
+      spanMsgUbicacion.textContent = i18n.t('location_validation');
       spanMsgUbicacion.style.color = '#e53935';
     } else {
-      spanMsgUbicacion.textContent = '¡Ubicación válida!';
+      spanMsgUbicacion.textContent = i18n.t('valid_location');
       spanMsgUbicacion.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
   });
-
-
-
-
 
   const inputUsuario = document.getElementById('usuario_signup');
   const spanMsgUsuario = document.getElementById('usuario_signup_msg');
@@ -421,10 +414,10 @@
       spanMsgUsuario.textContent = '';
       spanMsgUsuario.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgUsuario.textContent = 'El nombre de usuario debe tener al menos 3 caracteres y solo puede contener letras, números, guiones bajos (_) y guiones medios (-).';
+      spanMsgUsuario.textContent = i18n.t('username_validation');
       spanMsgUsuario.style.color = '#e53935';
     } else {
-      spanMsgUsuario.textContent = '¡Nombre de usuario válido!';
+      spanMsgUsuario.textContent = i18n.t('valid_username');
       spanMsgUsuario.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -449,10 +442,10 @@
       spanMsgPassword.textContent = '';
       spanMsgPassword.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgPassword.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+      spanMsgPassword.textContent = i18n.t('password_validation');
       spanMsgPassword.style.color = '#e53935';
     } else {
-      spanMsgPassword.textContent = '¡Contraseña válida!';
+      spanMsgPassword.textContent = i18n.t('valid_password');
       spanMsgPassword.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -470,10 +463,10 @@
       spanMsgTelefono.textContent = '';
       spanMsgTelefono.style.color = '#e53935';
     } else if (!esValido) {
-      spanMsgTelefono.textContent = 'El teléfono debe tener al menos 10 números y solo puede contener dígitos.';
+      spanMsgTelefono.textContent = i18n.t('phone_validation');
       spanMsgTelefono.style.color = '#e53935';
     } else {
-      spanMsgTelefono.textContent = '¡Teléfono válido!';
+      spanMsgTelefono.textContent = i18n.t('valid_phone');
       spanMsgTelefono.style.color = '#43a047';
     }
     verificarEstadoValidacionGeneral();
@@ -501,12 +494,12 @@
 } ?>
 
 <style>
- .password-toggle-correction{
+  .password-toggle-correction {
     position: absolute;
     right: 10px;
     top: 14%;
     cursor: pointer;
- }
+  }
 </style>
 
 

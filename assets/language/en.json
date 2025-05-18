@@ -1,5 +1,6 @@
 {
   "register_account": "Register Account",
+  "create_account": "Create Account",
   "first_name": "First Name",
   "last_name": "Last Name",
   "enter_first_name": "Enter your first name",
@@ -7,7 +8,7 @@
   "id": "ID",
   "enter_id": "Enter your ID",
   "location": "Location",
-  "enter_location": "E.g.: Country, state, address",
+  "enter_location": "E.g: Country, state, address",
   "username": "Username",
   "enter_username": "Create a username",
   "password": "Password",
@@ -18,5 +19,21 @@
   "enter_email": "Enter your email",
   "register": "Register",
   "already_have_account": "Already have an account?",
-  "login": "Login"
+  "login": "Login",
+  "name_validation": "Name must be at least 3 letters long and can only contain letters and spaces.",
+  "lastname_validation": "Last name must be at least 3 letters long and can only contain letters and spaces.",
+  "id_validation": "ID must be at least 6 digits long and can only contain numbers.",
+  "location_validation": "Location must be at least 3 characters long and can contain letters, numbers, spaces, commas and periods.",
+  "username_validation": "Username must be at least 3 characters long and can only contain letters, numbers, underscores (_) and hyphens (-).",
+  "password_validation": "Password must be at least 8 characters long.",
+  "phone_validation": "Phone number must be at least 10 digits long and can only contain numbers.",
+  "email_validation": "Please enter a valid email address.",
+  "valid_name": "Valid name!",
+  "valid_lastname": "Valid last name!",
+  "valid_id": "Valid ID!",
+  "valid_location": "Valid location!",
+  "valid_username": "Valid username!",
+  "valid_password": "Valid password!",
+  "valid_phone": "Valid phone number!",
+  "valid_email": "Valid email!"
 }

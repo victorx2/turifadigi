@@ -107,43 +107,6 @@
     }
   }
 
-/*   //===Language switcher=== */
-/*   function languageSwitcher() { */
-/*     if ($("#polyglot-language-options").length) { */
-/*       $("#polyglotLanguageSwitcher").polyglotLanguageSwitcher({ */
-/*         effect: "slide", */
-/*         animSpeed: 500, */
-/*         testMode: false, */
-/*         onChange: function (evt) { */
-/*           // Guardar la preferencia en cookie */
-/*           document.cookie = `language=${evt.selectedItem}; path=/; max-age=${ */
-/*             30 * 24 * 60 * 60 */
-/*           }`; */
-/*           // Recargar la página para aplicar el cambio */
-/*           location.reload(); */
-/*         }, */
-/*       }); */
-/*     } */
-/*   } */
-/*  */
-/*   // Llamar a la función cuando el documento esté listo */
-/*   $(document).ready(function () { */
-/*     languageSwitcher(); */
-/*   }); */
-
-  /* function languageSwitcher() { */
-  /*   if ($("#polyglot-language-options").length) { */
-  /*     $("#polyglotLanguageSwitcher").polyglotLanguageSwitcher({ */
-  /*       effect: "slide", */
-  /*       animSpeed: 500, */
-  /*       testMode: true, */
-  /*       onChange: function (evt) { */
-  /*         alert("The selected language is: " + evt.selectedItem); */
-  /*       }, */
-  /*     }); */
-  /*   } */
-  /* } */
-
   if ($(".portfolio-two__list li").length) {
     $(".portfolio-two__list li").each(function () {
       let self = $(this);
