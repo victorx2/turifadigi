@@ -77,7 +77,7 @@
               $premios = $config['premios'] ?? [
                 ['nombre' => '🛵 Premio Mayor', 'descripcion' => "Si estás en Estados Unidos, ganas una moto\nSi estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes"],
                 ['nombre' => '📱 Segundo Premio', 'descripcion' => "Un iPhone 16 Pro Max\nDisponible para cualquier país participante"],
-                ['nombre' => '💵 Tercer Premio', 'descripcion' => "$1000 en efectivo\nPara participar debes comprar 10 boletos o más\nEste premio se activa con el 50% de los boletos vendidos"]
+                ['nombre' => '💵 Tercer Premio', 'descripcion' => "$100 en efectivo\nPara participar debes comprar 10 boletos o más\nEste premio se activa con el 50% de los boletos vendidos"]
               ];
               foreach ($premios as $index => $premio): ?>
                 <div class="card mb-3 premio-item">
@@ -111,7 +111,7 @@
 
             <div class="mb-3">
               <label for="texto_ejemplo" class="form-label">Texto de Ejemplo</label>
-              <textarea class="form-control" id="texto_ejemplo" name="texto_ejemplo" rows="3" required><?php echo htmlspecialchars($config['texto_ejemplo'] ?? 'Si compras 10 boletos, participas automáticamente en el sorteo de $1000 cuando se alcance el 50% de los números vendidos. El día se anunciará públicamente.'); ?></textarea>
+              <textarea class="form-control" id="texto_ejemplo" name="texto_ejemplo" rows="3" required><?php echo htmlspecialchars($config['texto_ejemplo'] ?? 'Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.'); ?></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>

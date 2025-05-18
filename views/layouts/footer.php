@@ -3,98 +3,82 @@
   <div class="site-footer__top">
     <div class="container">
       <div class="row">
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
-          <div class="footer-widget__column footer-widget__about">
+        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+          <div class="footer-widget_column footer-widget_about">
             <div class="footer-widget__logo">
             </div>
             <p class="footer-widget__about-text"></p>
             <div class="site-footer__social-box">
               <h3 class="site-footer__social-title">Redes sociales</h3>
               <div class="site-footer__social">
-                <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D"><i class="fab fa-instagram"></i></a>
+                <h4 style="font-size: 18px; margin-bottom: 10px; color: white; display: inline-block;">¡Síguenos en Instagram!</h4>
+                <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" style="margin-left: 15px; display: inline-flex; justify-content: center; align-items: center; width: 48px; height: 48px; background: rgba(255,255,255,0.08); border-radius: 50%;">
+                  <i class="fab fa-instagram" style="font-size: 28px; color: white;"></i>
+                </a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
-          <div class="footer-widget__column footer-widget__link">
-            <div class="footer-widget__title-box">
-              <h3 class="footer-widget__title"></h3>
-            </div>
-            <ul class="footer-widget__link-list list-unstyled">
-              <!--  -->
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-              <li><a href=" "> </a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
-          <div class="footer-widget__column footer-widget__newsletter">
-            <div class="footer-widget__title-box">
-              <h3 class="footer-widget__title"> </h3>
-            </div>
-            <p class="footer-widget__newsletter-text"> </p>
 
-            <div class="mc-form__response"></div>
-            <ul class="footer-widget__Contact-list list-unstyled">
-              <li>
-                <div class="icon">
-                  <span class="icon-telephone"></span>
-                </div>
-                <div class="contact">
-                  <p>Llamar en cualquier momento</p>
-                  <a href="tel:12455689008">+1 4074287580</a>
-                </div>
-              </li>
-            </ul>
+        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+          <div class="footer-widget_column footer-widget_about">
+            <div class="footer-widget__logo">
+            </div>
+            <p class="footer-widget__about-text"></p>
+            <div class="site-footer__social-box">
+              <h3 class="site-footer__social-title">Contacto</h3>
+              <div class="phone number">
+                <i class="fa-solid fa-phone-volume"></i>
+                <a href="tel:14074287580">+1 4074287580</a>
+              </div>
+              <style>
+                .main-menu .mobile-nav__toggler {
+                  font-size: 30px;
+                  margin: 10px 0px 10px 10px;
+                }
+
+                .phone.number {
+                  font-size: 24px;
+                  font-weight: 600;
+                  color: #f51414;
+                  line-height: 32px;
+                  font-family: var(--zefxa-font-two);
+                  -webkit-transition: all 500ms ease;
+                }
+
+                .phone.number a,
+                .phone.number a:focus,
+                .phone.number a:visited {
+                  color: white;
+                  text-decoration: none;
+                }
+
+                .phone.number a:hover {
+                  color: var(--zefxa-base);
+                  text-decoration: none;
+                }
+
+
+                i.fa-solid.fa-phone-volume {
+
+                  color: var(--zefxa-base);
+                }
+              </style>
+            </div>
           </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="500ms">
-          <div class="footer-widget__column footer-widget__Gallery">
+        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="500ms" style="visibility: visible; animation-delay: 500ms; animation-name: fadeInUp;">
+          <div class="footer-widget_column footer-widget_Gallery">
             <div class="footer-widget__title-box">
               <h3 class="footer-widget__title"></h3>
             </div>
-            <ul class="footer-widget__Gallery-list list-unstyled clearfix">
-              <li>
-                <div class="footer-widget__Gallery-img">
-                  <!-- <img src="assets/images/project/footer-widget-Gallery-img-1.jpg" loading="lazy" alt=""> -->
-                  <a href="#"><span class="fab fa-instagram"></span></a>
-                </div>
-              </li>
-              <li>
-                <div class="footer-widget__Gallery-img">
-                  <img src="assets/images/project/footer-widget-Gallery-img-2.jpg" loading="lazy" alt="">
-                  <a href="#"><span class="fab fa-instagram"></span></a>
-                </div>
-              </li>
-              <li>
-                <div class="footer-widget__Gallery-img">
-                  <img src="assets/images/project/footer-widget-Gallery-img-3.jpg" loading="lazy" alt="">
-                  <a href="#"><span class="fab fa-instagram"></span></a>
-                </div>
-              </li>
-              <li>
-                <div class="footer-widget__Gallery-img">
-                  <img src="assets/images/project/footer-widget-Gallery-img-4.jpg" loading="lazy" alt="">
-                  <a href="#"><span class="fab fa-instagram"></span></a>
-                </div>
-              </li>
-              <li>
-                <div class="footer-widget__Gallery-img">
-                  <img src="assets/images/project/footer-widget-Gallery-img-5.jpg" loading="lazy" alt="">
-                  <a href="#"><span class="fab fa-instagram"></span></a>
-                </div>
-              </li>
-              <li>
-                <div class="footer-widget__Gallery-img">
-                  <img src="assets/images/project/footer-widget-Gallery-img-6.jpg" loading="lazy" alt="">
-                  <a href="#"><span class="fab fa-instagram"></span></a>
-                </div>
-              </li>
-            </ul>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="200ms" style="visibility: visible; animation-delay: 200ms; animation-name: fadeInUp;">
+          <div class="footer-widget_column footer-widget_link">
+            <div class="footer-widget__title-box">
+              <h3 class="footer-widget__title"></h3>
+            </div>
           </div>
         </div>
       </div>
@@ -127,10 +111,10 @@
 
 
 <div class="mobile-nav__wrapper">
-  <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+  <div class="mobile-nav_overlay mobile-nav_toggler"></div>
   <!-- /.mobile-nav__overlay -->
   <div class="mobile-nav__content">
-    <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+    <span class="mobile-nav_close mobile-nav_toggler"><i class="fa fa-times"></i></span>
 
     <div class="logo-box">
       <a href="" aria-label="logo image"><!-- LOGO TURIFADIGI --></a>
@@ -141,17 +125,23 @@
 
     <ul class="mobile-nav__contact list-unstyled">
       <li>
-        <i class="fa fa-envelope"></i>
-        <a href="mailto:needhelp@packageName__.com">turifadigitalx2@gmail.com</a>
+        <i class="fa fa-envelope" style="font-size: 16px;"></i>
+        <a href="mailto:needhelp@packageName__.com" style="font-size: 16px;">turifadigitalx2@gmail.com</a>
       </li>
       <li>
-        <i class="fa fa-phone-alt"></i>
-        <a href="tel:+1 4074287580">+1 4074287580</a>
+        <i class="fa fa-phone-alt" style="font-size: 16px;"></i>
+        <a href="tel:+1 4074287580" style="font-size: 16px;">+1 4074287580</a>
       </li>
     </ul><!-- /.mobile-nav__contact -->
     <div class="mobile-nav__top">
       <div class="mobile-nav__social">
-        <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" class="fab fa-instagram"></a>
+
+        <h4 style="font-size: 18px; margin-bottom: 10px; color: white; display: inline-block;">¡Síguenos en Instagram!</h4>
+        <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" style="margin-left: 15px; display: inline-flex; justify-content: center; align-items: center; width: 48px; height: 48px; background: rgba(255,255,255,0.08); border-radius: 50%;">
+          <i class="fab fa-instagram" style="font-size: 28px; color: white;"></i>
+        </a>
+
+        <!-- <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" class="fab fa-instagram"></a> -->
       </div><!-- /.mobile-nav__social -->
     </div><!-- /.mobile-nav__top -->
 

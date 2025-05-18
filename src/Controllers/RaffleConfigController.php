@@ -26,7 +26,7 @@ class RaffleConfigController
         'boletos_minimos' => '2',
         'numero_contacto' => '407-428-7580',
         'url_rifa' => 'https://tripletachira.com/',
-        'texto_ejemplo' => 'Si compras 10 boletos, participas automáticamente en el sorteo de $1000 cuando se alcance el 50% de los números vendidos. El día se anunciará públicamente.',
+        'texto_ejemplo' => 'Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.',
         'premios' => [
           [
             'id' => 1,
@@ -43,7 +43,7 @@ class RaffleConfigController
           [
             'id' => 3,
             'nombre' => 'Tercer Premio',
-            'descripcion' => "$1000 en efectivo\nEste premio se activa con el 50% de los boletos vendidos",
+            'descripcion' => "$100 en efectivo\nEste premio se activa con el 30% de los boletos vendidos",
             'boletos_minimos' => 10
           ]
         ]

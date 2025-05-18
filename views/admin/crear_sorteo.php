@@ -138,9 +138,9 @@ Disponible para cualquier país participante</textarea>
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> Descripción del Premio *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>$1000 en efectivo
+                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>$100 en efectivo
 Para participar debes comprar 10 boletos o más
-Este premio se activa con el 50% de los boletos vendidos</textarea>
+Este premio se activa con el 30% de los boletos vendidos</textarea>
                     </div>
                   </div>
                 </div>
@@ -164,7 +164,7 @@ Este premio se activa con el 50% de los boletos vendidos</textarea>
                 <label for="texto_ejemplo" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-chat-left-text icon-signup"></i> Texto de Ejemplo *
                 </label>
-                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>Si compras 10 boletos, participas automáticamente en el sorteo de $1000 cuando se alcance el 50% de los números vendidos. El día se anunciará públicamente.</textarea>
+                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.</textarea>
               </div>
 
               <button type="submit" class="btn btn-primary">Crear Sorteo</button>
