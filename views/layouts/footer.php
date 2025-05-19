@@ -81,20 +81,7 @@
              </div>
            </div>
          </div>
-         <!-- <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="500ms" style="visibility: visible; animation-delay: 500ms; animation-name: fadeInUp;">
-          <div class="footer-widget__column footer-widget__Gallery">
-            <div class="footer-widget__title-box">
-              <h3 class="footer-widget__title"></h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="200ms" style="visibility: visible; animation-delay: 200ms; animation-name: fadeInUp;">
-          <div class="footer-widget__column footer-widget__link">
-            <div class="footer-widget__title-box">
-              <h3 class="footer-widget__title"></h3>
-            </div>
-          </div>
-        </div> -->
+
        </div>
      </div>
    </div>
@@ -118,8 +105,8 @@
    </div>
 
  </footer>
+ 
  <!--Site Footer End-->
-
 
  </div><!-- /.page-wrapper -->
 
@@ -233,7 +220,6 @@
  <script src="assets/js/dataTables.bootstrap5.js"></script>
  <script src="assets/js/tooltip.js"></script>
  <script src="assets/js/i18n.js"></script>
- <!-- <script src="/assets/js/i18n.js"></script> -->
  </body>
 
  </html>

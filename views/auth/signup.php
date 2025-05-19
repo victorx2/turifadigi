@@ -465,16 +465,22 @@
   }
 
   // Actualizar mensajes de validación al cambiar el idioma
-  const originalChangeLang = i18n.changeLang.bind(i18n);
-  i18n.changeLang = async function(lang) {
-    await originalChangeLang(lang);
-    document.querySelectorAll('span[data-msg-key]').forEach(span => {
-      const key = span.getAttribute('data-msg-key');
-      if (key) {
-        span.textContent = i18n.t(key);
-      }
-    });
-  };
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof i18n !== 'undefined') {
+      const originalChangeLang = i18n.changeLang.bind(i18n);
+      i18n.changeLang = async function(lang) {
+        await originalChangeLang(lang);
+        document.querySelectorAll('span[data-msg-key]').forEach(span => {
+          const key = span.getAttribute('data-msg-key');
+          if (key) {
+            span.textContent = i18n.t(key);
+          }
+        });
+      };
+    } else {
+      console.error('i18n no está definido. Asegúrate de que el archivo i18n.js esté cargado correctamente.');
+    }
+  });
 </script>
 
 <?php if (!empty($_SESSION['mensaje'])) {

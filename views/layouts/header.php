@@ -157,15 +157,21 @@
               if ($session === '') {
                 echo '
             <div class="main-menu__right">
+
+
+
             
             <div id="language-container">
-              <select id="language-switcher" class="form-select" onchange="i18n.changeLang(this.value)">
-                <option value="es">Español</option>
-                <option value="en">English</option>
+              <select id="language-switcher" class="" onchange="i18n.changeLang(this.value)">
+                <option id="lang-es" value="es">Español</option>
+                <option id="lang-en" value="en">English</option>
               </select>
             </div>
 
-              <div class="main-menu__btn-box">
+
+
+
+            <div class="main-menu__btn-box">
               <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
               </div>
 

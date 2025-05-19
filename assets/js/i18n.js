@@ -1,15 +1,79 @@
 // Sistema de traducciones
+
+// Inicializar y sincronizar el idioma con localStorage y el select
+
+document.addEventListener("DOMContentLoaded", () => {
+  const languageSwitcher = document.getElementById("language-switcher");
+  //console.log(
+  //  "Tipo de languageSwitcher:",
+  //  typeof languageSwitcher,
+  //  "Valor:",
+  //  languageSwitcher
+  //);
+  if (languageSwitcher) {
+    //console.log("languageSwitcher encontrado en el DOM.");
+    // Obtener el idioma guardado o usar español por defecto
+    const savedLang = localStorage.getItem("language") || "es";
+    // Establecer el valor del select según el idioma guardado
+    languageSwitcher.value = savedLang;
+
+    // Cambiar el idioma al cargar la página
+    i18n.changeLang(savedLang);
+
+    // Manejar cambios en el select
+    languageSwitcher.addEventListener("change", function () {
+      const selectedLang = this.value;
+      localStorage.setItem("language", selectedLang);
+      i18n.changeLang(selectedLang);
+    });
+  } else {
+    console.log("languageSwitcher no encontrado en el DOM.");
+  }
+});
+
 const i18n = {
   // Almacena las traducciones
   translations: {},
-
   // Idioma actual
   currentLang: "es",
+  // Mapeo de idiomas a índices
+  languageIndices: {
+    es: 0,
+    en: 1,
+  },
+
+  // Funciones de manejo de cookies
+  setLanguageCookie(lang) {
+    document.cookie = `language=${lang}; max-age=${365 * 24 * 60 * 60}; path=/`;
+  },
+
+  getLanguageCookie() {
+    const name = "language=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length);
+      }
+    }
+    return null;
+  },
+
+  // Funciones de manejo de localStorage
+  saveLanguageToStorage(lang) {
+    localStorage.setItem("language", lang);
+  },
+
+  getLanguageFromStorage() {
+    return localStorage.getItem("language");
+  },
 
   // Inicializar el sistema
   async init() {
-    console.log("Inicializando sistema de traducciones...");
-    // Verificar si existen los archivos JSON de traducción
     try {
       const esResponse = await fetch("assets/language/es.json");
       const enResponse = await fetch("assets/language/en.json");
@@ -18,23 +82,22 @@ const i18n = {
         throw new Error("No se encontraron los archivos de traducción");
       }
 
-      console.log("Archivos de traducción encontrados: es.json y en.json");
+      // Intentar obtener el idioma de las cookies o localStorage
+      const cookieLang = this.getLanguageCookie();
+      const storageLang = this.getLanguageFromStorage();
 
-      // SIEMPRE usa español por defecto al cargar
-      this.currentLang = "es";
-      console.log(`Idioma actual: ${this.currentLang}`);
+      // Establecer el idioma actual con prioridad: cookie > localStorage > español por defecto
+      this.currentLang = cookieLang || storageLang || "es";
 
       // Cargar las traducciones
       await this.loadTranslations(this.currentLang);
 
-      // Inicializar el selector de idioma
+      // Inicializar el selector de idioma (esto actualizará el selector visualmente)
       this.initLanguageSwitcher();
 
       // Traducir la página
       this.translatePage();
-      console.log("Sistema de traducciones inicializado correctamente");
     } catch (error) {
-      console.error("Error verificando archivos de traducción:", error);
       alert(
         "No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/"
       );
@@ -43,16 +106,13 @@ const i18n = {
 
   // Cargar traducciones desde el archivo JSON
   async loadTranslations(lang) {
-    console.log(`Cargando traducciones para el idioma: ${lang}`);
     try {
       const response = await fetch(`assets/language/${lang}.json`);
       if (!response.ok) {
         throw new Error(`No se encontró el archivo ${lang}.json`);
       }
       this.translations = await response.json();
-      console.log("Traducciones cargadas:", this.translations);
     } catch (error) {
-      console.error("Error cargando traducciones:", error);
       alert(
         `Error cargando traducciones para ${lang}. Verifica que el archivo ${lang}.json exista y tenga el formato correcto.`
       );
@@ -61,40 +121,68 @@ const i18n = {
 
   // Obtener una traducción
   t(key) {
-    const translation = this.translations[key] || key;
-    console.log(`Traduciendo clave: ${key} -> ${translation}`);
-    return translation;
+    return this.translations[key] || key;
   },
 
-  // Cambiar el idioma
-  async changeLang(lang) {
-    console.log(`Cambiando idioma a: ${lang}`);
-    this.currentLang = lang;
-    document.cookie = `language=${lang}; path=/; max-age=${30 * 24 * 60 * 60}`;
-    await this.loadTranslations(lang);
-    this.translatePage();
-    console.log(`Idioma cambiado exitosamente a: ${lang}`);
+  // Obtener índice del idioma actual
+  getLanguageIndex(lang) {
+    return this.languageIndices[lang] || 0;
+  },
+
+  // Cambiar selección por índice
+  setLanguageByIndex(index) {
+    const switcher = document.getElementById("language-switcher");
+    if (switcher) {
+      switcher.selectedIndex = index;
+      const lang = switcher.options[index].value;
+      this.changeLang(lang);
+    }
   },
 
   // Inicializar el selector de idioma
   initLanguageSwitcher() {
-    console.log("Inicializando selector de idioma...");
     const switcher = document.getElementById("language-switcher");
     if (switcher) {
-      switcher.value = this.currentLang;
+      // Obtener el idioma guardado (cookie o localStorage)
+      const cookieLang = this.getLanguageCookie();
+      const storageLang = this.getLanguageFromStorage();
+      const savedLang = cookieLang || storageLang || "es";
+
+      // Establecer el valor inicial basado en el idioma guardado
+      const currentIndex = this.getLanguageIndex(savedLang);
+      switcher.selectedIndex = currentIndex;
+
+      // Actualizar el idioma actual
+      this.currentLang = savedLang;
+
       switcher.addEventListener("change", (e) => {
-        console.log("Selección de idioma cambiada:", e.target.value);
         this.changeLang(e.target.value);
       });
-      console.log("Selector de idioma inicializado correctamente");
-    } else {
-      console.log("No se encontró el selector de idioma");
     }
+  },
+
+  // Cambiar el idioma
+  async changeLang(lang) {
+    this.currentLang = lang;
+
+    // Guardar en cookie y localStorage
+    this.setLanguageCookie(lang);
+    this.saveLanguageToStorage(lang);
+
+    // Actualizar el selector visualmente
+    const switcher = document.getElementById("language-switcher");
+    if (switcher) {
+      const index = this.getLanguageIndex(lang);
+      switcher.selectedIndex = index;
+      console.log("Idioma cambiado a:", lang, "Índice seleccionado:", index);
+    }
+
+    await this.loadTranslations(lang);
+    this.translatePage();
   },
 
   // Traducir la página
   translatePage() {
-    console.log("Iniciando traducción de la página...");
     // Traducir elementos con atributo data-i18n
     document.querySelectorAll("[data-i18n]").forEach((element) => {
       const key = element.getAttribute("data-i18n");
@@ -126,13 +214,10 @@ const i18n = {
         span.textContent = this.t(key);
       }
     });
-
-    console.log("Página traducida correctamente");
   },
 };
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM cargado, inicializando traducciones...");
-  i18n.init();
-});
+/* document.addEventListener("DOMContentLoaded", () => { */
+/*   i18n.init(); */
+/* }); */
