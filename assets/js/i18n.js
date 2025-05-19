@@ -1,33 +1,63 @@
 // Sistema de traducciones
 
-// Inicializar y sincronizar el idioma con localStorage y el select
-
 document.addEventListener("DOMContentLoaded", () => {
-  const languageSwitcher = document.getElementById("language-switcher");
-  //console.log(
-  //  "Tipo de languageSwitcher:",
-  //  typeof languageSwitcher,
-  //  "Valor:",
-  //  languageSwitcher
-  //);
+  const languageSwitcher = document.getElementById(
+    "language-selector-dropdown"
+  );
+
   if (languageSwitcher) {
-    //console.log("languageSwitcher encontrado en el DOM.");
     // Obtener el idioma guardado o usar español por defecto
     const savedLang = localStorage.getItem("language") || "es";
-    // Establecer el valor del select según el idioma guardado
-    languageSwitcher.value = savedLang;
+
+    // Establecer el valor inicial del dropdown
+    const defaultText = languageSwitcher.querySelector(".default.text");
+    const items = languageSwitcher.querySelectorAll(".item");
+    const hiddenInput = languageSwitcher.querySelector('input[type="hidden"]');
+
+    // Configurar el valor inicial
+    hiddenInput.value = savedLang;
+    defaultText.textContent = savedLang.toUpperCase();
 
     // Cambiar el idioma al cargar la página
     i18n.changeLang(savedLang);
 
-    // Manejar cambios en el select
-    languageSwitcher.addEventListener("change", function () {
-      const selectedLang = this.value;
-      localStorage.setItem("language", selectedLang);
-      i18n.changeLang(selectedLang);
+    // Manejar clic en el dropdown
+    languageSwitcher.addEventListener("click", function (e) {
+      e.stopPropagation();
+      this.classList.toggle("active");
+      const menu = this.querySelector(".menu");
+      menu.style.display = this.classList.contains("active") ? "block" : "none";
+    });
+
+    // Manejar selección de idioma
+    items.forEach((item) => {
+      item.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const selectedLang = this.getAttribute("data-value");
+
+        // Actualizar el texto visible
+        defaultText.textContent = selectedLang.toUpperCase();
+        hiddenInput.value = selectedLang;
+
+        // Guardar y cambiar el idioma
+        localStorage.setItem("language", selectedLang);
+        i18n.changeLang(selectedLang);
+
+        // Cerrar el dropdown
+        languageSwitcher.classList.remove("active");
+        languageSwitcher.querySelector(".menu").style.display = "none";
+      });
+    });
+
+    // Cerrar dropdown al hacer clic fuera
+    document.addEventListener("click", function (e) {
+      if (!languageSwitcher.contains(e.target)) {
+        languageSwitcher.classList.remove("active");
+        languageSwitcher.querySelector(".menu").style.display = "none";
+      }
     });
   } else {
-    console.log("languageSwitcher no encontrado en el DOM.");
+    console.log("language-selector-dropdown no encontrado en el DOM.");
   }
 });
 
@@ -36,11 +66,6 @@ const i18n = {
   translations: {},
   // Idioma actual
   currentLang: "es",
-  // Mapeo de idiomas a índices
-  languageIndices: {
-    es: 0,
-    en: 1,
-  },
 
   // Funciones de manejo de cookies
   setLanguageCookie(lang) {
@@ -92,9 +117,6 @@ const i18n = {
       // Cargar las traducciones
       await this.loadTranslations(this.currentLang);
 
-      // Inicializar el selector de idioma (esto actualizará el selector visualmente)
-      this.initLanguageSwitcher();
-
       // Traducir la página
       this.translatePage();
     } catch (error) {
@@ -124,43 +146,6 @@ const i18n = {
     return this.translations[key] || key;
   },
 
-  // Obtener índice del idioma actual
-  getLanguageIndex(lang) {
-    return this.languageIndices[lang] || 0;
-  },
-
-  // Cambiar selección por índice
-  setLanguageByIndex(index) {
-    const switcher = document.getElementById("language-switcher");
-    if (switcher) {
-      switcher.selectedIndex = index;
-      const lang = switcher.options[index].value;
-      this.changeLang(lang);
-    }
-  },
-
-  // Inicializar el selector de idioma
-  initLanguageSwitcher() {
-    const switcher = document.getElementById("language-switcher");
-    if (switcher) {
-      // Obtener el idioma guardado (cookie o localStorage)
-      const cookieLang = this.getLanguageCookie();
-      const storageLang = this.getLanguageFromStorage();
-      const savedLang = cookieLang || storageLang || "es";
-
-      // Establecer el valor inicial basado en el idioma guardado
-      const currentIndex = this.getLanguageIndex(savedLang);
-      switcher.selectedIndex = currentIndex;
-
-      // Actualizar el idioma actual
-      this.currentLang = savedLang;
-
-      switcher.addEventListener("change", (e) => {
-        this.changeLang(e.target.value);
-      });
-    }
-  },
-
   // Cambiar el idioma
   async changeLang(lang) {
     this.currentLang = lang;
@@ -168,14 +153,6 @@ const i18n = {
     // Guardar en cookie y localStorage
     this.setLanguageCookie(lang);
     this.saveLanguageToStorage(lang);
-
-    // Actualizar el selector visualmente
-    const switcher = document.getElementById("language-switcher");
-    if (switcher) {
-      const index = this.getLanguageIndex(lang);
-      switcher.selectedIndex = index;
-      console.log("Idioma cambiado a:", lang, "Índice seleccionado:", index);
-    }
 
     await this.loadTranslations(lang);
     this.translatePage();
@@ -218,6 +195,6 @@ const i18n = {
 };
 
 // Inicializar cuando el DOM esté listo
-/* document.addEventListener("DOMContentLoaded", () => { */
-/*   i18n.init(); */
-/* }); */
+document.addEventListener("DOMContentLoaded", () => {
+  i18n.init();
+});

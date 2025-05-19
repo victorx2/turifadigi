@@ -61,7 +61,7 @@
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
-  <link rel="stylesheet" href="assets/css/dropdown-search.css">
+  <link rel="stylesheet" href="assets/css/dropdown-language.css">
 
   <!-- Scripts adicionales CSS -->
   <link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
@@ -158,19 +158,48 @@
                 echo '
             <div class="main-menu__right">
 
-
-
-            
-            <div id="language-container">
-              <select id="language-switcher" class="" onchange="i18n.changeLang(this.value)">
-                <option id="lang-es" value="es">Español</option>
-                <option id="lang-en" value="en">English</option>
-              </select>
+            <div id="language-selector-dropdown" class="ui fluid selection dropdown">
+              <input type="hidden" name="language">
+              <i class="dropdown icon" style="
+                  position: absolute;
+                  right: 10px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: #666;
+              "></i>
+              <div class="default text" style="
+                  padding: 8px 12px;
+                  color: #333;
+                  font-weight: 500;
+              ">Idioma</div>
+              <div class="menu" style="
+                  display: none;
+                  border: 2px solid #e0e0e0;
+                  border-radius: 8px;
+                  margin-top: 5px;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                  width: 100%;
+                  position: absolute;
+                  z-index: 1000;
+                  background: white;
+              " data-silent="true">
+                <div class="item" data-value="es" style="
+                    padding: 12px 15px;
+                    cursor: pointer;
+                    transition: background-color 0.2s ease;
+                ">
+                  <span class="text">ES</span>
+                </div>
+                <div class="item" data-value="en" style="
+                    padding: 12px 15px;
+                    cursor: pointer;
+                    transition: background-color 0.2s ease;
+                ">
+                  <span class="text">EN</span>
+                </div>
+              </div>
             </div>
-
-
-
-
+            
             <div class="main-menu__btn-box">
               <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
               </div>
@@ -178,8 +207,10 @@
               </div>';
               } else {
                 echo '<div class="main-menu__right">
-              <div class="main-menu__cart-search-box">
-              </div>
+               
+           
+          
+
               <div class="main-menu__btn-box">
               <a href="" class="main-menu__btn thm-btn" onclick=session_destroy()>Cerrar Sesión</a>
               </div>
