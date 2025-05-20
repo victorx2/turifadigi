@@ -1,51 +1,8 @@
 <?php
 
 use App\Controllers\SorteoController;
-
 $sorteoController = new SorteoController();
-
 $sorteo = $sorteoController->obtenerSorteoActivo();
-
-// Función para obtener el texto según el idioma
-function getTextByLanguage($jsonText)
-{
-  try {
-    if (is_string($jsonText)) {
-      $texts = json_decode($jsonText, true);
-      $currentLang = $_COOKIE['language'] ?? 'es';
-      $langKey = strtoupper($currentLang);
-      return $texts[$langKey] ?? $texts['ES'] ?? $texts['EN'] ?? '';
-    }
-    return $jsonText;
-  } catch (\Exception $e) {
-    return $jsonText;
-  }
-}
-
-// Verificar si hay un sorteo activo
-if (!$sorteo) {
-  echo '<div class="alert alert-warning">No hay ningún sorteo activo en este momento.</div>';
-  exit;
-}
-
-// Obtener los datos del sorteo
-$titulo = isset($sorteo['titulo']) ? getTextByLanguage($sorteo['titulo']) : '';
-$precioBoleto = isset($sorteo['configuracion']['precio_boleto']) ? $sorteo['configuracion']['precio_boleto'] : '';
-$boletosMinimos = isset($sorteo['configuracion']['boletos_minimos']) ? $sorteo['configuracion']['boletos_minimos'] : '';
-$urlRifa = isset($sorteo['url_rifa']) ? $sorteo['url_rifa'] : '';
-$numeroContacto = isset($sorteo['numero_contacto']) ? $sorteo['numero_contacto'] : '';
-
-// Obtener los premios
-$premios = [];
-if (isset($sorteo['premios']) && is_array($sorteo['premios'])) {
-  foreach ($sorteo['premios'] as $premio) {
-    $premios[] = [
-      'nombre' => getTextByLanguage($premio['nombre']),
-      'descripcion' => getTextByLanguage($premio['descripcion'])
-    ];
-  }
-}
-
 ?>
 <link rel="stylesheet" href="assets/css/premio.css">
 
