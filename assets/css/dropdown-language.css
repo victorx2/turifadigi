@@ -57,6 +57,7 @@
 
 /* Estilos para el dropdown de métodos de pago */
 #language-selector-dropdown {
+  display: flex;
   -webkit-tap-highlight-color: transparent;
   background-color: var(--zefxa-base);
   border-radius: 5px;
@@ -64,19 +65,23 @@
   box-sizing: border-box;
   clear: both;
   cursor: pointer;
-  display: block;
+  /* display: block; */
   float: left;
   font-family: inherit;
   font-size: 14px;
   font-weight: normal;
   height: 42px;
-  line-height: 40px;
+  /* line-height: 40px; */
   outline: none;
   padding-left: 18px;
-  padding-right: 30px;
+  padding-right: 18px;
   position: relative;
+  margin: 0;
   text-align: left !important;
   -webkit-transform: translate(-10px, 0);
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 #language-selector-dropdown .menu {

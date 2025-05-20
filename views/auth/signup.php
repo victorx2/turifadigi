@@ -71,20 +71,17 @@
   input#password_signup {
     height: 60px;
     width: 100%;
+    border: 1px solid #2962ff;
     background-color: var(--zefxa-white);
     padding-left: 30px;
     padding-right: 30px;
+    outline: none;
     font-size: 14px;
     color: var(--zefxa-gray);
     display: block;
     font-weight: 500;
     line-height: 60px;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
-    outline: none;
-    border-radius: 0px;
+    border-radius: 10px;
   }
 
   .password-toggle {
@@ -492,7 +489,7 @@
   .password-toggle-correction {
     position: absolute;
     right: 10px;
-    top: 14%;
+    top: 19%;
     cursor: pointer;
   }
 </style>
