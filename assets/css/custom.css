@@ -8319,7 +8319,7 @@ ul {
 .contact-two__input-box input[type="email"] {
   height: 60px;
   width: 100%;
-  border: none;
+  border: 1px solid #2962ff;
   background-color: var(--zefxa-white);
   padding-left: 30px;
   padding-right: 30px;
@@ -8329,8 +8329,9 @@ ul {
   display: block;
   font-weight: 500;
   line-height: 60px;
-  border-radius: 0;
+  border-radius: 10px;
 }
+
 
 .contact-two__input-box .select-box {
   width: 100%;

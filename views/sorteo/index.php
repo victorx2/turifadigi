@@ -159,6 +159,11 @@
   </div>
 
   <div id="datosPersonales" class="form-personal" style="display: none;">
+    <?php
+    if (!@$_SESSION['usuario']) {
+      require_once 'views/sorteo/datos_personales/miniregistro.php';
+    }
+    ?>
     <div class="payment-section">
       <div class="payment-title">
         <i class="fas fa-money-bill"></i>
@@ -185,7 +190,7 @@
         <!--<div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
           <img src="assets/img/webp/bancolombia.webp" alt="bancolombia">
         </div>-->
-      </div> 
+      </div>
 
       <div class="payment-info">
         <p id="paymentTitle"></p>
@@ -203,7 +208,7 @@
         </div>
         <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
-           <-- carga dinamicamente -->
+          <-- carga dinamicamente -->
         </div>
       </div>
     </div>
@@ -640,49 +645,9 @@
         });
 
       document.querySelector('.btn.btn-continuar').disabled = true;
-      fetch('./api/session_verfication', {
-          method: 'POST',
-          header: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            boletos: Array.from(boletosSeleccionados)
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.session) {
-            document.getElementById('datosPersonales').style.display = 'block';
-            this.parentElement.style.display = 'none';
-          } else {
-            // Si no hay sesión, redirigir al login
-            let timerInterval;
-            Swal.fire({
-              title: "¡Inicia sesion para continuar!",
-              html: "redireccionando en <b></b> milliseconds.",
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading();
-                const timer = Swal.getPopup().querySelector("b");
-                timerInterval = setInterval(() => {
-                  timer.textContent = `${Swal.getTimerLeft()}`;
-                }, 100);
-              },
-              willClose: () => {
-                clearInterval(timerInterval);
-                window.location.href = '/login';
-              }
-            });
-            // alert('No haz iniciado sesion, redireccionando...');
-            // setTimeout(() => {
-            //   window.location.href = '/login';
-            // }, 1000);
-          }
-        })
-        .catch(error => {
-          console.error('Error al verificar sesión:', error);
-        });
+
+      document.getElementById('datosPersonales').style.display = 'block';
+      this.parentElement.style.display = 'none';
     };
 
     // Manejar el envío del formulario
