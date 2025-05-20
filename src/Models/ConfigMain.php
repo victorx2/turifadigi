@@ -45,11 +45,14 @@ class ConfigMain
 
       // 3. Insertar premios
       foreach ($premios as $premio) {
+        $nombre = is_string($premio['nombre']) ? json_decode($premio['nombre'], true) : $premio['nombre'];
+        $descripcion = is_string($premio['descripcion']) ? json_decode($premio['descripcion'], true) : $premio['descripcion'];
+
         $sqlPremio = "INSERT INTO premios (id_rifa, nombre, descripcion) VALUES (:id_rifa, :nombre, :descripcion)";
         $paramsPremio = [
           ':id_rifa' => $id_rifa,
-          ':nombre' => $premio['nombre'],
-          ':descripcion' => $premio['descripcion']
+          ':nombre' => json_encode($nombre, JSON_UNESCAPED_UNICODE),
+          ':descripcion' => json_encode($descripcion, JSON_UNESCAPED_UNICODE)
         ];
         $this->db->ejecutar($sqlPremio, $paramsPremio);
       }
