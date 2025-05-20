@@ -156,6 +156,11 @@ const i18n = {
 
     await this.loadTranslations(lang);
     this.translatePage();
+
+    // Disparar evento de cambio de idioma
+    window.dispatchEvent(
+      new CustomEvent("languageChanged", { detail: { language: lang } })
+    );
   },
 
   // Traducir la página
@@ -198,3 +203,24 @@ const i18n = {
 document.addEventListener("DOMContentLoaded", () => {
   i18n.init();
 });
+
+//const idiomas = {
+//  ES: "es",
+//  EN: "en",
+//};
+
+// Función para obtener el texto según el idioma actual
+function getTextByLanguage(jsonText) {
+  try {
+    if (typeof jsonText === "string") {
+      const texts = JSON.parse(jsonText);
+      const currentLang = localStorage.getItem("language") || "es";
+      const langKey = currentLang.toUpperCase();
+      return texts[langKey] || texts["ES"] || Object.values(texts)[0];
+    }
+    return jsonText;
+  } catch (e) {
+    console.error("Error al parsear texto JSON:", e);
+    return jsonText;
+  }
+}

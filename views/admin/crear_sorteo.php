@@ -37,7 +37,7 @@ require_once 'views/layouts/header.php';
                 <label for="titulo" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-card-heading icon-signup"></i> Título del Sorteo *
                 </label>
-                <input type="text" class="form-control input-hover-signup" id="titulo" name="titulo" value="🎉 ¡POR EL SUPERGANA! 🎉" required>
+                <input type="text" class="form-control input-hover-signup" id="titulo" name="titulo" value='{"ES":"🎉 ¡POR EL SUPERGANA! 🎉","EN":"🎉 BY SUPERGANA 🎉"}' required>
               </div>
 
               <div class="row">
@@ -199,17 +199,52 @@ This prize is activated when 30% of the tickets are sold."}</textarea>
     EN: 'en'
   };
 
-
-
-
-
-
-
   document.addEventListener('DOMContentLoaded', function() {
-
     const form = document.getElementById('form-config');
-
     const submitBtn = form.querySelector('button[type="submit"]');
+
+    // Función para actualizar los textos según el idioma
+    //function updateFormTexts() {
+    // Actualizar título
+    //const tituloInput = document.getElementById('titulo');
+    //if (tituloInput.value) {
+    //  const tituloText = getTextByLanguage(tituloInput.value);
+    //  tituloInput.setAttribute('data-original', tituloInput.value);
+    //  tituloInput.setAttribute('placeholder', tituloText);
+    //}
+
+    // Actualizar premios
+    //document.querySelectorAll('.premio-item').forEach(premio => {
+    //  const nombreInput = premio.querySelector('input[name*="[nombre]"]');
+    //  const descripcionTextarea = premio.querySelector('textarea[name*="[descripcion]"]');
+    //
+    //  if (nombreInput.value) {
+    //    const nombreText = getTextByLanguage(nombreInput.value);
+    //    nombreInput.setAttribute('data-original', nombreInput.value);
+    //    nombreInput.setAttribute('placeholder', nombreText);
+    //  }
+    //
+    //  if (descripcionTextarea.value) {
+    //    const descText = getTextByLanguage(descripcionTextarea.value);
+    //    descripcionTextarea.setAttribute('data-original', descripcionTextarea.value);
+    //    descripcionTextarea.setAttribute('placeholder', descText);
+    //  }
+    //});
+
+    // Actualizar texto ejemplo
+    //const textoEjemploTextarea = document.getElementById('texto_ejemplo');
+    //if (textoEjemploTextarea.value) {
+    //  const textoText = getTextByLanguage(textoEjemploTextarea.value);
+    //  textoEjemploTextarea.setAttribute('data-original', textoEjemploTextarea.value);
+    //  textoEjemploTextarea.setAttribute('placeholder', textoText);
+    //}
+    //}
+
+    // Escuchar cambios de idioma
+    // window.addEventListener('languageChanged', updateFormTexts);
+
+    // Actualizar textos al cargar
+    // updateFormTexts();
 
     form.onsubmit = function(e) {
       e.preventDefault();
@@ -287,6 +322,7 @@ This prize is activated when 30% of the tickets are sold."}</textarea>
     }
   });
 </script>
+
 
 <?php
 require_once 'views/layouts/footer.php';

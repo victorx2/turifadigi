@@ -6,6 +6,46 @@ $sorteoController = new SorteoController();
 
 $sorteo = $sorteoController->obtenerSorteoActivo();
 
+// Función para obtener el texto según el idioma
+function getTextByLanguage($jsonText)
+{
+  try {
+    if (is_string($jsonText)) {
+      $texts = json_decode($jsonText, true);
+      $currentLang = $_COOKIE['language'] ?? 'es';
+      $langKey = strtoupper($currentLang);
+      return $texts[$langKey] ?? $texts['ES'] ?? $texts['EN'] ?? '';
+    }
+    return $jsonText;
+  } catch (\Exception $e) {
+    return $jsonText;
+  }
+}
+
+// Verificar si hay un sorteo activo
+if (!$sorteo) {
+  echo '<div class="alert alert-warning">No hay ningún sorteo activo en este momento.</div>';
+  exit;
+}
+
+// Obtener los datos del sorteo
+$titulo = isset($sorteo['titulo']) ? getTextByLanguage($sorteo['titulo']) : '';
+$precioBoleto = isset($sorteo['configuracion']['precio_boleto']) ? $sorteo['configuracion']['precio_boleto'] : '';
+$boletosMinimos = isset($sorteo['configuracion']['boletos_minimos']) ? $sorteo['configuracion']['boletos_minimos'] : '';
+$urlRifa = isset($sorteo['url_rifa']) ? $sorteo['url_rifa'] : '';
+$numeroContacto = isset($sorteo['numero_contacto']) ? $sorteo['numero_contacto'] : '';
+
+// Obtener los premios
+$premios = [];
+if (isset($sorteo['premios']) && is_array($sorteo['premios'])) {
+  foreach ($sorteo['premios'] as $premio) {
+    $premios[] = [
+      'nombre' => getTextByLanguage($premio['nombre']),
+      'descripcion' => getTextByLanguage($premio['descripcion'])
+    ];
+  }
+}
+
 ?>
 <link rel="stylesheet" href="assets/css/premio.css">
 
@@ -14,7 +54,7 @@ $sorteo = $sorteoController->obtenerSorteoActivo();
     <div class="row">
       <div class="col-xl-12">
         <article class="supergana-content text-center">
-          <h1 class="section-title__title"><?php echo $sorteo['data']['titulo']; ?></h1>
+          <h1 class="section-title__title"><?php echo htmlspecialchars((string)$titulo); ?></h1>
           <div class="prize-details">
             <div class="alert alert-info mb-4" role="alert">
               <strong>Al completarse el 80% juega nuestra rifa</strong>
@@ -22,29 +62,19 @@ $sorteo = $sorteoController->obtenerSorteoActivo();
 
             <section class="lottery-info mb-4" aria-label="Información básica">
               <p>📍 Juega por la lotería de SuperGana</p>
-              <p>🎟️ Valor del boleto: <span class="price"><?php echo $sorteo['data']['configuracion']['precio_boleto']; ?></span></p>
-              <p>🎟️ Compra mínima: <span class="min-tickets"><?php echo $sorteo['data']['configuracion']['boletos_minimos']; ?> boletos</span> en adelante</p>
+              <p>🎟️ Valor del boleto: <span class="price">$<?php echo htmlspecialchars((string)$precioBoleto); ?></span></p>
+              <p>🎟️ Compra mínima: <span class="min-tickets"><?php echo htmlspecialchars((string)$boletosMinimos); ?> boletos</span> en adelante</p>
             </section>
 
             <section class="prize-list mb-4" aria-label="Lista de premios">
-              <div class="prize-item" role="article">
-                <h2><?php echo $sorteo['data']['premios']['nombres'][0]; ?></h2>
-                <div class="premio-descripcion">
-                  <?php echo $sorteo['data']['premios']['descripciones'][0]; ?>
+              <?php foreach ($premios as $premio): ?>
+                <div class="prize-item" role="article">
+                  <h2><?php echo htmlspecialchars($premio['nombre']); ?></h2>
+                  <div class="premio-descripcion">
+                    <?php echo nl2br(htmlspecialchars($premio['descripcion'])); ?>
+                  </div>
                 </div>
-              </div>
-              <div class="prize-item" role="article">
-                <h2><?php echo $sorteo['data']['premios']['nombres'][1]; ?></h2>
-                <div class="premio-descripcion">
-                  <?php echo $sorteo['data']['premios']['descripciones'][1]; ?>
-                </div>
-              </div>
-              <div class="prize-item" role="article">
-                <h2><?php echo $sorteo['data']['premios']['nombres'][2]; ?></h2>
-                <div class="premio-descripcion">
-                  <?php echo $sorteo['data']['premios']['descripciones'][2]; ?>
-                </div>
-              </div>
+              <?php endforeach; ?>
             </section>
 
             <section class="date-info mb-4" aria-label="Fecha del sorteo">
@@ -54,16 +84,16 @@ $sorteo = $sorteoController->obtenerSorteoActivo();
 
             <section class="official-link mb-4" aria-label="Enlace oficial">
               <h2>🔗 Enlace oficial para seguir el sorteo:</h2>
-              <a href="<?php echo $sorteo['data']['url_rifa']; ?>" target="_blank" class="thm-btn" rel="noopener">
-                LOTERIA OFICIAL  <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+              <a href="<?php echo htmlspecialchars((string)$urlRifa); ?>" target="_blank" class="thm-btn" rel="noopener">
+                LOTERIA OFICIAL <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                 <span class="sr-only">(se abre en una nueva ventana)</span>
               </a>
             </section>
 
             <section class="contact-info mb-4" aria-label="Información de contacto">
               <h2>📞 Número de contacto:</h2>
-              <p><a href="<?php echo $sorteo['data']['numero_contacto']; ?>" class="phone-number">
-                  <strong>+1 <?php echo $sorteo['data']['numero_contacto']; ?></strong>
+              <p><a href="tel:<?php echo htmlspecialchars((string)$numeroContacto); ?>" class="phone-number">
+                  <strong>+1 <?php echo htmlspecialchars((string)$numeroContacto); ?></strong>
                 </a></p>
             </section>
             <!--
