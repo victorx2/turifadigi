@@ -10,6 +10,10 @@
 
     <div class="progressLoader">
       <style>
+        #siguiente {
+          scroll-margin-top: 110px;
+        }
+
         .no-sort-activ {
           display: flex;
           justify-content: center;
@@ -159,11 +163,11 @@
   </div>
 
   <div id="datosPersonales" class="form-personal" style="display: none;">
-    <?php
-    if (!@$_SESSION['usuario']) {
-      require_once 'views/sorteo/datos_personales/miniregistro.php';
-    }
-    ?>
+    <div class="payment-subtitle" id="siguiente">
+      <i class="fas fa-arrow-down"></i>
+      deslice hacia abajo para continuar
+      <i class="fas fa-arrow-down"></i>
+    </div>
     <div class="payment-section">
       <div class="payment-title">
         <i class="fas fa-money-bill"></i>
@@ -212,6 +216,13 @@
         </div>
       </div>
     </div>
+    <?php
+    if (!@$_SESSION['usuario']) {
+      require_once 'views/sorteo/datos_personales/miniregistro.php';
+    } else {
+      echo '<input type="text" name="regist" class="d-none" id="regist" value="0">';
+    }
+    ?>
     <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
     <button type="submit" class="btn-confirmar">CONFIRMAR</button>
   </div>
@@ -222,10 +233,9 @@
 
 <!-- // Este script genera un enlace de WhatsApp con los datos del cliente y los boletos comprados] -->
 <script>
-  function generarEnlaceWhatsApp(data, ticketsComprados) {
+  function generarEnlaceWhatsApp(data, ticketsComprados, nuw = "") {
 
     const nombre = data.nombre; // Reemplaza con el nombre del cliente
-    const cedula = data.cedula; // Reemplaza con la cédula del cliente   
     const celular = data.telefono; // Reemplaza con el número de celular del cliente
     const numeroTelefono = "14077329524"; // Numero de la empresa en WhatsApp
     const listaTickets = ticketsComprados.join(', '); // Convierte el array de tickets en una cadena separada por comas
@@ -267,6 +277,7 @@
     const boletosContainer = document.querySelector('.boletos-container');
     const boletosList = document.getElementById('boletosList');
     const loadingText = document.querySelector('.loading-text');
+    const miniregist = document.getElementById('regist');
     const buscador = document.getElementById('buscador');
     const btnRandomNumber = document.getElementById('btnRandomNumber');
     const numeroBoletosSpan = document.querySelector('.numero-boletos');
@@ -648,120 +659,238 @@
 
       document.getElementById('datosPersonales').style.display = 'block';
       this.parentElement.style.display = 'none';
+
+      window.location.href = "#siguiente";
     };
 
+    const getInputValue = (selector) => {
+      const element = document.querySelector(selector);
+      return element ? element.value.trim() : '';
+    };
     // Manejar el envío del formulario
     document.querySelector('.btn-confirmar').onclick = async function(e) {
       e.preventDefault();
 
-      await fetch('./api/session_verfication?t=1', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
+      //PROCESO SELECTOR
+      if (miniregist.value == "0") {
 
-          if (!data.session) {
-            window.location.href = '/login';
-            return;
-          }
-
-          let value = data.user;
-          // Función auxiliar para obtener valor seguro
-          const getInputValue = (selector) => {
-            const element = document.querySelector(selector);
-            return element ? element.value.trim() : '';
-          };
-
-          // Obtener valores de forma segura
-          const formData = {
-            nombre: value.nombre + ' ' + value.apellido,
-            cedula: value.cedula,
-            telefono: value.telefono,
-            ubicacion: value.ubicacion,
-            id_usuario: value.id_usuario,
-            monto_pago: getInputValue('#monto_pagado'),
-            titular: getInputValue('#titular'),
-            referencia: getInputValue('#referencia'),
-            metodoPago: $('input[name="payment_method"]').val()
-          };
-
-          // Validar que todos los campos requeridos tengan valor
-          const camposRequeridos = [{
-              campo: 'titular',
-              mensaje: 'Titular'
-            },
-            {
-              campo: 'referencia',
-              mensaje: 'Referencia'
-            },
-            {
-              campo: 'metodoPago',
-              mensaje: 'Método de pago'
+        alert("proceso con sesion");
+        await fetch('./api/session_verfication?t=1', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
             }
-          ];
+          })
+          .then(response => response.json())
+          .then(data => {
 
-          const camposFaltantes = camposRequeridos
-            .filter(({
-              campo
-            }) => !formData[campo])
-            .map(({
-              mensaje
-            }) => mensaje);
+            if (!data.session) {
+              window.location.href = '/login';
+              return;
+            }
 
-          if (camposFaltantes.length > 0) {
-            alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
-            return;
-          }
+            let value = data.user;
+            // Función auxiliar para obtener valor seguro
 
-          const boletosCargar = Array.from(boletosSeleccionados)
-
-          try {
-            // Preparar datos de la compra
-            const datosCompra = {
-              boletos: boletosCargar,
-              ...formData,
-              // total: totalBS
+            // Obtener valores de forma segura
+            const formData = {
+              nombre: value.nombre + ' ' + value.apellido,
+              telefono: value.telefono,
+              ubicacion: value.ubicacion,
+              id_usuario: value.id_usuario,
+              monto_pago: getInputValue('#monto_pagado'),
+              titular: getInputValue('#titular'),
+              referencia: getInputValue('#referencia'),
+              metodoPago: $('input[name="payment_method"]').val()
             };
 
-            fetch('./api/process_purchase', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(datosCompra)
-              })
-              .then(response => response.json())
-              .then(dataCompra => {
-                if (dataCompra.success) {
+            // Validar que todos los campos requeridos tengan valor
+            const camposRequeridos = [{
+                campo: 'titular',
+                mensaje: 'Titular'
+              },
+              {
+                campo: 'referencia',
+                mensaje: 'Referencia'
+              },
+              {
+                campo: 'metodoPago',
+                mensaje: 'Método de pago'
+              }
+            ];
 
-                  generarEnlaceWhatsApp({
-                    nombre: formData.nombre,
-                    cedula: formData.cedula,
-                    telefono: formData.telefono
-                  }, boletosCargar);
+            const camposFaltantes = camposRequeridos
+              .filter(({
+                campo
+              }) => !formData[campo])
+              .map(({
+                mensaje
+              }) => mensaje);
 
-                  alert('¡Compra procesada correctamente!');
-                  window.location.href = '/sorteo';
-                }
-              })
-              .catch(error => {
-                alert(dataCompra.error || 'Error al procesar la compra');
-                console.error('Error al procesar la compra:', error);
-              });
+            if (camposFaltantes.length > 0) {
+              alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
+              return;
+            }
 
-          } catch (error) {
-            console.error('Error:', error);
-          }
+            const boletosCargar = Array.from(boletosSeleccionados)
 
-        })
-        .catch(error => {
-          console.error('Error al verificar sesión:', error);
-        });
+            try {
+              // Preparar datos de la compra
+              const datosCompra = {
+                boletos: boletosCargar,
+                ...formData,
+                // total: totalBS
+              };
+
+              fetch('./api/process_purchase', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(datosCompra)
+                })
+                .then(response => response.json())
+                .then(dataCompra => {
+                  if (dataCompra.success) {
+
+                    generarEnlaceWhatsApp({
+                      nombre: formData.nombre,
+                      telefono: formData.telefono
+                    }, boletosCargar);
+
+                    alert('¡Compra procesada correctamente!');
+                    window.location.href = '/sorteo';
+                  }
+                })
+                .catch(error => {
+                  alert(dataCompra.error || 'Error al procesar la compra');
+                  console.error('Error al procesar la compra:', error);
+                });
+
+            } catch (error) {
+              console.error('Error:', error);
+            }
+
+          })
+          .catch(error => {
+            console.error('Error al verificar sesión:', error);
+          });
+      } else {
+        alert("proceso de registro y compra");
+
+        const initData = {
+          nombre: getInputValue('#nombre'),
+          apellido: getInputValue('#apellido'),
+          prefijo_pais: getInputValue('#prefijo_pais'),
+          telefono: getInputValue('#telefono')
+        };
+        // CREAR USUARIO DINAMICAMENTE
+        console.log(initData);
+        //   await fetch('./api/riffle_singup', {
+        //       method: 'POST',
+        //       headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //       body: JSON.stringify(initData)
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+
+        //       if (!data.session) {
+        //         window.location.href = '/login';
+        //         return;
+        //       }
+
+        //       let value = data.user;
+        //       // Función auxiliar para obtener valor seguro
+
+
+        //       // Obtener valores de forma segura
+        //       const formData = {
+        //         nombre: getInputValue('#monto_pagado') + ' ' + getInputValue('#monto_pagado'),
+        //         telefono: getInputValue('#monto_pagado'),
+        //         ubicacion: getInputValue('#monto_pagado'),
+        //         id_usuario: getInputValue('#monto_pagado'),
+        //         monto_pago: getInputValue('#monto_pagado'),
+        //         titular: getInputValue('#titular'),
+        //         referencia: getInputValue('#referencia'),
+        //         metodoPago: $('input[name="payment_method"]').val()
+        //       };
+
+        //       // Validar que todos los campos requeridos tengan valor
+        //       const camposRequeridos = [{
+        //           campo: 'titular',
+        //           mensaje: 'Titular'
+        //         },
+        //         {
+        //           campo: 'referencia',
+        //           mensaje: 'Referencia'
+        //         },
+        //         {
+        //           campo: 'metodoPago',
+        //           mensaje: 'Método de pago'
+        //         }
+        //       ];
+
+        //       const camposFaltantes = camposRequeridos
+        //         .filter(({
+        //           campo
+        //         }) => !formData[campo])
+        //         .map(({
+        //           mensaje
+        //         }) => mensaje);
+
+        //       if (camposFaltantes.length > 0) {
+        //         alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
+        //         return;
+        //       }
+
+        //       const boletosCargar = Array.from(boletosSeleccionados)
+
+        //       try {
+        //         // Preparar datos de la compra
+        //         const datosCompra = {
+        //           boletos: boletosCargar,
+        //           ...formData,
+        //           // total: totalBS
+        //         };
+
+        //         fetch('./api/process_purchase', {
+        //             method: 'POST',
+        //             headers: {
+        //               'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify(datosCompra)
+        //           })
+        //           .then(response => response.json())
+        //           .then(dataCompra => {
+        //             if (dataCompra.success) {
+
+        //               generarEnlaceWhatsApp({
+        //                 nombre: formData.nombre,
+        //                 telefono: formData.telefono
+        //               }, boletosCargar);
+
+        //               alert('¡Compra procesada correctamente!');
+        //               window.location.href = '/sorteo';
+        //             }
+        //           })
+        //           .catch(error => {
+        //             alert(dataCompra.error || 'Error al procesar la compra');
+        //             console.error('Error al procesar la compra:', error);
+        //           });
+
+        //       } catch (error) {
+        //         console.error('Error:', error);
+        //       }
+
+        //     })
+        //     .catch(error => {
+        //       console.error('Error al verificar sesión:', error);
+        //     });
+      }
+
     };
-
     // Actualizar estilos para el botón de remover en el chip
     const styles = document.createElement('style');
     styles.textContent = `
