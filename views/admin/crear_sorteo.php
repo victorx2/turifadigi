@@ -96,14 +96,15 @@ require_once 'views/layouts/header.php';
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-trophy icon-signup"></i> Nombre del Premio *
                       </label>
-                      <input type="text" class="form-control input-hover-signup" name="premios[0][nombre]" value="🛵 Premio Mayor" required>
+                      <input type="text" class="form-control input-hover-signup" name="premios[0][nombre]" value='{"ES":"🛵 Premio Mayor", "EN":"🛵 Grand Prize"}' required>
                     </div>
                     <div class="mb-3">
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> Descripción del Premio *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[0][descripcion]" rows="3" required>Si estás en Estados Unidos, ganas una moto
-Si estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes</textarea>
+                      <textarea class="form-control input-hover-signup" name="premios[0][descripcion]" rows="3" required>{"ES":"Si estás en Estados Unidos, ganas una moto
+Si estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes", "EN":"If you're in the United States, you win a motorcycle.
+If you're in another country, you win the cash equivalent of the motorcycle in your local currency."}</textarea>
                     </div>
                   </div>
                 </div>
@@ -114,14 +115,16 @@ Si estás en otro país, ganas el valor de la moto al cambio de la moneda local 
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-trophy icon-signup"></i> Nombre del Premio *
                       </label>
-                      <input type="text" class="form-control input-hover-signup" name="premios[1][nombre]" value="📱 Segundo Premio" required>
+                      <input type="text" class="form-control input-hover-signup" name="premios[1][nombre]" value='{"ES":"📱 Segundo Premio", "EN":"📱 Second Prize"}' required>
                     </div>
                     <div class="mb-3">
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> Descripción del Premio *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[1][descripcion]" rows="3" required>Un iPhone 16 Pro Max
-Disponible para cualquier país participante</textarea>
+                      <textarea class="form-control input-hover-signup" name="premios[1][descripcion]" rows="3" required>{"ES":"Un iPhone 16 Pro Max
+Disponible para cualquier país participante", "EN":"An iPhone 16 Pro Max
+Available for participants from any country.
+Prize Name"}</textarea>
                     </div>
                   </div>
                 </div>
@@ -132,15 +135,17 @@ Disponible para cualquier país participante</textarea>
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-trophy icon-signup"></i> Nombre del Premio *
                       </label>
-                      <input type="text" class="form-control input-hover-signup" name="premios[2][nombre]" value="💵 Tercer Premio" required>
+                      <input type="text" class="form-control input-hover-signup" name="premios[2][nombre]" value='{"ES":"💵 Tercer Premio", "EN":"💵 Third Prize"}' required>
                     </div>
                     <div class="mb-3">
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> Descripción del Premio *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>$100 en efectivo
+                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>{"ES":"$100 en efectivo
 Para participar debes comprar 10 boletos o más
-Este premio se activa con el 30% de los boletos vendidos</textarea>
+Este premio se activa con el 30% de los boletos vendidos", "EN":"$100 in cash
+To participate, you must purchase 10 or more tickets.
+This prize is activated when 30% of the tickets are sold."}</textarea>
                     </div>
                   </div>
                 </div>
@@ -164,7 +169,7 @@ Este premio se activa con el 30% de los boletos vendidos</textarea>
                 <label for="texto_ejemplo" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-chat-left-text icon-signup"></i> Texto de Ejemplo *
                 </label>
-                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.</textarea>
+                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>{"ES":"Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.","EN":"If you buy 10 tickets, you automatically enter the $100 raffle once 30% of the numbers are sold. The date will be announced publicly."}</textarea>
               </div>
 
               <button type="submit" class="btn btn-primary">Crear Sorteo</button>
@@ -187,9 +192,23 @@ Este premio se activa con el 30% de los boletos vendidos</textarea>
   </div>
 
 </section>
+
 <script>
+  const idiomas = {
+    ES: 'es',
+    EN: 'en'
+  };
+
+
+
+
+
+
+
   document.addEventListener('DOMContentLoaded', function() {
+
     const form = document.getElementById('form-config');
+
     const submitBtn = form.querySelector('button[type="submit"]');
 
     form.onsubmit = function(e) {

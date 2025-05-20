@@ -220,6 +220,42 @@
  <script src="assets/js/dataTables.bootstrap5.js"></script>
  <script src="assets/js/tooltip.js"></script>
  <script src="assets/js/i18n.js"></script>
+ <script>
+   function setLanguageDropdown(lang) {
+     // Cambia el texto del botón en todos los dropdowns de idioma
+     document.querySelectorAll('.ui.dropdown .default.text').forEach(function(el) {
+       el.textContent = lang.toUpperCase();
+     });
+     // Cambia el valor oculto
+     document.querySelectorAll('.ui.dropdown input[name="language"]').forEach(function(input) {
+       input.value = lang;
+     });
+     // Marca el item seleccionado
+     document.querySelectorAll('.ui.dropdown .item').forEach(function(item) {
+       if (item.getAttribute('data-value') === lang) {
+         item.classList.add('selected');
+       } else {
+         item.classList.remove('selected');
+       }
+     });
+   }
+
+   // Evento de selección de idioma
+   document.querySelectorAll('.ui.dropdown .item').forEach(function(item) {
+     item.addEventListener('click', function() {
+       var lang = this.getAttribute('data-value');
+       localStorage.setItem('selectedLanguage', lang);
+       setLanguageDropdown(lang);
+       // Aquí puedes agregar lógica para cambiar el idioma de la página si tienes i18n
+     });
+   });
+
+   // Al cargar la página, aplica el idioma guardado
+   window.addEventListener('DOMContentLoaded', function() {
+     var lang = localStorage.getItem('selectedLanguage') || 'es'; // Por defecto ES
+     setLanguageDropdown(lang);
+   });
+ </script>
 
  </body>
 

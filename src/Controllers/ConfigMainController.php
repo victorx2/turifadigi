@@ -27,7 +27,11 @@ class ConfigMainController
     try {
       // Obtener datos del formulario
       $idUsuario = $_SESSION['id_usuario'] ?? 0;
-      $titulo = $_POST['titulo'] ?? '';
+
+      // Verificar si el título es un array y convertirlo a JSON si es necesario
+      $titulo = is_array($_POST['titulo']) ? json_encode($_POST['titulo']) : $_POST['titulo'];
+      $titulo = json_decode($titulo, true) ?? '';
+
       $precioBoleto = $_POST['precio_boleto'] ?? 0;
       $boletosMinimos = $_POST['boletos_minimos'] ?? 0;
       $boletosMaximos = $_POST['boletos_maximos'] ?? 0;
@@ -35,8 +39,15 @@ class ConfigMainController
       $fechaFin = $_POST['fecha_final'] ?? '';
       $numeroContacto = $_POST['numero_contacto'] ?? '';
       $urlRifa = $_POST['url_rifa'] ?? '';
-      $textoEjemplo = $_POST['texto_ejemplo'] ?? '';
-      $premios = $_POST['premios'] ?? [];
+
+      // Verificar si texto_ejemplo es un array y convertirlo a JSON si es necesario
+      $textoEjemplo = is_array($_POST['texto_ejemplo']) ? json_encode($_POST['texto_ejemplo']) : $_POST['texto_ejemplo'];
+      $textoEjemplo = json_decode($textoEjemplo, true) ?? [];
+
+      // Verificar si premios es un array y convertirlo a JSON si es necesario
+      $premios = is_array($_POST['premios']) ? json_encode($_POST['premios']) : $_POST['premios'];
+      $premios = json_decode($premios, true) ?? [];
+
       $imagen = $_FILES['imagen'] ?? null;
 
       // Validaciones básicas
