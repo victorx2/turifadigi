@@ -1,8 +1,68 @@
 <?php
 
 use App\Controllers\SorteoController;
+
 $sorteoController = new SorteoController();
 $sorteo = $sorteoController->obtenerSorteoActivo();
+
+// Función general para obtener texto multilenguaje
+function getTextoByLang($jsonText, $idioma = 'ES')
+{
+  if (!$jsonText) return '';
+  if (is_array($jsonText)) {
+    return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? '';
+  }
+  $arr = json_decode($jsonText, true);
+  if (is_array($arr)) {
+    return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? '';
+  }
+  return '';
+}
+
+// Detectar idioma desde cookie o localStorage (si se pasa por GET, POST, etc.)
+$idioma = 'ES';
+if (isset($_COOKIE['language'])) {
+  $idioma = strtoupper($_COOKIE['language']);
+}
+if (isset($_GET['lang'])) {
+  $idioma = strtoupper($_GET['lang']);
+}
+
+$titulo = 'Título no disponible';
+$descripcion = '';
+$textoImportante = '';
+$premiosMulti = [];
+$precioBoleto = '';
+$boletosMinimos = '';
+$urlRifa = '';
+$numeroContacto = '';
+
+if ($sorteo['success'] && isset($sorteo['data'])) {
+  // Título y descripción general
+  $titulo = getTextoByLang($sorteo['data']['titulo'] ?? '', $idioma);
+  $descripcion = getTextoByLang($sorteo['data']['descripcion'] ?? '', $idioma);
+  $textoImportante = getTextoByLang($sorteo['data']['texto_importante'] ?? '', $idioma);
+
+  // Datos de configuración
+  if (isset($sorteo['data']['configuracion'])) {
+    $precioBoleto = $sorteo['data']['configuracion']['precio_boleto'] ?? '';
+    $boletosMinimos = $sorteo['data']['configuracion']['boletos_minimos'] ?? '';
+  }
+  $urlRifa = $sorteo['data']['url_rifa'] ?? '';
+  $numeroContacto = $sorteo['data']['numero_contacto'] ?? '';
+
+  // Premios multilenguaje
+  if (isset($sorteo['data']['premios']['nombres'], $sorteo['data']['premios']['descripciones'])) {
+    $nombres = $sorteo['data']['premios']['nombres'];
+    $descripciones = $sorteo['data']['premios']['descripciones'];
+    foreach ($nombres as $i => $nombre) {
+      $premiosMulti[] = [
+        'nombre' => getTextoByLang($nombre, $idioma),
+        'descripcion' => getTextoByLang($descripciones[$i] ?? '', $idioma)
+      ];
+    }
+  }
+}
 ?>
 <link rel="stylesheet" href="assets/css/premio.css">
 
@@ -11,7 +71,12 @@ $sorteo = $sorteoController->obtenerSorteoActivo();
     <div class="row">
       <div class="col-xl-12">
         <article class="supergana-content text-center">
-          <h1 class="section-title__title"><?php echo htmlspecialchars((string)$titulo); ?></h1>
+
+          <h1 class="section-title__title"><?php echo htmlspecialchars($titulo); ?></h1>
+          <?php if ($descripcion): ?>
+            <div class="mb-4" style="font-size:1.1em;"><strong><?php echo nl2br(htmlspecialchars($descripcion)); ?></strong></div>
+          <?php endif; ?>
+
           <div class="prize-details">
             <div class="alert alert-info mb-4" role="alert">
               <strong>Al completarse el 80% juega nuestra rifa</strong>
@@ -24,7 +89,7 @@ $sorteo = $sorteoController->obtenerSorteoActivo();
             </section>
 
             <section class="prize-list mb-4" aria-label="Lista de premios">
-              <?php foreach ($premios as $premio): ?>
+              <?php foreach ($premiosMulti as $premio): ?>
                 <div class="prize-item" role="article">
                   <h2><?php echo htmlspecialchars($premio['nombre']); ?></h2>
                   <div class="premio-descripcion">
@@ -53,12 +118,12 @@ $sorteo = $sorteoController->obtenerSorteoActivo();
                   <strong>+1 <?php echo htmlspecialchars((string)$numeroContacto); ?></strong>
                 </a></p>
             </section>
-            <!--
-             <aside class="example-box" role="complementary">
-              <h2>Información importante</h2>
-              <p class="example-text"><?php echo $sorteo['data']['texto_importante']; ?></p>
-            </aside> 
-            -->
+            <?php if ($textoImportante): ?>
+              <aside class="example-box" role="complementary">
+                <h2>Información importante</h2>
+                <p class="example-text"><?php echo nl2br(htmlspecialchars($textoImportante)); ?></p>
+              </aside>
+            <?php endif; ?>
           </div>
         </article>
       </div>
