@@ -28,17 +28,14 @@ class RegisterUserController
       $datosUsuario = [
         'usuario' => $data['usuario'] ?? '',
         'password' => $data['password'] ?? '',
-        'correo' => $data['correo'] ?? ''
       ];
 
       $datosPersonales = [
         'nombre' => $data['nombre'] ?? '',
         'apellido' => $data['apellido'] ?? '',
-        'cedula' => $data['cedula'] ?? '',
         'telefono' => $data['telefono'] ?? '',
         'ubicacion' => $data['ubicacion'] ?? ''
       ];
-
       // Verificar si el usuario existe antes de intentar insertar
       if ($this->usuario->existeUsuario($datosUsuario['usuario'])) {
         http_response_code(409);
@@ -57,28 +54,31 @@ class RegisterUserController
         http_response_code(500);
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar el usuario',
+          'message' => 'Error al registrar el usuario controller',
           'type' => 'error'
         ]);
         return;
       }
 
       // Registrar datos personales
-      if ($this->usuario->registrarDatosPersonales($idUsuario, $datosPersonales)) {
-
-        http_response_code(201);
-        echo json_encode([
-          'success' => true,
-          'message' => 'Registro exitoso',
-          'type' => 'success',
-          'redirect' => '/login'
-        ]);
-        return;
-      } else {
+      try {
+        if ($this->usuario->registrarDatosPersonales($idUsuario, $datosPersonales)) {
+          http_response_code(201);
+          echo json_encode([
+            'success' => true,
+            'message' => 'Registro exitoso',
+            'type' => 'success',
+            'id_usuario' => $idUsuario,
+            'redirect' => '/login'
+          ]);
+          return;
+        }
+      } catch (\Exception $e) {
         http_response_code(500);
+        error_log("Error al registrar datos personales: " . $e->getMessage());
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar los datos personales',
+          'message' => 'Error al registrar los datos personales: ' . $e->getMessage(),
           'type' => 'error'
         ]);
         return;
@@ -88,7 +88,7 @@ class RegisterUserController
       error_log("Error en RegistroController::insert: " . $e->getMessage());
       echo json_encode([
         'success' => false,
-        'message' => 'Error interno del servidor',
+        'message' => 'Error interno del servidor: ' . $e->getMessage(),
         'type' => 'error'
       ]);
       return;

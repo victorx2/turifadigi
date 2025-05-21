@@ -240,7 +240,7 @@
     const numeroTelefono = "14077329524"; // Numero de la empresa en WhatsApp
     const listaTickets = ticketsComprados.join(', '); // Convierte el array de tickets en una cadena separada por comas
 
-    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCedula: ${cedula}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
+    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
 
     const mensajeCodificado = encodeURIComponent(mensaje);
     const enlaceWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeCodificado}`;
@@ -667,14 +667,25 @@
       const element = document.querySelector(selector);
       return element ? element.value.trim() : '';
     };
+
+
     // Manejar el envío del formulario
     document.querySelector('.btn-confirmar').onclick = async function(e) {
       e.preventDefault();
 
       //PROCESO SELECTOR
-      if (miniregist.value == "0") {
+      // Usar SweetAlert2 para mostrar el mensaje de "Procesando compra"
+      Swal.fire({
+        title: 'Procesando compra',
+        text: 'Por favor espere...',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
 
-        alert("proceso con sesion");
+      if (miniregist.value == "0") {
         await fetch('./api/session_verfication?t=1', {
             method: 'POST',
             headers: {
@@ -682,7 +693,7 @@
             }
           })
           .then(response => response.json())
-          .then(data => {
+          .then(async data => {
 
             if (!data.session) {
               window.location.href = '/login';
@@ -690,7 +701,6 @@
             }
 
             let value = data.user;
-            // Función auxiliar para obtener valor seguro
 
             // Obtener valores de forma segura
             const formData = {
@@ -728,21 +738,21 @@
               }) => mensaje);
 
             if (camposFaltantes.length > 0) {
-              alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
+              Swal.close();
+              Swal.fire('Campos incompletos', `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`, 'warning');
               return;
             }
 
-            const boletosCargar = Array.from(boletosSeleccionados)
+            const boletosCargar = Array.from(boletosSeleccionados);
 
             try {
               // Preparar datos de la compra
               const datosCompra = {
                 boletos: boletosCargar,
                 ...formData,
-                // total: totalBS
               };
 
-              fetch('./api/process_purchase', {
+              await fetch('./api/process_purchase', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -750,144 +760,181 @@
                   body: JSON.stringify(datosCompra)
                 })
                 .then(response => response.json())
-                .then(dataCompra => {
+                .then(async dataCompra => {
                   if (dataCompra.success) {
-
+                    Swal.close();
                     generarEnlaceWhatsApp({
                       nombre: formData.nombre,
                       telefono: formData.telefono
                     }, boletosCargar);
 
-                    alert('¡Compra procesada correctamente!');
+                    await Swal.fire({
+                      title: '¡Compra procesada correctamente!',
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                    });
                     window.location.href = '/sorteo';
+                  } else {
+                    Swal.close();
+                    Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
                   }
                 })
                 .catch(error => {
-                  alert(dataCompra.error || 'Error al procesar la compra');
+                  Swal.close();
+                  Swal.fire('Error', 'Error al procesar la compra', 'error');
                   console.error('Error al procesar la compra:', error);
                 });
 
             } catch (error) {
+              Swal.close();
               console.error('Error:', error);
             }
 
           })
           .catch(error => {
+            Swal.close();
             console.error('Error al verificar sesión:', error);
           });
       } else {
-        alert("proceso de registro y compra");
-
         const initData = {
           nombre: getInputValue('#nombre'),
           apellido: getInputValue('#apellido'),
           prefijo_pais: getInputValue('#prefijo_pais'),
           telefono: getInputValue('#telefono')
         };
+
         // CREAR USUARIO DINAMICAMENTE
-        console.log(initData);
-        //   await fetch('./api/riffle_singup', {
-        //       method: 'POST',
-        //       headers: {
-        //         'Content-Type': 'application/json'
-        //       },
-        //       body: JSON.stringify(initData)
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
+        await fetch('./api/riffle_singup', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(initData)
+          })
+          .then(response => response.json())
+          .then(async data => {
 
-        //       if (!data.session) {
-        //         window.location.href = '/login';
-        //         return;
-        //       }
+            if (!data.success) {
+              Swal.close();
+              Swal.fire('Error', "Error: response riffle sinup", 'error');
+              return;
+            }
 
-        //       let value = data.user;
-        //       // Función auxiliar para obtener valor seguro
+            let idrio = data.id_usuario;
 
+            await fetch('./api/riffle_verfication?t=1', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  id_usuario: idrio
+                })
+              })
+              .then(response => response.json())
+              .then(async data => {
 
-        //       // Obtener valores de forma segura
-        //       const formData = {
-        //         nombre: getInputValue('#monto_pagado') + ' ' + getInputValue('#monto_pagado'),
-        //         telefono: getInputValue('#monto_pagado'),
-        //         ubicacion: getInputValue('#monto_pagado'),
-        //         id_usuario: getInputValue('#monto_pagado'),
-        //         monto_pago: getInputValue('#monto_pagado'),
-        //         titular: getInputValue('#titular'),
-        //         referencia: getInputValue('#referencia'),
-        //         metodoPago: $('input[name="payment_method"]').val()
-        //       };
+                let value = data.user;
 
-        //       // Validar que todos los campos requeridos tengan valor
-        //       const camposRequeridos = [{
-        //           campo: 'titular',
-        //           mensaje: 'Titular'
-        //         },
-        //         {
-        //           campo: 'referencia',
-        //           mensaje: 'Referencia'
-        //         },
-        //         {
-        //           campo: 'metodoPago',
-        //           mensaje: 'Método de pago'
-        //         }
-        //       ];
+                // Obtener valores de forma segura
+                const formData = {
+                  nombre: value.nombre + ' ' + value.apellido,
+                  telefono: value.telefono,
+                  ubicacion: value.ubicacion,
+                  id_usuario: value.id_usuario,
+                  monto_pago: getInputValue('#monto_pagado'),
+                  titular: getInputValue('#titular'),
+                  referencia: getInputValue('#referencia'),
+                  metodoPago: $('input[name="payment_method"]').val()
+                };
 
-        //       const camposFaltantes = camposRequeridos
-        //         .filter(({
-        //           campo
-        //         }) => !formData[campo])
-        //         .map(({
-        //           mensaje
-        //         }) => mensaje);
+                // Validar que todos los campos requeridos tengan valor
+                const camposRequeridos = [{
+                    campo: 'titular',
+                    mensaje: 'Titular'
+                  },
+                  {
+                    campo: 'referencia',
+                    mensaje: 'Referencia'
+                  },
+                  {
+                    campo: 'metodoPago',
+                    mensaje: 'Método de pago'
+                  }
+                ];
 
-        //       if (camposFaltantes.length > 0) {
-        //         alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
-        //         return;
-        //       }
+                const camposFaltantes = camposRequeridos
+                  .filter(({
+                    campo
+                  }) => !formData[campo])
+                  .map(({
+                    mensaje
+                  }) => mensaje);
 
-        //       const boletosCargar = Array.from(boletosSeleccionados)
+                if (camposFaltantes.length > 0) {
+                  Swal.close();
+                  Swal.fire('Campos incompletos', `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`, 'warning');
+                  return;
+                }
 
-        //       try {
-        //         // Preparar datos de la compra
-        //         const datosCompra = {
-        //           boletos: boletosCargar,
-        //           ...formData,
-        //           // total: totalBS
-        //         };
+                const boletosCargar = Array.from(boletosSeleccionados);
 
-        //         fetch('./api/process_purchase', {
-        //             method: 'POST',
-        //             headers: {
-        //               'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify(datosCompra)
-        //           })
-        //           .then(response => response.json())
-        //           .then(dataCompra => {
-        //             if (dataCompra.success) {
+                try {
+                  // Preparar datos de la compra
+                  const datosCompra = {
+                    boletos: boletosCargar,
+                    ...formData,
+                  };
 
-        //               generarEnlaceWhatsApp({
-        //                 nombre: formData.nombre,
-        //                 telefono: formData.telefono
-        //               }, boletosCargar);
+                  await fetch('./api/process_purchase', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(datosCompra)
+                    })
+                    .then(response => response.json())
+                    .then(async dataCompra => {
+                      if (dataCompra.success) {
+                        Swal.close();
+                        generarEnlaceWhatsApp({
+                          nombre: formData.nombre,
+                          telefono: formData.telefono
+                        }, boletosCargar);
 
-        //               alert('¡Compra procesada correctamente!');
-        //               window.location.href = '/sorteo';
-        //             }
-        //           })
-        //           .catch(error => {
-        //             alert(dataCompra.error || 'Error al procesar la compra');
-        //             console.error('Error al procesar la compra:', error);
-        //           });
+                        await Swal.fire({
+                          title: '¡Compra procesada correctamente!',
+                          icon: 'success',
+                          confirmButtonText: 'OK'
+                        });
+                        window.location.href = '/sorteo';
+                      } else {
+                        Swal.close();
+                        Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                      }
+                    })
+                    .catch(error => {
+                      Swal.close();
+                      Swal.fire('Error', 'Error al procesar la compra', 'error');
+                      console.error('Error al procesar la compra:', error);
+                    });
 
-        //       } catch (error) {
-        //         console.error('Error:', error);
-        //       }
+                } catch (error) {
+                  Swal.close();
+                  console.error('Error:', error);
+                }
 
-        //     })
-        //     .catch(error => {
-        //       console.error('Error al verificar sesión:', error);
-        //     });
+              })
+              .catch(error => {
+                Swal.close();
+                console.error('Error al verificar sesión:', error);
+              });
+
+          })
+          .catch(error => {
+            Swal.close();
+            console.error('Error al verificar sesión:', error);
+          });
       }
 
     };

@@ -34,7 +34,7 @@
         .join(',');
 
       const message = `Gracias por comunicarte con CEGARIFAS. ¿Quieres ganarte una impecable joya por tan solo 3,34$?😮‍💨🍀\n\n` +
-        `Hola, soy Yorsin cruz, con mi celular, +1 407 4287580 y cedula 26196418, registre estos numeros: ${selectedNumbers} en la rifa LA OLLA DE PRESIONNN 😮️🔮\n\n` +
+        `Hola, soy Yorsin cruz, con mi celular, +1 407 4287580, registre estos numeros: ${selectedNumbers} en la rifa LA OLLA DE PRESIONNN 😮️🔮\n\n` +
         `Si ya realizaste el pago.\n` +
         `En un lapso no mayor a 24horas las asesoras verificarán tus boletos y serán enviados los originales✅\n\n` +
         `¡UN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN NOSOTROS!\n\n` +
