@@ -27,15 +27,14 @@ try {
 
                 $result = $personal->getByUsuarioId($result['id_usuario']);
                 echo json_encode([
+                    "session" => true,
                     "user" => [
                         "id_usuario" => $result['id_usuario'],
                         "nombre" => $result['nombre'],
                         "apellido" => $result['apellido'],
-                        "cedula" => $result['cedula'],
                         "telefono" => $result['telefono'],
                         "ubicacion" => $result['ubicacion']
                     ],
-                    "session" => true
                 ]);
                 exit;
             }

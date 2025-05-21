@@ -189,7 +189,7 @@ class Usuario
   /**
    * Registra datos personales para un usuario
    * @param int $id_usuario - ID del usuario
-   * @param array $datos - Datos personales (nombre, apellido, cedula, telefono, ubicacion)
+   * @param array $datos - Datos personales (nombre, apellido, telefono, ubicacion)
    * @return bool - true si se registr� correctamente, false en caso contrario
    */
   public function registrarDatosPersonales(int $id_usuario, array $datos): bool
@@ -225,12 +225,6 @@ class Usuario
   public function existeCedula($cedula): bool
   {
     error_log("Verificando cédula: " . $cedula);
-
-    // Validación básica de formato de cédula
-    if (empty($cedula) || !is_numeric($cedula)) {
-      error_log("Cédula inválida: " . $cedula);
-      return false;
-    }
 
     $result = $this->db->consultar(
       "SELECT COUNT(*) as count FROM " . self::TABLE_DATA . " WHERE " . self::COLUMN_CI . " = :cedula",

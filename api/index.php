@@ -94,7 +94,12 @@ switch (strtok($route, '?')) {
     case '/api/exchange_rate':
         require_once '../src/API/verificar.tasa.php';
         break;
-
+    case '/api/riffle_singup':
+        require_once '../src/API/registrarSorteo.php';
+        break;
+    case '/api/riffle_verfication':
+        require_once '../src/API/userVerifySorteo.php';
+        break;
     case '/api/coin_update':
         require_once '../src/API/actualizar_coin.php';
         break;
