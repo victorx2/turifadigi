@@ -40,9 +40,12 @@ class SorteoController
         "data" => $data
       ]);
     } catch (Exception $e) {
-
-      echo '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
-      exit;
+      http_response_code(201);
+      return ([
+      "success" => false,
+      "data" => null,
+      "message" => 'Error: ' . $e->getMessage()
+      ]);
     }
   }
 

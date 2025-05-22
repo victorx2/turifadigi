@@ -120,7 +120,7 @@ switch (strtok($route, '?')) {
     case '/sorteo':
         require_once 'views/rifa/sorteo.php';
         break;
-        
+
     case '/verificar_boleto':
         require_once 'views/verificar/index.php';
         break;
@@ -212,7 +212,9 @@ switch (strtok($route, '?')) {
     case '/admin/views/compra/accions_view':
         require_once 'views/admin/views/compra/vistaAcciones.php';
         break;
-
+    case '/admin/views/sorteo/action_riffle':
+        require_once 'views/admin/views/sorteo/vistaFinalizarSorteo.php';
+        break;
 
     //SECCION PANTALLAS DE SWEET ALERT DE SORTEO
     case '/sorteo/view/accion_view':

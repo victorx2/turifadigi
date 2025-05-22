@@ -26,6 +26,10 @@
     }
   </script>
 
+  <!-- FUNCION DE TICKETS -->
+  <script src="assets/js/boletosTicket.js"></script>
+  <script src="assets/js/jsbarcode.js"></script>
+
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script>
@@ -59,6 +63,7 @@
   <link rel="stylesheet" href="vendor/reey-font/stylesheet.css" />
 
   <!-- template styles -->
+  <link rel="stylesheet" href="assets/css/botonTickets.css" />
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
   <link rel="stylesheet" href="assets/css/dropdown-language.css">

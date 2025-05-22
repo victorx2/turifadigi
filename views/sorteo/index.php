@@ -267,9 +267,9 @@
     $.fn.transition.settings.silent = true;
 
     const boletosSeleccionados = new Set();
-    const minBoletos = <?php echo $sorteo['data']['configuracion']['boletos_minimos']; ?>;
-    let cantidadSeleccion = 2;
-    let precioUnitarioUSD = <?php echo $sorteo['data']['configuracion']['precio_boleto']; ?>;
+    const minBoletos = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
+    let cantidadSeleccion = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
+    let precioUnitarioUSD = "<?php echo $precioBoleto ?>" == '' ? "0" : "<?php echo $precioBoleto ?>";
     const todosLosBoletos = [];
     let cargandoBoletos = false;
 
@@ -336,24 +336,76 @@
 
       await fetch('./api/get_tickets') // Petición al backend
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
           const boletos = data['data'];
           const success = data['success'];
 
           try {
             if (!success) {
               if (boletos.rifa_estado == 0) {
-                const nuevoBoleto = document.createElement('div');
-                boletosList.style.display = 'flex';
-                nuevoBoleto.classList.add('no-sort-activ');
-                nuevoBoleto.textContent = "Sin sorteos activos";
-                fragment.appendChild(nuevoBoleto);
-                return
+                // Hacer otra petición con parámetro wn=1
+                await fetch('./api/get_tickets?wn=1')
+                  .then(response => response.json())
+                  .then(dataWn => {
+                    const boletosWn = dataWn['data'];
+                    const boletosLen = dataWn['total'];
+                    const boletosSc = dataWn['success'];
+                    // Si tampoco hay ganadores recientes, mostrar solo ese mensaje
+                    if (boletosSc == false || boletosLen === 0) {
+                      const nuevoBoleto = document.createElement('div');
+                      boletosList.style.display = 'flex';
+                      nuevoBoleto.classList.add('no-sort-activ');
+                      nuevoBoleto.textContent = "Sin sorteos activos, ni ganadores recientes";
+                      fragment.appendChild(nuevoBoleto);
+                    } else {
+
+                      boletosContainer.innerHTML = "";
+                      const nuevoBoleto = document.createElement('div');
+                      const msj = document.createElement('p');
+                      msj.textContent = "Últimos boletos ganadores";
+                      nuevoBoleto.id = "boletoContainer";
+                      boletosContainer.appendChild(msj);
+                      boletosContainer.appendChild(nuevoBoleto);
+
+                      // Validar que el elemento con id 'boletoContainer' exista antes de hacer el foreach
+                      setTimeout(() => {
+                        const container = document.getElementById('boletoContainer');
+                        if (container && Array.isArray(boletosWn)) {
+                          let databot = boletosWn.data || "";
+                          boletosWn.forEach(boleto => {
+                            // Llama a renderBoleto con los datos del boleto
+                            renderBoleto({
+                              items: {
+                                nombre: databot.nombre || "No comprado",
+                                telefono: databot.telefono || "No comprado",
+                                "Precio del boleto": databot.precio || "No comprado"
+                              },
+                              fecha_compra: boleto.fecha_compra || "No comprado",
+                              numero: boleto.numero_boleto || "",
+                              id_boleto: boleto.id_boleto || "",
+                              id_rifa: boleto.id_rifa || "",
+                              ganador: true
+                            });
+                          });
+                        }
+                      }, 0);
+
+                      setTimeout(() => {
+                        animateProgressBar(10000, 10000)
+                      }, 1000);
+                    }
+                  })
+                  .catch(error => {
+                    console.error('Error al cargar los boletos ganadores:', error);
+                  });
+                return;
               }
             }
           } catch (error) {
             console.error('Error al cargar los boletos:', error);
           }
+
+          // Si no hay boletos, no hacer nada aquí porque ya se maneja arriba
 
           boletos.forEach(boleto => {
             const nuevoBoleto = document.createElement('div');

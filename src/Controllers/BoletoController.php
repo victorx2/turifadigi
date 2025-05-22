@@ -199,19 +199,22 @@ class BoletoController
     }
   }
 
-  public function obtenerBoletos()
+  public function obtenerBoletos($petision = null)
   {
     header('Content-Type: application/json');
     header('Cache-Control: no-cache, must-revalidate');
 
     try {
+      // Selecciona el método según el valor de $petision
+      $boletos = $petision
+        ? $this->model->obtenerBoletosGandores()
+        : $this->model->obtenerBoletos();
 
-      $boletos = $this->model->obtenerBoletos();
-
-      if ($boletos['success'] == false) {
+      if (empty($boletos) || !isset($boletos['success']) || $boletos['success'] == false) {
         echo json_encode([
           'success' => false,
-          'data' => $boletos['data'],
+          'data' => $boletos['data'] ?? [],
+          'total' => $boletos['total'] ?? 0,
         ]);
         exit;
       }

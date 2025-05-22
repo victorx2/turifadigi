@@ -170,6 +170,16 @@
                             <i class="fa-solid fa-pen"></i>
                         </button>
                     </div>`;
+                    
+          let estado = '';
+
+          if (elemento['estado'] == 1) {
+            estado = 'activo';
+          } else if (elemento['estado'] == 2) {
+            estado = 'finalizada';
+          } else if (elemento['estado'] == 0 || elemento['estado'] === '' || elemento['estado'] === null || typeof elemento['estado'] === 'undefined') {
+            estado = 'desactivada';
+          }
 
           data[i]['contador'] = (i + 1);
           data[i]['id_rifa'] = elemento['id_rifa'];
@@ -177,7 +187,7 @@
           data[i]['fecha_creacion'] = elemento['fecha_creacion'];
           data[i]['boletos_maximos'] = elemento['configuracion']['boletos_maximos'];
           data[i]['precio_boleto'] = elemento['configuracion']['precio_boleto'];
-          data[i]['estado'] = elemento['estado'];
+          data[i]['estado'] = estado;
           data[i]['acciones'] = acciones;
 
           console.log(`Procesando sorteo ${i+1}:`, data[i]); // Log de cada sorteo procesado
@@ -286,7 +296,7 @@
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-
+                    window.location.reload();
                   }
                 }).then((result) => {
                   /* Read more about handling dismissals below */
@@ -313,62 +323,111 @@
 
         // window.location.href = "/confirmarBoleto/" + id;
       } else if (result.isDenied) {
-        Swal.fire({
-          title: "¡Procesando!",
-          html: "Por favor, espera mientras se completa la operación...",
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-
-            fetch("./api/change_draw_status?est=disabled&id=" + id, {
-                method: 'POST', // O el método HTTP que necesites
-                headers: {
-                  'Content-Type': 'application/json'
+        // Mostrar el formulario HTML obtenido de la ruta indicada
+        fetch('/admin/views/sorteo/action_riffle?id=' + id, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'text/html'
+            }
+          })
+          .then(response => response.text())
+          .then(htmlForm => {
+            Swal.fire({
+              title: 'Finalizar sorteo',
+              html: htmlForm,
+              showCancelButton: true,
+              confirmButtonText: 'Finalizar',
+              cancelButtonText: 'Cancelar',
+              focusConfirm: false,
+              preConfirm: () => {
+                const form = Swal.getPopup().querySelector('form');
+                if (!form) {
+                  Swal.showValidationMessage('No se encontró el formulario');
+                  return false;
                 }
-              })
-              .then(response => response.json()) // O response.text() si esperas texto plano
-              .then(data => {
-                Swal.close(); // Cierra el SweetAlert de "Procesando"
-
-                let timerInterval;
+                // Validar que todos los campos requeridos no estén vacíos
+                const requiredFields = form.querySelectorAll('[required]');
+                for (let field of requiredFields) {
+                  if (!field.value || field.value.trim() === '') {
+                    Swal.showValidationMessage(`El campo "${field.getAttribute('id') || field.placeholder || 'requerido'}" no puede estar vacío`);
+                    field.focus();
+                    return false;
+                  }
+                  // Validar que el valor sea numérico y de 4 dígitos exactos (formato "0000")
+                  if (field.type === 'number' || field.getAttribute('type') === 'number' || field.getAttribute('pattern') === '0000') {
+                    if (!validarFormatoCuatroDigitos(field.value)) {
+                      Swal.showValidationMessage(`El campo "${field.getAttribute('id') || field.placeholder || 'requerido'}" debe tener exactamente 4 dígitos numéricos (formato "0000")`);
+                      field.focus();
+                      return false;
+                    }
+                  }
+                }
+                // Obtener los datos del formulario
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                  data[key] = value;
+                });
+                return data;
+              }
+            }).then((result) => {
+              if (result.isConfirmed && result.value) {
                 Swal.fire({
-                  icon: 'info', // 'success' O 'error', 'warning', 'info', 'question' según el resultado
-                  title: '¡Éxito al finalizar!', // O el título que corresponda
-                  timer: 3000,
+                  title: "¡Procesando!",
+                  html: "Por favor, espera mientras se completa la operación...",
                   timerProgressBar: true,
                   didOpen: () => {
                     Swal.showLoading();
-                    const timer = Swal.getPopup().querySelector("b");
-                    timerInterval = setInterval(() => {
-                      timer.textContent = `${Swal.getTimerLeft()}`;
-                    }, 100);
-                  },
-                  willClose: () => {
-                    clearInterval(timerInterval);
-
-                  }
-                }).then((result) => {
-                  /* Read more about handling dismissals below */
-                  if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log("I was closed by the timer");
+                    fetch("./api/change_draw_status?est=disabled&id=" + id, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result.value)
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                        Swal.close();
+                        let timerInterval;
+                        Swal.fire({
+                          icon: 'info',
+                          title: '¡Éxito al finalizar!',
+                          timer: 3000,
+                          timerProgressBar: true,
+                          didOpen: () => {
+                            Swal.showLoading();
+                          },
+                          willClose: () => {
+                            clearInterval(timerInterval);
+                            window.location.reload();
+                          }
+                        });
+                      })
+                      .catch((error) => {
+                        Swal.close();
+                        console.error('Error en la petición:', error);
+                        Swal.fire({
+                          icon: 'error',
+                          title: '¡Error!',
+                          text: 'Hubo un problema al procesar la solicitud.',
+                          timer: 3000,
+                          showConfirmButton: false
+                        });
+                      });
                   }
                 });
-
-              })
-              .catch((error) => {
-                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
-                console.error('Error en la petición:', error);
-                Swal.fire({
-                  icon: 'error',
-                  title: '¡Error!',
-                  text: 'Hubo un problema al procesar la solicitud.',
-                  timer: 3000,
-                  showConfirmButton: false
-                });
-              });
-
-          },
-        });
+              }
+            });
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: 'error',
+              title: '¡Error!',
+              text: 'No se pudo cargar el formulario.',
+              timer: 3000,
+              showConfirmButton: false
+            });
+          });
       }
     });
 
@@ -442,6 +501,17 @@
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });
+    }
+  }
+
+  function validarFormatoCuatroDigitos(input) {
+    const regex = /^\d{4}$/; // ^ inicio, \d un dígito, {4} exactamente 4 veces, $ fin
+    if (regex.test(input)) {
+      console.log(`"${input}" está en el formato "0000".`);
+      return true;
+    } else {
+      console.log(`Error: "${input}" no está en el formato "0000".`);
+      return false;
     }
   }
 </script>

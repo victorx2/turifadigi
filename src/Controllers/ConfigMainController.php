@@ -115,7 +115,7 @@ class ConfigMainController
         if (!isset($premio['descripcion'])) {
           throw new Exception('La descripción del premio es requerida');
         }
-        
+
         $descripcion = is_array($premio['descripcion']) ?  $premio['descripcion'] :  json_encode($premio['descripcion'], JSON_UNESCAPED_UNICODE);
 
         $premios[] = [
@@ -212,14 +212,19 @@ class ConfigMainController
     }
   }
 
-  public function actualizarSorteo($id, $estado)
+  public function actualizarSorteo($id, $estado, $ganadores = null)
   {
     $this->model->desactivarRifas();
 
     if ($id != null && $estado != null) {
 
       try {
-        $mrc = $this->model->actualizarRifa($id, $estado);
+
+        if ($ganadores) {
+          $mrc = $this->model->finalizarRifa($id, $estado, $ganadores);
+        } else {
+          $mrc = $this->model->actualizarRifa($id, $estado);
+        }
 
         if ($mrc == true) {
           return [

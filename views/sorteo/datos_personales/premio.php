@@ -45,8 +45,8 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
 
   // Datos de configuración
   if (isset($sorteo['data']['configuracion'])) {
-    $precioBoleto = $sorteo['data']['configuracion']['precio_boleto'] ?? '';
-    $boletosMinimos = $sorteo['data']['configuracion']['boletos_minimos'] ?? '';
+    $precioBoleto = $sorteo['data']['configuracion']['precio_boleto'] ?? '1';
+    $boletosMinimos = $sorteo['data']['configuracion']['boletos_minimos'] ?? '1';
   }
   $urlRifa = $sorteo['data']['url_rifa'] ?? '';
   $numeroContacto = $sorteo['data']['numero_contacto'] ?? '';
