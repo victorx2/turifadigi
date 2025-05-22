@@ -28,7 +28,12 @@ if (isset($_GET['lang'])) {
   $idioma = strtoupper($_GET['lang']);
 }
 
+// Obtener texto traducido para el título
 $titulo = 'Título no disponible';
+if ($idioma === 'EN') {
+  $titulo = 'Title not available';
+}
+
 $descripcion = '';
 $textoImportante = '';
 $premiosMulti = [];
@@ -79,13 +84,13 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
 
           <div class="prize-details">
             <div class="alert alert-info mb-4" role="alert">
-              <strong>Al completarse el 80% juega nuestra rifa</strong>
+              <strong data-i18n="80_percent">Al completarse el 80% juega nuestra rifa</strong>
             </div>
 
             <section class="lottery-info mb-4" aria-label="Información básica">
-              <p>📍 Juega por la lotería de SuperGana</p>
-              <p>🎟️ Valor del boleto: <span class="price">$<?php echo htmlspecialchars((string)$precioBoleto); ?></span></p>
-              <p>🎟️ Compra mínima: <span class="min-tickets"><?php echo htmlspecialchars((string)$boletosMinimos); ?> boletos</span> en adelante</p>
+              <p data-i18n="play_supergana">📍 Juega por la lotería de SuperGana</p>
+              <p data-i18n="price_ticket">🎟️ Valor del boleto: <span class="price">$<?php echo htmlspecialchars((string)$precioBoleto); ?></span></p>
+              <p data-i18n="minimum_tickets">🎟️ Compra mínima: <span class="min-tickets"><?php echo htmlspecialchars((string)$boletosMinimos); ?> boletos</span> en adelante</p>
             </section>
 
             <section class="prize-list mb-4" aria-label="Lista de premios">
@@ -100,12 +105,12 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
             </section>
 
             <section class="date-info mb-4" aria-label="Fecha del sorteo">
-              <h2>🗓️ ¿Cuándo se juega la rifa?</h2>
-              <p>La fecha del sorteo será anunciada una vez se alcance el 80% de los boletos vendidos</p>
+              <h2 data-i18n="when_raffle_plays">🗓️ ¿Cuándo se juega la rifa?</h2>
+              <p data-i18n="when_raffle_plays_desc">La fecha del sorteo será anunciada una vez se alcance el 80% de los boletos vendidos</p>
             </section>
 
             <section class="official-link mb-4" aria-label="Enlace oficial">
-              <h2>🔗 Enlace oficial para seguir el sorteo:</h2>
+              <h2 data-i18n="official_link">🔗 Enlace oficial para seguir el sorteo:</h2>
               <a href="<?php echo htmlspecialchars((string)$urlRifa); ?>" target="_blank" class="thm-btn" rel="noopener">
                 LOTERIA OFICIAL <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                 <span class="sr-only">(se abre en una nueva ventana)</span>
@@ -113,7 +118,7 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
             </section>
 
             <section class="contact-info mb-4" aria-label="Información de contacto">
-              <h2>📞 Número de contacto:</h2>
+              <h2 data-i18n="contact_number">📞 Número de contacto:</h2>
               <p><a href="tel:<?php echo htmlspecialchars((string)$numeroContacto); ?>" class="phone-number">
                   <strong>+1 <?php echo htmlspecialchars((string)$numeroContacto); ?></strong>
                 </a></p>

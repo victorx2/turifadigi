@@ -222,6 +222,10 @@
  <script src="assets/js/i18n.js"></script>
  <script>
    function setLanguageDropdown(lang) {
+     // Cambiar el idioma usando el sistema i18n
+     if (typeof i18n !== 'undefined' && typeof i18n.changeLang === 'function') {
+       i18n.changeLang(lang);
+     }
      // Cambia el texto del botón en todos los dropdowns de idioma
      document.querySelectorAll('.ui.dropdown .default.text').forEach(function(el) {
        el.textContent = lang.toUpperCase();

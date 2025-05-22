@@ -18,7 +18,7 @@ class Conexion
   public function __construct()
   {
 
-    $this->dbname = 'turifadigi32';
+    $this->dbname = 'turifadigi';
     $this->servidor = 'localhost';
     $this->usuario = 'root';
     $this->password = '';

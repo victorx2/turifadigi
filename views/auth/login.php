@@ -19,7 +19,6 @@
                   class="form-control"
                   data-i18n-placeholder="username_placeholder"
                   placeholder="Nombre de usuario"
-                  required
                   autocomplete="username">
               </div>
             </div>
@@ -33,7 +32,6 @@
                   class="form-control"
                   data-i18n-placeholder="password_placeholder"
                   placeholder="Contraseña"
-                  required
                   autocomplete="current-password">
                 <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()">
                   <i class="fas fa-eye"></i>

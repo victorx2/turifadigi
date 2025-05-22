@@ -46,6 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Cerrar el dropdown
         languageSwitcher.classList.remove("active");
         languageSwitcher.querySelector(".menu").style.display = "none";
+
+        // Recargar la página después de cambiar el idioma
+        window.location.reload();
       });
     });
 
@@ -171,6 +174,12 @@ const i18n = {
       element.textContent = this.t(key);
     });
 
+    // Traducir elementos th dentro de tablas con atributo data-i18n-th
+    document.querySelectorAll("table th[data-i18n-th]").forEach((th) => {
+      const key = th.getAttribute("data-i18n-th");
+      th.textContent = this.t(key);
+    });
+
     // Traducir placeholders
     document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
       const key = element.getAttribute("data-i18n-placeholder");
@@ -223,4 +232,7 @@ function getTextByLanguage(jsonText) {
     console.error("Error al parsear texto JSON:", e);
     return jsonText;
   }
+
 }
+
+

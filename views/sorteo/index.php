@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
   <div class="text-center">
-    <h1 class="lista-title">LISTA DE BOLETOS</h1>
+    <h1 class="lista-title" data-i18n="list_tickets">LISTA DE BOLETOS</h1>
 
     <div class="progressLoader">
       <style>
@@ -130,7 +130,7 @@
     <div class="elegir-title">
       <button id="btnRandomNumber" class="magic-button">
         <i class="fa fa-star"></i>
-        <span>ELEGIR A LA SUERTE</span>
+        <span data-i18n="choose_randomly">ELEGIR A LA SUERTE</span>
         <i class="fa fa-star"></i>
       </button>
     </div>
@@ -143,8 +143,8 @@
     </div>
 
     <div class="buscar-container">
-      <input type="text" id="buscador" class="form-control" placeholder="Buscar boleto (ej: 001, 0020...)">
-      <button class="btn-buscar">BUSCAR</button>
+      <input type="text" id="buscador" class="form-control" placeholder="Buscar boleto (ej: 001, 0020...)" data-i18n-placeholder="search_ticket_placeholder">
+      <button class="btn-buscar" data-i18n="search">BUSCAR</button>
     </div>
 
     <div class="boletos-container">
@@ -362,7 +362,7 @@
                       boletosContainer.innerHTML = "";
                       const nuevoBoleto = document.createElement('div');
                       const msj = document.createElement('p');
-                      msj.textContent = "Últimos boletos ganadores";
+                      msj.textContent = i18n.t("last_winners_tickets");
                       nuevoBoleto.id = "boletoContainer";
                       boletosContainer.appendChild(msj);
                       boletosContainer.appendChild(nuevoBoleto);
@@ -376,11 +376,11 @@
                             // Llama a renderBoleto con los datos del boleto
                             renderBoleto({
                               items: {
-                                nombre: databot.nombre || "No comprado",
-                                telefono: databot.telefono || "No comprado",
-                                "Precio del boleto": databot.precio || "No comprado"
+                                nombre: databot.nombre || i18n.t("no_purchases"),
+                                telefono: databot.telefono || i18n.t("no_purchases"),
+                                "Precio": databot.precio || i18n.t("no_purchases")
                               },
-                              fecha_compra: boleto.fecha_compra || "No comprado",
+                              fecha_compra: boleto.fecha_compra || i18n.t("no_purchases"),
                               numero: boleto.numero_boleto || "",
                               id_boleto: boleto.id_boleto || "",
                               id_rifa: boleto.id_rifa || "",

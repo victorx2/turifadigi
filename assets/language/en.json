@@ -19,7 +19,9 @@
   "enter_email": "Enter your email",
   "register": "Register",
   "already_have_account": "Already have an account?",
+
   "login": "Login",
+
   "name_validation": "Name must be at least 3 letters long and can only contain letters and spaces.",
   "lastname_validation": "Last name must be at least 3 letters long and can only contain letters and spaces.",
   "id_validation": "ID must be at least 6 digits long and can only contain numbers.",
@@ -36,11 +38,22 @@
   "valid_password": "Valid password!",
   "valid_phone": "Valid phone number!",
   "valid_email": "Valid email!",
+
   "home": "Home",
+  
+  "verify purchases": "Verify Purchases",
+  "verify raffles": "Verify Raffles",
+  "create raffle": "Create Raffle",
+
+  "purchases": "Purchases",
+
   "verify_ticket": "Ticket Verify",
   "raffle": "Raffle",
+
   "login_btn": "Login",
+
   "logout_btn": "Logout",
+
   "payment_system": "Secure Payment System",
   "multiple_methods": "Multiple payment methods and secure transactions.",
   "learn_more": "Learn more",
@@ -68,9 +81,66 @@
   "follow_instagram": "Follow us on instagram!",
   "contact": "Contact",
   "phone_number": "+1 4074287580",
+
   "login_title": "Login",
+
   "username_placeholder": "Username",
   "password_placeholder": "Password",
   "no_account": "Don't have an account?",
-  "register_here": "Register here"
+  "register_here": "Register here",
+
+  "list_tickets": "TICKET LIST",
+  "choose_randomly": "CHOOSE RANDOMLY",
+  "total": "Total:",
+  "search_ticket_placeholder": "Search ticket (e.g.: 001, 0020...)",
+  "search": "SEARCH",
+
+  "winning_ticket": "Winning Ticket",
+  "ticket_details": "Ticket Details",
+  "purchase_date": "Purchase Date:",
+  "ticket_id": "Ticket ID:",
+
+  "title": "Title not available",
+  "80_percent": "When 80% is completed, our raffle plays",
+  "play_supergana": "📍 Play SuperGana",
+  "price_ticket": "🎟️ Price Ticket:",
+  "minimum_tickets": "🎟️ Minimum Tickets:",
+  "when_raffle_plays": "🗓️ When does the raffle play?",
+  "when_raffle_plays_desc": "The raffle date will be announced once 80% of the tickets are sold",
+  "official_link": "🔗 Official link to follow the raffle:",
+  "contact_number": "📞 Contact number:",
+
+  "last_winners_tickets": "Last winners tickets",
+  "no_purchases": "No purchased",
+
+  "admin_tickets": "Ticket Administration",
+  "admin_tickets_desc": "Ticket Management",
+
+  "purchase_date_2": "PURCHASE DATE",
+  "datatable_buyer": "BUYER",
+  "datatable_raffle": "RAFFLE",
+  "datatable_tickets": "TICKETS",
+  "datatable_amount": "AMOUNT",
+  "datatable_status": "STATUS",
+  "datatable_actions": "ACTIONS",
+
+  "datatable_show": "Show",
+  "datatable_entries_per_page": "Entries per page",
+  "datatable_search": "Search:",
+  "datatable_search_placeholder": "Search here...",
+  "datatable_no_data": "No data available...",
+  "datatable_showing": "Showing",
+  "datatable_to": "to",
+  "datatable_of": "of",
+  "datatable_entries": "entries",
+  "datatable_first": "First",
+  "datatable_previous": "Previous",
+  "datatable_next": "Next",
+  "datatable_last": "Last"
+ 
+  
+
+
+   
+
 }

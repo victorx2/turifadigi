@@ -116,8 +116,8 @@
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 mb-4">
-      <h1 style="color: #5497CC;" class=" text-center">Administración de Boletos</h1>
-      <h5 class=" text-center"> <strong>- Gestión de Boletos de Rifa -</strong> </h5>
+      <h1 style="color: #5497CC;" class=" text-center" data-i18n="admin_tickets">Administración de Boletos</h1>
+      <h5 class=" text-center" data-i18n="admin_tickets_desc">Gestión de Boletos de Rifa</h5>
     </div>
     <div class="col-lg-2"></div>
   </div>
@@ -131,13 +131,13 @@
       <table id="tabla" class="table table-sm table-bordered table-hover mb-0">
         <thead class="align-middle">
           <tr>
-            <th class="text-center bg-body-tertiary" width="1%">#</th>
-            <th class="text-center bg-body-tertiary" width="20%">FECHA DE COMPRA</th>
-            <th class="text-center bg-body-tertiary" width="25%">COMPRADOR</th>
-            <th class="text-center bg-body-tertiary" width="20%">BOLETOS</th>
-            <th class="text-center bg-body-tertiary" width="10%">MONTO</th>
-            <th class="text-center bg-body-tertiary" width="10%">ESTADO</th>
-            <th class="text-center bg-body-tertiary" width="14%">ACCIONES</th>
+            <th class="text-center bg-body-tertiary" width="1%" data-i18n-th="purchase_date_2">FECHA DE COMPRA</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n-th="datatable_buyer">COMPRADOR</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n-th="datatable_raffle">SORTEO</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n-th="datatable_tickets">BOLETOS</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n-th="datatable_amount">MONTO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_status">ESTADO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_actions">ACCIONES</th>
           </tr>
         </thead>
       </table>

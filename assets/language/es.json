@@ -19,7 +19,9 @@
   "enter_email": "Ingrese su correo electrónico",
   "register": "Registrarme",
   "already_have_account": "¿Ya tienes una cuenta?",
+
   "login": "Inicia sesión",
+
   "name_validation": "El nombre debe tener al menos 3 letras y solo puede contener letras y espacios.",
   "lastname_validation": "El apellido debe tener al menos 3 letras y solo puede contener letras y espacios.",
   "id_validation": "La cédula debe tener al menos 6 números y solo puede contener dígitos.",
@@ -36,11 +38,23 @@
   "valid_password": "¡Contraseña válida!",
   "valid_phone": "¡Teléfono válido!",
   "valid_email": "¡Correo electrónico válido!",
+
   "home": "Inicio",
+
+  "verify purchases": "Verificar Compras",
+  "verify raffles": "Verificar Sorteos",
+  "create raffle": "Crear Sorteo",
+
+  "purchases": "Compras",
+
+
   "verify_ticket": "Verificar Boleto",
   "raffle": "Sorteo",
+
   "login_btn": "Iniciar Sesión",
+
   "logout_btn": "Cerrar Sesión",
+
   "payment_system": "Sistema de Pagos Seguro",
   "multiple_methods": "Múltiples métodos de pago y transacciones seguras.",
   "learn_more": "Conoce más",
@@ -68,9 +82,63 @@
   "follow_instagram": "¡Síguenos en instagram!",
   "contact": "Contacto",
   "phone_number": "+1 4074287580",
+  
   "login_title": "Iniciar Sesión",
+
   "username_placeholder": "Nombre de usuario",
   "password_placeholder": "Contraseña",
   "no_account": "¿No tienes cuenta?",
-  "register_here": "Regístrate aquí"
+  "register_here": "Regístrate aquí",
+
+  "list_tickets": "LISTA DE BOLETOS",
+  "choose_randomly": "ELEGIR As LA SUERTE",
+  "total": "Total:",
+  "search_ticket_placeholder": "Bucar boleto (ej: 001, 0020...)",
+  "search": "BUSCAR",
+
+  "winning_ticket": "Boleto Ganador",
+  "ticket_details": "Detalles de Boleto",
+  "purchase_date": "Fecha de compra:",
+  "ticket_id": "ID Boleto:",
+
+  "title": "Título no disponible",
+  "80_percent": "Al completarse el 80% juega nuestra rifa",
+  "play_supergana": "📍 Juega por la lotería de SuperGana",
+  "price_ticket": "🎟️ Valor del boleto:",
+  "minimum_tickets": "🎟️ Compra mínima:",
+  "when_raffle_plays": "🗓️ ¿Cuándo se juega la rifa?",
+  "when_raffle_plays_desc": "La fecha del sorteo será anunciada una vez se alcance el 80% de los boletos vendidos",
+  "official_link": "🔗 Enlace oficial para seguir el sorteo:",
+  "contact_number": "📞 Número de contacto:",
+
+  "last_winners_tickets": "Últimos boletos ganadores",
+  "no_purchases": "No comprado",
+
+
+  "admin_tickets": "Administración de Boletos",
+  "admin_tickets_desc": "Gestión de Boletos de Rifa",
+
+  "purchase_date_2": "FECHA DE COMPRA",
+  "datatable_buyer": "COMPRADOR",
+  "datatable_raffle": "SORTEO",
+  "datatable_tickets": "BOLETOS",
+  "datatable_amount": "MONTO",
+  "datatable_status": "ESTADO",
+  "datatable_actions": "ACCIONES",
+
+  "datatable_show": "Mostrar",
+  "datatable_entries_per_page": "Registros por página",
+  "datatable_search": "Buscar:",
+  "datatable_search_placeholder": "Buscar por aquí...",
+  "datatable_no_data": "No hay datos disponibles...",
+  "datatable_showing": "Mostrando",
+  "datatable_to": "a",
+  "datatable_of": "de",
+  "datatable_entries": "registros",
+  "datatable_first": "Primero",
+  "datatable_previous": "Anterior",
+  "datatable_next": "Siguiente",
+  "datatable_last": "Último"
+
+   
 }

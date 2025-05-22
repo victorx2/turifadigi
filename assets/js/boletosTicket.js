@@ -22,7 +22,7 @@ function renderBoleto(data) {
             </div>`
     ).join('');
 
-    const ganador = data.ganador ? '<p class="subabel win">Boleto Ganadors</p>' : "";
+    const ganador = data.ganador ? `<p class="subabel win" data-i18n="winning_ticket">Boleto Ganador</p>` : "";
     const fondogan = data.ganador ? 'style="background: #007bff6e"' : "";
 
     // Crea un elemento contenedor para el boleto
@@ -34,11 +34,11 @@ function renderBoleto(data) {
                 <div class="logo-container">
                     <img src="assets/img/webp/TuRifadigi.webp" alt="Logo de la Rifa">
                 </div>
-                <h2 class="raffle-name">Tu Rifa Digital</h2>
-                <p class="subabel">Detalles de Boleto</p>
+                <h2 class="raffle-name" data-i18n="turifadigital">Tu Rifa Digital</h2>
+                <p class="subabel" data-i18n="ticket_details">Detalles de Boleto</p>
                 ${itemsHtml}
                 <div class="reference">
-                <span class="label">Fecha de compra:</span>
+                <span class="label" data-i18n="purchase_date">Fecha de compra:</span>
                 <span class="value">${data.fecha_compra}</span>
                 </div>
                 </div>
@@ -48,13 +48,27 @@ function renderBoleto(data) {
                 <p class="ticket-number">Nº ${data.numero}</p>
                 <div class="barcode">
                     <img id="barcode_${data.id_boleto}" alt="Código de Barras">
-                    <p class="barcode-text win">ID Boleto: ${data.id_boleto}</p>
+                    <p class="barcode-text win" data-i18n="ticket_id">ID Boleto: ${data.id_boleto}</p>
                 </div>
             </div>
         </div>
     `;
 
     container.appendChild(boletoDiv);
+
+    // Verificar y traducir el contenido del boleto
+    // console.log("Verificando elementos con data-i18n antes de la traducción:");
+    const i18nElements = boletoDiv.querySelectorAll('[data-i18n]');
+    i18nElements.forEach(el => {
+        // console.log(`Elemento encontrado: ${el.tagName}, Atributo data-i18n: ${el.getAttribute('data-i18n')}`);
+    });
+
+    if (typeof i18n.translatePage === 'function') {
+        // console.log("i18n.translatePage es una función válida, ejecutando traducción...");
+        i18n.translatePage();
+    } else {
+        console.error("Error: i18n.translatePage no es una función válida");
+    }
 
     // Genera el código de barras cuando el DOM esté listo
     setTimeout(() => {

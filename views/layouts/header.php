@@ -113,10 +113,10 @@
                       if ($session !== '' && $sessionRol == 2) {
                         echo '
                         <ul class="dropdown-menu">
-                          <li><a href="/compra_verificacion">Verificar compras</a></li>
-                          <li><a href="/sorteo_verificacion">Verificar sorteos</a></li>
+                          <li><a href="/compra_verificacion" data-i18n="verify purchases">Verificar compras</a></li>
+                          <li><a href="/sorteo_verificacion" data-i18n="verify raffles">Verificar sorteos</a></li>
                           <!-- <li><a href="/editar_sorteo">Editar sorteo</a></li> -->
-                          <li><a href="/crear_sorteo">Crear sorteo</a></li>
+                          <li><a href="/crear_sorteo" data-i18n="create raffle">Crear sorteo</a></li>
                         </ul>';
                       } ?>
                     </li>
@@ -124,7 +124,7 @@
                     if ($session !== '') {
                       echo '
                     <li class="element">
-                      <a href="/compras">Compras
+                      <a href="/compras" data-i18n="purchases">Compras
                         <span class="main-menu-border"></span>
                       </a>
                     </li>';
@@ -150,9 +150,9 @@
                       </li>';
                     }
                     if ($session === '') {
-                      echo '<a href="/login" class="main-menu__btn thm-btn inic" id="inicMob" data-i18n="login_btn">Iniciar Sesión</a>';
+                      echo '<a href="/login" class="main-menu__btn thm-btn inic inicMob"   data-i18n="login_btn">Iniciar Sesión</a>';
                     } else {
-                      echo '<a href="" class="main-menu__btn thm-btn inic" onclick=session_destroy() id="inicMob" data-i18n="logout_btn">Cerrar Sesión</a>';
+                      echo '<a href="" class="main-menu__btn thm-btn inic inicMob" onclick=session_destroy()  data-i18n="logout_btn">Cerrar Sesión</a>';
                     } ?>
                   </ul>
 
@@ -163,7 +163,7 @@
                 echo '
             <div class="main-menu__right">
 
-            <div id="language-selector-dropdown" class="ui fluid selection dropdown">
+            <div id="language-selector-dropdown" class="ui fluid selection dropdown inicMob2">
               <input type="hidden" name="language">
               <i class="dropdown icon" style="
                   position: absolute;
@@ -212,13 +212,58 @@
               </div>';
               } else {
                 echo '<div class="main-menu__right">
-               
+
+
+
+              
+               <div id="language-selector-dropdown" class="ui fluid selection dropdown inicMob2">
+              <input type="hidden" name="language">
+              <i class="dropdown icon" style="
+                  position: absolute;
+                  right: 10px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: #666;
+              "></i>
+              <div class="default text" style="
+                  padding: 8px 12px;
+                  color: #333;
+                  font-weight: 500;
+              ">Idioma</div>
+              <div class="menu" style="
+                  display: none;
+                  border: 2px solid #e0e0e0;
+                  border-radius: 8px;
+                  margin-top: 5px;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                  width: 100%;
+                  position: absolute;
+                  z-index: 1000;
+                  background: white;
+              " data-silent="true">
+                <div class="item" data-value="es" style="
+                    padding: 12px 15px;
+                    cursor: pointer;
+                    transition: background-color 0.2s ease;
+                ">
+                  <span class="text">ES</span>
+                </div>
+                <div class="item" data-value="en" style="
+                    padding: 12px 15px;
+                    cursor: pointer;
+                    transition: background-color 0.2s ease;
+                ">
+                  <span class="text">EN</span>
+                </div>
+              </div>
+            </div>
            
           
 
               <div class="main-menu__btn-box">
-              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy()>Cerrar Sesión</a>
+              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesión</a>
               </div>
+
               </div>';
               } ?>
             </div>
@@ -246,13 +291,26 @@
       </script>
     </header>
     <style>
-      #inicMob {
+      .inicMob {
         margin: 20px 0;
         display: none;
       }
 
       @media (max-width: 765px) {
-        #inicMob {
+        .inicMob {
+          margin: 20px 0;
+          display: block;
+        }
+      }
+
+      .inicMob2 {
+        /* 763 */
+        margin: 20px 0;
+        display: none;
+      }
+
+      @media (max-width: 765px) {
+        .inicMob2 {
           margin: 20px 0;
           display: block;
         }
