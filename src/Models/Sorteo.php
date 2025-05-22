@@ -219,9 +219,15 @@ class SorteoModel
         $id_rifa = $row['id_rifa'];
 
         $nombres_premios_array = explode(' - ', $row["nombres_premios"]);
-
-        // Desagrupar las descripciones de los premios
         $descripciones_premios_array = explode(' || ', $row["descripciones_premios"]);
+
+        // Decodificar cada nombre y descripción de premio, limpiando las barras invertidas
+        foreach ($nombres_premios_array as &$nombre) {
+          $nombre = json_decode(stripslashes($nombre), true);
+        }
+        foreach ($descripciones_premios_array as &$desc) {
+          $desc = json_decode(stripslashes($desc), true);
+        }
 
         if (!isset($sorteos[$id_rifa])) {
           $sorteos[$id_rifa] = [
