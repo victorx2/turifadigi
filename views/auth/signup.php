@@ -183,7 +183,9 @@
 
           <div class="result"></div>
 
-          <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n-html="already_have_account">¿Ya tienes una cuenta? &nbsp;&nbsp;&nbsp;<a href="/login" data-i18n="login">Inicia sesión</a></p>
+          <a href="/login">
+            <p class="contact-two__left-text" style="margin-top: 20px;">¿Ya tiene una cuenta?</p>
+          </a>
 
         </div>
       </div>

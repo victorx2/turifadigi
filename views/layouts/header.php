@@ -66,6 +66,9 @@
   <link rel="stylesheet" href="assets/css/botonTickets.css" />
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
+
+  <link rel="stylesheet" href="assets/css/dropdownMetodosPagos.css">
+
   <link rel="stylesheet" href="assets/css/dropdown-language.css">
 
   <!-- Scripts adicionales CSS -->
@@ -82,6 +85,10 @@
 </head>
 
 <body class="custom-cursor">
+
+
+
+
 
   <div class="custom-cursor__cursor"></div>
   <div class="custom-cursor__cursor-two"></div>
@@ -163,47 +170,19 @@
                 echo '
             <div class="main-menu__right">
 
-            <div id="language-selector-dropdown" class="ui fluid selection dropdown inicMob2">
-              <input type="hidden" name="language">
-              <i class="dropdown icon" style="
-                  position: absolute;
-                  right: 10px;
-                  top: 50%;
-                  transform: translateY(-50%);
-                  color: #666;
-              "></i>
-              <div class="default text" style="
-                  padding: 8px 12px;
-                  color: #333;
-                  font-weight: 500;
-              ">Idioma</div>
-              <div class="menu" style="
-                  display: none;
-                  border: 2px solid #e0e0e0;
-                  border-radius: 8px;
-                  margin-top: 5px;
-                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                  width: 100%;
-                  position: absolute;
-                  z-index: 1000;
-                  background: white;
-              " data-silent="true">
-                <div class="item" data-value="es" style="
-                    padding: 12px 15px;
-                    cursor: pointer;
-                    transition: background-color 0.2s ease;
-                ">
-                  <span class="text">ES</span>
-                </div>
-                <div class="item" data-value="en" style="
-                    padding: 12px 15px;
-                    cursor: pointer;
-                    transition: background-color 0.2s ease;
-                ">
-                  <span class="text">EN</span>
-                </div>
-              </div>
-            </div>
+            
+<div class="custom-language-select  " id="custom-language-select">
+  <div class="custom-language-button">
+    <span class="custom-language-selected">Idioma</span>
+    <span class="custom-language-arrow">▼</span>
+  </div>
+  <div class="custom-language-options">
+    <div class="custom-language-option" data-value="es">Español</div>
+    <div class="custom-language-option" data-value="en">Inglés</div>
+  </div>
+  <input type="hidden" name="language" value="es">
+</div>
+
             
             <div class="main-menu__btn-box">
               <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
@@ -212,54 +191,18 @@
               </div>';
               } else {
                 echo '<div class="main-menu__right">
-
-
-
-              
-               <div id="language-selector-dropdown" class="ui fluid selection dropdown inicMob2">
-              <input type="hidden" name="language">
-              <i class="dropdown icon" style="
-                  position: absolute;
-                  right: 10px;
-                  top: 50%;
-                  transform: translateY(-50%);
-                  color: #666;
-              "></i>
-              <div class="default text" style="
-                  padding: 8px 12px;
-                  color: #333;
-                  font-weight: 500;
-              ">Idioma</div>
-              <div class="menu" style="
-                  display: none;
-                  border: 2px solid #e0e0e0;
-                  border-radius: 8px;
-                  margin-top: 5px;
-                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                  width: 100%;
-                  position: absolute;
-                  z-index: 1000;
-                  background: white;
-              " data-silent="true">
-                <div class="item" data-value="es" style="
-                    padding: 12px 15px;
-                    cursor: pointer;
-                    transition: background-color 0.2s ease;
-                ">
-                  <span class="text">ES</span>
-                </div>
-                <div class="item" data-value="en" style="
-                    padding: 12px 15px;
-                    cursor: pointer;
-                    transition: background-color 0.2s ease;
-                ">
-                  <span class="text">EN</span>
-                </div>
-              </div>
-            </div>
+<div class="custom-language-select  " id="custom-language-select">
+  <div class="custom-language-button">
+    <span class="custom-language-selected">Idioma</span>
+    <span class="custom-language-arrow">▼</span>
+  </div>
+  <div class="custom-language-options">
+    <div class="custom-language-option" data-value="es">Español</div>
+    <div class="custom-language-option" data-value="en">Inglés</div>
+  </div>
+  <input type="hidden" name="language" value="es">
+</div>
            
-          
-
               <div class="main-menu__btn-box">
               <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesión</a>
               </div>
@@ -298,19 +241,6 @@
 
       @media (max-width: 765px) {
         .inicMob {
-          margin: 20px 0;
-          display: block;
-        }
-      }
-
-      .inicMob2 {
-        /* 763 */
-        margin: 20px 0;
-        display: none;
-      }
-
-      @media (max-width: 765px) {
-        .inicMob2 {
           margin: 20px 0;
           display: block;
         }

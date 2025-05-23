@@ -155,25 +155,25 @@
     </div>
 
     <div class="seleccionados-container" style="display: none;">
-      <span class="seleccionados-text">SELECCIONADOS</span>
+      <span class="seleccionados-text" data-i18n="selected">SELECCIONADOS</span>
       <div class="contador">0</div>
       <div class="boletos-seleccionados-chips"></div>
-      <button class="btn btn-continuar">CONTINUAR</button>
+      <button class="btn btn-continuar" data-i18n="continue">CONTINUAR</button>
     </div>
   </div>
 
   <div id="datosPersonales" class="form-personal" style="display: none;">
     <div class="payment-subtitle" id="siguiente">
       <i class="fas fa-arrow-down"></i>
-      deslice hacia abajo para continuar
+      <span data-i18n="slide_down_to_continue">deslice hacia abajo para continuar</span>
       <i class="fas fa-arrow-down"></i>
     </div>
     <div class="payment-section">
       <div class="payment-title">
         <i class="fas fa-money-bill"></i>
-        METODO DE PAGO
+        <span data-i18n="payment_method">METODO DE PAGO</span>
       </div>
-      <div class="payment-subtitle">Transferencia o depósito</div>
+      <div class="payment-subtitle" data-i18n="payment_method_subtitle">Transferencia o depósito</div>
 
       <div class="payment-methods">
         <div class="payment-method" onclick="mostrarDatosDePago('pago_movil')">
@@ -210,7 +210,7 @@
             <span id="mapr"></span>
           </div>
         </div>
-        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 1 USD</p>
+        <p class="exchange-rate" id="tasaEx" data-i18n="exchange_rate">Tasa de cambio: 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
           <-- carga dinamicamente -->
         </div>
@@ -261,11 +261,8 @@
     document.body.removeChild(enlace);
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-
-    // Configuración global para Semantic UI Transitions
-    $.fn.transition.settings.silent = true;
-
+  document.addEventListener('DOMContentLoaded', async function() {
+    await i18n.init();
     const boletosSeleccionados = new Set();
     const minBoletos = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
     let cantidadSeleccion = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
@@ -355,7 +352,10 @@
                       const nuevoBoleto = document.createElement('div');
                       boletosList.style.display = 'flex';
                       nuevoBoleto.classList.add('no-sort-activ');
-                      nuevoBoleto.textContent = "Sin sorteos activos, ni ganadores recientes";
+                      nuevoBoleto.setAttribute('data-i18n', 'no_active_raffles');
+                      nuevoBoleto.textContent = i18n.t("no_active_raffles") !== "no_active_raffles" ?
+                        i18n.t("no_active_raffles") :
+                        "Sin sorteos activos, ni ganadores recientes";
                       fragment.appendChild(nuevoBoleto);
                     } else {
 
@@ -440,7 +440,7 @@
     }
 
     // Cargar los primeros boletos
-    cargarMasBoletos();
+    await cargarMasBoletos();
 
     // Inicializar el contador y total
     numeroBoletosSpan.textContent = cantidadSeleccion;

@@ -115,6 +115,26 @@
    <div class="mobile-nav__overlay mobile-nav__toggler"></div>
    <!-- /.mobile-nav__overlay -->
    <div class="mobile-nav__content">
+
+     <!-- <div class="mobile-nav__btns"> -->
+     <!--   <a href="/login" class="main-menu__btn thm-btn"  --><!-- data-i18n="login_btn">Iniciar Sesión</a> -->
+     <!--   <div class="custom-language-select" id="custom-language-select-mobile"> -->
+     <!--     <div class="custom-language-button"> -->
+     <!--       <span class="custom-language-selected">Idioma</span> -->
+     <!--       <span class="custom-language-arrow">▼</span> -->
+     <!--     </div> -->
+     <!--     <div class="custom-language-options"> -->
+     <!--       <div class="custom-language-option" data-value="es">Español</div> -->
+     <!--       <div class="custom-language-option" data-value="en">Inglés</div> -->
+     <!--     </div> -->
+     <!--     <input type="hidden" name="language" value="es"> -->
+     <!--   </div> -->
+     <!-- </div> -->
+
+
+
+
+
      <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
 
      <div class="logo-box">
@@ -166,6 +186,27 @@
  <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="icon-right-arrow"></i></a>
 
 
+ <!-- <style> -->
+ /*   .mobile-nav__btns { */
+ /*     display: flex; */
+ /*     flex-direction: column; */
+ /*     gap: 10px; */
+ /*     margin-bottom: 20px; */
+ /*   } */
+
+ /*   @media (max-width: 765px) { */
+ /*     .mobile-nav__btns { */
+ /*       width: 100%; */
+ /*     } */
+
+ /*     .mobile-nav__btns .main-menu__btn, */
+ /*     .mobile-nav__btns .custom-language-select { */
+ /*       width: 100%; */
+ /*       margin: 0; */
+ /*     } */
+ /*   } */
+ <!-- </style> -->
+
  <!-- Scripts CDN con fallback -->
 
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -214,52 +255,18 @@
  <!-- template js -->
  <script src="assets/js/header.js"></script>
  <script src="assets/js/main.js"></script>
- <script src="assets/js/dropdown-search.js"></script>
+
+
+ <!-- <script src="assets/js/dropdown-search.js"></script> -->
+
  <script src="assets/js/tabla_boletos.js"></script>
  <script src="assets/js/dataTables.js"></script>
  <script src="assets/js/dataTables.bootstrap5.js"></script>
  <script src="assets/js/tooltip.js"></script>
+
  <script src="assets/js/i18n.js"></script>
- <script>
-   function setLanguageDropdown(lang) {
-     // Cambiar el idioma usando el sistema i18n
-     if (typeof i18n !== 'undefined' && typeof i18n.changeLang === 'function') {
-       i18n.changeLang(lang);
-     }
-     // Cambia el texto del botón en todos los dropdowns de idioma
-     document.querySelectorAll('.ui.dropdown .default.text').forEach(function(el) {
-       el.textContent = lang.toUpperCase();
-     });
-     // Cambia el valor oculto
-     document.querySelectorAll('.ui.dropdown input[name="language"]').forEach(function(input) {
-       input.value = lang;
-     });
-     // Marca el item seleccionado
-     document.querySelectorAll('.ui.dropdown .item').forEach(function(item) {
-       if (item.getAttribute('data-value') === lang) {
-         item.classList.add('selected');
-       } else {
-         item.classList.remove('selected');
-       }
-     });
-   }
-
-   // Evento de selección de idioma
-   document.querySelectorAll('.ui.dropdown .item').forEach(function(item) {
-     item.addEventListener('click', function() {
-       var lang = this.getAttribute('data-value');
-       localStorage.setItem('selectedLanguage', lang);
-       setLanguageDropdown(lang);
-       // Aquí puedes agregar lógica para cambiar el idioma de la página si tienes i18n
-     });
-   });
-
-   // Al cargar la página, aplica el idioma guardado
-   window.addEventListener('DOMContentLoaded', function() {
-     var lang = localStorage.getItem('selectedLanguage') || 'es'; // Por defecto ES
-     setLanguageDropdown(lang);
-   });
- </script>
+ <script src="assets/js/dropdownMetodosDePagos.js"></script>
+ <script src="assets/js/dropdown-search.js"></script>
 
  </body>
 

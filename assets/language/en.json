@@ -136,11 +136,28 @@
   "datatable_first": "First",
   "datatable_previous": "Previous",
   "datatable_next": "Next",
-  "datatable_last": "Last"
+  "datatable_last": "Last",
+
+  "no_active_raffles": "No active raffles, nor recent winners",
  
-  
+  "selected": "SELECTED",
+  "continue": "CONTINUE",
+  "slide_down_to_continue": "slide down to continue",
+  "payment_method": "PAYMENT METHOD",
+  "payment_method_subtitle": "Transfer or deposit",
+  "exchange_rate": "Exchange rate: 1 USD = 1 USD",
+  "comprobante_title": "PAYMENT PROOF",
 
-
-   
+  "comprobante_titular": "Payment title (Payment title phone, if it is Pago Movil)",
+  "comprobante_referencia": "Payment reference",
+  "comprobante_monto": "Amount paid",
+  "comprobante_metodo": "Payment method",
+  "comprobante_metodo_seleccionar": "Select payment method",
+  "comprobante_metodo_pago_movil": "Pago Movil",
+  "comprobante_metodo_zelle": "Zelle",
+  "comprobante_metodo_davivienda": "Davivienda",
+  "comprobante_metodo_paypal": "Paypal",
+  "comprobante_metodo_banco_venezuela": "Banco de Venezuela",
+  "comprobante_metodo_bancolombia": "Bancolombia"
 
 }

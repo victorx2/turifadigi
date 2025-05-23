@@ -232,7 +232,4 @@ function getTextByLanguage(jsonText) {
     console.error("Error al parsear texto JSON:", e);
     return jsonText;
   }
-
 }
-
-
