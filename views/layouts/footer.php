@@ -187,24 +187,24 @@
 
 
  <!-- <style> -->
- /*   .mobile-nav__btns { */
- /*     display: flex; */
- /*     flex-direction: column; */
- /*     gap: 10px; */
- /*     margin-bottom: 20px; */
- /*   } */
+ <!-- /*   .mobile-nav__btns { */ -->
+ <!-- /*     display: flex; */ -->
+ <!-- /*     flex-direction: column; */ -->
+ <!-- /*     gap: 10px; */ -->
+ <!-- /*     margin-bottom: 20px; */ -->
+ <!-- /*   } */ -->
 
- /*   @media (max-width: 765px) { */
- /*     .mobile-nav__btns { */
- /*       width: 100%; */
- /*     } */
+ <!-- /*   @media (max-width: 765px) { */ -->
+ <!-- /*     .mobile-nav__btns { */ -->
+ <!-- /*       width: 100%; */ -->
+ <!-- /*     } */ -->
 
- /*     .mobile-nav__btns .main-menu__btn, */
- /*     .mobile-nav__btns .custom-language-select { */
- /*       width: 100%; */
- /*       margin: 0; */
- /*     } */
- /*   } */
+ <!-- /*     .mobile-nav__btns .main-menu__btn, */ -->
+ <!-- /*     .mobile-nav__btns .custom-language-select { */ -->
+ <!-- /*       width: 100%; */ -->
+ <!-- /*       margin: 0; */ -->
+ <!-- /*     } */ -->
+ <!-- /*   } */ -->
  <!-- </style> -->
 
  <!-- Scripts CDN con fallback -->

@@ -224,7 +224,7 @@
     }
     ?>
     <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
-    <button type="submit" class="btn-confirmar">CONFIRMAR</button>
+    <button type="submit" class="btn-confirmar">CONFIRMARXD</button>
   </div>
 </div>
 
@@ -724,6 +724,60 @@
     // Manejar el envío del formulario
     document.querySelector('.btn-confirmar').onclick = async function(e) {
       e.preventDefault();
+
+
+      // VALIDACIONES DE LOS CAMPOS DE COMPROBANTE DE PAGO 
+
+      const montoPagado = getInputValue('#monto_pagado');
+     
+      const titular = getInputValue('#titular');
+      const referencia = getInputValue('#referencia');
+
+      if (montoPagado == "") {
+        Swal.fire('Error', 'El monto pagado es requerido', 'error');
+        return;
+      }
+
+      if (titular == "") {
+        Swal.fire('Error', 'El titular es requerido', 'error');
+        return;
+      }
+
+      if (referencia == "") {
+        Swal.fire('Error', 'La referencia es requerida', 'error');
+        return;
+      }
+
+    
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       //PROCESO SELECTOR
       // Usar SweetAlert2 para mostrar el mensaje de "Procesando compra"

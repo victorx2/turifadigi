@@ -9,7 +9,7 @@
   </div>
 
   <div class="form-group-custom">
-    <label class="required" data-i18n="comprobante_referencia">Referencia del pago</label>
+    <label class="required" data-i18n="comprobante_referencia">Referen del pago</label>
     <input type="text" class="form-control-custom" id="referencia" placeholder="123456">
   </div>
 
