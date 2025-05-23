@@ -118,6 +118,7 @@
   "admin_tickets": "Administración de Boletos",
   "admin_tickets_desc": "Gestión de Boletos de Rifa",
 
+  "datatable_number": "NUMERO",
   "purchase_date_2": "FECHA DE COMPRA",
   "datatable_buyer": "COMPRADOR",
   "datatable_raffle": "SORTEO",

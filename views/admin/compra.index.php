@@ -131,10 +131,11 @@
       <table id="tabla" class="table table-sm table-bordered table-hover mb-0">
         <thead class="align-middle">
           <tr>
-            <th class="text-center bg-body-tertiary" width="1%" data-i18n-th="purchase_date_2">FECHA DE COMPRA</th>
+            <th class="text-center bg-body-tertiary" width="1%" data-i18n-th="datatable_number">NUMBER</th>
+            <th class="text-center bg-body-tertiary" width="18%" data-i18n-th="purchase_date_2">FECHA DE COMPRA</th>
             <th class="text-center bg-body-tertiary" width="20%" data-i18n-th="datatable_buyer">COMPRADOR</th>
-            <th class="text-center bg-body-tertiary" width="20%" data-i18n-th="datatable_raffle">SORTEO</th>
-            <th class="text-center bg-body-tertiary" width="10%" data-i18n-th="datatable_tickets">BOLETOS</th>
+            <th class="text-center bg-body-tertiary" width="1%" data-i18n-th="datatable_raffle">SORTEO</th>
+            <th class="text-center bg-body-tertiary" width="15%" data-i18n-th="datatable_tickets">BOLETOS</th>
             <th class="text-center bg-body-tertiary" width="10%" data-i18n-th="datatable_amount">MONTO</th>
             <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_status">ESTADO</th>
             <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_actions">ACCIONES</th>
@@ -166,25 +167,55 @@
 
         data.forEach((elemento, index) => {
           let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
-          let acciones = elemento['estado'] == 'pagado' || elemento['estado'] == 'rechazado' ? `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, '${elemento['estado']}')" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
-                          <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
-                        </button>
-                    </div>` : `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_compra']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>`;
+          let acciones;
+          if (['aprobado', 'rechazado'].includes(elemento['estado_pago'])) {
+            acciones = `
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary btn-sm"
+                  onclick="pregunta(${elemento['id_compra']}, '${elemento['estado_pago']}')"
+                  data-bs-toggle-tooltip="tooltip"
+                  data-bs-placement="top"
+                  data-bs-custom-class="custom-tooltip tooltip-inner"
+                  data-bs-title="Confirmar Pago">
+                  <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
+                </button>
+              </div>`;
+          } else {
+            acciones = `
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-info btn-sm"
+                  onclick="pregunta(${elemento['id_compra']})"
+                  data-bs-toggle-tooltip="tooltip"
+                  data-bs-placement="top"
+                  data-bs-custom-class="custom-tooltip tooltip-inner"
+                  data-bs-title="Confirmar Pago">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+              </div>`;
+          }
           data[i]['contador'] = (i + 1);
           data[i]['sorteo'] = elemento['id_rifa'];
           data[i]['boletos'] = boletos;
           data[i]['acciones'] = acciones;
 
-          if (elemento['estado'] == 'pagado') {
-            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>`;
-          } else if (elemento['estado'] == 'rechazado') {
-            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Rechazado</small>`;
+          if (elemento['estado_pago'] == 'aprobado') {
+            data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
+              <button type="button" class="btn btn-success btn-sm" disabled>
+              <i class="fa-solid fa-check"></i> Pagado
+              </button>
+            </div>`;
+          } else if (elemento['estado_pago'] == 'rechazado') {
+            data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
+              <button type="button" class="btn btn-danger btn-sm" disabled>
+              <i class="fa-solid fa-times"></i> Rechazado
+              </button>
+            </div>`;
           } else {
-            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-info-emphasis bg-info-subtle border border-info-subtle rounded-2">Pendiente</small>`;
+            data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
+              <button type="button" class="btn btn-info btn-sm" disabled>
+              <i class="fa-solid fa-hourglass-half"></i> Pendiente
+              </button>
+            </div>`;
           }
 
           i++;
@@ -260,7 +291,7 @@
 
     const htmlPersonalizado = await response.text();
 
-    if (condition == 'pagado') {
+    if (condition == 'aprobado') {
       Swal.fire({
         title: '<h5><span class="pago-confirmado">Pago Confirmado<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>',
         html: htmlPersonalizado,
@@ -306,42 +337,41 @@
             Swal.showLoading();
 
             fetch("./api/change_purchase_status?est=enabled&id=" + id, {
-                method: 'POST', // O el método HTTP que necesites
+                method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 }
               })
-              .then(response => response.json()) // O response.text() si esperas texto plano
+              .then(response => response.json())
               .then(data => {
-                Swal.close(); // Cierra el SweetAlert de "Procesando"
+                Swal.close();
 
                 let timerInterval;
                 Swal.fire({
-                  icon: 'success', // 'success' O 'error', 'warning', 'info', 'question' según el resultado
-                  title: '¡Éxito al aceptar!', // O el título que corresponda
+                  icon: 'success',
+                  title: '¡Éxito al aceptar!',
                   timer: 3000,
                   timerProgressBar: true,
                   didOpen: () => {
                     Swal.showLoading();
                     const timer = Swal.getPopup().querySelector("b");
                     timerInterval = setInterval(() => {
-                      timer.textContent = `${Swal.getTimerLeft()}`;
+                      if (timer) timer.textContent = `${Swal.getTimerLeft()}`;
                     }, 100);
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-                    window.location.href('/sorteo_verification');
+                    window.location.reload();
                   }
                 }).then((result) => {
-                  /* Read more about handling dismissals below */
                   if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log("I was closed by the timer");
+                    // No action needed
                   }
                 });
 
               })
               .catch((error) => {
-                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
+                Swal.close();
                 console.error('Error en la petición:', error);
                 Swal.fire({
                   icon: 'error',
@@ -362,43 +392,39 @@
           didOpen: () => {
             Swal.showLoading();
             fetch("./api/change_purchase_status?est=disabled&id=" + id, {
-                method: 'POST', // O el método HTTP que necesites
-                body: JSON.stringify({
-                  /* tus datos a enviar */
-                }),
+                method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 }
               })
-              .then(response => response.json()) // O response.text() si esperas texto plano
+              .then(response => response.json())
               .then(data => {
-                Swal.close(); // Cierra el SweetAlert de "Procesando"
+                Swal.close();
                 let timerInterval;
                 Swal.fire({
-                  icon: 'warning', // O 'error', 'warning', 'info', 'question' según el resultado
-                  title: '¡Éxito al rechazar!', // O el título que corresponda
+                  icon: 'warning',
+                  title: '¡Éxito al rechazar!',
                   timer: 3000,
                   timerProgressBar: true,
                   didOpen: () => {
                     Swal.showLoading();
                     const timer = Swal.getPopup().querySelector("b");
                     timerInterval = setInterval(() => {
-                      timer.textContent = `${Swal.getTimerLeft()}`;
+                      if (timer) timer.textContent = `${Swal.getTimerLeft()}`;
                     }, 100);
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-                    window.location.href('/sorteo_verification');
+                    window.location.reload();
                   }
                 }).then((result) => {
-                  /* Read more about handling dismissals below */
                   if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log("I was closed by the timer");
+                    // No action needed
                   }
                 });
               })
               .catch((error) => {
-                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
+                Swal.close();
                 console.error('Error en la petición:', error);
                 Swal.fire({
                   icon: 'error',

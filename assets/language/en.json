@@ -115,7 +115,8 @@
 
   "admin_tickets": "Ticket Administration",
   "admin_tickets_desc": "Ticket Management",
-
+  
+  "datatable_number": "NUMBER",
   "purchase_date_2": "PURCHASE DATE",
   "datatable_buyer": "BUYER",
   "datatable_raffle": "RAFFLE",

@@ -198,6 +198,23 @@ class BoletoModel
 
         $boletosInsertados[] = $boletos[$index];
       }
+      // Obtener datos personales del usuario para detalle_compras
+      $sqlDatosPersonales = "SELECT nombre, apellido, telefono FROM datos_personales WHERE id_usuario = :id_usuario";
+      $datosPersonales = $this->db->consultar($sqlDatosPersonales, [':id_usuario' => $id_usuario]);
+      $nombre = isset($datosPersonales[0]['nombre']) ? $datosPersonales[0]['nombre'] : null;
+      $apellido = isset($datosPersonales[0]['apellido']) ? $datosPersonales[0]['apellido'] : null;
+      $telefono = isset($datosPersonales[0]['telefono']) ? $datosPersonales[0]['telefono'] : null;
+
+      // Actualizar detalle_compras con los datos del comprador
+      $sqlUpdateDetalle = "UPDATE detalle_compras 
+               SET nom_comprador = :nombre, ape_comprador = :apellido, telefono_comprador = :telefono 
+               WHERE id_compra = :id_compra";
+      $this->db->ejecutar($sqlUpdateDetalle, [
+        ':nombre' => $nombre,
+        ':apellido' => $apellido,
+        ':telefono' => $telefono,
+        ':id_compra' => $idCompra
+      ]);
 
       // 5. Registrar el pago como pendiente
       $sqlPago = "INSERT INTO pagos (id_compra, titular, referencia, metodo, monto_pagado) 
@@ -298,19 +315,15 @@ class BoletoModel
 
       // Optimizamos la consulta para mejor rendimiento
       $sql = "SELECT
-                    b.id_boleto,
-                    b.id_rifa,
-                    b.numero_boleto,
-                    c.precio_boleto,
-                    b.estado AS estado_boleto,
-                    c.estado AS rifa_estado,
-                    r.id_rifa,
-                    u.id_usuario,
-                    dp.nombre,
-                    dp.apellido,
-                    dp.telefono,
-                    cb.id_compra, -- Si necesitas algún dato de compras_boletos
-                    cb.fecha_compra   -- Si necesitas algún dato de detalle_compras, por ejemplo
+              cb.id_compra,
+              b.id_rifa,
+              b.numero_boleto,
+              dc.nom_comprador AS cliente,
+              dc.ape_comprador AS a_cliente,
+              dc.telefono_comprador AS telefono,
+              cb.total_compra,
+              cb.estado,
+              cb.fecha_compra
                 FROM
                     boletos b
                 INNER JOIN
@@ -323,8 +336,6 @@ class BoletoModel
                     compras_boletos cb ON cb.id_compra = dc.id_compra
                 LEFT JOIN -- Usa LEFT JOIN para usuarios
                     usuarios u ON b.id_usuario = u.id_usuario
-                LEFT JOIN -- Usa LEFT JOIN para datos_personales
-                    datos_personales dp ON dp.id_usuario = u.id_usuario
                 WHERE
                     c.estado = 2
                     AND b.estado NOT IN ('disponible', 'pendiente')
@@ -357,8 +368,9 @@ class BoletoModel
               cb.id_compra,
               b.id_rifa,
               b.numero_boleto,
-              dp.nombre AS cliente,
-              dp.apellido AS a_cliente,
+              dc.nom_comprador AS cliente,
+              dc.ape_comprador AS a_cliente,
+              dc.telefono_comprador AS telefono,
               p.metodo AS metodo_pago,
               cb.total_compra,
               cb.estado,
@@ -371,7 +383,6 @@ class BoletoModel
               FROM compras_boletos cb
               INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra
               INNER JOIN boletos b ON dc.id_boleto = b.id_boleto
-              INNER JOIN datos_personales dp ON b.id_usuario = dp.id_usuario  
               INNER JOIN pagos p ON cb.id_compra = p.id_compra
               ORDER BY
                 cb.fecha_compra DESC";
@@ -422,8 +433,9 @@ class BoletoModel
               cb.id_compra,
               b.id_rifa,
               b.numero_boleto,
-              dp.nombre AS cliente,
-              dp.apellido AS a_cliente,
+              dc.nom_comprador AS cliente,
+              dc.ape_comprador AS a_cliente,
+              dc.telefono_comprador AS telefono,
               p.metodo AS metodo_pago,
               cb.total_compra,
               cb.estado,
@@ -436,7 +448,6 @@ class BoletoModel
               FROM compras_boletos cb
               INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra
               INNER JOIN boletos b ON dc.id_boleto = b.id_boleto
-              INNER JOIN datos_personales dp ON b.id_usuario = dp.id_usuario  
               INNER JOIN pagos p ON cb.id_compra = p.id_compra
               WHERE
                 cb.id_compra = :id_entrada
@@ -558,25 +569,54 @@ class BoletoModel
   public function marcarCompraComoPagada($id_compra)
   {
     try {
-      // Depuración: Verifica el valor recibido
-      error_log("Intentando actualizar compra: " . $id_compra);
+      $sql = "SELECT dc.id_boleto, p.id_pago FROM compras_boletos cb INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra INNER JOIN pagos p on p.id_compra = cb.id_compra WHERE cb.id_compra = :id_compra";
+      $result = $this->db->consultar($sql, [':id_compra' => $id_compra]);
 
-      $sql = "UPDATE compras_boletos SET estado = 'pagado' WHERE id_compra = :id_compra";
-      $this->db->consultar($sql, [':id_compra' => $id_compra]);
+      if ($result === false) {
+        throw new Exception("Error al consultar los boletos asociados a la compra.");
+      }
 
-      $result = $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
+      $boletos = [];
+      $id_pago = null;
+      foreach ($result as $row) {
+        if (!isset($row['id_boleto'])) {
+          throw new Exception("No se encontró el id_boleto en el resultado.");
+        }
+        $boletos[] = $row['id_boleto'];
+        // Tomamos el primer id_pago encontrado (debería ser el mismo para todos)
+        if ($id_pago === null && isset($row['id_pago'])) {
+          $id_pago = $row['id_pago'];
+        }
+      }
 
-      // Depuración: Verifica el resultado de la consulta
-      error_log("Resultado de ejecutar SQL: " . print_r($result, true));
+      foreach ($boletos as $id_boleto) {
+        $sqlUpdate = "UPDATE boletos SET estado = 'vendido' WHERE id_boleto = :id_boleto";
+        $updateResult = $this->db->ejecutar($sqlUpdate, [':id_boleto' => $id_boleto]);
+        if ($updateResult === false) {
+          throw new Exception("Error al actualizar el estado del boleto con id $id_boleto.");
+        }
+      }
 
-      // Si tu método ejecutar() retorna el número de filas afectadas, puedes comprobarlo:
-      if ($result === 0) {
-        error_log("No se actualizó ninguna fila. ¿El id_compra existe?");
-        throw new Exception("No se actualizó ninguna fila. ¿El id_compra existe?");
+      $sql1 = "UPDATE compras_boletos SET estado = 'aprobado' WHERE id_compra = :id_compra";
+      $updateCompra = $this->db->ejecutar($sql1, [':id_compra' => $id_compra]);
+      if ($updateCompra === false) {
+        throw new Exception("Error al actualizar el estado de la compra.");
+      }
+
+      // Nueva sentencia para actualizar el estado del pago
+      if ($id_pago !== null) {
+        $sqlPago = "UPDATE pagos SET validacion = 'aprobado' WHERE id_pago = :id_pago";
+        $updatePago = $this->db->ejecutar($sqlPago, [':id_pago' => $id_pago]);
+        if ($updatePago === false) {
+          throw new Exception("Error al actualizar el estado del pago.");
+        }
+      } else {
+        throw new Exception("No se encontró el id_pago asociado a la compra.");
       }
 
       return true;
     } catch (Exception $e) {
+      error_log("Error en marcarCompraComoPagada: " . $e->getMessage());
       throw new Exception("Error al actualizar el estado: " . $e->getMessage());
     }
   }
@@ -584,11 +624,54 @@ class BoletoModel
   public function marcarCompraComoRechazada($id_compra)
   {
     try {
-      $sql = "UPDATE compras_boletos SET estado = 'rechazado' WHERE id_compra = :id_compra";
-      $this->db->ejecutar($sql, [':id_compra' => $id_compra]);
+      $sql = "SELECT dc.id_boleto, p.id_pago FROM compras_boletos cb INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra INNER JOIN pagos p on p.id_compra = cb.id_compra WHERE cb.id_compra = :id_compra";
+      $result = $this->db->consultar($sql, [':id_compra' => $id_compra]);
+
+      if ($result === false) {
+        throw new Exception("Error al consultar los boletos asociados a la compra.");
+      }
+
+      $boletos = [];
+      $id_pago = null;
+      foreach ($result as $row) {
+        if (!isset($row['id_boleto'])) {
+          throw new Exception("No se encontró el id_boleto en el resultado.");
+        }
+        $boletos[] = $row['id_boleto'];
+        // Tomamos el primer id_pago encontrado (debería ser el mismo para todos)
+        if ($id_pago === null && isset($row['id_pago'])) {
+          $id_pago = $row['id_pago'];
+        }
+      }
+
+      foreach ($boletos as $id_boleto) {
+        $sqlUpdate = "UPDATE boletos SET id_usuario = NULL, estado = 'disponible' WHERE id_boleto = :id_boleto";
+        $updateResult = $this->db->ejecutar($sqlUpdate, [':id_boleto' => $id_boleto]);
+        if ($updateResult === false) {
+          throw new Exception("Error al actualizar el estado del boleto con id $id_boleto.");
+        }
+      }
+
+      $sql1 = "UPDATE compras_boletos SET estado = 'rechazado' WHERE id_compra = :id_compra";
+      $updateCompra = $this->db->ejecutar($sql1, [':id_compra' => $id_compra]);
+      if ($updateCompra === false) {
+        throw new Exception("Error al actualizar el estado de la compra.");
+      }
+
+      // Nueva sentencia para actualizar el estado del pago
+      if ($id_pago !== null) {
+        $sqlPago = "UPDATE pagos SET validacion = 'rechazado' WHERE id_pago = :id_pago";
+        $updatePago = $this->db->ejecutar($sqlPago, [':id_pago' => $id_pago]);
+        if ($updatePago === false) {
+          throw new Exception("Error al actualizar el estado del pago.");
+        }
+      } else {
+        throw new Exception("No se encontró el id_pago asociado a la compra.");
+      }
 
       return true;
     } catch (Exception $e) {
+      error_log("Error en marcarCompraComoRechazada: " . $e->getMessage());
       throw new Exception("Error al actualizar el estado: " . $e->getMessage());
     }
   }
