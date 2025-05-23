@@ -290,65 +290,97 @@ class BoletoModel
     }
   }
 
-  public function obtenerBoletosGandores()
+
+
+
+
+
+
+
+
+  public function obtenerBoletosGandores($rifaId, $numeroBoleto = null)
   {
     try {
-      // Asegurarse de que los boletos estén inicializados
-      // $this->inicializarBoletos();
-
-      // Optimizamos la consulta para mejor rendimiento
       $sql = "SELECT
-                    b.id_boleto,
-                    b.id_rifa,
-                    b.numero_boleto,
-                    c.precio_boleto,
-                    b.estado AS estado_boleto,
-                    c.estado AS rifa_estado,
-                    r.id_rifa,
-                    u.id_usuario,
-                    dp.nombre,
-                    dp.apellido,
-                    dp.telefono,
-                    cb.id_compra, -- Si necesitas algún dato de compras_boletos
-                    cb.fecha_compra   -- Si necesitas algún dato de detalle_compras, por ejemplo
-                FROM
-                    boletos b
-                INNER JOIN
-                    rifas r ON r.id_rifa = b.id_rifa
-                INNER JOIN
-                    configuracion c ON c.id_configuracion = r.id_configuracion
-                LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
-                    detalle_compras dc ON  b.id_boleto=dc.id_boleto
-                LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
-                    compras_boletos cb ON cb.id_compra = dc.id_compra
-                LEFT JOIN -- Usa LEFT JOIN para usuarios
-                    usuarios u ON b.id_usuario = u.id_usuario
-                LEFT JOIN -- Usa LEFT JOIN para datos_personales
-                    datos_personales dp ON dp.id_usuario = u.id_usuario
-                WHERE
-                    c.estado = 2
-                    AND b.estado NOT IN ('disponible', 'pendiente')
-                ORDER BY
-                    b.id_boleto ASC;";
+                  b.id_boleto,
+                  b.id_rifa,
+                  b.numero_boleto,
+                  c.precio_boleto,
+                  b.estado AS estado_boleto,
+                  c.estado AS rifa_estado,
+                  r.id_rifa,
+                  u.id_usuario,
+                  dp.nombre,
+                  dp.apellido,
+                  dp.telefono,
+                  cb.id_compra,
+                  cb.fecha_compra
+              FROM
+                  boletos b
+              INNER JOIN
+                  rifas r ON r.id_rifa = b.id_rifa
+              INNER JOIN
+                  configuracion c ON c.id_configuracion = r.id_configuracion
+              LEFT JOIN
+                  detalle_compras dc ON b.id_boleto = dc.id_boleto
+              LEFT JOIN
+                  compras_boletos cb ON cb.id_compra = dc.id_compra
+              LEFT JOIN
+                  usuarios u ON b.id_usuario = u.id_usuario
+              LEFT JOIN
+                  datos_personales dp ON dp.id_usuario = u.id_usuario
+              WHERE b.id_rifa = ? AND b.id_boleto = ?";
+      $params = [$rifaId, $numeroBoleto];
 
-      $boletos = $this->db->consultar($sql, []);
+      $result = $this->db->consultar($sql, $params);
 
-      if (count($boletos) == 0) {
+      if (empty($result)) {
         return [
           'success' => false,
-          'data' => ["rifa_estado" => "0"],
-          'total' => 0,
+          'message' => 'Falta boleto',
+          'data' => [],
+          'total' => 0
         ];
       }
+
       return [
         'success' => true,
-        'data' => $boletos,
-        'total' => count($boletos)
+        'data' => $result,
+        'total' => count($result)
       ];
     } catch (Exception $e) {
-      throw new Exception("Error al obtener boletos: " . $e->getMessage());
+      throw new Exception("Error al obtener boletos por filtros: " . $e->getMessage());
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   public function obtenerCompras()
   {

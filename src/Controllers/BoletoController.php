@@ -199,16 +199,16 @@ class BoletoController
     }
   }
 
-  public function obtenerBoletos($petision = null)
+  public function obtenerBoletos($params = null)
   {
     header('Content-Type: application/json');
     header('Cache-Control: no-cache, must-revalidate');
 
     try {
-      // Selecciona el método según el valor de $petision
-      $boletos = $petision
-        ? $this->model->obtenerBoletosGandores()
-        : $this->model->obtenerBoletos();
+      // params[0] = id_rifa, params[1] = numero_boleto
+      $boletos = ($params && !empty($params[0]))
+        ? $this->model->obtenerBoletosGandores($params[0], $params[1] ?? null)
+        : $this->model->obtenerBoletosGandores(null, null);
 
       if (empty($boletos) || !isset($boletos['success']) || $boletos['success'] == false) {
         echo json_encode([
