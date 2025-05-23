@@ -159,7 +159,6 @@
         let i = 0;
         let data = dataD.data;
 
-        console.log("Datos recibidos de la API:", dataD); // Log de los datos recibidos
 
         data.forEach((elemento, index) => {
           let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
@@ -170,7 +169,7 @@
                             <i class="fa-solid fa-pen"></i>
                         </button>
                     </div>`;
-                    
+
           let estado = '';
 
           if (elemento['estado'] == 1) {
@@ -190,7 +189,6 @@
           data[i]['estado'] = estado;
           data[i]['acciones'] = acciones;
 
-          console.log(`Procesando sorteo ${i+1}:`, data[i]); // Log de cada sorteo procesado
           i++;
         })
 
@@ -240,7 +238,6 @@
           ]
         };
 
-        console.log("Datos preparados para la tabla:", datos); // Log de los datos finales
         cargar_tabla_boletos(datos);
 
       } else {
@@ -300,9 +297,7 @@
                   }
                 }).then((result) => {
                   /* Read more about handling dismissals below */
-                  if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log("I was closed by the timer");
-                  }
+                  if (result.dismiss === Swal.DismissReason.timer) {}
                 });
 
               })
@@ -443,7 +438,6 @@
     }
 
     const result = await response.json();
-    console.log("Resultado del cambio de estado:", result); // Log del resultado
 
     if (result.success) {
       Swal.fire({
@@ -466,7 +460,6 @@
 
   // FUNCION PARA VER DETALLES DEL SORTEO
   async function obsSorteo(id, condition = false) {
-    console.log(`Obteniendo detalles del sorteo ID: ${id}`); // Log de la acción
     try {
       const response = await fetch('./admin/views/sorteo/only_view?acvi=' + id, {
         method: 'POST',
@@ -480,7 +473,6 @@
       }
 
       const htmlPersonalizado = await response.text();
-      console.log("HTML recibido para vista de acciones:", htmlPersonalizado); // Log del HTML recibido
 
       Swal.fire({
         html: htmlPersonalizado,
@@ -507,10 +499,8 @@
   function validarFormatoCuatroDigitos(input) {
     const regex = /^\d{4}$/; // ^ inicio, \d un dígito, {4} exactamente 4 veces, $ fin
     if (regex.test(input)) {
-      console.log(`"${input}" está en el formato "0000".`);
       return true;
     } else {
-      console.log(`Error: "${input}" no está en el formato "0000".`);
       return false;
     }
   }

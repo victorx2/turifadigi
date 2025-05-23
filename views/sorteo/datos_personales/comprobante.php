@@ -1,4 +1,11 @@
 <div class="form-section">
+  <?php
+  if (!@$_SESSION['usuario']) {
+    require_once 'views/sorteo/datos_personales/miniregistro.php';
+  } else {
+    echo '<input type="text" name="regist" class="d-none" id="regist" value="0">';
+  }
+  ?>
   <h2 class="form-section-title" data-i18n="comprobante_title">
     <i class="fas fa-file-invoice"></i>
     COMPROBANTE DE PAGO

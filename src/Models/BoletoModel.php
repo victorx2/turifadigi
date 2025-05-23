@@ -310,10 +310,6 @@ class BoletoModel
   public function obtenerBoletosGandores()
   {
     try {
-      // Asegurarse de que los boletos estén inicializados
-      // $this->inicializarBoletos();
-
-      // Optimizamos la consulta para mejor rendimiento
       $sql = "SELECT
               cb.id_compra,
               b.id_rifa,
@@ -348,6 +344,66 @@ class BoletoModel
         return [
           'success' => false,
           'data' => ["rifa_estado" => "0"],
+          'total' => 0,
+        ];
+      }
+      return [
+        'success' => true,
+        'data' => $boletos,
+        'total' => count($boletos)
+      ];
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener boletos: " . $e->getMessage());
+    }
+  }
+
+  public function verificarBoletosXCompra($id_rifa, $boleto)
+  {
+    try {
+      // Validar que los parámetros existan y no estén vacíos
+      if (empty($id_rifa) || empty($boleto)) {
+        throw new Exception("Faltan parámetros requeridos: id_rifa o boleto.");
+      }
+
+      $sql = "SELECT
+          b.id_rifa,
+          b.id_boleto,
+          b.numero_boleto,
+          cb.id_compra,
+          dc.nom_comprador AS cliente,
+          dc.ape_comprador AS a_cliente,
+          dc.telefono_comprador AS telefono,
+          dc.precio_unitario AS precio_boleto,
+          cb.total_compra,
+          cb.estado,
+          cb.fecha_compra
+          FROM
+            boletos b
+          INNER JOIN
+            rifas r ON r.id_rifa = b.id_rifa
+          INNER JOIN
+            configuracion c ON c.id_configuracion = r.id_configuracion
+          LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
+            detalle_compras dc ON  b.id_boleto=dc.id_boleto
+          LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
+            compras_boletos cb ON cb.id_compra = dc.id_compra
+          LEFT JOIN -- Usa LEFT JOIN para usuarios
+            usuarios u ON b.id_usuario = u.id_usuario
+          WHERE
+            b.id_rifa = :id_rifa
+            AND b.numero_boleto = :boleto
+          ORDER BY
+            b.id_boleto ASC;";
+
+      $boletos = $this->db->consultar($sql, [
+        ":id_rifa" => $id_rifa,
+        ":boleto" => $boleto
+      ]);
+
+      if (!$boletos) {
+        return [
+          'success' => false,
+          'data' => ["comprados" => "0"],
           'total' => 0,
         ];
       }

@@ -216,13 +216,6 @@
         </div>
       </div>
     </div>
-    <?php
-    if (!@$_SESSION['usuario']) {
-      require_once 'views/sorteo/datos_personales/miniregistro.php';
-    } else {
-      echo '<input type="text" name="regist" class="d-none" id="regist" value="0">';
-    }
-    ?>
     <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
     <button type="submit" class="btn-confirmar">CONFIRMARXD</button>
   </div>
@@ -722,65 +715,16 @@
 
 
     // Manejar el envío del formulario
-    document.querySelector('.btn-confirmar').onclick = async function(e) {
-      e.preventDefault();
+    // Mejoras: 
+    // - Evita doble envío
+    // - Deshabilita botón durante proceso
+    // - Maneja errores inesperados
+    // - Limpia mensajes de SweetAlert correctamente
 
+    const btnConfirmar = document.querySelector('.btn-confirmar');
+    let procesandoCompra = false;
 
-      // VALIDACIONES DE LOS CAMPOS DE COMPROBANTE DE PAGO 
-
-      const montoPagado = getInputValue('#monto_pagado');
-     
-      const titular = getInputValue('#titular');
-      const referencia = getInputValue('#referencia');
-
-      if (montoPagado == "") {
-        Swal.fire('Error', 'El monto pagado es requerido', 'error');
-        return;
-      }
-
-      if (titular == "") {
-        Swal.fire('Error', 'El titular es requerido', 'error');
-        return;
-      }
-
-      if (referencia == "") {
-        Swal.fire('Error', 'La referencia es requerida', 'error');
-        return;
-      }
-
-    
-      
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      //PROCESO SELECTOR
-      // Usar SweetAlert2 para mostrar el mensaje de "Procesando compra"
+    btnConfirmar.onclick = async function(e) {
       Swal.fire({
         title: 'Procesando compra',
         text: 'Por favor espere...',
@@ -791,259 +735,305 @@
         }
       });
 
-      if (miniregist.value == "0") {
-        await fetch('./api/session_verfication?t=1', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          .then(response => response.json())
-          .then(async data => {
+      e.preventDefault();
 
-            if (!data.session) {
-              window.location.href = '/login';
-              return;
-            }
+      if (procesandoCompra) return; // Evita doble envío
+      procesandoCompra = true;
+      btnConfirmar.disabled = true;
 
-            let value = data.user;
-
-            // Obtener valores de forma segura
-            const formData = {
-              nombre: value.nombre + ' ' + value.apellido,
-              telefono: value.telefono,
-              ubicacion: value.ubicacion,
-              id_usuario: value.id_usuario,
-              monto_pago: getInputValue('#monto_pagado'),
-              titular: getInputValue('#titular'),
-              referencia: getInputValue('#referencia'),
-              metodoPago: $('input[name="payment_method"]').val()
-            };
-
-            // Validar que todos los campos requeridos tengan valor
-            const camposRequeridos = [{
-                campo: 'titular',
-                mensaje: 'Titular'
-              },
-              {
-                campo: 'referencia',
-                mensaje: 'Referencia'
-              },
-              {
-                campo: 'metodoPago',
-                mensaje: 'Método de pago'
+      try {
+        if (miniregist.value == "0") {
+          await fetch('./api/session_verfication?t=1', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
               }
-            ];
+            })
+            .then(response => response.json())
+            .then(async data => {
 
-            const camposFaltantes = camposRequeridos
-              .filter(({
-                campo
-              }) => !formData[campo])
-              .map(({
-                mensaje
-              }) => mensaje);
+              if (!data.session) {
+                window.location.href = '/login';
+                return;
+              }
 
-            if (camposFaltantes.length > 0) {
-              Swal.close();
-              Swal.fire('Campos incompletos', `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`, 'warning');
-              return;
-            }
+              let value = data.user;
 
-            const boletosCargar = Array.from(boletosSeleccionados);
-
-            try {
-              // Preparar datos de la compra
-              const datosCompra = {
-                boletos: boletosCargar,
-                ...formData,
+              // Obtener valores de forma segura
+              const formData = {
+                nombre: value.nombre + ' ' + value.apellido,
+                telefono: value.telefono,
+                ubicacion: value.ubicacion,
+                id_usuario: value.id_usuario,
+                monto_pago: getInputValue('#monto_pagado'),
+                titular: getInputValue('#titular'),
+                referencia: getInputValue('#referencia'),
+                metodoPago: $('input[name="payment_method"]').val()
               };
 
-              await fetch('./api/process_purchase', {
+              // Validar que todos los campos requeridos tengan valor
+              const camposRequeridos = [{
+                  campo: 'titular',
+                  mensaje: 'Titular'
+                },
+                {
+                  campo: 'referencia',
+                  mensaje: 'Referencia'
+                },
+                {
+                  campo: 'metodoPago',
+                  mensaje: 'Método de pago'
+                }
+              ];
+
+              const camposFaltantes = camposRequeridos
+                .filter(({
+                  campo
+                }) => !formData[campo])
+                .map(({
+                  mensaje
+                }) => mensaje);
+
+              if (camposFaltantes.length > 0) {
+                Swal.close();
+                Swal.fire({
+                  title: 'Campos incompletos',
+                  text: `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`,
+                  icon: 'warning',
+                  confirmButtonText: 'Aceptar'
+                });
+                return;
+              }
+
+              const boletosCargar = Array.from(boletosSeleccionados);
+
+              try {
+                // Preparar datos de la compra
+                const datosCompra = {
+                  boletos: boletosCargar,
+                  ...formData,
+                };
+
+                await fetch('./api/process_purchase', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datosCompra)
+                  })
+                  .then(response => response.json())
+                  .then(async dataCompra => {
+                    Swal.close();
+                    if (dataCompra.success) {
+                      generarEnlaceWhatsApp({
+                        nombre: formData.nombre,
+                        telefono: formData.telefono
+                      }, boletosCargar);
+
+                      await Swal.fire({
+                        title: '¡Compra procesada correctamente!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                      });
+                      window.location.href = '/sorteo';
+                    } else {
+                      Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                    }
+                  })
+                  .catch(error => {
+                    Swal.close();
+                    Swal.fire('Error', 'Error al procesar la compra', 'error');
+                    console.error('Error al procesar la compra:', error);
+                  });
+
+              } catch (error) {
+                Swal.close();
+                console.error('Error:', error);
+              }
+
+            })
+            .catch(error => {
+              Swal.close();
+              console.error('Error al verificar sesión:', error);
+            });
+        } else {
+          // Unificar validación de campos de usuario y de pago
+          const campos = [{
+              nombre: 'nombre',
+              label: 'Nombre',
+              value: getInputValue('#nombre')
+            },
+            {
+              nombre: 'apellido',
+              label: 'Apellido',
+              value: getInputValue('#apellido')
+            },
+            {
+              nombre: 'prefijo_pais',
+              label: 'Prefijo de país',
+              value: getInputValue('#prefijo_pais')
+            },
+            {
+              nombre: 'telefono',
+              label: 'Teléfono',
+              value: getInputValue('#telefono')
+            },
+            {
+              nombre: 'monto_pagado',
+              label: 'Monto pagado',
+              value: getInputValue('#monto_pagado')
+            },
+            {
+              nombre: 'titular',
+              label: 'Titular',
+              value: getInputValue('#titular')
+            },
+            {
+              nombre: 'referencia',
+              label: 'Referencia',
+              value: getInputValue('#referencia')
+            },
+            {
+              nombre: 'metodoPago',
+              label: 'Método de pago',
+              value: $('input[name="payment_method"]').val()
+            }
+          ];
+
+          const camposFaltantes = campos.filter(c => !c.value).map(c => c.label);
+
+          if (camposFaltantes.length > 0) {
+            Swal.close();
+            Swal.fire({
+              title: 'Campos incompletos',
+              text: `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`,
+              icon: 'warning',
+              confirmButtonText: 'Aceptar'
+            });
+            return;
+          }
+
+          const initData = {
+            nombre: campos[0].value,
+            apellido: campos[1].value,
+            prefijo_pais: campos[2].value,
+            telefono: campos[3].value
+          };
+
+          // CREAR USUARIO DINAMICAMENTE
+          await fetch('./api/riffle_singup', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(initData)
+            })
+            .then(response => response.json())
+            .then(async data => {
+
+              if (!data.success) {
+                Swal.close();
+                Swal.fire('Error', "Error: response riffle sinup", 'error');
+                return;
+              }
+
+              let idrio = data.id_usuario;
+
+              await fetch('./api/riffle_verfication?t=1', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
                   },
-                  body: JSON.stringify(datosCompra)
+                  body: JSON.stringify({
+                    id_usuario: idrio
+                  })
                 })
                 .then(response => response.json())
-                .then(async dataCompra => {
-                  if (dataCompra.success) {
-                    Swal.close();
-                    generarEnlaceWhatsApp({
-                      nombre: formData.nombre,
-                      telefono: formData.telefono
-                    }, boletosCargar);
+                .then(async data => {
 
-                    await Swal.fire({
-                      title: '¡Compra procesada correctamente!',
-                      icon: 'success',
-                      confirmButtonText: 'OK'
-                    });
-                    window.location.href = '/sorteo';
-                  } else {
+                  let value = data.user;
+
+                  // Obtener valores de forma segura
+                  const formData = {
+                    nombre: value.nombre + ' ' + value.apellido,
+                    telefono: value.telefono,
+                    ubicacion: value.ubicacion,
+                    id_usuario: value.id_usuario,
+                    monto_pago: getInputValue('#monto_pagado'),
+                    titular: getInputValue('#titular'),
+                    referencia: getInputValue('#referencia'),
+                    metodoPago: $('input[name="payment_method"]').val()
+                  };
+
+                  const boletosCargar = Array.from(boletosSeleccionados);
+
+                  try {
+                    // Preparar datos de la compra
+                    const datosCompra = {
+                      boletos: boletosCargar,
+                      ...formData,
+                    };
+
+                    await fetch('./api/process_purchase', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(datosCompra)
+                      })
+                      .then(response => response.json())
+                      .then(async dataCompra => {
+                        Swal.close();
+                        if (dataCompra.success) {
+                          generarEnlaceWhatsApp({
+                            nombre: formData.nombre,
+                            telefono: formData.telefono
+                          }, boletosCargar);
+
+                          await Swal.fire({
+                            title: '¡Compra procesada correctamente!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                          });
+                          window.location.href = '/sorteo';
+                        } else {
+                          Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                        }
+                      })
+                      .catch(error => {
+                        Swal.close();
+                        Swal.fire('Error', 'Error al procesar la compra', 'error');
+                        console.error('Error al procesar la compra:', error);
+                      });
+
+                  } catch (error) {
                     Swal.close();
-                    Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                    console.error('Error:', error);
                   }
+
                 })
                 .catch(error => {
                   Swal.close();
-                  Swal.fire('Error', 'Error al procesar la compra', 'error');
-                  console.error('Error al procesar la compra:', error);
+                  console.error('Error al verificar sesión:', error);
                 });
 
-            } catch (error) {
+            })
+            .catch(error => {
               Swal.close();
-              console.error('Error:', error);
-            }
-
-          })
-          .catch(error => {
-            Swal.close();
-            console.error('Error al verificar sesión:', error);
-          });
-      } else {
-        const initData = {
-          nombre: getInputValue('#nombre'),
-          apellido: getInputValue('#apellido'),
-          prefijo_pais: getInputValue('#prefijo_pais'),
-          telefono: getInputValue('#telefono')
-        };
-
-        // CREAR USUARIO DINAMICAMENTE
-        await fetch('./api/riffle_singup', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(initData)
-          })
-          .then(response => response.json())
-          .then(async data => {
-
-            if (!data.success) {
-              Swal.close();
-              Swal.fire('Error', "Error: response riffle sinup", 'error');
-              return;
-            }
-
-            let idrio = data.id_usuario;
-
-            await fetch('./api/riffle_verfication?t=1', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  id_usuario: idrio
-                })
-              })
-              .then(response => response.json())
-              .then(async data => {
-
-                let value = data.user;
-
-                // Obtener valores de forma segura
-                const formData = {
-                  nombre: value.nombre + ' ' + value.apellido,
-                  telefono: value.telefono,
-                  ubicacion: value.ubicacion,
-                  id_usuario: value.id_usuario,
-                  monto_pago: getInputValue('#monto_pagado'),
-                  titular: getInputValue('#titular'),
-                  referencia: getInputValue('#referencia'),
-                  metodoPago: $('input[name="payment_method"]').val()
-                };
-
-                // Validar que todos los campos requeridos tengan valor
-                const camposRequeridos = [{
-                    campo: 'titular',
-                    mensaje: 'Titular'
-                  },
-                  {
-                    campo: 'referencia',
-                    mensaje: 'Referencia'
-                  },
-                  {
-                    campo: 'metodoPago',
-                    mensaje: 'Método de pago'
-                  }
-                ];
-
-                const camposFaltantes = camposRequeridos
-                  .filter(({
-                    campo
-                  }) => !formData[campo])
-                  .map(({
-                    mensaje
-                  }) => mensaje);
-
-                if (camposFaltantes.length > 0) {
-                  Swal.close();
-                  Swal.fire('Campos incompletos', `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`, 'warning');
-                  return;
-                }
-
-                const boletosCargar = Array.from(boletosSeleccionados);
-
-                try {
-                  // Preparar datos de la compra
-                  const datosCompra = {
-                    boletos: boletosCargar,
-                    ...formData,
-                  };
-
-                  await fetch('./api/process_purchase', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify(datosCompra)
-                    })
-                    .then(response => response.json())
-                    .then(async dataCompra => {
-                      if (dataCompra.success) {
-                        Swal.close();
-                        generarEnlaceWhatsApp({
-                          nombre: formData.nombre,
-                          telefono: formData.telefono
-                        }, boletosCargar);
-
-                        await Swal.fire({
-                          title: '¡Compra procesada correctamente!',
-                          icon: 'success',
-                          confirmButtonText: 'OK'
-                        });
-                        window.location.href = '/sorteo';
-                      } else {
-                        Swal.close();
-                        Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
-                      }
-                    })
-                    .catch(error => {
-                      Swal.close();
-                      Swal.fire('Error', 'Error al procesar la compra', 'error');
-                      console.error('Error al procesar la compra:', error);
-                    });
-
-                } catch (error) {
-                  Swal.close();
-                  console.error('Error:', error);
-                }
-
-              })
-              .catch(error => {
-                Swal.close();
-                console.error('Error al verificar sesión:', error);
-              });
-
-          })
-          .catch(error => {
-            Swal.close();
-            console.error('Error al verificar sesión:', error);
-          });
+              console.error('Error al verificar sesión:', error);
+            });
+        }
+      } catch (err) {
+        Swal.close();
+        Swal.fire('Error inesperado', 'Ha ocurrido un error inesperado. Intente de nuevo.', 'error');
+        console.error('Error inesperado:', err);
+      } finally {
+        procesandoCompra = false;
+        btnConfirmar.disabled = false;
       }
-
     };
+
+
     // Actualizar estilos para el botón de remover en el chip
     const styles = document.createElement('style');
     styles.textContent = `

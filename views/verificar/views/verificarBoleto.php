@@ -52,11 +52,13 @@
 
 <div class="container-fluid">
     <div class="section-title__title center">
-        Verificar Boletos xd
+        Verificar Boletos
     </div>
     <form class="verificar-form" method="post" id="verificarForm">
-        <input class="input-boleto" type="text" name="id_rifa" placeholder="Ingresa el ID de la rifa" required>
-        <input class="input-boleto" type="text" name="numero_boleto" placeholder="Ingresa el número de boleto (opcional)">
+        <select class="input-boleto" name="id_rifa" required>
+            <option value="1" selected>Rifa actual</option>
+        </select>
+        <input class="input-boleto" type="text" name="numero_boleto" placeholder="ej: 0001" required>
         <button class="btn-verificar" type="submit">Verificar</button>
     </form>
 
@@ -65,32 +67,26 @@
 
 <script src="/assets/js/boletosTicket.js"></script>
 <script>
-    // Mostrar el boleto de ejemplo al cargar la página
-    window.addEventListener('DOMContentLoaded', function() {
-        renderBoleto({
-            items: {
-                nombre: "victor carrillo fernadez tercero",
-                telefono: "04243191605",
-                "Precio del boleto": "3$"
-            },
-            fecha_compra: "18/05/2025 13:46",
-            numero: "0013",
-            id_boleto: "123456"
-        });
-    });
-
     document.getElementById('verificarForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const idRifa = document.querySelector('input[name="id_rifa"]').value.trim();
+        const idRifa = document.querySelector('select[name="id_rifa"]').value.trim();
         const numeroBoleto = document.querySelector('input[name="numero_boleto"]').value.trim();
         const container = document.getElementById('boletoContainer');
+
+        // Validación: solo números y exactamente 4 dígitos
+        if (!/^\d{4}$/.test(numeroBoleto)) {
+            container.innerHTML = '<div style="color:red;">El número de boleto debe tener exactamente 4 dígitos numéricos.</div>';
+            return;
+        }
+
         container.innerHTML = "Buscando...";
 
-        let url = `/api/get_tickets?id_rifa=${encodeURIComponent(idRifa)}`;
-        if (numeroBoleto) url += `&numero_boleto=${encodeURIComponent(numeroBoleto)}`;
+        let url = '/api/get_tickets?id_rifa=' + encodeURIComponent(idRifa) + '&numero_boleto=' + encodeURIComponent(numeroBoleto);
 
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                method: "POST",
+            });
             const data = await response.json();
 
             // Log para depuración
@@ -100,11 +96,11 @@
             if (!data.success || !data.data || data.data.length === 0) {
                 console.log("No llegaron datos reales desde la API, mostrando boleto de ejemplo.");
                 container.innerHTML = `
-                    <div style="color:red; margin-bottom:10px;">
-                        No se encontraron datos reales.<br>
-                        <b>Mostrando un boleto de ejemplo.</b>
-                    </div>
-                `;
+                <div style="color:red; margin-bottom:10px;">
+                No se encontraron datos reales.<br>
+                <b>Mostrando un boleto de ejemplo.</b>
+                </div>
+            `;
                 // Generar datos aleatorios de ejemplo
                 const ejemplos = [{
                         items: {
@@ -148,9 +144,9 @@
             if (boleto) {
                 const datosBoleto = {
                     items: {
-                        nombre: (boleto.nombre || '') + ' ' + (boleto.apellido || ''),
-                        telefono: boleto.telefono || '',
-                        "Precio del boleto": boleto.precio_boleto ? boleto.precio_boleto + '$' : ''
+                        nombre: (boleto.cliente || 'no') + ' ' + (boleto.a_cliente || 'comprado'),
+                        telefono: boleto.telefono || 'no comprado',
+                        "Precio": boleto.precio_boleto ? boleto.precio_boleto + '$' : 'no comprado'
                     },
                     fecha_compra: boleto.fecha_compra || 'No disponible',
                     numero: boleto.numero_boleto,
@@ -161,8 +157,8 @@
             } else if (data.data && data.data.length > 0) {
                 // Si buscas todos los boletos de la rifa, puedes listarlos aquí
                 container.innerHTML = data.data.map(boleto => `
-                    <div>${boleto.numero_boleto} - ${boleto.estado_boleto}</div>
-                `).join('');
+                <div>${boleto.numero_boleto} - ${boleto.estado_boleto}</div>
+            `).join('');
             }
         } catch (err) {
             container.innerHTML = '<div style="color:red;">Error de conexión con el servidor.</div>';

@@ -199,14 +199,45 @@ class BoletoController
     }
   }
 
-  public function obtenerBoletos($petision = null)
+  public function obtenerBoletos($peticion = null, $array = null)
   {
-    header('Content-Type: application/json');
-    header('Cache-Control: no-cache, must-revalidate');
 
     try {
-      // Selecciona el método según el valor de $petision
-      $boletos = $petision
+      // Validar si $array es un array
+      // Validar si $array es un array no vacío
+      if ($array !== null) {
+        if (!is_array($array) || empty($array)) {
+          echo json_encode([
+            'success' => false,
+            'error' => 'El parámetro proporcionado no es un array válido o está vacío',
+          ]);
+          exit;
+        }
+
+        $idbol = $array["boleto"];
+        $idrif = $array["id_rifa"];
+        
+        $boletos = $this->model->verificarBoletosXCompra($idrif, $idbol);
+
+        if (empty($boletos) || !isset($boletos['success']) || $boletos['success'] == false) {
+          echo json_encode([
+            'success' => false,
+            'data' => $boletos['data'] ?? [],
+            'total' => $boletos['total'] ?? 0,
+          ]);
+          exit;
+        }
+
+        echo json_encode([
+          'success' => true,
+          'data' => $boletos['data'],
+          'total' => $boletos['total'],
+        ]);
+        exit;
+      }
+
+      // Selecciona el método según el valor de $peticion
+      $boletos = $peticion
         ? $this->model->obtenerBoletosGandores()
         : $this->model->obtenerBoletos();
 
@@ -232,42 +263,6 @@ class BoletoController
       ]);
     }
   }
-
-  // public function inicializarBoletos()
-  // {
-  //   header('Content-Type: application/json');
-  //   try {
-  //     $this->model->inicializarBoletos();
-  //     echo json_encode([
-  //       'success' => true,
-  //       'message' => 'd correctamente'
-  //     ]);
-  //   } catch (Exception $e) {
-  //     http_response_code(500);
-  //     echo json_encode([
-  //       'success' => false,
-  //       'error' => $e->getMessage()
-  //     ]);
-  //   }
-  // }
-
-  // public function show()
-  // {
-  //   header('Content-Type: application/json');
-  //   try {
-  //     $this->model->show();
-  //     echo json_encode([
-  //       'success' => true,
-  //       'message' => 'd correctamente'
-  //     ]);
-  //   } catch (Exception $e) {
-  //     http_response_code(500);
-  //     echo json_encode([
-  //       'success' => false,
-  //       'error' => $e->getMessage()
-  //     ]);
-  //   }
-  // }
 
   public function confirmarPago($id_compra)
   {
