@@ -6,10 +6,14 @@
 
 <div class="container-fluid">
   <div class="text-center">
-    <h1 class="lista-title">LISTA DE BOLETOS</h1>
+    <h1 class="lista-title" data-i18n="list_tickets">LISTA DE BOLETOS</h1>
 
     <div class="progressLoader">
       <style>
+        #siguiente {
+          scroll-margin-top: 110px;
+        }
+
         .no-sort-activ {
           display: flex;
           justify-content: center;
@@ -126,7 +130,7 @@
     <div class="elegir-title">
       <button id="btnRandomNumber" class="magic-button">
         <i class="fa fa-star"></i>
-        <span>ELEGIR A LA SUERTE</span>
+        <span data-i18n="choose_randomly">ELEGIR A LA SUERTE</span>
         <i class="fa fa-star"></i>
       </button>
     </div>
@@ -139,32 +143,37 @@
     </div>
 
     <div class="buscar-container">
-      <input type="text" id="buscador" class="form-control" placeholder="Buscar boleto (ej: 001, 0020...)">
-      <button class="btn-buscar">BUSCAR</button>
+      <input type="text" id="buscador" class="form-control" placeholder="Buscar boleto (ej: 001, 0020...)" data-i18n-placeholder="search_ticket_placeholder">
+      <button class="btn-buscar" data-i18n="search">BUSCAR</button>
     </div>
 
     <div class="boletos-container">
       <div class="boletos-grid" id="boletosList">
         <!-- Los boletos se generarán dinámicamente aquí -->
       </div>
-      <div class="loading-text" style="display: block;">Cargando boletos...</div>
+      <div class="loading-text" style="display: block;" data-i18n="loading_tickets">Cargando boletos...</div>
     </div>
 
     <div class="seleccionados-container" style="display: none;">
-      <span class="seleccionados-text">SELECCIONADOS</span>
+      <span class="seleccionados-text" data-i18n="selected">SELECCIONADOS</span>
       <div class="contador">0</div>
       <div class="boletos-seleccionados-chips"></div>
-      <button class="btn btn-continuar">CONTINUAR</button>
+      <button class="btn btn-continuar" data-i18n="continue">CONTINUAR</button>
     </div>
   </div>
 
   <div id="datosPersonales" class="form-personal" style="display: none;">
+    <div class="payment-subtitle" id="siguiente">
+      <i class="fas fa-arrow-down"></i>
+      <span data-i18n="slide_down_to_continue">deslice hacia abajo para continuar</span>
+      <i class="fas fa-arrow-down"></i>
+    </div>
     <div class="payment-section">
       <div class="payment-title">
         <i class="fas fa-money-bill"></i>
-        METODO DE PAGO
+        <span data-i18n="payment_method">METODO DE PAGO</span>
       </div>
-      <div class="payment-subtitle">Transferencia o depósito</div>
+      <div class="payment-subtitle" data-i18n="payment_method_subtitle">Transferencia o depósito</div>
 
       <div class="payment-methods">
         <div class="payment-method" onclick="mostrarDatosDePago('pago_movil')">
@@ -185,7 +194,7 @@
         <!--<div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
           <img src="assets/img/webp/bancolombia.webp" alt="bancolombia">
         </div>-->
-      </div> 
+      </div>
 
       <div class="payment-info">
         <p id="paymentTitle"></p>
@@ -201,14 +210,14 @@
             <span id="mapr"></span>
           </div>
         </div>
-        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 1 USD</p>
+        <p class="exchange-rate" id="tasaEx" data-i18n="exchange_rate">Tasa de cambio: 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
-           <-- carga dinamicamente -->
+          <-- carga dinamicamente -->
         </div>
       </div>
     </div>
     <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
-    <button type="submit" class="btn-confirmar">CONFIRMAR</button>
+    <button type="submit" class="btn-confirmar" data-i18n="confirm">CONFIRMAR</button>
   </div>
 </div>
 
@@ -217,15 +226,14 @@
 
 <!-- // Este script genera un enlace de WhatsApp con los datos del cliente y los boletos comprados] -->
 <script>
-  function generarEnlaceWhatsApp(data, ticketsComprados) {
+  function generarEnlaceWhatsApp(data, ticketsComprados, nuw = "") {
 
     const nombre = data.nombre; // Reemplaza con el nombre del cliente
-    const cedula = data.cedula; // Reemplaza con la cédula del cliente   
     const celular = data.telefono; // Reemplaza con el número de celular del cliente
     const numeroTelefono = "14077329524"; // Numero de la empresa en WhatsApp
     const listaTickets = ticketsComprados.join(', '); // Convierte el array de tickets en una cadena separada por comas
 
-    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCedula: ${cedula}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
+    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
 
     const mensajeCodificado = encodeURIComponent(mensaje);
     const enlaceWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeCodificado}`;
@@ -246,15 +254,12 @@
     document.body.removeChild(enlace);
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-
-    // Configuración global para Semantic UI Transitions
-    $.fn.transition.settings.silent = true;
-
+  document.addEventListener('DOMContentLoaded', async function() {
+    await i18n.init();
     const boletosSeleccionados = new Set();
-    const minBoletos = <?php echo $sorteo['data']['configuracion']['boletos_minimos']; ?>;
-    let cantidadSeleccion = 2;
-    let precioUnitarioUSD = <?php echo $sorteo['data']['configuracion']['precio_boleto']; ?>;
+    const minBoletos = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
+    let cantidadSeleccion = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
+    let precioUnitarioUSD = "<?php echo $precioBoleto ?>" == '' ? "0" : "<?php echo $precioBoleto ?>";
     const todosLosBoletos = [];
     let cargandoBoletos = false;
 
@@ -262,6 +267,7 @@
     const boletosContainer = document.querySelector('.boletos-container');
     const boletosList = document.getElementById('boletosList');
     const loadingText = document.querySelector('.loading-text');
+    const miniregist = document.getElementById('regist');
     const buscador = document.getElementById('buscador');
     const btnRandomNumber = document.getElementById('btnRandomNumber');
     const numeroBoletosSpan = document.querySelector('.numero-boletos');
@@ -320,24 +326,79 @@
 
       await fetch('./api/get_tickets') // Petición al backend
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
           const boletos = data['data'];
           const success = data['success'];
 
           try {
             if (!success) {
               if (boletos.rifa_estado == 0) {
-                const nuevoBoleto = document.createElement('div');
-                boletosList.style.display = 'flex';
-                nuevoBoleto.classList.add('no-sort-activ');
-                nuevoBoleto.textContent = "Sin sorteos activos";
-                fragment.appendChild(nuevoBoleto);
-                return
+                // Hacer otra petición con parámetro wn=1
+                await fetch('./api/get_tickets?wn=1')
+                  .then(response => response.json())
+                  .then(dataWn => {
+                    const boletosWn = dataWn['data'];
+                    const boletosLen = dataWn['total'];
+                    const boletosSc = dataWn['success'];
+                    // Si tampoco hay ganadores recientes, mostrar solo ese mensaje
+                    if (boletosSc == false || boletosLen === 0) {
+                      const nuevoBoleto = document.createElement('div');
+                      boletosList.style.display = 'flex';
+                      nuevoBoleto.classList.add('no-sort-activ');
+                      nuevoBoleto.setAttribute('data-i18n', 'no_active_raffles');
+                      nuevoBoleto.textContent = i18n.t("no_active_raffles") !== "no_active_raffles" ?
+                        i18n.t("no_active_raffles") :
+                        "Sin sorteos activos, ni ganadores recientes";
+                      fragment.appendChild(nuevoBoleto);
+                    } else {
+
+                      boletosContainer.innerHTML = "";
+                      const nuevoBoleto = document.createElement('div');
+                      const msj = document.createElement('p');
+                      msj.textContent = i18n.t("last_winners_tickets");
+                      nuevoBoleto.id = "boletoContainer";
+                      boletosContainer.appendChild(msj);
+                      boletosContainer.appendChild(nuevoBoleto);
+
+                      // Validar que el elemento con id 'boletoContainer' exista antes de hacer el foreach
+                      setTimeout(() => {
+                        const container = document.getElementById('boletoContainer');
+                        if (container && Array.isArray(boletosWn)) {
+                          let databot = boletosWn.data || "";
+                          boletosWn.forEach(boleto => {
+                            // Llama a renderBoleto con los datos del boleto
+                            renderBoleto({
+                              items: {
+                                nombre: databot.nombre || i18n.t("no_purchases"),
+                                telefono: databot.telefono || i18n.t("no_purchases"),
+                                "Precio": databot.precio || i18n.t("no_purchases")
+                              },
+                              fecha_compra: boleto.fecha_compra || i18n.t("no_purchases"),
+                              numero: boleto.numero_boleto || "",
+                              id_boleto: boleto.id_boleto || "",
+                              id_rifa: boleto.id_rifa || "",
+                              ganador: true
+                            });
+                          });
+                        }
+                      }, 0);
+
+                      setTimeout(() => {
+                        animateProgressBar(10000, 10000)
+                      }, 1000);
+                    }
+                  })
+                  .catch(error => {
+                    console.error('Error al cargar los boletos ganadores:', error);
+                  });
+                return;
               }
             }
           } catch (error) {
             console.error('Error al cargar los boletos:', error);
           }
+
+          // Si no hay boletos, no hacer nada aquí porque ya se maneja arriba
 
           boletos.forEach(boleto => {
             const nuevoBoleto = document.createElement('div');
@@ -372,7 +433,7 @@
     }
 
     // Cargar los primeros boletos
-    cargarMasBoletos();
+    await cargarMasBoletos();
 
     // Inicializar el contador y total
     numeroBoletosSpan.textContent = cantidadSeleccion;
@@ -640,162 +701,358 @@
         });
 
       document.querySelector('.btn.btn-continuar').disabled = true;
-      fetch('./api/session_verfication', {
-          method: 'POST',
-          header: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            boletos: Array.from(boletosSeleccionados)
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.session) {
-            document.getElementById('datosPersonales').style.display = 'block';
-            this.parentElement.style.display = 'none';
-          } else {
-            // Si no hay sesión, redirigir al login
-            let timerInterval;
-            Swal.fire({
-              title: "¡Inicia sesion para continuar!",
-              html: "redireccionando en <b></b> milliseconds.",
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading();
-                const timer = Swal.getPopup().querySelector("b");
-                timerInterval = setInterval(() => {
-                  timer.textContent = `${Swal.getTimerLeft()}`;
-                }, 100);
-              },
-              willClose: () => {
-                clearInterval(timerInterval);
-                window.location.href = '/login';
-              }
-            });
-            // alert('No haz iniciado sesion, redireccionando...');
-            // setTimeout(() => {
-            //   window.location.href = '/login';
-            // }, 1000);
-          }
-        })
-        .catch(error => {
-          console.error('Error al verificar sesión:', error);
-        });
+
+      document.getElementById('datosPersonales').style.display = 'block';
+      this.parentElement.style.display = 'none';
+
+      window.location.href = "#siguiente";
     };
 
+    const getInputValue = (selector) => {
+      const element = document.querySelector(selector);
+      return element ? element.value.trim() : '';
+    };
+
+
     // Manejar el envío del formulario
-    document.querySelector('.btn-confirmar').onclick = async function(e) {
+    // Mejoras: 
+    // - Evita doble envío
+    // - Deshabilita botón durante proceso
+    // - Maneja errores inesperados
+    // - Limpia mensajes de SweetAlert correctamente
+
+    const btnConfirmar = document.querySelector('.btn-confirmar');
+    let procesandoCompra = false;
+
+    btnConfirmar.onclick = async function(e) {
+      Swal.fire({
+        title: i18n.t('processing_purchase'),
+        text: i18n.t('processing_purchase_text'),
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       e.preventDefault();
 
-      await fetch('./api/session_verfication?t=1', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
+      if (procesandoCompra) return; // Evita doble envío
+      procesandoCompra = true;
+      btnConfirmar.disabled = true;
 
-          if (!data.session) {
-            window.location.href = '/login';
-            return;
-          }
+      try {
+        if (miniregist.value == "0") {
+          await fetch('./api/session_verfication?t=1', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+            .then(response => response.json())
+            .then(async data => {
 
-          let value = data.user;
-          // Función auxiliar para obtener valor seguro
-          const getInputValue = (selector) => {
-            const element = document.querySelector(selector);
-            return element ? element.value.trim() : '';
-          };
+              if (!data.session) {
+                window.location.href = '/login';
+                return;
+              }
 
-          // Obtener valores de forma segura
-          const formData = {
-            nombre: value.nombre + ' ' + value.apellido,
-            cedula: value.cedula,
-            telefono: value.telefono,
-            ubicacion: value.ubicacion,
-            id_usuario: value.id_usuario,
-            monto_pago: getInputValue('#monto_pagado'),
-            titular: getInputValue('#titular'),
-            referencia: getInputValue('#referencia'),
-            metodoPago: $('input[name="payment_method"]').val()
-          };
+              let value = data.user;
 
-          // Validar que todos los campos requeridos tengan valor
-          const camposRequeridos = [{
-              campo: 'titular',
-              mensaje: 'Titular'
+              // Obtener valores de forma segura
+              const formData = {
+                nombre: value.nombre + ' ' + value.apellido,
+                telefono: value.telefono,
+                ubicacion: value.ubicacion,
+                id_usuario: value.id_usuario,
+                monto_pago: getInputValue('#monto_pagado'),
+                titular: getInputValue('#titular'),
+                referencia: getInputValue('#referencia'),
+                metodoPago: $('input[name="payment_method"]').val()
+              };
+
+              // Validar que todos los campos requeridos tengan valor
+              const camposRequeridos = [{
+                  campo: 'titular',
+                  mensaje: 'comprobante_titular'
+                },
+                {
+                  campo: 'referencia',
+                  mensaje: 'comprobante_referencia'
+                },
+                {
+                  campo: 'metodoPago',
+                  mensaje: 'comprobante_metodo'
+                }
+              ];
+
+              const camposFaltantes = camposRequeridos
+                .filter(({
+                  campo
+                }) => !formData[campo])
+                .map(({
+                  mensaje
+                }) => i18n.t(mensaje));
+
+              if (camposFaltantes.length > 0) {
+                Swal.close();
+                Swal.fire({
+                  title: i18n.t('incomplete_fields'),
+                  text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
+                  icon: 'warning',
+                  confirmButtonText: i18n.t('incomplete_fields_confirm'),
+                  customClass: {
+                    confirmButton: 'swal2-confirm'
+                  }
+                });
+                return;
+              }
+
+              const boletosCargar = Array.from(boletosSeleccionados);
+
+              try {
+                // Preparar datos de la compra
+                const datosCompra = {
+                  boletos: boletosCargar,
+                  ...formData,
+                };
+
+                await fetch('./api/process_purchase', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datosCompra)
+                  })
+                  .then(response => response.json())
+                  .then(async dataCompra => {
+                    Swal.close();
+                    if (dataCompra.success) {
+                      generarEnlaceWhatsApp({
+                        nombre: formData.nombre,
+                        telefono: formData.telefono
+                      }, boletosCargar);
+
+                      await Swal.fire({
+                        title: '¡Compra procesada correctamente!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                      });
+                      window.location.href = '/sorteo';
+                    } else {
+                      Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                    }
+                  })
+                  .catch(error => {
+                    Swal.close();
+                    Swal.fire('Error', 'Error al procesar la compra', 'error');
+                    console.error('Error al procesar la compra:', error);
+                  });
+
+              } catch (error) {
+                Swal.close();
+                console.error('Error:', error);
+              }
+
+            })
+            .catch(error => {
+              Swal.close();
+              console.error('Error al verificar sesión:', error);
+            });
+        } else {
+          // Unificar validación de campos de usuario y de pago
+          const campos = [{
+              nombre: 'nombre',
+              label: 'Nombre',
+              value: getInputValue('#nombre')
             },
             {
-              campo: 'referencia',
-              mensaje: 'Referencia'
+              nombre: 'apellido',
+              label: 'Apellido',
+              value: getInputValue('#apellido')
             },
             {
-              campo: 'metodoPago',
-              mensaje: 'Método de pago'
+              nombre: 'prefijo_pais',
+              label: 'Prefijo de país',
+              value: getInputValue('#prefijo_pais')
+            },
+            {
+              nombre: 'telefono',
+              label: 'Teléfono',
+              value: getInputValue('#telefono')
+            },
+            {
+              nombre: 'monto_pagado',
+              label: 'Monto pagado',
+              value: getInputValue('#monto_pagado')
+            },
+            {
+              nombre: 'titular',
+              label: 'Titular',
+              value: getInputValue('#titular')
+            },
+            {
+              nombre: 'referencia',
+              label: 'Referencia',
+              value: getInputValue('#referencia')
+            },
+            {
+              nombre: 'metodoPago',
+              label: 'Método de pago',
+              value: $('input[name="payment_method"]').val()
             }
           ];
 
-          const camposFaltantes = camposRequeridos
-            .filter(({
-              campo
-            }) => !formData[campo])
-            .map(({
-              mensaje
-            }) => mensaje);
+          const camposFaltantes = campos.filter(c => !c.value).map(c => c.label);
+
+          /*   if (camposFaltantes.length > 0) {
+                Swal.close();
+                Swal.fire({
+                  title: i18n.t('incomplete_fields'),
+                  text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
+                  icon: 'warning',
+                  confirmButtonText: i18n.t('incomplete_fields_confirm'),
+                  customClass: {
+                    confirmButton: 'swal2-confirm'
+                  }
+                });
+                return;
+              } */
 
           if (camposFaltantes.length > 0) {
-            alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
+            Swal.close();
+            Swal.fire({
+              title: i18n.t('incomplete_fields'),
+              text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
+              icon: 'warning',
+              confirmButtonText: i18n.t('incomplete_fields_confirm'),
+              customClass: {
+                confirmButton: 'swal2-confirm'
+              }
+            });
             return;
           }
 
-          const boletosCargar = Array.from(boletosSeleccionados)
+          const initData = {
+            nombre: campos[0].value,
+            apellido: campos[1].value,
+            prefijo_pais: campos[2].value,
+            telefono: campos[3].value
+          };
 
-          try {
-            // Preparar datos de la compra
-            const datosCompra = {
-              boletos: boletosCargar,
-              ...formData,
-              // total: totalBS
-            };
+          // CREAR USUARIO DINAMICAMENTE
+          await fetch('./api/riffle_singup', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(initData)
+            })
+            .then(response => response.json())
+            .then(async data => {
 
-            fetch('./api/process_purchase', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(datosCompra)
-              })
-              .then(response => response.json())
-              .then(dataCompra => {
-                if (dataCompra.success) {
+              if (!data.success) {
+                Swal.close();
+                Swal.fire('Error', "Error: response riffle sinup", 'error');
+                return;
+              }
 
-                  generarEnlaceWhatsApp({
-                    nombre: formData.nombre,
-                    cedula: formData.cedula,
-                    telefono: formData.telefono
-                  }, boletosCargar);
+              let idrio = data.id_usuario;
 
-                  alert('¡Compra procesada correctamente!');
-                  window.location.href = '/sorteo';
-                }
-              })
-              .catch(error => {
-                alert(dataCompra.error || 'Error al procesar la compra');
-                console.error('Error al procesar la compra:', error);
-              });
+              await fetch('./api/riffle_verfication?t=1', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    id_usuario: idrio
+                  })
+                })
+                .then(response => response.json())
+                .then(async data => {
 
-          } catch (error) {
-            console.error('Error:', error);
-          }
+                  let value = data.user;
 
-        })
-        .catch(error => {
-          console.error('Error al verificar sesión:', error);
-        });
+                  // Obtener valores de forma segura
+                  const formData = {
+                    nombre: value.nombre + ' ' + value.apellido,
+                    telefono: value.telefono,
+                    ubicacion: value.ubicacion,
+                    id_usuario: value.id_usuario,
+                    monto_pago: getInputValue('#monto_pagado'),
+                    titular: getInputValue('#titular'),
+                    referencia: getInputValue('#referencia'),
+                    metodoPago: $('input[name="payment_method"]').val()
+                  };
+
+                  const boletosCargar = Array.from(boletosSeleccionados);
+
+                  try {
+                    // Preparar datos de la compra
+                    const datosCompra = {
+                      boletos: boletosCargar,
+                      ...formData,
+                    };
+
+                    await fetch('./api/process_purchase', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(datosCompra)
+                      })
+                      .then(response => response.json())
+                      .then(async dataCompra => {
+                        Swal.close();
+                        if (dataCompra.success) {
+                          generarEnlaceWhatsApp({
+                            nombre: formData.nombre,
+                            telefono: formData.telefono
+                          }, boletosCargar);
+
+                          await Swal.fire({
+                            title: '¡Compra procesada correctamente!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                          });
+                          window.location.href = '/sorteo';
+                        } else {
+                          Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                        }
+                      })
+                      .catch(error => {
+                        Swal.close();
+                        Swal.fire('Error', 'Error al procesar la compra', 'error');
+                        console.error('Error al procesar la compra:', error);
+                      });
+
+                  } catch (error) {
+                    Swal.close();
+                    console.error('Error:', error);
+                  }
+
+                })
+                .catch(error => {
+                  Swal.close();
+                  console.error('Error al verificar sesión:', error);
+                });
+
+            })
+            .catch(error => {
+              Swal.close();
+              console.error('Error al verificar sesión:', error);
+            });
+        }
+      } catch (err) {
+        Swal.close();
+        Swal.fire('Error inesperado', 'Ha ocurrido un error inesperado. Intente de nuevo.', 'error');
+        console.error('Error inesperado:', err);
+      } finally {
+        procesandoCompra = false;
+        btnConfirmar.disabled = false;
+      }
     };
+
 
     // Actualizar estilos para el botón de remover en el chip
     const styles = document.createElement('style');

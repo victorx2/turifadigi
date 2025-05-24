@@ -7,7 +7,15 @@ require_once '../vendor/autoload.php';
 
 // Configuración de zona horaria y localización
 date_default_timezone_set('America/Caracas');
+//Idiomas
 setlocale(LC_TIME, 'Spanish');
+
+/* // Obtener el idioma preferido de la sesión o cookie */
+/* $preferred_language = $_SESSION['language'] ?? $_COOKIE['language'] ?? 'es'; */
+/*  */
+/* // Configurar la localización según el idioma seleccionado */
+/* setlocale(LC_TIME, $preferred_language === 'en' ? 'English' : 'Spanish'); */
+
 
 // Configuración de cookies para mayor seguridad
 $cookie_duration = 30 * 24 * 60 * 60; // Duración de 30 días
@@ -70,7 +78,7 @@ switch (strtok($route, '?')) {
             break;
         }
         require_once '../src/API/obtenerCompras.php';
-	break;
+        break;
     case '/api/get_sorteo':
         $cmp = $_GET["cmp"] ?? '';
         if ($cmp != '') {
@@ -80,19 +88,22 @@ switch (strtok($route, '?')) {
         break;
     case '/api/admin_password_reset':
 
-	    echo "ruta activa";
+        echo "ruta activa";
 
-	break;
+        break;
     case '/api/exchange_rate':
         require_once '../src/API/verificar.tasa.php';
         break;
-
+    case '/api/riffle_singup':
+        require_once '../src/API/registrarSorteo.php';
+        break;
+    case '/api/riffle_verfication':
+        require_once '../src/API/userVerifySorteo.php';
+        break;
     case '/api/coin_update':
-	require_once '../src/API/actualizar_coin.php';
-    	break;
+        require_once '../src/API/actualizar_coin.php';
+        break;
     default:
-        echo "Error api ". __DIR__;
+        echo "Error api " . __DIR__;
         break;
 }
-
-

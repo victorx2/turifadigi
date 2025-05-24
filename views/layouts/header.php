@@ -26,6 +26,10 @@
     }
   </script>
 
+  <!-- FUNCION DE TICKETS -->
+  <script src="assets/js/boletosTicket.js"></script>
+  <script src="assets/js/jsbarcode.js"></script>
+
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script>
@@ -59,9 +63,13 @@
   <link rel="stylesheet" href="vendor/reey-font/stylesheet.css" />
 
   <!-- template styles -->
+  <link rel="stylesheet" href="assets/css/botonTickets.css" />
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
-  <link rel="stylesheet" href="assets/css/dropdown-search.css">
+
+  <link rel="stylesheet" href="assets/css/dropdownMetodosPagos.css">
+
+  <link rel="stylesheet" href="assets/css/dropdown-language.css">
 
   <!-- Scripts adicionales CSS -->
   <link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
@@ -73,9 +81,14 @@
   <link rel="stylesheet" href="vendor/dropzone/dropzone.css">
   <link rel="stylesheet" href="vendor/summernote/summernote-bs4.min.css">
   <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
+
 </head>
 
 <body class="custom-cursor">
+
+
+
+
 
   <div class="custom-cursor__cursor"></div>
   <div class="custom-cursor__cursor-two"></div>
@@ -100,17 +113,17 @@
                     $class = $sessionRol != 2 ? 'element' : 'dropdown';
                     ?>
                     <li class="<?php echo $class ?>">
-                      <a href="/">Inicio
+                      <a href="/" data-i18n="home">Inicio
                         <span class="main-menu-border"></span>
                       </a>
                       <?php
                       if ($session !== '' && $sessionRol == 2) {
                         echo '
                         <ul class="dropdown-menu">
-                          <li><a href="/compra_verificacion">Verificar compras</a></li>
-                          <li><a href="/sorteo_verificacion">Verificar sorteos</a></li>
+                          <li><a href="/compra_verificacion" data-i18n="verify purchases">Verificar compras</a></li>
+                          <li><a href="/sorteo_verificacion" data-i18n="verify raffles">Verificar sorteos</a></li>
                           <!-- <li><a href="/editar_sorteo">Editar sorteo</a></li> -->
-                          <li><a href="/crear_sorteo">Crear sorteo</a></li>
+                          <li><a href="/crear_sorteo" data-i18n="create raffle">Crear sorteo</a></li>
                         </ul>';
                       } ?>
                     </li>
@@ -118,31 +131,35 @@
                     if ($session !== '') {
                       echo '
                     <li class="element">
-                      <a href="/compras">Compras
+                      <a href="/compras" data-i18n="purchases">Compras
                         <span class="main-menu-border"></span>
                       </a>
                     </li>';
                     } ?>
                     <li class="element">
-                      <a href="/sorteo">Sorteo
+                      <a href="/verificar_boleto" data-i18n="verify_ticket">Verificar Boleto
                         <span class="main-menu-border"></span>
                       </a>
-
+                    </li>
+                    <li class="element">
+                      <a href="/sorteo" data-i18n="raffle">Sorteo
+                        <span class="main-menu-border"></span>
+                      </a>
                     </li>
                     <?php
                     $session = $_SESSION['usuario'] ?? '';
                     if ($session === '') {
                       echo '
                       <li class="element">
-                        <a href="/signup">Crear Cuenta
+                        <a href="/signup" data-i18n="create_account">Crear Cuenta
                           <span class="main-menu-border"></span>
                         </a>
                       </li>';
                     }
                     if ($session === '') {
-                      echo '<a href="/login" class="main-menu__btn thm-btn inic" id="inicMob">Iniciar Sesión</a>';
+                      echo '<a href="/login" class="main-menu__btn thm-btn inic inicMob"   data-i18n="login_btn">Iniciar Sesión</a>';
                     } else {
-                      echo '<a href="" class="main-menu__btn thm-btn inic" onclick=session_destroy() id="inicMob">Cerrar Sesión</a>';
+                      echo '<a href="" class="main-menu__btn thm-btn inic inicMob" onclick=session_destroy()  data-i18n="logout_btn">Cerrar Sesión</a>';
                     } ?>
                   </ul>
 
@@ -151,20 +168,45 @@
               <?php
               if ($session === '') {
                 echo '
-              <div class="main-menu__right">
-              <div class="main-menu__cart-search-box">
+            <div class="main-menu__right">
+
+            
+<div class="custom-language-select  " id="custom-language-select">
+  <div class="custom-language-button">
+    <span class="custom-language-selected">Idioma</span>
+    <span class="custom-language-arrow">▼</span>
+  </div>
+  <div class="custom-language-options">
+    <div class="custom-language-option" data-value="es">Español</div>
+    <div class="custom-language-option" data-value="en">Inglés</div>
+  </div>
+  <input type="hidden" name="language" value="es">
+</div>
+
+            
+            <div class="main-menu__btn-box">
+              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
               </div>
-              <div class="main-menu__btn-box">
-              <a href="/login" class="main-menu__btn thm-btn">Iniciar Sesión</a>
-              </div>
+
               </div>';
               } else {
                 echo '<div class="main-menu__right">
-              <div class="main-menu__cart-search-box">
-              </div>
+<div class="custom-language-select  " id="custom-language-select">
+  <div class="custom-language-button">
+    <span class="custom-language-selected">Idioma</span>
+    <span class="custom-language-arrow">▼</span>
+  </div>
+  <div class="custom-language-options">
+    <div class="custom-language-option" data-value="es">Español</div>
+    <div class="custom-language-option" data-value="en">Inglés</div>
+  </div>
+  <input type="hidden" name="language" value="es">
+</div>
+           
               <div class="main-menu__btn-box">
-              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy()>Cerrar Sesión</a>
+              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesión</a>
               </div>
+
               </div>';
               } ?>
             </div>
@@ -192,19 +234,17 @@
       </script>
     </header>
     <style>
-      #inicMob {
+      .inicMob {
         margin: 20px 0;
         display: none;
       }
 
       @media (max-width: 765px) {
-        #inicMob {
+        .inicMob {
           margin: 20px 0;
           display: block;
         }
       }
-
-
     </style>
 
     <div class="stricky-header stricked-menu main-menu">

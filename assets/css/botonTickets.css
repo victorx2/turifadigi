@@ -1,0 +1,128 @@
+.raffle-ticket-container {
+    width: 251px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px 5px #ddd;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.raffle-ticket-top {
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    /* Importante para el padding */
+}
+
+.logo-container {
+    margin-bottom: 10px;
+}
+
+.logo-container img {
+    max-width: 100px;
+    height: auto;
+}
+
+.raffle-name {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.item:last-of-type {
+    border-bottom: none;
+}
+
+
+.item span.label {
+    font-weight: bold;
+    color: #444;
+}
+
+.item span.value {
+    color: #666;
+}
+
+.reference {
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+    width: 90%;
+}
+
+.reference .label {
+    display: block;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.reference .value {
+    font-size: 1em;
+    color: #555;
+}
+
+.raffle-ticket-separator {
+    width: 100%;
+    height: 3px;
+    background: #007bff82;
+    border-top: 2px dashed #ccc;
+    margin-top: -1px;
+    margin-bottom: -1px;
+}
+
+.raffle-ticket-bottom {
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.ticket-number {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.barcode img {
+    max-width: 150px;
+    height: auto;
+}
+
+.barcode-text {
+    font-size: 0.8em;
+    color: #777;
+}
+
+.subabel {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #44444461;
+}
+
+p.subabel.win {
+    color: #1b376b;
+    margin: 10px;
+}
+
+.barcode-text.win {
+    font-size: 0.8em;
+    color: #323763;
+}

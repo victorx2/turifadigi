@@ -29,13 +29,11 @@ class SorteoModel
               c.precio_boleto
               FROM rifas r
               INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
-		WHERE c.estado = 1
               ORDER BY
                 r.fecha_creacion DESC";
 
       $result = $this->db->consultar($sql, []);
 
-	var_dump($result);
       // Procesar los resultados
       $sorteos = [];
       foreach ($result as $row) {
@@ -192,13 +190,13 @@ class SorteoModel
         c.precio_boleto,
         GROUP_CONCAT(p.nombre SEPARATOR ' - ') AS nombres_premios,
         GROUP_CONCAT(p.descripcion SEPARATOR ' || ') AS descripciones_premios
-	FROM rifas r
-	INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
-	INNER JOIN premios p ON r.id_rifa = p.id_rifa
-	WHERE
+      FROM rifas r
+      INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+      INNER JOIN premios p ON r.id_rifa = p.id_rifa
+      WHERE
         c.estado = 1
-	GROUP BY
-	r.id_rifa,
+      GROUP BY
+        r.id_rifa,
         r.titulo,
         r.descripcion,
         r.imagen,
@@ -211,7 +209,7 @@ class SorteoModel
         c.boletos_maximos,
         c.boletos_minimos,
         c.precio_boleto
-	";
+      ";
 
       $result = $this->db->consultar($sql, []);
 
@@ -221,9 +219,25 @@ class SorteoModel
         $id_rifa = $row['id_rifa'];
 
         $nombres_premios_array = explode(' - ', $row["nombres_premios"]);
-
-        // Desagrupar las descripciones de los premios
         $descripciones_premios_array = explode(' || ', $row["descripciones_premios"]);
+
+        // Decodificar cada nombre y descripción de premio, limpiando las barras invertidas y comillas
+        foreach ($nombres_premios_array as &$nombre) {
+          $nombre = trim($nombre, "\"");
+          $nombre = stripslashes($nombre);
+          $nombre = json_decode($nombre, true);
+          if (!is_array($nombre)) {
+            $nombre = '';
+          }
+        }
+        foreach ($descripciones_premios_array as &$desc) {
+          $desc = trim($desc, "\"");
+          $desc = stripslashes($desc);
+          $desc = json_decode($desc, true);
+          if (!is_array($desc)) {
+            $desc = '';
+          }
+        }
 
         if (!isset($sorteos[$id_rifa])) {
           $sorteos[$id_rifa] = [

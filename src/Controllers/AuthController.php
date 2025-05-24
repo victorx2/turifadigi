@@ -16,39 +16,42 @@ class AuthController
     public function login(array $request): void
     {
         header('Content-Type: application/json');
+        $lang = $_SERVER['HTTP_X_LANGUAGE'] ?? 'es';
+        if (!in_array($lang, ['es', 'en'])) $lang = 'es';
+        $translations = $this->loadTranslations($lang);
+
         try {
-            // Validación básica de datos
             if (empty($request['usuario']) || empty($request['password'])) {
                 echo json_encode([
                     'success' => false,
-                    'message' => 'Todos los campos son requeridos',
+                    'message' => $translations['all_fields_required'],
                     'type' => 'error'
                 ]);
                 exit;
             }
 
             $result = $this->login->login($request);
-            $response = $this->login->getStatusMessage($result);
-
-            // Debug temporal
-            error_log('Login attempt - Identificador: ' . $request['usuario']);
-            error_log('Login result: ' . json_encode($response));
+            $response = $this->login->getStatusMessage($result, $translations);
 
             echo json_encode($response);
         } catch (\Exception $e) {
-            error_log("Error en AuthController::login: " . $e->getMessage());
             echo json_encode([
                 'success' => false,
-                'message' => 'Error al procesar la solicitud en la base de datos',
+                'message' => $translations['database_error'],
                 'type' => 'error'
             ]);
         }
         exit();
     }
 
+ 
+
     public function recuperarPassword(array $request): void
     {
         header('Content-Type: application/json');
+        $lang = $_SERVER['HTTP_X_LANGUAGE'] ?? 'es';
+        if (!in_array($lang, ['es', 'en'])) $lang = 'es';
+        $translations = $this->loadTranslations($lang);
         try {
             // Validación básica de datos
             if (empty($request['correo'])) {
@@ -61,7 +64,7 @@ class AuthController
             }
 
             $result = $this->login->recuperarPassword($request);
-            $response = $this->login->getStatusMessage($result);
+            $response = $this->login->getStatusMessage($result, $translations);
 
             echo json_encode($response);
         } catch (\Exception $e) {
@@ -113,5 +116,18 @@ class AuthController
             ]);
         }
         exit();
+    }
+
+
+    public function loadTranslations($lang = 'es')
+    {
+        $file = __DIR__ . "/../../assets/language/{$lang}.json";
+        if (file_exists($file)) {
+            $json = file_get_contents($file);
+            return json_decode($json, true);
+        }
+        // Fallback a español si no existe el archivo
+        $json = file_get_contents(__DIR__ . "/../../assets/language/es.json");
+        return json_decode($json, true);
     }
 }

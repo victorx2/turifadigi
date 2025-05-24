@@ -14,6 +14,16 @@ use App\Controllers\{AuthController, RegisterUserController, HomeController, Bol
 date_default_timezone_set('America/Caracas');
 setlocale(LC_TIME, 'Spanish');
 
+/* // Obtener el idioma preferido de la sesión o cookie */
+/* $preferred_language = $_SESSION['language'] ?? $_COOKIE['language'] ?? 'es'; */
+/*  */
+/* // Configurar la localización según el idioma seleccionado */
+/* setlocale(LC_TIME, $preferred_language === 'en' ? 'English' : 'Spanish'); */
+/*  */
+
+
+
+
 // Carga las variables de entorno desde el archivo .env
 // $dotenv = Dotenv::createImmutable(__DIR__)->load();
 
@@ -108,9 +118,12 @@ switch (strtok($route, '?')) {
         break;
 
     case '/sorteo':
-            require_once 'views/rifa/sorteo.php';
+        require_once 'views/rifa/sorteo.php';
         break;
 
+    case '/verificar_boleto':
+        require_once 'views/verificar/index.php';
+        break;
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
         break;
@@ -129,7 +142,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -141,7 +154,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -153,7 +166,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -166,7 +179,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
@@ -179,13 +192,13 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-	if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 2) {
             header("Location: /");
             exit;
         }
 
         require_once 'views/admin/resetear_contra.php';
-	break;
+        break;
 
     //SECCION PANTALLAS DE SWEET ALERT
     case '/compras/view/accions_view':
@@ -199,7 +212,9 @@ switch (strtok($route, '?')) {
     case '/admin/views/compra/accions_view':
         require_once 'views/admin/views/compra/vistaAcciones.php';
         break;
-
+    case '/admin/views/sorteo/action_riffle':
+        require_once 'views/admin/views/sorteo/vistaFinalizarSorteo.php';
+        break;
 
     //SECCION PANTALLAS DE SWEET ALERT DE SORTEO
     case '/sorteo/view/accion_view':

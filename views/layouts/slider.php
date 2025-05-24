@@ -29,10 +29,10 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="main-slider__content">
-                                <h2 class="main-slider__title">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
-                                <p class="main-slider__text">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
+                                <h2 class="main-slider__title" data-i18n="best_option">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
+                                <p class="main-slider__text" data-i18n="easy_safe">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
                                 <div class="main-slider__btn-box">
-                                    <a href="/login" class="main-slider__btn thm-btn">Comenzar ahora</a>
+                                    <a href="/login" class="main-slider__btn thm-btn" data-i18n="start_now">Comenzar ahora</a>
                                 </div>
                             </div>
                         </div>
@@ -53,13 +53,13 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="main-slider__content">
-                                <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
-                                <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
+                                <h2 class="main-slider__title" data-i18n="manage_raffles">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
+                                <p class="main-slider__text" data-i18n="full_control">Control total sobre tus sorteos <br> y participantes.</p>
                                 <?php
                                 $session = $_SESSION['usuario'] ?? '';
                                 if ($session === '') {
                                     echo '<div class="main-slider__btn-box">
-                            <a href="/login" class="main-slider__btn thm-btn">Regístrate gratis</a>
+                            <a href="/login" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
                           </div>';
                                 }
                                 ?>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="swiper-slide">
-            <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/iPhoneback.webp);"></div>
+                <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/iPhoneback.webp);"></div>
                 <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
                 <div class="main-slider__shape-1 float-bob-y">
                     <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
@@ -82,10 +82,10 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="main-slider__content">
-                                <h2 class="main-slider__title">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
-                                <p class="main-slider__text">Múltiples métodos de pago <br> y transacciones seguras.</p>
+                                <h2 class="main-slider__title" data-i18n="payment_system">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
+                                <p class="main-slider__text" data-i18n="multiple_methods">Múltiples métodos de pago <br> y transacciones seguras.</p>
                                 <div class="main-slider__btn-box">
-                                    <a href="/login" class="main-slider__btn thm-btn">Conoce más</a>
+                                    <a href="/login" class="main-slider__btn thm-btn" data-i18n="learn_more">Conoce más</a>
                                 </div>
                             </div>
                         </div>

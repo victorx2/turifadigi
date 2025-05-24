@@ -30,7 +30,7 @@ $montoa_pagar = $data["total"] ?? '';
 
 ?>
 <div class="form-section">
-  <h4 class="form-section-title">
+  <h4 class="form-section-title" data-i18n="comprobante_title">
     <i class="fas fa-file-invoice"></i>
     COMPROBANTE DE PAGO
   </h4>
@@ -85,7 +85,7 @@ $montoa_pagar = $data["total"] ?? '';
     ?>
         <div class="form-group-custom">
           <label class="required">Monto Pagado</label>
-          <input type="text" class="form-control-custom" id="monto_pagado" disabled value="<?php echo htmlspecialchars($monto_pagado . " ". $moneda[$key]); ?>">
+          <input type="text" class="form-control-custom" id="monto_pagado" disabled value="<?php echo htmlspecialchars($monto_pagado . " " . $moneda[$key]); ?>">
         </div>
         <div class="form-group-custom input-con-icono">
           <label class="required">Metodo de pago</label>

@@ -6,7 +6,7 @@
       <div class="col-lg-6 col-md-8">
         <div class="login-card">
           <div class="login-header text-center mb-4">
-            <h2 class="login-title">Iniciar Sesión</h2>
+            <h2 class="login-title" data-i18n="login_title">Iniciar Sesión</h2>
           </div>
 
           <form id="form-login" class="login-form" method="post">
@@ -17,8 +17,8 @@
                   name="usuario"
                   id="usuario"
                   class="form-control"
+                  data-i18n-placeholder="username_placeholder"
                   placeholder="Nombre de usuario"
-                  required
                   autocomplete="username">
               </div>
             </div>
@@ -30,8 +30,8 @@
                   name="password"
                   id="password"
                   class="form-control"
+                  data-i18n-placeholder="password_placeholder"
                   placeholder="Contraseña"
-                  required
                   autocomplete="current-password">
                 <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()">
                   <i class="fas fa-eye"></i>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-primary w-100" id="btn-login">
+              <button type="submit" class="btn btn-primary w-100" id="btn-login" data-i18n="login_btn">
                 Iniciar Sesión
               </button>
             </div>
@@ -48,7 +48,7 @@
 
           <div class="text-center mt-4">
             <p class="register-link">
-              ¿No tienes cuenta? <a href="/signup">Regístrate aquí</a>
+              <span data-i18n="no_account">¿No tienes cuenta?</span> <a href="/signup" data-i18n="register_here">Regístrate aquí</a>
             </p>
             <!-- <p class="forgot-password-link mt-2">
               <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
@@ -177,17 +177,36 @@
     const password = document.getElementById('password');
     let valid = true;
 
+
+
+
+
+
+
+
+
+
+
     if (usuario.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El nombre de usuario es requerido');
+      showToast('warning', i18n.t('empty_field'), i18n.t('username_required'));
       usuario.focus();
       valid = false;
     }
 
     if (password.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'La contraseña es requerida');
+      showToast('warning', i18n.t('empty_field'), i18n.t('password_required'));
       password.focus();
       valid = false;
     }
+
+
+
+
+
+
+
+
+
 
     if (valid) {
       if (boton.disabled) {
@@ -197,9 +216,16 @@
       boton.disabled = true;
 
       const formData = new FormData(this);
+      /* fetch('/api/login', { */
+      /*     method: 'POST', */
+      /*     body: new URLSearchParams(formData) */
+      /*   }) */
       fetch('/api/login', {
           method: 'POST',
-          body: new URLSearchParams(formData)
+          body: new URLSearchParams(formData),
+          headers: {
+            'X-Language': localStorage.getItem('language') || 'es'
+          }
         })
         .then(response => response.json())
         .then(data => {

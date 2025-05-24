@@ -1,0 +1,316 @@
+{
+  "register_account": "Sign Up",
+  "create_account": "Create Account",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "enter_first_name": "Enter your first name",
+  "enter_last_name": "Enter your last name",
+  "id": "ID",
+  "enter_id": "Enter your ID",
+  "location": "Location",
+  "enter_location": "E.g: Country, state, address",
+  "username": "Username",
+  "enter_username": "Create a username",
+  "password": "Password",
+  "enter_password": "Create a password",
+  "phone": "Phone",
+  "country": "Country",
+  "enter_phone": "Enter your phone number",
+  "email": "Email",
+  "enter_email": "Enter your email",
+  "register": "Register",
+  "already_have_account": "¿Already have an account?",
+
+  "first_last_name_phone_placeholder": "First Name Last Name (or phone)",
+
+  "login": "Login",
+
+  "name_validation": "Name must be at least 3 letters long and can only contain letters and spaces.",
+  "lastname_validation": "Last name must be at least 3 letters long and can only contain letters and spaces.",
+  "id_validation": "ID must be at least 6 digits long and can only contain numbers.",
+  "location_validation": "Location must be at least 3 characters long and can contain letters, numbers, spaces, commas and periods.",
+  "username_validation": "Username must be at least 3 characters long and can only contain letters, numbers, underscores (_) and hyphens (-).",
+  "password_validation": "Password must be at least 8 characters long.",
+  "phone_validation": "Phone number must be at least 10 digits long and can only contain numbers.",
+  "email_validation": "Please enter a valid email address.",
+  "valid_name": "Valid name!",
+  "valid_lastname": "Valid last name!",
+  "valid_id": "Valid ID!",
+  "valid_location": "Valid location!",
+  "valid_username": "Valid username!",
+  "valid_password": "Valid password!",
+  "valid_phone": "Valid phone number!",
+  "valid_email": "Valid email!",
+
+  "home": "Home",
+  
+  "verify purchases": "Verify Purchases",
+  "verify raffles": "Verify Raffles",
+  "create raffle": "Create Raffles",
+  "create_raffle2": "Create Raffle",
+
+  "purchases": "Purchases",
+
+  "verify_ticket": "Ticket Verify",
+  "raffle": "Raffle",
+
+  "login_btn": "Login",
+
+  "logout_btn": "Logout",
+
+  "payment_system": "Secure Payment System",
+  "multiple_methods": "Multiple payment methods and secure transactions.",
+  "learn_more": "Learn more",
+  "turifadigital": "TuRifaDigital",
+  "best_option": "Your best option for raffles",
+  "easy_safe": "Create and manage your raffles easily and safely.",
+  "start_now": "Start now",
+  "manage_raffles": "Manage your Raffles easily",
+  "full_control": "Full control over your raffles and participants.",
+  "register_free": "Register for free",
+  "what_is_turifadigital": "What is TuRifaDigital?",
+  "platform_select_pay": "Your platform to select tickets and pay",
+  "turifadigital_desc": "TuRifaDigital is the perfect tool to participate in raffles easily. Our platform allows you to select your favorite tickets and make payments quickly and securely.",
+  "ticket_selection": "Ticket Selection",
+  "choose_numbers": "Choose your preferred numbers easily and intuitively.",
+  "secure_payment": "Secure Payment",
+  "pay_confidence": "Make your payments with total confidence and protection.",
+  "payment_methods": "Payment Methods",
+  "pago_movil": "Pago Móvil",
+  "zelle": "Zelle",
+  "davivienda": "Davivienda",
+  "paypal": "Paypal",
+  "banco_venezuela": "Banco de Venezuela",
+  "social_networks": "Social networks",
+  "follow_instagram": "Follow us on instagram!",
+  "contact": "Contact",
+  "phone_number": "+1 4074287580",
+
+  "login_title": "Login",
+
+  "username_placeholder": "Username",
+  "password_placeholder": "Password",
+  "no_account": "Don't have an account?",
+  "register_here": "Register here",
+
+  "list_tickets": "TICKET LIST",
+  "choose_randomly": "CHOOSE RANDOMLY",
+  "total": "Total:",
+  "search_ticket_placeholder": "Search ticket (e.g.: 001, 0020...)",
+  "search": "SEARCH",
+
+  "winning_ticket": "Winning Ticket",
+  "ticket_details": "Ticket Details",
+  "purchase_date": "Purchase Date:",
+  "ticket_id": "Ticket ID:",
+
+  "title": "Title not available",
+  "80_percent": "When 80% is completed, our raffle plays",
+  "play_supergana": "📍 Play SuperGana",
+  "price_ticket": "🎟️ Price Ticket:",
+  "minimum_tickets": "🎟️ Minimum Tickets:",
+  "when_raffle_plays": "🗓️ When does the raffle play?",
+  "when_raffle_plays_desc": "The raffle date will be announced once 80% of the tickets are sold",
+  "official_link": "🔗 Official link to follow the raffle:",
+  "contact_number": "📞 Contact number:",
+
+  "last_winners_tickets": "Last winners tickets",
+  "no_purchases": "No purchased",
+
+  "admin_tickets": "Ticket Administration",
+  "admin_tickets_desc": "Ticket Management",
+  
+  "datatable_number": "NUMBER",
+  "purchase_date_2": "PURCHASE DATE",
+  "datatable_buyer": "BUYER",
+  "datatable_raffle": "RAFFLE",
+  "datatable_tickets": "TICKETS",
+  "datatable_amount": "AMOUNT",
+  "datatable_status": "STATUS",
+  "datatable_actions": "ACTIONS",
+
+  "datatable_show": "Show",
+  "datatable_entries_per_page": "Entries per page",
+  "datatable_search": "Search:",
+  "datatable_search_placeholder": "Search here...",
+  "datatable_no_data": "No data available...",
+  "datatable_showing": "Showing",
+  "datatable_to": "to",
+  "datatable_of": "of",
+  "datatable_entries": "entries",
+  "datatable_first": "First",
+  "datatable_previous": "Previous",
+  "datatable_next": "Next",
+  "datatable_last": "Last",
+
+  "no_active_raffles": "No active raffles, nor recent winners",
+ 
+  "selected": "SELECTED",
+  "continue": "CONTINUE",
+  "slide_down_to_continue": "slide down to continue",
+  "payment_method": "PAYMENT METHOD",
+  "payment_method_subtitle": "Transfer or deposit",
+  "exchange_rate": "Exchange rate: 1 USD = 1 USD",
+  "comprobante_title": "PAYMENT PROOF",
+
+  "comprobante_titular": "Payment title (Payment title phone, if it is Pago Movil)",
+  "comprobante_referencia": "Payment reference",
+  "comprobante_monto": "Amount paid",
+  "comprobante_metodo": "Payment method",
+  "ingrese_sus_datos": "Enter your data",
+  "comprobante_metodo_seleccionar": "Select payment method",
+  "comprobante_metodo_pago_movil": "Pago Movil",
+  "comprobante_metodo_zelle": "Zelle",
+  "comprobante_metodo_davivienda": "Davivienda",
+  "comprobante_metodo_paypal": "Paypal",
+  "comprobante_metodo_banco_venezuela": "Banco de Venezuela",
+  "comprobante_metodo_bancolombia": "Bancolombia",
+
+  "username_required": "Username is required",
+  "password_required": "Password is required",
+  "empty_field": "Empty field",
+
+  "login_success_redirect": "Login successful, redirecting.",
+  "no_account_found": "No account found for this user. Please check the entered username.",
+  "invalid_password": "The password entered is incorrect. Please try again.",
+  "database_error": "There was an error processing your request. Please check your internet connection and try again.",
+  "unexpected_error": "An unexpected error occurred. Please try again later or contact support.",
+  "all_fields_required": "All fields are required",
+
+  "username_already_exists": "Username already exists",
+  "user_registration_success": "User registered successfully",
+  "user_registration_error": "Error registering user",
+  "user_registration_success_redirect": "Registration successful, redirecting.",
+  "user_registration_error_redirect": "Error registering user, redirecting.",
+
+  "user_registration_success_redirect_title": "Registration successful",
+  "user_registration_error_redirect_title": "Error registering user",
+
+ "incomplete_fields": "Incomplete fields",
+"incomplete_fields_text": "Please complete the following fields:",
+"incomplete_fields_confirm": "Accept",
+"confirm": "CONFIRM",
+
+"processing_purchase": "Processing purchase",
+"processing_purchase_text": "Please wait...",
+"processing_purchase_confirm": "Confirm",
+
+"processing": "Processing",
+"please_wait": "Please wait while the operation is completed...", 
+
+"verify_tickets": "Verify Tickets",
+"verify_tickets_button": "Verify",
+"verify_tickets_placeholder": "ej: 0001",
+
+"purchased_tickets": "Purchased Tickets",
+"purchased_tickets_desc": "Raffle Ticket Management",   
+
+"paid": "Paid",
+"pending": "Pending",
+"rejected": "Rejected",
+
+"loading_tickets": "Loading tickets...",
+"loading_tickets_text": "Loading tickets...",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"config_sorteo_title": "Raffle Configuration",
+"create_new_raffle": "Create New Raffle",
+
+"banner_sorteo": "Raffle Banner",
+"banner_sorteo_desc": "No files selected",
+"banner_sorteo_help": "(Optional, PNG or JPG, maximum 5MB)",
+
+"title_sorteo": "Raffle Title",
+"title_sorteo_desc": "Raffle Title",
+"title_sorteo_required": "Raffle title is required",
+
+"fecha_inicio": "Start Date",
+"fecha_inicio_desc": "Start date of the raffle",  
+
+"fecha_final": "End Date",
+"fecha_final_desc": "End date of the raffle",
+"fecha_final_required": "End date is required",
+
+"precio_boleto": "Ticket Price ($)",
+"precio_boleto_desc": "3",
+"precio_boleto_required": "Ticket price is required",
+
+"compra_minima": "Minimum Purchase",
+"compra_minima_desc": "2",
+"compra_minima_required": "Minimum purchase is required",
+
+"compra_maxima": "Maximum Purchase",
+"compra_maxima_desc": "500",
+"compra_maxima_required": "Maximum purchase is required",
+
+"premios": "Prizes",
+"nombre_premio": "Prize Name",
+"descripcion_premio": "Prize Description",
+"premio_required": "Prize name and description are required",
+
+"contacto_numero": "Contact Number",
+"contacto_numero_desc": "407-428-7580",
+"contacto_numero_required": "Contact number is required",
+
+"url_loteria": "Lottery URL",
+"url_loteria_desc": "https://tripletachira.com/",
+"url_loteria_required": "Lottery URL is required",
+
+"texto_ejemplo": "Example Text",
+"texto_ejemplo_desc": "If you buy 10 tickets, you automatically participate in the $100 raffle when 30% of the numbers are sold. The day will be announced publicly.",
+
+"ganador_sorteo": "Raffle Winner",
+"ganador_sorteo_required": "Raffle winner is required",
+
+"ganador_sorteo_placeholder": "ej: 0001",
+
+"ganador_sorteo_button": "Save",
+
+"ganador_sorteo_success": "Raffle winner saved successfully",
+
+
+
+"create_raffle_success": "Raffle created successfully",
+"create_raffle_success_redirect": "redirecting in <b></b> milliseconds.",
+
+"admin_raffles": "Raffle Administration",
+"admin_raffles_desc": "Raffle Management - Activate/Finish",
+
+"fecha_creacion": "CREATION DATE",
+"titulo": "TITLE",
+"id_sorteo": "RAFFLE ID",
+"boletos_maximos": "MAX TICKETS",
+"precio_boleto_2": "TICKET PRICE",
+"estado": "STATUS",
+"acciones": "ACTIONS",
+"activo": "ACTIVE",
+"finalizado": "FINISHED",
+"desactivado": "DESACTIVATED"
+
+
+
+
+}

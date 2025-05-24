@@ -40,9 +40,12 @@ class SorteoController
         "data" => $data
       ]);
     } catch (Exception $e) {
-
-      echo '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';
-      exit;
+      http_response_code(201);
+      return ([
+      "success" => false,
+      "data" => null,
+      "message" => 'Error: ' . $e->getMessage()
+      ]);
     }
   }
 
@@ -50,14 +53,23 @@ class SorteoController
   {
     try {
       $data = $this->model->obtenerSorteosActivos();
-      return ([
-        "success" => true,
-        "data" => $data[0]
-      ]);
+      if (isset($data[0])) {
+        return ([
+          "success" => true,
+          "data" => $data[0]
+        ]);
+      } else {
+        return ([
+          "success" => false,
+          "data" => null,
+          "message" => "No hay sorteos activos"
+        ]);
+      }
     } catch (Exception $e) {
       return ([
-        "success" => true,
-        "data" => 'Error: ' . $e->getMessage()
+        "success" => false,
+        "data" => null,
+        "message" => 'Error: ' . $e->getMessage()
       ]);
     }
   }

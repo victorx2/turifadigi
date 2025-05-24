@@ -33,7 +33,7 @@ class Usuario
   private $audi;
 
   /**
-   * Constructor: Inicializa la conexiÛn a la base de datos y el modelo de datos personales
+   * Constructor: Inicializa la conexiÔøΩn a la base de datos y el modelo de datos personales
    */
   public function __construct()
   {
@@ -58,23 +58,11 @@ class Usuario
         return false;
       }
 
-      // Verificar si el usuario o la cÈdula ya existen
+      // Verificar si el usuario ya existe
       if ($this->existeUsuario($data['usuario'])) {
         error_log("Error en Usuario::insert: El usuario ya existe");
         return false;
       }
-
-      if (isset($data['cedula']) && $this->existeCedula($data['cedula'])) {
-        error_log("Error en Usuario::insert: La cÈdula ya existe");
-        return false;
-      }
-
-
-      if (isset($data['telefono']) && $this->existeTelefono($data['telefono'])) {
-        error_log("Error en Usuario::insert: La TELEFONO ya existe");
-        return false;
-      }
-
 
       // Insertar el usuario
       $userSql = "INSERT INTO " . self::TABLE_NAME . " 
@@ -141,10 +129,28 @@ class Usuario
   }
 
   /**
-   * Actualiza los intentos fallidos de inicio de sesiÛn
+   * Obtiene un usuario por su tel√©fono
+   * @param string $telefono - N√∫mero de tel√©fono
+   * @return array|null - Datos del usuario o null si no existe
+   */
+  public function getByTelefono(string $telefono): ?array
+  {
+    try {
+      $sql = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_PHONE . " = :telefono";
+      $result = $this->db->consultar($sql, [':telefono' => $telefono]);
+
+      return $result ? $result[0] : null;
+    } catch (Exception $e) {
+      error_log("Error en Usuario::getByTelefono: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  /**
+   * Actualiza los intentos fallidos de inicio de sesi√≥n
    * @param int $id_usuario - ID del usuario
-   * @param int $intentos - N˙mero de intentos fallidos
-   * @return bool - true si se actualizÛ correctamente, false en caso contrario
+   * @param int $intentos - NÔøΩmero de intentos fallidos
+   * @return bool - true si se actualizÔøΩ correctamente, false en caso contrario
    */
   public function actualizarIntentosFallidos(int $id_usuario, int $intentos): bool
   {
@@ -163,9 +169,9 @@ class Usuario
   }
 
   /**
-   * Actualiza la fecha y hora del ˙ltimo acceso
+   * Actualiza la fecha y hora del ÔøΩltimo acceso
    * @param int $id_usuario - ID del usuario
-   * @return bool - true si se actualizÛ correctamente, false en caso contrario
+   * @return bool - true si se actualizÔøΩ correctamente, false en caso contrario
    */
   public function actualizarUltimoAcceso(int $id_usuario): bool
   {
@@ -183,8 +189,8 @@ class Usuario
   /**
    * Registra datos personales para un usuario
    * @param int $id_usuario - ID del usuario
-   * @param array $datos - Datos personales (nombre, apellido, cedula, telefono, ubicacion)
-   * @return bool - true si se registrÛ correctamente, false en caso contrario
+   * @param array $datos - Datos personales (nombre, apellido, telefono, ubicacion)
+   * @return bool - true si se registrÔøΩ correctamente, false en caso contrario
    */
   public function registrarDatosPersonales(int $id_usuario, array $datos): bool
   {
@@ -218,38 +224,32 @@ class Usuario
 
   public function existeCedula($cedula): bool
   {
-    error_log("Verificando cÈdula: " . $cedula);
-
-    // ValidaciÛn b·sica de formato de cÈdula
-    if (empty($cedula) || !is_numeric($cedula)) {
-      error_log("CÈdula inv·lida: " . $cedula);
-      return false;
-    }
+    error_log("Verificando c√©dula: " . $cedula);
 
     $result = $this->db->consultar(
       "SELECT COUNT(*) as count FROM " . self::TABLE_DATA . " WHERE " . self::COLUMN_CI . " = :cedula",
       [':cedula' => $cedula]
     );
 
-    error_log("Resultado de b˙squeda de cÈdula: " . print_r($result, true));
+    error_log("Resultado de b√∫squeda de c√©dula: " . print_r($result, true));
     return $result && $result[0]['count'] > 0;
   }
 
   public function existeTelefono($telefono): bool
   {
-    error_log("Verificando telÈfono: " . $telefono);
+    error_log("Verificando tel√©fono: " . $telefono);
 
-    // ValidaciÛn b·sica de formato de telÈfono
+    // Validaci√≥n b√°sica de formato de tel√©fono
     if (empty($telefono)) {
-      error_log("TelÈfono vacÌo");
+      error_log("Tel√©fono vac√≠o");
       return false;
     }
 
-    // Limpiar el telÈfono de caracteres no numÈricos
+    // Limpiar el tel√©fono de caracteres no num√©ricos
     $telefono = preg_replace('/[^0-9]/', '', $telefono);
 
     if (strlen($telefono) < 10) {
-      error_log("TelÈfono inv·lido (muy corto): " . $telefono);
+      error_log("Tel√©fono inv√°lido (muy corto): " . $telefono);
       return false;
     }
 
@@ -258,7 +258,84 @@ class Usuario
       [':telefono' => $telefono]
     );
 
-    error_log("Resultado de b˙squeda de telÈfono: " . print_r($result, true));
+    error_log("Resultado de b√∫squeda de tel√©fono: " . print_r($result, true));
     return $result && $result[0]['count'] > 0;
   }
+
+  /**
+   * Obtiene un rol existente o crea uno nuevo
+   * @param string $rolName - Nombre del rol
+   * @return int - ID del rol
+   */
+
+  /* private function obtenerOCrearRol(string $rolName): int */
+  /* { */
+  /*   try { */
+  /*     // Verificar si el rol ya existe */
+  /*     $sql = "SELECT " . self::ROLE_ID . " FROM " . self::ROLES_TABLE . " WHERE " . self::ROLE_NAME . " = :role_name"; */
+  /*     $result = $this->db->consultar($sql, [':role_name' => $rolName]); */
+
+  /*     if ($result && count($result) > 0) { */
+  /*       return $result[0][self::ROLE_ID]; */
+  /*     } */
+
+  /*     // Si no existe, crearlo */
+  /*     $sql = "INSERT INTO " . self::ROLES_TABLE . " (" . self::ROLE_NAME . ") VALUES (:role_name)"; */
+  /*     return $this->db->ejecutar($sql, [':role_name' => $rolName]); */
+  /*   } catch (Exception $e) { */
+  /*     error_log("Error en Usuario::obtenerOCrearRol: " . $e->getMessage()); */
+  /*     throw $e; */
+  /*   } */
+  /* } */
+
+  /**
+   * Obtiene un estado existente o crea uno nuevo
+   * @param string $estadoName - Nombre del estado
+   * @param string $descripcion - Descripci√≥n del estado
+   * @return int - ID del estado
+   */
+  /* private function obtenerOCrearEstado(string $estadoName, string $descripcion): int */
+  /* { */
+  /*   try { */
+  /*     // Verificar si el estado ya existe */
+  /*     $sql = "SELECT " . self::STATUS_ID . " FROM " . self::STATUS_TABLE . " WHERE " . self::STATUS_NAME . " = :status_name"; */
+  /*     $result = $this->db->consultar($sql, [':status_name' => $estadoName]); */
+
+  /*     if ($result && count($result) > 0) { */
+  /*       return $result[0][self::STATUS_ID]; */
+  /*     } */
+
+  /*     // Si no existe, crearlo */
+  /*     $sql = "INSERT INTO " . self::STATUS_TABLE . " (" . self::STATUS_NAME . ", descripcion_estado) VALUES (:status_name, :descripcion)"; */
+  /*     return $this->db->ejecutar($sql, [ */
+  /*       ':status_name' => $estadoName, */
+  /*       ':descripcion' => $descripcion */
+  /*     ]); */
+  /*   } catch (Exception $e) { */
+  /*     error_log("Error en Usuario::obtenerOCrearEstado: " . $e->getMessage()); */
+  /*     throw $e; */
+  /*   } */
+  /* } */
+
+  /**
+   * Registra una acci√≥n en la tabla de auditor√≠a
+   * @param int $id_usuario - ID del usuario
+   * @param string $accion - Descripci√≥n de la acci√≥n
+   * @return int - ID de la auditor√≠a
+   */
+  /* private function registrarAuditoria(int $id_usuario, string $accion): int */
+  /* { */
+  /*   try { */
+  /*     $sql = "INSERT INTO usuarios_auditorias (id_usuario, acciones_auditoria, fecha_auditoria, hora_auditoria)  */
+  /*             VALUES (:id_usuario, :accion, CURDATE(), CURTIME())"; */
+
+  /*     return $this->db->ejecutar($sql, [ */
+  /*       ':id_usuario' => $id_usuario, */
+  /*       ':accion' => $accion */
+  /*     ]); */
+  /*   } catch (Exception $e) { */
+  /*     error_log("Error en Usuario::registrarAuditoria: " . $e->getMessage()); */
+  /*     throw $e; */
+  /*   } */
+  /* } */
 }

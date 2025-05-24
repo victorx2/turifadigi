@@ -27,7 +27,26 @@ class ConfigMainController
     try {
       // Obtener datos del formulario
       $idUsuario = $_SESSION['id_usuario'] ?? 0;
-      $titulo = $_POST['titulo'] ?? '';
+      //echo "<pre>ID Usuario: ";
+      //print_r($idUsuario);
+      //echo "</pre>";
+      //echo "<pre>Var dump ID Usuario: ";
+      //var_dump($idUsuario);
+      //echo "</pre>";
+
+      // Verificar si el título es un array y convertirlo a JSON si es necesario
+      if (is_array($_POST['titulo'])) {
+        $titulo = json_encode($_POST['titulo'], JSON_UNESCAPED_UNICODE);
+      } else {
+        $titulo = json_encode(json_decode($_POST['titulo'], true), JSON_UNESCAPED_UNICODE);
+      }
+      //echo "<pre>Título procesado: ";
+      //print_r($titulo);
+      //echo "</pre>";
+      //echo "<pre>Var dump título: ";
+      //var_dump($titulo);
+      //echo "</pre>";
+
       $precioBoleto = $_POST['precio_boleto'] ?? 0;
       $boletosMinimos = $_POST['boletos_minimos'] ?? 0;
       $boletosMaximos = $_POST['boletos_maximos'] ?? 0;
@@ -35,15 +54,92 @@ class ConfigMainController
       $fechaFin = $_POST['fecha_final'] ?? '';
       $numeroContacto = $_POST['numero_contacto'] ?? '';
       $urlRifa = $_POST['url_rifa'] ?? '';
-      $textoEjemplo = $_POST['texto_ejemplo'] ?? '';
-      $premios = $_POST['premios'] ?? [];
-      $imagen = $_FILES['imagen'] ?? null;
 
-      // Validaciones básicas
-      if (empty($titulo) || empty($fechaInicio) || empty($fechaFin)) {
-        throw new Exception('Todos los campos son requeridos');
+      //echo "<pre>Datos del formulario: ";
+      //echo "Precio boleto: ";
+      //print_r($precioBoleto);
+      //echo "\n";
+      //echo "Boletos mínimos: ";
+      //print_r($boletosMinimos);
+      //echo "\n";
+      //echo "Boletos máximos: ";
+      //print_r($boletosMaximos);
+      //echo "\n";
+      //echo "Fecha inicio: ";
+      //print_r($fechaInicio);
+      //echo "\n";
+      //echo "Fecha fin: ";
+      //print_r($fechaFin);
+      //echo "\n";
+      //echo "Número contacto: ";
+      //print_r($numeroContacto);
+      //echo "\n";
+      //echo "URL rifa: ";
+      //print_r($urlRifa);
+      //echo "\n";
+      //echo "</pre>";
+
+      // Verificar si texto_ejemplo es un array y convertirlo a JSON si es necesario
+      if (is_array($_POST['texto_ejemplo'])) {
+        $textoEjemplo = json_encode($_POST['texto_ejemplo'], JSON_UNESCAPED_UNICODE);
+      } else {
+        $textoEjemplo = json_encode(json_decode($_POST['texto_ejemplo'], true), JSON_UNESCAPED_UNICODE);
+      }
+      //echo "<pre>Texto ejemplo procesado: ";
+      //print_r($textoEjemplo);
+      //echo "</pre>";
+      //echo "<pre>Var dump texto ejemplo: ";
+      //var_dump($textoEjemplo);
+      //echo "</pre>";
+
+      // Verificar si premios es un array y convertirlo a JSON si es necesario
+
+
+      // Verificar si premios existe y es un array
+      if (!isset($_POST['premios']) || !is_array($_POST['premios'])) {
+        throw new Exception('Los datos de los premios no son válidos');
       }
 
+      $premios = [];
+      foreach ($_POST['premios'] as $premio) {
+        // Validar y procesar el nombre del premio
+        if (!isset($premio['nombre'])) {
+          throw new Exception('El nombre del premio es requerido');
+        }
+        $nombre = is_array($premio['nombre']) ?
+          json_encode($premio['nombre'], JSON_UNESCAPED_UNICODE) : (json_decode($premio['nombre'], true) ?
+            json_encode(json_decode($premio['nombre'], true), JSON_UNESCAPED_UNICODE) :
+            $premio['nombre']);
+
+        // Validar y procesar la descripción del premio
+        if (!isset($premio['descripcion'])) {
+          throw new Exception('La descripción del premio es requerida');
+        }
+
+        $descripcion = is_array($premio['descripcion']) ?  $premio['descripcion'] :  json_encode($premio['descripcion'], JSON_UNESCAPED_UNICODE);
+
+        $premios[] = [
+          'nombre' => $nombre,
+          'descripcion' => $descripcion
+        ];
+      }
+
+      //echo "<pre>Premios procesados: ";
+      //print_r($premios);
+      //echo "</pre>";
+      //echo "<pre>Var dump premios: ";
+      //var_dump($premios);
+      //echo "</pre>";
+
+      $imagen = $_FILES['imagen'] ?? null;
+      //echo "<pre>Datos de la imagen: ";
+      //print_r($imagen);
+      //echo "</pre>";
+      //echo "<pre>Var dump imagen: ";
+      //var_dump($imagen);
+      //echo "</pre>";
+
+      // Validaciones básicas
       if (strtotime($fechaInicio) > strtotime($fechaFin)) {
         throw new Exception('La fecha de inicio no puede ser mayor a la fecha final');
       }
@@ -71,6 +167,12 @@ class ConfigMainController
           $rutaImagen = $destino . $nombreArchivo;
         }
       }
+      //echo "<pre>Ruta de la imagen: ";
+      //print_r($rutaImagen);
+      //echo "</pre>";
+      //echo "<pre>Var dump ruta imagen: ";
+      //var_dump($rutaImagen);
+      //echo "</pre>";
 
       // Crear el sorteo usando el modelo
       $idSorteo = $this->model->crearSorteo(
@@ -87,6 +189,12 @@ class ConfigMainController
         $premios,
         $rutaImagen
       );
+      //echo "<pre>ID del sorteo creado: ";
+      //print_r($idSorteo);
+      //echo "</pre>";
+      //echo "<pre>Var dump ID sorteo: ";
+      //var_dump($idSorteo);
+      //echo "</pre>";
 
       if ($idSorteo) {
         header('Content-Type: application/json');
@@ -104,14 +212,19 @@ class ConfigMainController
     }
   }
 
-  public function actualizarSorteo($id, $estado)
+  public function actualizarSorteo($id, $estado, $ganadores = null)
   {
     $this->model->desactivarRifas();
 
     if ($id != null && $estado != null) {
 
       try {
-        $mrc = $this->model->actualizarRifa($id, $estado);
+
+        if ($ganadores) {
+          $mrc = $this->model->finalizarRifa($id, $estado, $ganadores);
+        } else {
+          $mrc = $this->model->actualizarRifa($id, $estado);
+        }
 
         if ($mrc == true) {
           return [

@@ -19,65 +19,33 @@ class RegisterUserController
   public function insert(array $data): void
   {
     header('Content-Type: application/json');
+    $lang = $_SERVER['HTTP_X_LANGUAGE'] ?? 'es';
+    if (!in_array($lang, ['es', 'en'])) $lang = 'es';
+    $translations = $this->loadTranslations($lang);
+    header('Content-Type: application/json');
     header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
     header('Cache-Control: post-check=0, pre-check=0', false);
     header('Pragma: no-cache');
 
     try {
-      // Depuración de datos recibidos
-      error_log("Datos recibidos en el controlador:");
-      error_log(print_r($data, true));
-
       // Preparar datos del usuario
       $datosUsuario = [
         'usuario' => $data['usuario'] ?? '',
         'password' => $data['password'] ?? '',
-        'cedula' => $data['cedula'] ?? '' // Agregamos la cédula aquí también
       ];
 
       $datosPersonales = [
         'nombre' => $data['nombre'] ?? '',
         'apellido' => $data['apellido'] ?? '',
-        'cedula' => $data['cedula'] ?? '',
         'telefono' => $data['telefono'] ?? '',
         'ubicacion' => $data['ubicacion'] ?? ''
       ];
-
-      // Depuración de datos procesados
-      error_log("Datos de usuario preparados:");
-      error_log(print_r($datosUsuario, true));
-      error_log("Datos personales preparados:");
-      error_log(print_r($datosPersonales, true));
-
       // Verificar si el usuario existe antes de intentar insertar
       if ($this->usuario->existeUsuario($datosUsuario['usuario'])) {
         http_response_code(409);
         echo json_encode([
           'success' => false,
-          'message' => 'El nombre de usuario ya existe',
-          'type' => 'error'
-        ]);
-        return;
-      }
-
-      // Verificar si la cédula existe
-      if ($this->usuario->existeCedula($datosPersonales['cedula'])) {
-        http_response_code(409);
-        echo json_encode([
-          'success' => false,
-          'message' => 'Esta persona ya se registro el sistema, cedula ya existe',
-          'type' => 'error'
-        ]);
-        return;
-      }
-
-      // Verificar si el teléfono existe
-      error_log("Verificando teléfono: " . $datosPersonales['telefono']);
-      if ($this->usuario->existeTelefono($datosPersonales['telefono'])) {
-        http_response_code(409);
-        echo json_encode([
-          'success' => false,
-          'message' => 'Esta persona ya se registro el sistema, telefono ya existe',
+          'message' => $translations['username_already_exists'],
           'type' => 'error'
         ]);
         return;
@@ -90,28 +58,31 @@ class RegisterUserController
         http_response_code(500);
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar el usuario',
+          'message' => $translations['user_registration_error'],
           'type' => 'error'
         ]);
         return;
       }
 
       // Registrar datos personales
-      if ($this->usuario->registrarDatosPersonales($idUsuario, $datosPersonales)) {
-
-        http_response_code(201);
-        echo json_encode([
-          'success' => true,
-          'message' => 'Registro exitoso',
-          'type' => 'success',
-          'redirect' => '/login'
-        ]);
-        return;
-      } else {
+      try {
+        if ($this->usuario->registrarDatosPersonales($idUsuario, $datosPersonales)) {
+          http_response_code(201);
+          echo json_encode([
+            'success' => true,
+            'message' => $translations['user_registration_success'],
+            'type' => 'success',
+            'id_usuario' => $idUsuario,
+            'redirect' => '/login'
+          ]);
+          return;
+        }
+      } catch (\Exception $e) {
         http_response_code(500);
+        error_log("Error al registrar datos personales: " . $e->getMessage());
         echo json_encode([
           'success' => false,
-          'message' => 'Error al registrar los datos personales',
+          'message' => $translations['user_registration_error'],
           'type' => 'error'
         ]);
         return;
@@ -121,10 +92,21 @@ class RegisterUserController
       error_log("Error en RegistroController::insert: " . $e->getMessage());
       echo json_encode([
         'success' => false,
-        'message' => 'Error interno del servidor',
+        'message' => 'Error interno del servidor: ' . $e->getMessage(),
         'type' => 'error'
       ]);
       return;
     }
+  }
+
+  public function loadTranslations($lang = 'es')
+  {
+    $file = __DIR__ . "/../../assets/language/{$lang}.json";
+    if (file_exists($file)) {
+      $json = file_get_contents($file);
+      return json_decode($json, true);
+    }
+    $json = file_get_contents(__DIR__ . "/../../assets/language/es.json");
+    return json_decode($json, true);
   }
 }

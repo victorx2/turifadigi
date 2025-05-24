@@ -201,37 +201,73 @@ class Auth
     }
   }
 
-  public function getStatusMessage(int $status): array
+  /* public function getStatusMessage(int $status): array */
+  /* { */
+  /*   switch ($status) { */
+  /*     case self::LOGIN_SUCCESS: */
+  /*       return [ */
+  /*         'success' => true, */
+  /*         'message' => 'Inicio de sesión exitoso, redirigiendo.', */
+  /*         'type' => 'success' */
+  /*       ]; */
+  /*     case self::ERROR_INVALID_CREDENTIALS: */
+  /*       return [ */
+  /*         'success' => false, */
+  /*         'message' => 'No se encontró ninguna cuenta asociada a este usuario. Por favor, verifica el usuario  *//* ingresado.', */
+  /*         'type' => 'error' */
+  /*       ]; */
+  /*     case self::ERROR_INVALID_DATA: */
+  /*       return [ */
+  /*         'success' => false, */
+  /*         'message' => 'La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.', */
+  /*         'type' => 'error' */
+  /*       ]; */
+  /*     case self::ERROR_DATABASE: */
+  /*       return [ */
+  /*         'success' => false, */
+  /*         'message' => 'Hubo un error al procesar tu solicitud. Por favor, verifica tu conexión a internet e  *//* intenta nuevamente.', */
+  /*         'type' => 'error' */
+  /*       ]; */
+  /*     default: */
+  /*       return [ */
+  /*         'success' => false, */
+  /*         'message' => 'Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde o contacta al soporte  *//* técnico.', */
+  /*         'type' => 'error' */
+  /*       ]; */
+  /*   } */
+  /* } */
+
+  public function getStatusMessage(int $status, $translations): array
   {
     switch ($status) {
       case self::LOGIN_SUCCESS:
         return [
           'success' => true,
-          'message' => 'Inicio de sesión exitoso, redirigiendo.',
+          'message' => $translations['login_success_redirect'],
           'type' => 'success'
         ];
       case self::ERROR_INVALID_CREDENTIALS:
         return [
           'success' => false,
-          'message' => 'No se encontró ninguna cuenta asociada a este usuario. Por favor, verifica el usuario ingresado.',
+          'message' => $translations['no_account_found'],
           'type' => 'error'
         ];
       case self::ERROR_INVALID_DATA:
         return [
           'success' => false,
-          'message' => 'La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.',
+          'message' => $translations['invalid_password'],
           'type' => 'error'
         ];
       case self::ERROR_DATABASE:
         return [
           'success' => false,
-          'message' => 'Hubo un error al procesar tu solicitud. Por favor, verifica tu conexión a internet e intenta nuevamente.',
+          'message' => $translations['database_error'],
           'type' => 'error'
         ];
       default:
         return [
           'success' => false,
-          'message' => 'Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde o contacta al soporte técnico.',
+          'message' => $translations['unexpected_error'],
           'type' => 'error'
         ];
     }

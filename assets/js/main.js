@@ -107,20 +107,6 @@
     }
   }
 
-  //===Language switcher===
-  function languageSwitcher() {
-    if ($("#polyglot-language-options").length) {
-      $("#polyglotLanguageSwitcher").polyglotLanguageSwitcher({
-        effect: "slide",
-        animSpeed: 500,
-        testMode: true,
-        onChange: function (evt) {
-          alert("The selected language is: " + evt.selectedItem);
-        },
-      });
-    }
-  }
-
   if ($(".portfolio-two__list li").length) {
     $(".portfolio-two__list li").each(function () {
       let self = $(this);
@@ -1113,6 +1099,6 @@
     $("#datepicker").datepicker();
   }
 
-  // Nice Select
-  $("select").niceSelect();
+  // // Nice Select
+  // $("select").niceSelect();
 })(jQuery);
