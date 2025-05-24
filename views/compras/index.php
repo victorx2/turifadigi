@@ -2,7 +2,7 @@
 
 <div class="separador"></div>
 <style>
-  .separador{
+  .separador {
     margin-top: 100px;
   }
 </style>
@@ -11,8 +11,8 @@
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 mb-4">
-      <h1 style="color: #5497CC;" class=" text-center">Boletos Comprados</h1>
-      <h5 class=" text-center"> <strong>- Gestión de Boletos de Rifa -</strong> </h5>
+      <h1 style="color: #5497CC;" class=" text-center" data-i18n="purchased_tickets">Boletos Comprados</h1>
+      <h5 class=" text-center" data-i18n="purchased_tickets_desc"> <strong>- Gestión de Boletos de Rifa -</strong> </h5>
     </div>
     <div class="col-lg-2"></div>
   </div>
@@ -27,12 +27,13 @@
         <thead class="align-middle">
           <tr>
             <th class="text-center bg-body-tertiary" width="1%">#</th>
-            <th class="text-center bg-body-tertiary" width="20%">FECHA DE COMPRA</th>
-            <th class="text-center bg-body-tertiary" width="25%">COMPRADOR</th>
-            <th class="text-center bg-body-tertiary" width="20%">BOLETOS</th>
-            <th class="text-center bg-body-tertiary" width="10%">MONTO</th>
-            <th class="text-center bg-body-tertiary" width="10%">ESTADO</th>
-            <th class="text-center bg-body-tertiary" width="14%">ACCIONES</th>
+            <th class="text-center bg-body-tertiary" width="18%" data-i18n-th="purchase_date_2">FECHA DE COMPRA</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n-th="datatable_buyer">COMPRADOR</th>
+            <th class="text-center bg-body-tertiary" width="1%" data-i18n-th="datatable_raffle">SORTEO</th>
+            <th class="text-center bg-body-tertiary" width="15%" data-i18n-th="datatable_tickets">BOLETOS</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n-th="datatable_amount">MONTO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_status">ESTADO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_actions">ACCIONES</th>
           </tr>
         </thead>
       </table>
@@ -73,15 +74,16 @@
           data[i]['sorteo'] = elemento['id_rifa'];
           data[i]['boletos'] = boletos;
           data[i]['acciones'] = acciones;
-            if (elemento['estado'] == 'aprobado') {
-            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>`;
-            } else if (elemento['estado'] == 'pendiente') {
-            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-2">Pendiente</small>`;
-            } else if (elemento['estado'] == 'rechazado') {
-            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Rechazado</small>`;
-            } else {
+          if (elemento['estado'] == 'aprobado') {
+            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2" data-i18n="paid">Pagado</small>`;
+          } else if (elemento['estado'] == 'pendiente') {
+            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-2" data-i18n="pending">Pendiente</small>`;
+          } else if (elemento['estado'] == 'rechazado') {
+            data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2" data-i18n="rejected">Rechazado</small>`;
+          } else {
             data[i]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-secondary-emphasis bg-secondary-subtle border border-secondary-subtle rounded-2">${elemento['estado']}</small>`;
-            }i++;
+          }
+          i++;
         })
 
         const datos = {

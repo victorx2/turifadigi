@@ -51,7 +51,7 @@
 </style>
 
 <div class="container-fluid">
-    <div class="section-title__title center">
+    <div class="section-title__title center" data-i18n="verify_tickets">
         Verificar Boletos
     </div>
     <form class="verificar-form" method="post" id="verificarForm">
@@ -59,7 +59,7 @@
             <option value="1" selected>Rifa actual</option>
         </select>
         <input class="input-boleto" type="text" name="numero_boleto" placeholder="ej: 0001" required>
-        <button class="btn-verificar" type="submit">Verificar</button>
+        <button class="btn-verificar" type="submit" data-i18n="verify_tickets_button">Verificar</button>
     </form>
 
     <div id="boletoContainer"></div>

@@ -190,13 +190,13 @@ class SorteoModel
         c.precio_boleto,
         GROUP_CONCAT(p.nombre SEPARATOR ' - ') AS nombres_premios,
         GROUP_CONCAT(p.descripcion SEPARATOR ' || ') AS descripciones_premios
-	FROM rifas r
-	INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
-	INNER JOIN premios p ON r.id_rifa = p.id_rifa
-	WHERE
+      FROM rifas r
+      INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+      INNER JOIN premios p ON r.id_rifa = p.id_rifa
+      WHERE
         c.estado = 1
-	GROUP BY
-	r.id_rifa,
+      GROUP BY
+        r.id_rifa,
         r.titulo,
         r.descripcion,
         r.imagen,
@@ -209,7 +209,7 @@ class SorteoModel
         c.boletos_maximos,
         c.boletos_minimos,
         c.precio_boleto
-	";
+      ";
 
       $result = $this->db->consultar($sql, []);
 
@@ -221,12 +221,22 @@ class SorteoModel
         $nombres_premios_array = explode(' - ', $row["nombres_premios"]);
         $descripciones_premios_array = explode(' || ', $row["descripciones_premios"]);
 
-        // Decodificar cada nombre y descripción de premio, limpiando las barras invertidas
+        // Decodificar cada nombre y descripción de premio, limpiando las barras invertidas y comillas
         foreach ($nombres_premios_array as &$nombre) {
-          $nombre = json_decode(stripslashes($nombre), true);
+          $nombre = trim($nombre, "\"");
+          $nombre = stripslashes($nombre);
+          $nombre = json_decode($nombre, true);
+          if (!is_array($nombre)) {
+            $nombre = '';
+          }
         }
         foreach ($descripciones_premios_array as &$desc) {
-          $desc = json_decode(stripslashes($desc), true);
+          $desc = trim($desc, "\"");
+          $desc = stripslashes($desc);
+          $desc = json_decode($desc, true);
+          if (!is_array($desc)) {
+            $desc = '';
+          }
         }
 
         if (!isset($sorteos[$id_rifa])) {

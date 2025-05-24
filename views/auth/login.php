@@ -177,17 +177,36 @@
     const password = document.getElementById('password');
     let valid = true;
 
+
+
+
+
+
+
+
+
+
+
     if (usuario.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'El nombre de usuario es requerido');
+      showToast('warning', i18n.t('empty_field'), i18n.t('username_required'));
       usuario.focus();
       valid = false;
     }
 
     if (password.value.trim() === '') {
-      showToast('warning', 'Campo vacío', 'La contraseña es requerida');
+      showToast('warning', i18n.t('empty_field'), i18n.t('password_required'));
       password.focus();
       valid = false;
     }
+
+
+
+
+
+
+
+
+
 
     if (valid) {
       if (boton.disabled) {
@@ -197,9 +216,16 @@
       boton.disabled = true;
 
       const formData = new FormData(this);
+      /* fetch('/api/login', { */
+      /*     method: 'POST', */
+      /*     body: new URLSearchParams(formData) */
+      /*   }) */
       fetch('/api/login', {
           method: 'POST',
-          body: new URLSearchParams(formData)
+          body: new URLSearchParams(formData),
+          headers: {
+            'X-Language': localStorage.getItem('language') || 'es'
+          }
         })
         .then(response => response.json())
         .then(data => {

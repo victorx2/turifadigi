@@ -1,26 +1,26 @@
 <input type="text" name="regist" class="d-none" id="regist" value="1">
-<h2 class="form-section-title">
+<h2 class="form-section-title" data-i18n="ingrese_sus_datos">
     INGRESE SUS DATOS
 </h2>
 <div style="display: flex; flex-wrap: wrap; gap: 16px;">
     <div style="flex: 1 1 200px; min-width: 200px;">
         <div class="form-group-custom">
-            <label class="required">Nombre</label>
-            <input type="text" class="form-control-custom" id="nombre" name="nombre" placeholder="Nombre" required>
+            <label class="required" data-i18n="first_name">Nombre</label>
+            <input type="text" class="form-control-custom" id="nombre" name="nombre" data-i18n-placeholder="first_name" placeholder="Nombre" required>
         </div>
     </div>
     <div style="flex: 1 1 200px; min-width: 200px;">
         <div class="form-group-custom">
-            <label class="required">Apellido</label>
-            <input type="text" class="form-control-custom" id="apellido" name="apellido" placeholder="Apellido" required>
+            <label class="required" data-i18n="last_name">Apellido</label>
+            <input type="text" class="form-control-custom" id="apellido" name="apellido" data-i18n-placeholder="last_name" placeholder="Apellido" required>
         </div>
     </div>
 </div>
 <div class="form-group-custom">
-    <label class="required">Número de Teléfono</label>
+    <label class="required" data-i18n="phone">Número de Teléfono</label>
     <div class="form-group-phone">
         <select class="form-control-custom select-sm" id="prefijo_pais" name="prefijo_pais" required style="display: block;">
-            <option value="">País</option>
+            <option value="" data-i18n="country">País</option>
             <option value="+1">Estados Unidos (+1)</option>
             <option value="+1">Canadá (+1)</option>
             <option value="+52">México (+52)</option>
@@ -68,7 +68,7 @@
             <option value="+599-7">Curazao (+599-7)</option>
             <option value="+599-3">Bonaire, San Eustaquio y Saba (+599-3)</option>
         </select>
-        <input type="tel" class="form-control-custom" id="telefono" name="telefono" placeholder="Número" required pattern="[0-9]{6,15}">
+        <input type="tel" class="form-control-custom" id="telefono" name="telefono" data-i18n-placeholder="phone" placeholder="Número" required pattern="[0-9]{6,15}">
     </div>
 </div>
 <style>

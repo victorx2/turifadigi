@@ -12,7 +12,7 @@
   </h2>
   <div class="form-group-custom">
     <label class="required" data-i18n="comprobante_titular">Titular del pago (Telefono del titular del pago, si es Pago Movil)</label>
-    <input type="text" class="form-control-custom" id="titular" placeholder="Nombre Apellido (o telefono)">
+    <input type="text" class="form-control-custom" id="titular" placeholder="Nombre Apellido (o telefono)" data-i18n-placeholder="first_last_name_phone_placeholder">
   </div>
 
   <div class="form-group-custom">

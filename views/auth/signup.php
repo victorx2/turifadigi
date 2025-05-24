@@ -184,7 +184,7 @@
           <div class="result"></div>
 
           <a href="/login">
-            <p class="contact-two__left-text" style="margin-top: 20px;">¿Ya tiene una cuenta?</p>
+            <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n="already_have_account">¿Ya tiene una cuenta?</p>
           </a>
 
         </div>
@@ -219,17 +219,31 @@
 
       const formData = new URLSearchParams(new FormData(this));
       console.log('Datos a enviar:', formData.toString());
+
       const response = await fetch('/registro_usuario', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
           'Accept': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-Language': localStorage.getItem('language') || 'es'
         },
         body: formData.toString(),
         credentials: 'same-origin',
         mode: 'same-origin'
       });
+
+      /* const response = await fetch('/registro_usuario', { */
+      /*   method: 'POST', */
+      /*   headers: { */
+      /*     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', */
+      /*     'Accept': 'application/json', */
+      /*     'X-Requested-With': 'XMLHttpRequest' */
+      /*   }, */
+      /*   body: formData.toString(), */
+      /*   credentials: 'same-origin', */
+      /*   mode: 'same-origin' */
+      /* }); */
 
       console.log('Respuesta recibida:', response);
       const data = await response.json();
@@ -238,6 +252,7 @@
       if (!response.ok) throw data;
 
       showToast('success', 'Éxito', data.message);
+
       Array.from(form.getElementsByTagName('input')).forEach(input => input.disabled = true);
       console.log('Redirigiendo a /login en 2 segundos...');
       setTimeout(() => {

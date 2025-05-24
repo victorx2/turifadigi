@@ -110,8 +110,8 @@
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 mb-4">
-      <h1 style="color: #5497CC;" class=" text-center">Administración de Sorteos</h1>
-      <h5 class=" text-center"> <strong>- Gestión de Sorteos activar/finalizar -</strong> </h5>
+      <h1 style="color: #5497CC;" class=" text-center" data-i18n="admin_raffles">Administración de Sorteos</h1>
+      <h5 class=" text-center"> <strong data-i18n="admin_raffles_desc"> - Gestión de Sorteos activar/finalizar -</strong> </h5>
     </div>
     <div class="col-lg-2"></div>
   </div>
@@ -125,14 +125,14 @@
       <table id="tabla" class="table table-sm table-bordered table-hover mb-0">
         <thead class="align-middle">
           <tr>
-            <th class="text-center bg-body-tertiary" width="1%">#</th>
-            <th class="text-center bg-body-tertiary" width="20%">FECHA DE CREACION</th>
-            <th class="text-center bg-body-tertiary" width="25%">TITULO</th>
-            <th class="text-center bg-body-tertiary" width="10%">ID SORTEO</th>
-            <th class="text-center bg-body-tertiary" width="20%">BOLETOS MAXIMOS</th>
-            <th class="text-center bg-body-tertiary" width="10%">PRECIO BOLETO</th>
-            <th class="text-center bg-body-tertiary" width="10%">ESTADO</th>
-            <th class="text-center bg-body-tertiary" width="14%">ACCIONES</th>
+            <th class="text-center bg-body-tertiary" width="1%" data-i18n="fecha_creacion">#</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n="fecha_creacion">FECHA DE CREACION</th>
+            <th class="text-center bg-body-tertiary" width="25%" data-i18n="titulo">TITULO</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n="id_sorteo">ID SORTEO</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n="boletos_maximos">BOLETOS MAXIMOS</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n="precio_boleto_2">PRECIO BOLETO</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n="estado">ESTADO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n="acciones">ACCIONES</th>
           </tr>
         </thead>
       </table>
@@ -175,9 +175,9 @@
           if (elemento['estado'] == 1) {
             estado = 'activo';
           } else if (elemento['estado'] == 2) {
-            estado = 'finalizada';
+            estado = 'finalizado';
           } else if (elemento['estado'] == 0 || elemento['estado'] === '' || elemento['estado'] === null || typeof elemento['estado'] === 'undefined') {
-            estado = 'desactivada';
+            estado = 'desactivado';
           }
 
           data[i]['contador'] = (i + 1);

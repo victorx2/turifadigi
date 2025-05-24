@@ -6,26 +6,74 @@ $sorteoController = new SorteoController();
 $sorteo = $sorteoController->obtenerSorteoActivo();
 
 // Función general para obtener texto multilenguaje
+/* function getTextoByLang($jsonText, $idioma = 'ES') */
+/* { */
+/*   if (!$jsonText) return ''; */
+/*   if (is_array($jsonText)) { */
+/*     return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? ''; */
+/*   } */
+/*   $arr = json_decode($jsonText, true); */
+/*   if (is_array($arr)) { */
+/*     return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? ''; */
+/*   } */
+/*   return ''; */
+/* } */
+
+/* function getTextoByLang($jsonText, $idioma = 'ES') */
+/* { */
+/*   if (!$jsonText) return ''; */
+/*   if (is_array($jsonText)) { */
+/*     $idioma = strtoupper($idioma); */
+/*     return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? ''; */
+/*   } */
+/*   $arr = json_decode($jsonText, true); */
+/*   if (is_array($arr)) { */
+/*     $idioma = strtoupper($idioma); */
+/*     return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? ''; */
+/*   } */
+/*   return ''; */
+/* } */
+
+
 function getTextoByLang($jsonText, $idioma = 'ES')
 {
   if (!$jsonText) return '';
   if (is_array($jsonText)) {
+    $idioma = strtoupper($idioma);
     return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? '';
   }
+  // LIMPIA el string si viene con comillas escapadas
+  $jsonText = trim($jsonText, "\"");
+  $jsonText = stripslashes($jsonText);
+
   $arr = json_decode($jsonText, true);
   if (is_array($arr)) {
+    $idioma = strtoupper($idioma);
     return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? '';
   }
   return '';
 }
 
+
+
 // Detectar idioma desde cookie o localStorage (si se pasa por GET, POST, etc.)
+/* $idioma = 'ES'; */
+/* if (isset($_COOKIE['language'])) { */
+/*   $idioma = strtoupper($_COOKIE['language']); */
+/* } */
+/* if (isset($_GET['lang'])) { */
+/*   $idioma = strtoupper($_GET['lang']); */
+/* } */
+
 $idioma = 'ES';
 if (isset($_COOKIE['language'])) {
   $idioma = strtoupper($_COOKIE['language']);
 }
 if (isset($_GET['lang'])) {
   $idioma = strtoupper($_GET['lang']);
+}
+if (!in_array($idioma, ['ES', 'EN'])) {
+  $idioma = 'ES';
 }
 
 // Obtener texto traducido para el título
@@ -123,12 +171,12 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
                   <strong>+1 <?php echo htmlspecialchars((string)$numeroContacto); ?></strong>
                 </a></p>
             </section>
-            <?php if ($textoImportante): ?>
-              <aside class="example-box" role="complementary">
-                <h2>Información importante</h2>
-                <p class="example-text"><?php echo nl2br(htmlspecialchars($textoImportante)); ?></p>
-              </aside>
-            <?php endif; ?>
+            <!-- <?php if ($textoImportante): ?> -->
+            <!--   <aside class="example-box" role="complementary"> -->
+            <!--     <h2>Información importante</h2> -->
+            <!--     <p class="example-text"><?php echo nl2br(htmlspecialchars($textoImportante)); ?></p> -->
+            <!--   </aside> -->
+            <!-- <?php endif; ?> -->
           </div>
         </article>
       </div>

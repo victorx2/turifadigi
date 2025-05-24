@@ -151,7 +151,7 @@
       <div class="boletos-grid" id="boletosList">
         <!-- Los boletos se generarán dinámicamente aquí -->
       </div>
-      <div class="loading-text" style="display: block;">Cargando boletos...</div>
+      <div class="loading-text" style="display: block;" data-i18n="loading_tickets">Cargando boletos...</div>
     </div>
 
     <div class="seleccionados-container" style="display: none;">
@@ -217,7 +217,7 @@
       </div>
     </div>
     <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
-    <button type="submit" class="btn-confirmar">CONFIRMARXD</button>
+    <button type="submit" class="btn-confirmar" data-i18n="confirm">CONFIRMAR</button>
   </div>
 </div>
 
@@ -726,8 +726,8 @@
 
     btnConfirmar.onclick = async function(e) {
       Swal.fire({
-        title: 'Procesando compra',
-        text: 'Por favor espere...',
+        title: i18n.t('processing_purchase'),
+        text: i18n.t('processing_purchase_text'),
         allowOutsideClick: false,
         allowEscapeKey: false,
         didOpen: () => {
@@ -774,15 +774,15 @@
               // Validar que todos los campos requeridos tengan valor
               const camposRequeridos = [{
                   campo: 'titular',
-                  mensaje: 'Titular'
+                  mensaje: 'comprobante_titular'
                 },
                 {
                   campo: 'referencia',
-                  mensaje: 'Referencia'
+                  mensaje: 'comprobante_referencia'
                 },
                 {
                   campo: 'metodoPago',
-                  mensaje: 'Método de pago'
+                  mensaje: 'comprobante_metodo'
                 }
               ];
 
@@ -792,15 +792,18 @@
                 }) => !formData[campo])
                 .map(({
                   mensaje
-                }) => mensaje);
+                }) => i18n.t(mensaje));
 
               if (camposFaltantes.length > 0) {
                 Swal.close();
                 Swal.fire({
-                  title: 'Campos incompletos',
-                  text: `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`,
+                  title: i18n.t('incomplete_fields'),
+                  text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
                   icon: 'warning',
-                  confirmButtonText: 'Aceptar'
+                  confirmButtonText: i18n.t('incomplete_fields_confirm'),
+                  customClass: {
+                    confirmButton: 'swal2-confirm'
+                  }
                 });
                 return;
               }
@@ -902,13 +905,30 @@
 
           const camposFaltantes = campos.filter(c => !c.value).map(c => c.label);
 
+          /*   if (camposFaltantes.length > 0) {
+                Swal.close();
+                Swal.fire({
+                  title: i18n.t('incomplete_fields'),
+                  text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
+                  icon: 'warning',
+                  confirmButtonText: i18n.t('incomplete_fields_confirm'),
+                  customClass: {
+                    confirmButton: 'swal2-confirm'
+                  }
+                });
+                return;
+              } */
+
           if (camposFaltantes.length > 0) {
             Swal.close();
             Swal.fire({
-              title: 'Campos incompletos',
-              text: `Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`,
+              title: i18n.t('incomplete_fields'),
+              text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
               icon: 'warning',
-              confirmButtonText: 'Aceptar'
+              confirmButtonText: i18n.t('incomplete_fields_confirm'),
+              customClass: {
+                confirmButton: 'swal2-confirm'
+              }
             });
             return;
           }
