@@ -14,6 +14,15 @@
                  <i class="fa-brands fa-instagram"></i>
                  <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">�Siguenos en instagram!</a>
                </div>
+               <h3 class="site-footer__social-title" data-i18n="support">Soporte</h3>
+               <div class="phone number">
+                 <i class="fa fa-envelope"></i>
+                 <a href="mailto:support@turifadigital.org">support@turifadigital.org</a>
+               </div>
+               <div class="phone number">
+                 <i class="fa-solid fa-phone-volume"></i>
+                 <a href="tel:14077329524" data-i18n="phone_number">+1 407-732-9524</a>
+               </div>
              </div>
            </div>
          </div>
@@ -27,15 +36,6 @@
                <div class="phone number">
                  <i class="fa-solid fa-phone-volume"></i>
                  <a href="tel:14074287580" data-i18n="phone_number">+1 407-428-7580</a>
-               </div>
-               <h3 class="site-footer__social-title" data-i18n="support">Soporte</h3>
-               <div class="phone number">
-                 <i class="fa fa-envelope"></i>
-                 <a href="mailto:support@turifadigital.org">support@turifadigital.org</a>
-               </div>
-               <div class="phone number">
-                 <i class="fa-solid fa-phone-volume"></i>
-                 <a href="tel:14077329524" data-i18n="phone_number">+1 407-732-9524</a>
                </div>
                <style>
                  .main-menu .mobile-nav__toggler {
