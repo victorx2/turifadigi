@@ -691,7 +691,7 @@
             const valorConvertido = dc;
 
             inputMapr.textContent = `${valorConvertido} $`;
-            tasaEx.textContent = `Tasa de cambio: 1 USD = 1 USD`;
+            tasaEx.textContent = `Tasa de cambio: 1 USD`;
             contenedorOpciones.innerHTML = "";
             contenedorOpciones.appendChild(opcionesMonedaHTML);
           }
