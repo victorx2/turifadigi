@@ -260,8 +260,8 @@
             type: 'POST',
             dataType: 'json',
             success: function(response) {
-              if (response.status === 'success') {
-                window.location.href = './';
+                if (response.status === 'success') {
+                window.location.reload();
               } else {
                 alert('Error al cerrar sesi�n. Int�ntalo de nuevo.');
               }

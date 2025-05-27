@@ -364,14 +364,14 @@
                       setTimeout(() => {
                         const container = document.getElementById('boletoContainer');
                         if (container && Array.isArray(boletosWn)) {
-                          let databot = boletosWn.data || "";
                           boletosWn.forEach(boleto => {
                             // Llama a renderBoleto con los datos del boleto
                             renderBoleto({
                               items: {
-                                nombre: databot.nombre || i18n.t("no_purchases"),
-                                telefono: databot.telefono || i18n.t("no_purchases"),
-                                "Precio": databot.precio || i18n.t("no_purchases")
+                                [`${i18n.t("ticket_name")}`]: boleto.cliente != null ? boleto.cliente +" "+ boleto.a_cliente : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_phone")}`]: boleto.telefono != null ? boleto.telefono : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_price")}`]: boleto.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_state")}`]: boleto.estado != null ? boleto.estado : i18n.t("no_purchases"),
                               },
                               fecha_compra: boleto.fecha_compra || i18n.t("no_purchases"),
                               numero: boleto.numero_boleto || "",

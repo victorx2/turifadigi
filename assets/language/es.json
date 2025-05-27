@@ -321,5 +321,10 @@
 "for_raffles": "para rifas",
 "m_raffle":"facilmente.",
 "easy_an_safe": "y grandes oportunidades.",
-"ur_tickets": "sobre tus boletos."
+"ur_tickets": "sobre tus boletos.",
+"ticket_name": "nombre",
+"ticket_phone": "telefono",
+"ticket_price":"precio",
+"ticket_state":"estado"
+
 }

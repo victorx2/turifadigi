@@ -321,5 +321,9 @@
 
 "m_raffle":"easily.",
 "easy_an_safe": "and great opportunities.",
-"ur_tickets": "of your tickets."
+"ur_tickets": "of your tickets.",
+"ticket_name": "name",
+"ticket_phone": "phone",
+"ticket_price":"price",
+"ticket_state":"status"
 }

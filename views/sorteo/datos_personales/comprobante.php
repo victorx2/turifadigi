@@ -22,7 +22,7 @@
 
   <div class="form-group-custom">
     <label class="required" data-i18n="comprobante_monto">Monto Pagado</label>
-    <input type="text" class="form-control-custom" id="monto_pagado" placeholder="0.00">
+    <input type="number" class="form-control-custom" id="monto_pagado" placeholder="0.00">
   </div>
 
   <div class="form-group-custom">
