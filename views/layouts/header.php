@@ -116,7 +116,8 @@
                     $class = $sessionRol != 2 ? 'element' : 'dropdown';
                     ?>
                     <li class="<?php echo $class ?>">
-                      <a href="/"><span data-i18n="home">Inicio</span>
+                      <a href="/">
+                        <span data-i18n="home">Inicio</span>
                         <span class="main-menu-border"></span>
                       </a>
                       <?php
@@ -155,9 +156,9 @@
                     if ($session === '') {
                       echo '
                       <li class="element">
-                        <a href="/signup" >
-                        <span data-i18n="create_account">Crear Cuenta</span>
-                        <span class="main-menu-border"></span>
+                        <a href="/signup">
+                          <span data-i18n="create_account">Crear Cuenta</span>
+                          <span class="main-menu-border"></span>
                         </a>
                       </li>';
                     }
