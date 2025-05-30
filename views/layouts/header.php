@@ -132,18 +132,21 @@
                     if ($session !== '') {
                       echo '
                     <li class="element">
-                      <a href="/compras" data-i18n="purchases">Compras
+                      <a href="/compras">
+                        <span data-i18n="purchases">Compras</span> 
                         <span class="main-menu-border"></span>
                       </a>
                     </li>';
                     } ?>
                     <li class="element">
-                      <a href="/verificar_boleto" data-i18n="verify_ticket">Verificar Boleto
+                      <a href="/verificar_boleto">
+                        <span data-i18n="verify_ticket">Verificar Boleto</span>
                         <span class="main-menu-border"></span>
                       </a>
                     </li>
                     <li class="element">
-                      <a href="/sorteo" data-i18n="raffle">Sorteo
+                      <a href="/sorteo">
+                        <span data-i18n="raffle">Sorteo</span>
                         <span class="main-menu-border"></span>
                       </a>
                     </li>
@@ -152,8 +155,9 @@
                     if ($session === '') {
                       echo '
                       <li class="element">
-                        <a href="/signup" data-i18n="create_account">Crear Cuenta
-                          <span class="main-menu-border"></span>
+                        <a href="/signup" >
+                        <span data-i18n="create_account">Crear Cuenta</span>
+                        <span class="main-menu-border"></span>
                         </a>
                       </li>';
                     }
