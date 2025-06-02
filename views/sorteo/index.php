@@ -818,19 +818,19 @@
                       Swal.fire({
                         title: '¡Compra procesada correctamente!',
                         icon: 'success',
-                        confirmButtonText: 'Finalizar en whatsapp',
-                        denyButtonText: 'salir',
+                        confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+                        denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+                        showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
                       }).then((sid) => {
                         if (sid.isConfirmed) {
                           generarEnlaceWhatsApp({
                             nombre: formData.nombre,
                             telefono: formData.telefono
                           }, boletosCargar);
-                        }
-                        if (sid.isDenied) {
-
+                        } else if (sid.isDenied) {
                           window.location.href = '/sorteo';
                         }
+                        window.location.href = '/sorteo';
                       });
                     } else {
                       showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
@@ -992,19 +992,19 @@
                           Swal.fire({
                             title: '¡Compra procesada correctamente!',
                             icon: 'success',
-                            confirmButtonText: 'Finalizar en whatsapp',
-                            denyButtonText: 'salir',
+                            confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+                            denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+                            showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
                           }).then((sid) => {
                             if (sid.isConfirmed) {
                               generarEnlaceWhatsApp({
                                 nombre: formData.nombre,
                                 telefono: formData.telefono
                               }, boletosCargar);
-                            }
-                            if (sid.isDenied) {
-
+                            } else if (sid.isDenied) {
                               window.location.href = '/sorteo';
                             }
+                            window.location.href = '/sorteo';
                           });
                         } else {
                           showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
