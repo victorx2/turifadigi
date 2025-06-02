@@ -818,9 +818,19 @@
                       Swal.fire({
                         title: '¡Compra procesada correctamente!',
                         icon: 'success',
-                        confirmButtonText: 'OK'
-                      }).then(() => {
-                        window.location.href = '/sorteo';
+                        confirmButtonText: 'Finalizar en whatsapp',
+                        denyButtonText: 'salir',
+                      }).then((sid) => {
+                        if (sid.isConfirmed) {
+                          generarEnlaceWhatsApp({
+                            nombre: formData.nombre,
+                            telefono: formData.telefono
+                          }, boletosCargar);
+                        }
+                        if (sid.isDenied) {
+
+                          window.location.href = '/sorteo';
+                        }
                       });
                     } else {
                       showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
@@ -984,8 +994,17 @@
                             text: 'OK',
                             icon: 'success',
                             confirmButtonText: 'OK'
-                          }).then(() => {
-                            window.location.href = '/sorteo';
+                          }).then((sid) => {
+                            if (sid.isConfirmed) {
+                              generarEnlaceWhatsApp({
+                                nombre: formData.nombre,
+                                telefono: formData.telefono
+                              }, boletosCargar);
+                            }
+                            if (sid.isDenied) {
+
+                              window.location.href = '/sorteo';
+                            }
                           });
                         } else {
                           showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
