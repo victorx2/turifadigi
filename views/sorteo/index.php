@@ -991,9 +991,9 @@
 
                           Swal.fire({
                             title: '¡Compra procesada correctamente!',
-                            text: 'OK',
                             icon: 'success',
-                            confirmButtonText: 'OK'
+                            confirmButtonText: 'Finalizar en whatsapp',
+                            denyButtonText: 'salir',
                           }).then((sid) => {
                             if (sid.isConfirmed) {
                               generarEnlaceWhatsApp({
