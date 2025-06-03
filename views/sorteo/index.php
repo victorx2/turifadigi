@@ -447,7 +447,7 @@
 
     setInterval(async () => {
       await cargarMasBoletos();
-    }, 10000);
+    }, 60000);
 
     // Inicializar el contador y total
     numeroBoletosSpan.textContent = cantidadSeleccion;
