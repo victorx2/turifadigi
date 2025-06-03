@@ -24,7 +24,7 @@
                             $session = $_SESSION['usuario'] ?? '';
                             if ($session === '') {
                                 echo '<div class="main-slider__btn-box">
-                                        <a href="/singup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
+                                        <a href="/signup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
                                     </div>';
                             }
 
@@ -58,7 +58,7 @@
                             $session = $_SESSION['usuario'] ?? '';
                             if ($session === '') {
                                 echo '<div class="main-slider__btn-box">
-                                        <a href="/singup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
+                                        <a href="/signup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
                                     </div>';
                             }
 
@@ -92,7 +92,7 @@
                             $session = $_SESSION['usuario'] ?? '';
                             if ($session === '') {
                                 echo '<div class="main-slider__btn-box">
-                                        <a href="/singup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
+                                        <a href="/signup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
                                     </div>';
                             }
 
