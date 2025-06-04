@@ -688,39 +688,7 @@
         return;
       }
 
-      const inputMapr = document.getElementById('mapr');
-      const tasaEx = document.getElementById('tasaEx');
-
-      // data de moneda
-      fetch('./api/exchange_rate') // Asumiendo que esta API te da las tasas
-        .then(response => response.json())
-        .then(data => {
-          // Ajusta estas líneas según la estructura de la respuesta de tu API
-          const tasaBS = data.data.VES.precio;
-          const tasaCOP = data.data.COP.precio;
-
-          const opcionesMonedaHTML = crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, boletosSeleccionados.size);
-
-          // Agrega la sección de opciones de moneda al elemento deseado en tu HTML
-          const contenedorOpciones = document.getElementById('currency-option-conten'); // Reemplaza con el ID de tu contenedor
-          if (contenedorOpciones) {
-            let dc = precioUnitarioUSD * boletosSeleccionados.size;
-            const valorConvertido = dc;
-
-            inputMapr.textContent = `${valorConvertido} $`;
-            tasaEx.textContent = `${i18n.t("exchange_rate")}  1 USD`;
-            contenedorOpciones.innerHTML = "";
-            contenedorOpciones.appendChild(opcionesMonedaHTML);
-          }
-        })
-        .catch(error => {
-          console.error('Error al obtener las tasas de cambio:', error);
-        });
-
       document.querySelector('.btn.btn-continuar').disabled = true;
-
-      document.getElementById('datosPersonales').style.display = 'block';
-      this.parentElement.style.display = 'none';
 
       fetch('./api/session_verfication', {
           method: 'POST',
@@ -734,18 +702,42 @@
         .then(response => response.json())
         .then(data => {
           if (data.session) {
+            // data de moneda
+            const inputMapr = document.getElementById('mapr');
+            const tasaEx = document.getElementById('tasaEx');
+
+            fetch('./api/exchange_rate')
+              .then(response => response.json())
+              .then(data => {
+                const tasaBS = data.data.VES.precio;
+                const tasaCOP = data.data.COP.precio;
+                const opcionesMonedaHTML = crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, boletosSeleccionados.size);
+
+                // Agrega la sección de opciones de moneda al elemento deseado en tu HTML
+                const contenedorOpciones = document.getElementById('currency-option-conten'); // Reemplaza con el ID de tu contenedor
+                if (contenedorOpciones) {
+                  let dc = precioUnitarioUSD * boletosSeleccionados.size;
+                  const valorConvertido = dc;
+
+                  inputMapr.textContent = `${valorConvertido} $`;
+                  tasaEx.textContent = `${i18n.t("exchange_rate")}  1 USD`;
+                  contenedorOpciones.innerHTML = "";
+                  contenedorOpciones.appendChild(opcionesMonedaHTML);
+                }
+              })
+              .catch(error => {
+                console.error('Error al obtener las tasas de cambio:', error);
+              });
+
             document.getElementById('datosPersonales').style.display = 'block';
             this.parentElement.style.display = 'none';
+
           } else {
             // Si no hay sesión, redirigir al login
             let timerInterval;
 
-
-
-            let storage = localStorage.getItem("language");
-
-            let title = i18n.t('init_sesion'); // Obtiene la traducción directamente
-            let conten = `${i18n.t('redirex')} <b></b> milliseconds.`; // Combina la traducción con el HTML
+            let title = i18n.t('init_sesion');
+            let conten = `${i18n.t('redirex')} <b></b> milliseconds.`;
 
             Swal.fire({
               title: title,
@@ -774,8 +766,6 @@
         .catch(error => {
           console.error('Error al verificar sesión:', error);
         });
-
-      window.location.href = "#siguiente";
     };
 
     const getInputValue = (selector) => {
