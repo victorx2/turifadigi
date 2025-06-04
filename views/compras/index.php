@@ -153,7 +153,7 @@
 
   // Llamar a la función inmediatamente al cargar la página (opcional)
   document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(getPurchases, 200); // Esperar 1 segundo antes de la primera llamada
+    setTimeout(getPurchases, 300); // Esperar 1 segundo antes de la primera llamada
 
     // Llamar a la función cada 30 segundos (30000 milisegundos)
     const intervalId = setInterval(getPurchases, 30000);

@@ -146,7 +146,12 @@
   }
 
   // Llamar a la función inmediatamente al cargar la página (opcional)
-  getRaffles();
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(getRaffles, 300); // Esperar 1 segundo antes de la primera llamada
+
+    // Llamar a la función cada 30 segundos (30000 milisegundos)
+    const intervalId = setInterval(getRaffles, 300000);
+  });
 
   // Llamar a la función cada 30 segundos (30000 milisegundos)
   const intervalId = setInterval(getRaffles, 180000);
