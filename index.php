@@ -225,6 +225,6 @@ switch (strtok($route, '?')) {
         require_once 'views/admin/views/sorteo/vistaAcciones.php';
         break;
     default:
-        require_once 'views/main.php';
+        require_once 'views/errors/404.php';
         break;
 }

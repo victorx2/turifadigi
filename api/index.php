@@ -104,6 +104,6 @@ switch (strtok($route, '?')) {
         require_once '../src/API/actualizar_coin.php';
         break;
     default:
-        echo "Error api " . __DIR__;
+        require_once 'views/errors/404.php';
         break;
 }
