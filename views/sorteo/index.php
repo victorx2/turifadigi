@@ -1310,7 +1310,7 @@
     const valorConvertido = (dc * tasaCambio).toFixed(2);
 
     inputMapr.textContent = `${valorConvertido} ${moneda}`;
-    tasaEx.textContent = ` 1 USD = ${tasaCambio} ${moneda}`;
+    tasaEx.textContent = `${i18n.t("exchange_rate")} 1 USD = ${tasaCambio} ${moneda}`;
   }
 
   function showToast(type, title, message) {
