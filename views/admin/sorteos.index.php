@@ -1,117 +1,13 @@
 <?php include_once "views/layouts/header.php"; ?>
+<?php include_once "views/layouts/slider.php"; ?>
 
-<section class="main-slider">
-
-  <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
-                "effect": "fade",
-                "pagination": {
-                "el": "#main-slider-pagination",
-                "type": "bullets",
-                "clickable": true
-                },
-                "navigation": {
-                "nextEl": "#main-slider__swiper-button-next",
-                "prevEl": "#main-slider__swiper-button-prev"
-                },
-                "autoplay": {
-                    "delay": 8000
-                } 
-            }'>
-
-    <div class="swiper-wrapper">
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/sorteo.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
-                <p class="main-slider__text">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn">Comenzar ahora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-2.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shature-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
-                <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
-                <div class="main-slider__btn-box">
-                  <!-- <a href="/login" class="main-slider__btn thm-btn">Regístrate gratis</a> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-3.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
-                <p class="main-slider__text">Múltiples métodos de pago <br> y transacciones seguras.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn">Conoce más</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="swiper-pagination" id="main-slider-pagination"></div>
-  </div>
-</section>
 
 <div class="container-lg">
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 mb-4">
-      <h1 style="color: #5497CC;" class=" text-center">Administración de Sorteos</h1>
-      <h5 class=" text-center"> <strong>- Gestión de Sorteos activar/finalizar -</strong> </h5>
+      <h1 style="color: #5497CC;" class=" text-center" data-i18n="admin_raffles">Administración de Sorteos</h1>
+      <h5 class=" text-center"> <strong data-i18n="admin_raffles_desc"> - Gestión de Sorteos activar/finalizar -</strong> </h5>
     </div>
     <div class="col-lg-2"></div>
   </div>
@@ -125,14 +21,14 @@
       <table id="tabla" class="table table-sm table-bordered table-hover mb-0">
         <thead class="align-middle">
           <tr>
-            <th class="text-center bg-body-tertiary" width="1%">#</th>
-            <th class="text-center bg-body-tertiary" width="20%">FECHA DE CREACION</th>
-            <th class="text-center bg-body-tertiary" width="25%">TITULO</th>
-            <th class="text-center bg-body-tertiary" width="10%">ID SORTEO</th>
-            <th class="text-center bg-body-tertiary" width="20%">BOLETOS MAXIMOS</th>
-            <th class="text-center bg-body-tertiary" width="10%">PRECIO BOLETO</th>
-            <th class="text-center bg-body-tertiary" width="10%">ESTADO</th>
-            <th class="text-center bg-body-tertiary" width="14%">ACCIONES</th>
+            <th class="text-center bg-body-tertiary" width="1%" data-i18n="fecha_creacion">#</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n="fecha_creacion">FECHA DE CREACION</th>
+            <th class="text-center bg-body-tertiary" width="25%" data-i18n="titulo">TITULO</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n="id_sorteo">ID SORTEO</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n="boletos_maximos">BOLETOS MAXIMOS</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n="precio_boleto_2">PRECIO BOLETO</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n="estado">ESTADO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n="acciones">ACCIONES</th>
           </tr>
         </thead>
       </table>
@@ -146,23 +42,23 @@
 
 <script>
   // CARGA DE LA TABLA
+  function getRaffles() {
 
-  fetch('./api/get_sorteo?cmp=1', {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json())
-    .then(dataD => {
-      if (dataD.success) {
+    fetch('./api/get_sorteo?cmp=1', {
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+      .then(dataD => {
+        if (dataD.success) {
 
-        let i = 0;
-        let data = dataD.data;
+          let i = 0;
+          let data = dataD.data;
 
-        console.log("Datos recibidos de la API:", dataD); // Log de los datos recibidos
 
-        data.forEach((elemento, index) => {
-          let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
+          data.forEach((elemento, index) => {
+            let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-info btn-sm" onclick="obsSorteo(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
                            <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
                         </button>
@@ -171,76 +67,95 @@
                         </button>
                     </div>`;
 
-          data[i]['contador'] = (i + 1);
-          data[i]['id_rifa'] = elemento['id_rifa'];
-          data[i]['titulo'] = elemento['titulo'];
-          data[i]['fecha_creacion'] = elemento['fecha_creacion'];
-          data[i]['boletos_maximos'] = elemento['configuracion']['boletos_maximos'];
-          data[i]['precio_boleto'] = elemento['configuracion']['precio_boleto'];
-          data[i]['estado'] = elemento['estado'];
-          data[i]['acciones'] = acciones;
+            let estado = '';
 
-          console.log(`Procesando sorteo ${i+1}:`, data[i]); // Log de cada sorteo procesado
-          i++;
-        })
-
-        const datos = {
-          'id_tabla': '#tabla',
-          'data': data,
-          'columns': [{
-              'data': 'contador',
-              'title': '#',
-              'className': 'text-center'
-            },
-            {
-              'data': 'fecha_creacion',
-              'title': 'FECHA DE CREACION',
-              'className': 'text-center'
-            },
-            {
-              'data': 'titulo',
-              'title': 'TITULO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'id_rifa',
-              'title': 'ID SORTEO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'boletos_maximos',
-              'title': 'BOLETOS MAXIMOS',
-              'className': 'text-center'
-            },
-            {
-              'data': 'precio_boleto',
-              'title': 'PRECIO BOLETO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'estado',
-              'title': 'ESTADO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'acciones',
-              'title': 'ACCIONES',
-              'className': 'text-center'
+            if (elemento['estado'] == 1) {
+              estado = 'activo';
+            } else if (elemento['estado'] == 2) {
+              estado = 'finalizado';
+            } else if (elemento['estado'] == 0 || elemento['estado'] === '' || elemento['estado'] === null || typeof elemento['estado'] === 'undefined') {
+              estado = 'desactivado';
             }
-          ]
-        };
 
-        console.log("Datos preparados para la tabla:", datos); // Log de los datos finales
-        cargar_tabla_boletos(datos);
+            data[i]['contador'] = (i + 1);
+            data[i]['id_rifa'] = elemento['id_rifa'];
+            data[i]['titulo'] = elemento['titulo'];
+            data[i]['fecha_creacion'] = elemento['fecha_creacion'];
+            data[i]['boletos_maximos'] = elemento['configuracion']['boletos_maximos'];
+            data[i]['precio_boleto'] = elemento['configuracion']['precio_boleto'];
+            data[i]['estado'] = estado;
+            data[i]['acciones'] = acciones;
 
-      } else {
-        console.error('Error al cargar los datos de la tabla:', data.error);
-      }
-    })
-    .catch(error => console.error('Error:', error));
+            i++;
+          })
 
+          const datos = {
+            'id_tabla': '#tabla',
+            'data': data,
+            'columns': [{
+                'data': 'contador',
+                'title': '#',
+                'className': 'text-center'
+              },
+              {
+                'data': 'fecha_creacion',
+                'title': 'FECHA DE CREACION',
+                'className': 'text-center'
+              },
+              {
+                'data': 'titulo',
+                'title': 'TITULO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'id_rifa',
+                'title': 'ID SORTEO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'boletos_maximos',
+                'title': 'BOLETOS MAXIMOS',
+                'className': 'text-center'
+              },
+              {
+                'data': 'precio_boleto',
+                'title': 'PRECIO BOLETO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'estado',
+                'title': 'ESTADO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'acciones',
+                'title': 'ACCIONES',
+                'className': 'text-center'
+              }
+            ]
+          };
+
+          cargar_tabla_boletos(datos);
+
+        } else {
+          console.error('Error al cargar los datos de la tabla:', data.error);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+
+  }
+
+  // Llamar a la función inmediatamente al cargar la página (opcional)
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(getRaffles, 300); // Esperar 1 segundo antes de la primera llamada
+
+    // Llamar a la función cada 30 segundos (30000 milisegundos)
+    const intervalId = setInterval(getRaffles, 300000);
+  });
+
+  // Llamar a la función cada 30 segundos (30000 milisegundos)
+  const intervalId = setInterval(getRaffles, 180000);
   // FUNCION PARA CAMBIAR ESTADO DEL SORTEO
-
   async function cambiarEstado(id) {
     Swal.fire({
       title: 'Cambio de estado',
@@ -283,20 +198,14 @@
                   timerProgressBar: true,
                   didOpen: () => {
                     Swal.showLoading();
-                    const timer = Swal.getPopup().querySelector("b");
-                    timerInterval = setInterval(() => {
-                      timer.textContent = `${Swal.getTimerLeft()}`;
-                    }, 100);
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
-                    window.location.href = '/sorteo_verificacion';
+                    window.location.reload();
                   }
                 }).then((result) => {
                   /* Read more about handling dismissals below */
-                  if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log("I was closed by the timer");
-                  }
+                  if (result.dismiss === Swal.DismissReason.timer) {}
                 });
 
               })
@@ -317,62 +226,111 @@
 
         // window.location.href = "/confirmarBoleto/" + id;
       } else if (result.isDenied) {
-        Swal.fire({
-          title: "¡Procesando!",
-          html: "Por favor, espera mientras se completa la operación...",
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-
-            fetch("./api/change_draw_status?est=disabled&id=" + id, {
-                method: 'POST', // O el método HTTP que necesites
-                headers: {
-                  'Content-Type': 'application/json'
+        // Mostrar el formulario HTML obtenido de la ruta indicada
+        fetch('/admin/views/sorteo/action_riffle?id=' + id, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'text/html'
+            }
+          })
+          .then(response => response.text())
+          .then(htmlForm => {
+            Swal.fire({
+              title: 'Finalizar sorteo',
+              html: htmlForm,
+              showCancelButton: true,
+              confirmButtonText: 'Finalizar',
+              cancelButtonText: 'Cancelar',
+              focusConfirm: false,
+              preConfirm: () => {
+                const form = Swal.getPopup().querySelector('form');
+                if (!form) {
+                  Swal.showValidationMessage('No se encontró el formulario');
+                  return false;
                 }
-              })
-              .then(response => response.json()) // O response.text() si esperas texto plano
-              .then(data => {
-                Swal.close(); // Cierra el SweetAlert de "Procesando"
-
-                let timerInterval;
+                // Validar que todos los campos requeridos no estén vacíos
+                const requiredFields = form.querySelectorAll('[required]');
+                for (let field of requiredFields) {
+                  if (!field.value || field.value.trim() === '') {
+                    Swal.showValidationMessage(`El campo "${field.getAttribute('id') || field.placeholder || 'requerido'}" no puede estar vacío`);
+                    field.focus();
+                    return false;
+                  }
+                  // Validar que el valor sea numérico y de 4 dígitos exactos (formato "0000")
+                  if (field.type === 'number' || field.getAttribute('type') === 'number' || field.getAttribute('pattern') === '0000') {
+                    if (!validarFormatoCuatroDigitos(field.value)) {
+                      Swal.showValidationMessage(`El campo "${field.getAttribute('id') || field.placeholder || 'requerido'}" debe tener exactamente 4 dígitos numéricos (formato "0000")`);
+                      field.focus();
+                      return false;
+                    }
+                  }
+                }
+                // Obtener los datos del formulario
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                  data[key] = value;
+                });
+                return data;
+              }
+            }).then((result) => {
+              if (result.isConfirmed && result.value) {
                 Swal.fire({
-                  icon: 'info', // 'success' O 'error', 'warning', 'info', 'question' según el resultado
-                  title: '¡Éxito al finalizar!', // O el título que corresponda
-                  timer: 3000,
+                  title: "¡Procesando!",
+                  html: "Por favor, espera mientras se completa la operación...",
                   timerProgressBar: true,
                   didOpen: () => {
                     Swal.showLoading();
-                    const timer = Swal.getPopup().querySelector("b");
-                    timerInterval = setInterval(() => {
-                      timer.textContent = `${Swal.getTimerLeft()}`;
-                    }, 100);
-                  },
-                  willClose: () => {
-                    clearInterval(timerInterval);
-                    window.location.href = '/sorteo_verificacion';
-                  }
-                }).then((result) => {
-                  /* Read more about handling dismissals below */
-                  if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log("I was closed by the timer");
+                    fetch("./api/change_draw_status?est=disabled&id=" + id, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result.value)
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                        Swal.close();
+                        let timerInterval;
+                        Swal.fire({
+                          icon: 'info',
+                          title: '¡Éxito al finalizar!',
+                          timer: 3000,
+                          timerProgressBar: true,
+                          didOpen: () => {
+                            Swal.showLoading();
+                          },
+                          willClose: () => {
+                            clearInterval(timerInterval);
+                            window.location.reload();
+                          }
+                        });
+                      })
+                      .catch((error) => {
+                        Swal.close();
+                        console.error('Error en la petición:', error);
+                        Swal.fire({
+                          icon: 'error',
+                          title: '¡Error!',
+                          text: 'Hubo un problema al procesar la solicitud.',
+                          timer: 3000,
+                          showConfirmButton: false
+                        });
+                      });
                   }
                 });
-
-              })
-              .catch((error) => {
-                Swal.close(); // Asegúrate de cerrar el SweetAlert de "Procesando" en caso de error
-                console.error('Error en la petición:', error);
-                Swal.fire({
-                  icon: 'error',
-                  title: '¡Error!',
-                  text: 'Hubo un problema al procesar la solicitud.',
-                  timer: 3000,
-                  showConfirmButton: false
-                });
-              });
-
-          },
-        });
+              }
+            });
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: 'error',
+              title: '¡Error!',
+              text: 'No se pudo cargar el formulario.',
+              timer: 3000,
+              showConfirmButton: false
+            });
+          });
       }
     });
 
@@ -388,7 +346,6 @@
     }
 
     const result = await response.json();
-    console.log("Resultado del cambio de estado:", result); // Log del resultado
 
     if (result.success) {
       Swal.fire({
@@ -411,7 +368,6 @@
 
   // FUNCION PARA VER DETALLES DEL SORTEO
   async function obsSorteo(id, condition = false) {
-    console.log(`Obteniendo detalles del sorteo ID: ${id}`); // Log de la acción
     try {
       const response = await fetch('./admin/views/sorteo/only_view?acvi=' + id, {
         method: 'POST',
@@ -425,7 +381,6 @@
       }
 
       const htmlPersonalizado = await response.text();
-      console.log("HTML recibido para vista de acciones:", htmlPersonalizado); // Log del HTML recibido
 
       Swal.fire({
         html: htmlPersonalizado,
@@ -446,6 +401,15 @@
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });
+    }
+  }
+
+  function validarFormatoCuatroDigitos(input) {
+    const regex = /^\d{4}$/; // ^ inicio, \d un dígito, {4} exactamente 4 veces, $ fin
+    if (regex.test(input)) {
+      return true;
+    } else {
+      return false;
     }
   }
 </script>

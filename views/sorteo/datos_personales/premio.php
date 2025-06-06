@@ -1,4 +1,122 @@
- 
+<?php
+
+use App\Controllers\SorteoController;
+
+$sorteoController = new SorteoController();
+$sorteo = $sorteoController->obtenerSorteoActivo();
+
+// Función general para obtener texto multilenguaje
+/* function getTextoByLang($jsonText, $idioma = 'ES') */
+/* { */
+/*   if (!$jsonText) return ''; */
+/*   if (is_array($jsonText)) { */
+/*     return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? ''; */
+/*   } */
+/*   $arr = json_decode($jsonText, true); */
+/*   if (is_array($arr)) { */
+/*     return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? ''; */
+/*   } */
+/*   return ''; */
+/* } */
+
+/* function getTextoByLang($jsonText, $idioma = 'ES') */
+/* { */
+/*   if (!$jsonText) return ''; */
+/*   if (is_array($jsonText)) { */
+/*     $idioma = strtoupper($idioma); */
+/*     return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? ''; */
+/*   } */
+/*   $arr = json_decode($jsonText, true); */
+/*   if (is_array($arr)) { */
+/*     $idioma = strtoupper($idioma); */
+/*     return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? ''; */
+/*   } */
+/*   return ''; */
+/* } */
+
+
+function getTextoByLang($jsonText, $idioma = 'ES')
+{
+  if (!$jsonText) return '';
+  if (is_array($jsonText)) {
+    $idioma = strtoupper($idioma);
+    return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? '';
+  }
+  // LIMPIA el string si viene con comillas escapadas
+  $jsonText = trim($jsonText, "\"");
+  $jsonText = stripslashes($jsonText);
+
+  $arr = json_decode($jsonText, true);
+  if (is_array($arr)) {
+    $idioma = strtoupper($idioma);
+    return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? '';
+  }
+  return '';
+}
+
+
+
+// Detectar idioma desde cookie o localStorage (si se pasa por GET, POST, etc.)
+/* $idioma = 'ES'; */
+/* if (isset($_COOKIE['language'])) { */
+/*   $idioma = strtoupper($_COOKIE['language']); */
+/* } */
+/* if (isset($_GET['lang'])) { */
+/*   $idioma = strtoupper($_GET['lang']); */
+/* } */
+
+$idioma = 'ES';
+if (isset($_COOKIE['language'])) {
+  $idioma = strtoupper($_COOKIE['language']);
+}
+if (isset($_GET['lang'])) {
+  $idioma = strtoupper($_GET['lang']);
+}
+if (!in_array($idioma, ['ES', 'EN'])) {
+  $idioma = 'ES';
+}
+
+// Obtener texto traducido para el título
+$titulo = 'Título no disponible';
+if ($idioma === 'EN') {
+  $titulo = 'Title not available';
+}
+
+$descripcion = '';
+$textoImportante = '';
+$premiosMulti = [];
+$precioBoleto = '';
+$boletosMinimos = '';
+$urlRifa = '';
+$numeroContacto = '';
+
+if ($sorteo['success'] && isset($sorteo['data'])) {
+  // Título y descripción general
+  $titulo = getTextoByLang($sorteo['data']['titulo'] ?? '', $idioma);
+  $descripcion = getTextoByLang($sorteo['data']['descripcion'] ?? '', $idioma);
+  $textoImportante = getTextoByLang($sorteo['data']['texto_importante'] ?? '', $idioma);
+
+  // Datos de configuración
+  if (isset($sorteo['data']['configuracion'])) {
+    $precioBoleto = $sorteo['data']['configuracion']['precio_boleto'] ?? '1';
+    $boletosMinimos = $sorteo['data']['configuracion']['boletos_minimos'] ?? '1';
+  }
+  $urlRifa = $sorteo['data']['url_rifa'] ?? '';
+  $numeroContacto = $sorteo['data']['numero_contacto'] ?? '';
+
+  // Premios multilenguaje
+  if (isset($sorteo['data']['premios']['nombres'], $sorteo['data']['premios']['descripciones'])) {
+    $nombres = $sorteo['data']['premios']['nombres'];
+    $descripciones = $sorteo['data']['premios']['descripciones'];
+    foreach ($nombres as $i => $nombre) {
+      $premiosMulti[] = [
+        'nombre' => getTextoByLang($nombre, $idioma),
+        'descripcion' => getTextoByLang($descripciones[$i] ?? '', $idioma)
+      ];
+    }
+  }
+}
+?>
 <link rel="stylesheet" href="assets/css/premio.css">
 
 <main class="supergana-section" role="main">
@@ -6,76 +124,63 @@
     <div class="row">
       <div class="col-xl-12">
         <article class="supergana-content text-center">
-          <h1 class="section-title__title">🎉 ¡POR EL SUPERGANA! 🎉</h1>
+
+          <h1 class="section-title__title"><?php echo htmlspecialchars($titulo); ?></h1>
+          <?php if ($descripcion): ?>
+            <div class="mb-4" style="font-size:1.1em;"><strong><?php echo nl2br(htmlspecialchars($descripcion)); ?></strong></div>
+          <?php endif; ?>
+
           <div class="prize-details">
             <div class="alert alert-info mb-4" role="alert">
-              <strong>Al completarse el 80% juega nuestra rifa</strong>
+              <strong data-i18n="80_percent">Al completarse el 80% juega nuestra rifa</strong>
             </div>
 
             <section class="lottery-info mb-4" aria-label="Información básica">
-              <p>📍 Juega por la lotería de SuperGana</p>
-              <p>🎟️ Valor del boleto: <span class="price">$3</span></p>
-              <p>🎟️ Compra mínima: <span class="min-tickets">2 boletos</span> en adelante</p>
+              <p data-i18n="play_supergana">📍 Juega por la lotería de SuperGana</p>
+              <p class="price" style="line-height:1; font-size:1.2em;"><span data-i18n="price_ticket" class="mb-0" style="line-height:1;"> ??? Valor del boleto: </span> $<?php echo htmlspecialchars((string)$precioBoleto); ?></p>
+              <p class="min-tickets"><span data-i18n="minimum_tickets">??? Compra m�nima: </span> <?php echo htmlspecialchars((string)$boletosMinimos); ?></p>
             </section>
 
             <section class="prize-list mb-4" aria-label="Lista de premios">
-              <div class="prize-item" role="article">
-                <h2>🛵 Premio Mayor</h2>
-                <div class="premio-descripcion">
-                  Si estás en Estados Unidos, ganas una moto<br>
-                  Si estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes
+              <?php foreach ($premiosMulti as $premio): ?>
+                <div class="prize-item" role="article">
+                  <h2><?php echo htmlspecialchars($premio['nombre']); ?></h2>
+                  <div class="premio-descripcion">
+                    <?php echo nl2br(htmlspecialchars($premio['descripcion'])); ?>
+                  </div>
                 </div>
-              </div>
-              <div class="prize-item" role="article">
-                <h2>📱 Segundo Premio</h2>
-                <div class="premio-descripcion">
-                  Un iPhone 16 Pro Max<br>
-                  Disponible para cualquier país participante
-                </div>
-              </div>
-              <div class="prize-item" role="article">
-                <h2>💵 Tercer Premio</h2>
-                <div class="premio-descripcion">
-                  $1000 en efectivo<br>
-                  Para participar debes comprar 10 boletos o más<br>
-                  Este premio se activa con el 50% de los boletos vendidos
-                </div>
-              </div>
+              <?php endforeach; ?>
             </section>
 
             <section class="date-info mb-4" aria-label="Fecha del sorteo">
-              <h2>🗓️ ¿Cuándo se juega la rifa?</h2>
-              <p>La fecha del sorteo será anunciada una vez se alcance el 80% de los boletos vendidos</p>
+              <h2 data-i18n="when_raffle_plays">🗓️ ¿Cuándo se juega la rifa?</h2>
+              <p data-i18n="when_raffle_plays_desc">La fecha del sorteo será anunciada una vez se alcance el 80% de los boletos vendidos</p>
             </section>
 
             <section class="official-link mb-4" aria-label="Enlace oficial">
-              <h2>🔗 Enlace oficial para seguir el sorteo:</h2>
-              <a href="https://www.supergana.com" target="_blank" class="thm-btn" rel="noopener">
-                👉 SuperGana <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+              <h2 data-i18n="official_link">🔗 Enlace oficial para seguir el sorteo:</h2>
+              <a href="<?php echo htmlspecialchars((string)$urlRifa); ?>" target="_blank" class="thm-btn" rel="noopener">
+                LOTERIA OFICIAL <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                 <span class="sr-only">(se abre en una nueva ventana)</span>
               </a>
             </section>
 
             <section class="contact-info mb-4" aria-label="Información de contacto">
-              <h2>📞 Número de contacto:</h2>
-              <p><a href="tel:+14074287580" class="phone-number">
-                  <strong>+1 407 4287580</strong>
+              <h2><span data-i18n="contact_number"> Número de contacto:</span> </h2>
+              <p><a href="tel:14074287580" class="phone-number">
+                  <strong>+1 407-428-7580</strong>
+                </a></p>
+              <h2><span data-i18n="contact_number_support"> Número de soporte:</span> </h2>
+              <p><a href="tel:14077329524?>" class="phone-number">
+                  <strong>+1 407-732-9524</strong>
                 </a></p>
             </section>
-
-            <section class="important-info mb-4" aria-label="Información importante">
-              <h2>Información importante:</h2>
-              <ul class="list-unstyled">
-                <li>El Premio Mayor y el Segundo Premio se juegan con el 80% de los boletos vendidos</li>
-                <li>El Tercer Premio ($1000) se juega con el 50% de los boletos vendidos, exclusivo para quienes compren 10 boletos o más</li>
-                <li>Todos los premios se juegan por la lotería SuperGana</li>
-              </ul>
-            </section>
-
-            <aside class="example-box" role="complementary">
-              <h2>💬 Ejemplo:</h2>
-              <p class="example-text">Si compras 2 boletos por $6, participas por todos los premios principales. Si compras 10 boletos o más, además participas por el premio de $1000.</p>
-            </aside>
+            <!-- <?php if ($textoImportante): ?> -->
+            <!--   <aside class="example-box" role="complementary"> -->
+            <!--     <h2>Información importante</h2> -->
+            <!--     <p class="example-text"><?php echo nl2br(htmlspecialchars($textoImportante)); ?></p> -->
+            <!--   </aside> -->
+            <!-- <?php endif; ?> -->
           </div>
         </article>
       </div>

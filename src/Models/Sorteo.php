@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Config\Conexion;
+use App\config\Conexion;
 use Exception;
-
 
 class SorteoModel
 {
@@ -169,6 +168,105 @@ class SorteoModel
       return array_values($sorteos);
     } catch (Exception $e) {
       throw new Exception("Error al obtener los datos de los sorteos del usuario: " . $e->getMessage());
+    }
+  }
+
+  public function obtenerSorteosActivos()
+  {
+    try {
+      $sql = "SELECT
+        r.id_rifa,
+        r.titulo,
+        r.descripcion,
+        r.imagen,
+        r.fecha_creacion,
+        c.estado,
+        c.url_rifa,
+        c.texto_ejemplo,
+        c.numero_contacto,
+        c.id_configuracion,
+        c.boletos_maximos,
+        c.boletos_minimos,
+        c.precio_boleto,
+        GROUP_CONCAT(p.nombre SEPARATOR ' - ') AS nombres_premios,
+        GROUP_CONCAT(p.descripcion SEPARATOR ' || ') AS descripciones_premios
+      FROM rifas r
+      INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+      INNER JOIN premios p ON r.id_rifa = p.id_rifa
+      WHERE
+        c.estado = 1
+      GROUP BY
+        r.id_rifa,
+        r.titulo,
+        r.descripcion,
+        r.imagen,
+        r.fecha_creacion,
+        c.estado,
+        c.url_rifa,
+        c.texto_ejemplo,
+        c.numero_contacto,
+        c.id_configuracion,
+        c.boletos_maximos,
+        c.boletos_minimos,
+        c.precio_boleto
+      ";
+
+      $result = $this->db->consultar($sql, []);
+
+      // Procesar los resultados
+      $sorteos = [];
+      foreach ($result as $row) {
+        $id_rifa = $row['id_rifa'];
+
+        $nombres_premios_array = explode(' - ', $row["nombres_premios"]);
+        $descripciones_premios_array = explode(' || ', $row["descripciones_premios"]);
+
+        // Decodificar cada nombre y descripción de premio, limpiando las barras invertidas y comillas
+        foreach ($nombres_premios_array as &$nombre) {
+          $nombre = trim($nombre, "\"");
+          $nombre = stripslashes($nombre);
+          $nombre = json_decode($nombre, true);
+          if (!is_array($nombre)) {
+            $nombre = '';
+          }
+        }
+        foreach ($descripciones_premios_array as &$desc) {
+          $desc = trim($desc, "\"");
+          $desc = stripslashes($desc);
+          $desc = json_decode($desc, true);
+          if (!is_array($desc)) {
+            $desc = '';
+          }
+        }
+
+        if (!isset($sorteos[$id_rifa])) {
+          $sorteos[$id_rifa] = [
+            'id_rifa' => $id_rifa,
+            'titulo' => $row['titulo'],
+            'descripcion' => $row['descripcion'],
+            'imagen' => $row['imagen'],
+            'fecha_creacion' => $row['fecha_creacion'],
+            'estado' => $row['estado'],
+            'url_rifa' => $row['url_rifa'],
+            'numero_contacto' => $row['numero_contacto'],
+            'texto_importante' => $row['texto_ejemplo'],
+            'configuracion' => [
+              'id_configuracion' => $row['id_configuracion'],
+              'boletos_maximos' => $row['boletos_maximos'],
+              'boletos_minimos' => $row['boletos_minimos'],
+              'precio_boleto' => $row['precio_boleto'],
+            ],
+            'premios' => [
+              'nombres' => $nombres_premios_array,
+              'descripciones' => $descripciones_premios_array
+            ]
+          ];
+        }
+      }
+
+      return array_values($sorteos);
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener los datos de los sorteos: " . $e->getMessage());
     }
   }
 }

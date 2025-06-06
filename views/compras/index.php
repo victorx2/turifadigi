@@ -1,117 +1,18 @@
 <?php include_once "views/layouts/header.php"; ?>
 
-<section class="main-slider">
-
-  <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
-                "effect": "fade",
-                "pagination": {
-                "el": "#main-slider-pagination",
-                "type": "bullets",
-                "clickable": true
-                },
-                "navigation": {
-                "nextEl": "#main-slider__swiper-button-next",
-                "prevEl": "#main-slider__swiper-button-prev"
-                },
-                "autoplay": {
-                    "delay": 8000
-                } 
-            }'>
-
-    <div class="swiper-wrapper">
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/sorteo.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
-                <p class="main-slider__text">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn">Comenzar ahora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-2.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shature-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
-                <p class="main-slider__text">Control total sobre tus sorteos <br> y participantes.</p>
-                <div class="main-slider__btn-box">
-              <!--     <a href="/login" class="main-slider__btn thm-btn">Regístrate gratis</a> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-3.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
-                <p class="main-slider__text">Múltiples métodos de pago <br> y transacciones seguras.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn">Conoce más</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="swiper-pagination" id="main-slider-pagination"></div>
-  </div>
-</section>
+<div class="separador"></div>
+<style>
+  .separador {
+    margin-top: 100px;
+  }
+</style>
 
 <div class="container-lg">
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 mb-4">
-      <h1 style="color: #5497CC;" class=" text-center">Boletos Comprados</h1>
-      <h5 class=" text-center"> <strong>- Gestión de Boletos de Rifa -</strong> </h5>
+      <h1 style="color: #5497CC;" class=" text-center" data-i18n="purchased_tickets">Boletos Comprados</h1>
+      <h5 class=" text-center" data-i18n="purchased_tickets_desc"> <strong>- Gestión de Boletos de Rifa -</strong> </h5>
     </div>
     <div class="col-lg-2"></div>
   </div>
@@ -126,12 +27,13 @@
         <thead class="align-middle">
           <tr>
             <th class="text-center bg-body-tertiary" width="1%">#</th>
-            <th class="text-center bg-body-tertiary" width="20%">FECHA DE COMPRA</th>
-            <th class="text-center bg-body-tertiary" width="25%">COMPRADOR</th>
-            <th class="text-center bg-body-tertiary" width="20%">BOLETOS</th>
-            <th class="text-center bg-body-tertiary" width="10%">MONTO</th>
-            <th class="text-center bg-body-tertiary" width="10%">ESTADO</th>
-            <th class="text-center bg-body-tertiary" width="14%">ACCIONES</th>
+            <th class="text-center bg-body-tertiary" width="18%" data-i18n-th="purchase_date_2">FECHA DE COMPRA</th>
+            <th class="text-center bg-body-tertiary" width="20%" data-i18n-th="datatable_buyer">COMPRADOR</th>
+            <th class="text-center bg-body-tertiary" width="1%" data-i18n-th="datatable_raffle">SORTEO</th>
+            <th class="text-center bg-body-tertiary" width="15%" data-i18n-th="datatable_tickets">BOLETOS</th>
+            <th class="text-center bg-body-tertiary" width="10%" data-i18n-th="datatable_amount">MONTO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_status">ESTADO</th>
+            <th class="text-center bg-body-tertiary" width="14%" data-i18n-th="datatable_actions">ACCIONES</th>
           </tr>
         </thead>
       </table>
@@ -146,89 +48,116 @@
 <script>
   // CARGA DE LA TABLA
 
-  fetch('./api/get_purchase', {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json())
-    .then(dataD => {
-      if (dataD.success) {
+  function getPurchases() {
+    fetch('./api/get_purchase', {
+        method: 'POST',
+        headers: { // Cambiado 'header' a 'headers' (es el nombre correcto en Fetch API)
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        // Siempre verifica si la respuesta es OK antes de intentar parsear el JSON
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(dataD => {
+        if (dataD.success) {
+          let data = dataD.data;
 
-        let i = 0;
-        let data = dataD.data;
+          data.forEach((elemento, index) => {
+            let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
+            let acciones = elemento['estado'] == 'aprobado' ?
+              `<div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, 1, 1)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
+                <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
+              </button>
+            </div>` :
+              `<div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_compra']}, 1, null)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago">
+                  <i class="fa-solid fa-pen"></i>
+              </button>`;
 
-        data.forEach((elemento, index) => {
-          let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
-          let acciones = elemento['estado'] == 'pagado' ? `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="pregunta(${elemento['id_compra']}, 1, 1)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago" ${elemento['estado'] === 'Pagado' ? 'disabled' : ''}>
-                          <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
-                        </button>
-                    </div>` : `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-info btn-sm" onclick="pregunta(${elemento['id_compra']}, 1, null)" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Confirmar Pago">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>`;
-          data[i]['contador'] = (i + 1);
-          data[i]['sorteo'] = elemento['id_rifa'];
-          data[i]['boletos'] = boletos;
-          data[i]['acciones'] = acciones;
-          data[i]['estado'] = elemento['estado'] == 'pagado' ? `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2">Pagado</small>` : `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2">Pendiente</small>`;
-          i++;
-        })
+            data[index]['contador'] = (index + 1); // Usa 'index' directamente
+            data[index]['sorteo'] = elemento['id_rifa'];
+            data[index]['boletos'] = boletos;
+            data[index]['acciones'] = acciones;
 
-        const datos = {
-          'id_tabla': '#tabla',
-          'data': data,
-          'columns': [{
-              'data': 'contador',
-              'title': '#',
-              'className': 'text-center'
-            },
-            {
-              'data': 'fecha_compra',
-              'title': 'FECHA DE COMPRA',
-              'className': 'text-center'
-            },
-            {
-              'data': 'cliente',
-              'title': 'COMPRADOR',
-              'className': 'text-center'
-            },
-            {
-              'data': 'boletos',
-              'title': 'BOLETOS',
-              'className': 'text-center'
-            },
-            {
-              'data': 'sorteo',
-              'title': 'SORTEO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'total',
-              'title': 'MONTO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'estado',
-              'title': 'ESTADO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'acciones',
-              'title': 'ACCIONES',
-              'className': 'text-center'
+            if (elemento['estado'] == 'aprobado') {
+              data[index]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-success-emphasis bg-success-subtle border border-success-subtle rounded-2" data-i18n="paid">${i18n.t("paid")}</small>`;
+            } else if (elemento['estado'] == 'pendiente') {
+              data[index]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-2" data-i18n="pending">${i18n.t("pending")}</small>`;
+            } else if (elemento['estado'] == 'rechazado') {
+              data[index]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-2" data-i18n="rejected">${i18n.t("rejected")}</small>`;
+            } else {
+              data[index]['estado'] = `<small class="d-inline-flex px-2 py-1 fw-semibold text-secondary-emphasis bg-secondary-subtle border border-secondary-subtle rounded-2">${elemento['estado']}</small>`;
             }
-          ]
-        };
+          });
 
-        cargar_tabla_boletos(datos);
+          const datos = {
+            'id_tabla': '#tabla',
+            'data': data,
+            'columns': [{
+                'data': 'contador',
+                'title': "#",
+                'className': 'text-center'
+              },
+              {
+                'data': 'fecha_compra',
+                'title': i18n.t("purchase_date_2"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'cliente',
+                'title': i18n.t("datatable_buyer"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'sorteo',
+                'title': i18n.t("datatable_raffle"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'boletos',
+                'title': i18n.t("datatable_tickets"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'total',
+                'title': i18n.t("datatable_amount"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'estado',
+                'title': i18n.t("datatable_status"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'acciones',
+                'title': i18n.t("datatable_actions"),
+                'className': 'text-center'
+              }
+            ]
+          };
 
-      } else {
-        console.error('Error al cargar los datos de la tabla:', data.error);
-      }
-    })
-    .catch(error => console.error('Error:', error));
+          // Asumo que 'cargar_tabla_boletos' es una función global o accesible
+          cargar_tabla_boletos(datos);
+
+        } else {
+          console.error('Error al cargar los datos de la tabla:', dataD.error);
+        }
+      })
+      .catch(error => console.error('Error en la solicitud de compra:', error)); // Mensaje más específico
+  }
+
+  // Llamar a la función inmediatamente al cargar la página (opcional)
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(getPurchases, 300); // Esperar 1 segundo antes de la primera llamada
+
+    // Llamar a la función cada 30 segundos (30000 milisegundos)
+    const intervalId = setInterval(getPurchases, 30000);
+  });
 
   // SWEETAL ALERT PARA CONFIRMAR PAGO
 

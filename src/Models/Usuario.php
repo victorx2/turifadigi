@@ -9,12 +9,14 @@ class Usuario
 {
   // Constantes para las tablas y columnas de la base de datos
   const TABLE_NAME = 'usuarios';
+  const TABLE_DATA = 'datos_personales';
   const COLUMN_ID = 'id_usuario';
   const COLUMN_STATUS = 'id_estatus';
   const COLUMN_NAME = 'usuario';
+  const COLUMN_CI = 'cedula';
   const COLUMN_PASSWORD = 'password';
   const COLUMN_PHONE = 'telefono';
-  const COLUMN_EMAIL = 'correo';
+
   const COLUMN_LAST_ACCESS = 'ultimo_acceso';
   const COLUMN_ATTEMPTS = 'intentos_fallidos';
 
@@ -31,7 +33,7 @@ class Usuario
   private $audi;
 
   /**
-   * Constructor: Inicializa la conexión a la base de datos y el modelo de datos personales
+   * Constructor: Inicializa la conexi�n a la base de datos y el modelo de datos personales
    */
   public function __construct()
   {
@@ -42,33 +44,38 @@ class Usuario
 
   /**
    * Inserta un nuevo usuario en la base de datos
-   * @param array $data - Datos del usuario (usuario, password, telefono, correo)
+   * @param array $data - Datos del usuario (usuario, password, telefono)
    * @return int|bool - ID del usuario insertado o false en caso de error
    */
   public function insert(array $data): int|bool
   {
     try {
+      error_log("Intentando insertar usuario con datos: " . print_r($data, true));
+
       // Validar datos requeridos
       if (empty($data['usuario']) || empty($data['password'])) {
         error_log("Error en Usuario::insert: Datos requeridos faltantes");
         return false;
       }
 
+      // Sanitizar datos
+      $usuario = filter_var($data['usuario'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH);
+      $password = filter_var($data['password'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH);
+
       // Verificar si el usuario ya existe
-      if ($this->existeUsuario($data['usuario'])) {
+      if ($this->existeUsuario($usuario)) {
         error_log("Error en Usuario::insert: El usuario ya existe");
         return false;
       }
 
       // Insertar el usuario
       $userSql = "INSERT INTO " . self::TABLE_NAME . " 
-                (usuario, password,correo,nivel,estado) 
-                VALUES (:usuario, :password,:correo,1,1)";
+                (usuario, password,nivel,estado) 
+                VALUES (:usuario, :password, 1, 1)";
 
       $userId = $this->db->ejecutar($userSql, [
-        ':usuario' => $data['usuario'],
-        ':password' => password_hash($data['password'], PASSWORD_DEFAULT),
-        ':correo' => $data['correo']
+        ':usuario' => $usuario,
+        ':password' => password_hash($password, PASSWORD_DEFAULT),
       ]);
 
       $this->audi->store([
@@ -146,8 +153,8 @@ class Usuario
   /**
    * Actualiza los intentos fallidos de inicio de sesión
    * @param int $id_usuario - ID del usuario
-   * @param int $intentos - Número de intentos fallidos
-   * @return bool - true si se actualizó correctamente, false en caso contrario
+   * @param int $intentos - N�mero de intentos fallidos
+   * @return bool - true si se actualiz� correctamente, false en caso contrario
    */
   public function actualizarIntentosFallidos(int $id_usuario, int $intentos): bool
   {
@@ -166,9 +173,9 @@ class Usuario
   }
 
   /**
-   * Actualiza la fecha y hora del último acceso
+   * Actualiza la fecha y hora del �ltimo acceso
    * @param int $id_usuario - ID del usuario
-   * @return bool - true si se actualizó correctamente, false en caso contrario
+   * @return bool - true si se actualiz� correctamente, false en caso contrario
    */
   public function actualizarUltimoAcceso(int $id_usuario): bool
   {
@@ -186,8 +193,8 @@ class Usuario
   /**
    * Registra datos personales para un usuario
    * @param int $id_usuario - ID del usuario
-   * @param array $datos - Datos personales (nombre, apellido, cedula, telefono, ubicacion)
-   * @return bool - true si se registró correctamente, false en caso contrario
+   * @param array $datos - Datos personales (nombre, apellido, telefono, ubicacion)
+   * @return bool - true si se registr� correctamente, false en caso contrario
    */
   public function registrarDatosPersonales(int $id_usuario, array $datos): bool
   {
@@ -216,6 +223,46 @@ class Usuario
       [':username' => $username]
     );
 
+    return $result && $result[0]['count'] > 0;
+  }
+
+  public function existeCedula($cedula): bool
+  {
+    error_log("Verificando cédula: " . $cedula);
+
+    $result = $this->db->consultar(
+      "SELECT COUNT(*) as count FROM " . self::TABLE_DATA . " WHERE " . self::COLUMN_CI . " = :cedula",
+      [':cedula' => $cedula]
+    );
+
+    error_log("Resultado de búsqueda de cédula: " . print_r($result, true));
+    return $result && $result[0]['count'] > 0;
+  }
+
+  public function existeTelefono($telefono): bool
+  {
+    error_log("Verificando teléfono: " . $telefono);
+
+    // Validación básica de formato de teléfono
+    if (empty($telefono)) {
+      error_log("Teléfono vacío");
+      return false;
+    }
+
+    // Limpiar el teléfono de caracteres no numéricos
+    $telefono = preg_replace('/[^0-9]/', '', $telefono);
+
+    if (strlen($telefono) < 10) {
+      error_log("Teléfono inválido (muy corto): " . $telefono);
+      return false;
+    }
+
+    $result = $this->db->consultar(
+      "SELECT COUNT(*) as count FROM " . self::TABLE_DATA . " WHERE " . self::COLUMN_PHONE . " = :telefono",
+      [':telefono' => $telefono]
+    );
+
+    error_log("Resultado de búsqueda de teléfono: " . print_r($result, true));
     return $result && $result[0]['count'] > 0;
   }
 

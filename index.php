@@ -1,4 +1,5 @@
 <?php
+
 // Carga las dependencias necesarias usando Composer
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -12,6 +13,16 @@ use App\Controllers\{AuthController, RegisterUserController, HomeController, Bol
 // Configuración de zona horaria y localización
 date_default_timezone_set('America/Caracas');
 setlocale(LC_TIME, 'Spanish');
+
+/* // Obtener el idioma preferido de la sesión o cookie */
+/* $preferred_language = $_SESSION['language'] ?? $_COOKIE['language'] ?? 'es'; */
+/*  */
+/* // Configurar la localización según el idioma seleccionado */
+/* setlocale(LC_TIME, $preferred_language === 'en' ? 'English' : 'Spanish'); */
+/*  */
+
+
+
 
 // Carga las variables de entorno desde el archivo .env
 // $dotenv = Dotenv::createImmutable(__DIR__)->load();
@@ -94,15 +105,6 @@ switch (strtok($route, '?')) {
         }
         break;
 
-    case '/home':
-        if (isset($_SESSION['usuario'])) {
-            (new HomeController())->index();
-        } else {
-            header("Location: /login");
-            exit;
-        }
-        break;
-
     case '/signup':
         if (!isset($_SESSION['usuario'])) {
             require_once 'views/auth/signup.php';
@@ -116,9 +118,12 @@ switch (strtok($route, '?')) {
         break;
 
     case '/sorteo':
-        (new BoletoController())->index();
+        require_once 'views/rifa/sorteo.php';
         break;
 
+    case '/verificar_boleto':
+        require_once 'views/verificar/index.php';
+        break;
     case '/rifa_config':
         require_once 'views/admin/rifa_config.php';
         break;
@@ -137,6 +142,11 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
+        if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
         require_once 'views/admin/compra.index.php';
         break;
     case '/sorteo_verificacion':
@@ -144,6 +154,11 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
+        if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
         require_once 'views/admin/sorteos.index.php';
         break;
     case '/editar_sorteo':
@@ -151,15 +166,38 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
+        if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
         require_once 'views/admin/editar_sorteo.php';
         break;
-        
+
     case '/crear_sorteo':
         if (!isset($_SESSION['usuario'])) {
             header("Location: /login");
             exit;
         }
-        (new ConfigMainController())->index();
+        if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
+        require_once 'views/admin/crear_sorteo.php';
+        break;
+
+    case '/restablecer_contrasena':
+        if (!isset($_SESSION['usuario'])) {
+            header("Location: /login");
+            exit;
+        }
+        if ($_SESSION['rol_usuario'] != 2) {
+            header("Location: /");
+            exit;
+        }
+
+        require_once 'views/admin/resetear_contra.php';
         break;
 
     //SECCION PANTALLAS DE SWEET ALERT
@@ -174,7 +212,9 @@ switch (strtok($route, '?')) {
     case '/admin/views/compra/accions_view':
         require_once 'views/admin/views/compra/vistaAcciones.php';
         break;
-
+    case '/admin/views/sorteo/action_riffle':
+        require_once 'views/admin/views/sorteo/vistaFinalizarSorteo.php';
+        break;
 
     //SECCION PANTALLAS DE SWEET ALERT DE SORTEO
     case '/sorteo/view/accion_view':
@@ -184,62 +224,7 @@ switch (strtok($route, '?')) {
     case '/admin/views/sorteo/accion_view':
         require_once 'views/admin/views/sorteo/vistaAcciones.php';
         break;
-
-
-    //SECCIONES API
-    case '/api/login':
-        require_once 'src/API/login.php';
-        break;
-
-    case '/api/recovery_password':
-        require_once 'src/API/passwordRecovery.php';
-        break;
-    case '/api/session_verfication':
-        require_once 'src/API/sessionVerify.php';
-        break;
-
-    case '/api/get_tickets':
-        require_once 'src/API/boletosDisponibility.php';
-        break;
-
-    case '/api/change_purchase_status':
-        require_once 'src/API/admin.cambiarEstadoCompra.php';
-        break;
-
-    case '/api/change_draw_status':
-        require_once 'src/API/admin.cambiarEstadoSorteo.php';
-        break;
-
-    case '/api/process_purchase':
-        require_once 'src/API/procesarCompra.php';
-        break;
-
-    case '/api/session_destroy':
-        require_once 'src/API/destruirSesion.php';
-        break;
-
-    case '/api/get_purchase':
-        $cmp = $_GET["cmp"] ?? '';
-        if ($cmp != '') {
-            require_once 'src/API/admin.obtenerCompras.php';
-            break;
-        }
-    case '/api/get_sorteo':
-        $cmp = $_GET["cmp"] ?? '';
-        if ($cmp != '') {
-            require_once 'src/API/admin.obtenerSorteo.php';
-            break;
-        }
-        require_once 'src/API/obtenerCompras.php';
-        break;
-    case '/api/exchange_rate':
-        require_once 'src/API/verificar.tasa.php';
-        break;
-    case '/api/coin_update':
-        require_once 'src/API/actualizar_coin.php';
-        break;
-
     default:
-        require_once 'views/main.php';
+        require_once 'views/errors/404.php';
         break;
 }

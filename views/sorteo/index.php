@@ -6,10 +6,14 @@
 
 <div class="container-fluid">
   <div class="text-center">
-    <h1 class="lista-title">LISTA DE BOLETOS</h1>
+    <h1 class="lista-title" data-i18n="list_tickets">LISTA DE BOLETOS</h1>
 
     <div class="progressLoader">
       <style>
+        #siguiente {
+          scroll-margin-top: 110px;
+        }
+
         .no-sort-activ {
           display: flex;
           justify-content: center;
@@ -126,7 +130,7 @@
     <div class="elegir-title">
       <button id="btnRandomNumber" class="magic-button">
         <i class="fa fa-star"></i>
-        <span>ELEGIR A LA SUERTE</span>
+        <span data-i18n="choose_randomly">ELEGIR A LA SUERTE</span>
         <i class="fa fa-star"></i>
       </button>
     </div>
@@ -139,32 +143,38 @@
     </div>
 
     <div class="buscar-container">
-      <input type="text" id="buscador" class="form-control" placeholder="Buscar boleto (ej: 001, 0020...)">
-      <button class="btn-buscar">BUSCAR</button>
+      <input type="text" id="buscador" class="form-control" placeholder="Buscar boleto (ej: 001, 0020...)" data-i18n-placeholder="search_ticket_placeholder">
+      <button class="btn-buscar" data-i18n="search">BUSCAR</button>
     </div>
 
     <div class="boletos-container">
       <div class="boletos-grid" id="boletosList">
         <!-- Los boletos se generarán dinámicamente aquí -->
       </div>
-      <div class="loading-text" style="display: block;">Cargando boletos...</div>
+      <div class="loading-text" style="display: block;" data-i18n="loading_tickets">Cargando boletos...</div>
     </div>
 
     <div class="seleccionados-container" style="display: none;">
-      <span class="seleccionados-text">SELECCIONADOS</span>
+      <span class="seleccionados-text" data-i18n="selected">SELECCIONADOS</span>
       <div class="contador">0</div>
       <div class="boletos-seleccionados-chips"></div>
-      <button class="btn btn-continuar">CONTINUAR</button>
+      <button class="btn btn-continuar" data-i18n="continue">CONTINUAR</button>
     </div>
   </div>
 
   <div id="datosPersonales" class="form-personal" style="display: none;">
+    <div class="payment-subtitle" id="siguiente">
+      <i class="fas fa-arrow-down"></i>
+      <span data-i18n="slide_down_to_continue">deslice hacia abajo para continuar</span>
+      <i class="fas fa-arrow-down"></i>
+    </div>
     <div class="payment-section">
       <div class="payment-title">
         <i class="fas fa-money-bill"></i>
-        METODO DE PAGO
+        <span data-i18n="payment_method">METODO DE PAGO</span>
+        <i class="fas fa-money-bill"></i>
       </div>
-      <div class="payment-subtitle">Transferencia o depósito</div>
+      <div class="payment-subtitle" data-i18n="payment_method_subtitle">Transferencia o depósito</div>
 
       <div class="payment-methods">
         <div class="payment-method" onclick="mostrarDatosDePago('pago_movil')">
@@ -182,9 +192,9 @@
         <div class="payment-method" onclick="mostrarDatosDePago('banco_venezuela')">
           <img src="assets/img/webp/banco_venezuela.webp" alt="banco_de_Venezuela">
         </div>
-        <div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
+        <!--<div class="payment-method" onclick="mostrarDatosDePago('bancolombia')">
           <img src="assets/img/webp/bancolombia.webp" alt="bancolombia">
-        </div>
+        </div>-->
       </div>
 
       <div class="payment-info">
@@ -201,32 +211,30 @@
             <span id="mapr"></span>
           </div>
         </div>
-        <p class="exchange-rate" id="tasaEx">Tasa de cambio: 1 USD = 106.31 BS</p>
+        <p class="exchange-rate" id="tasaEx" data-i18n="exchange_rate"> 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
-          <!-- carga dinamicamente -->
+          <-- carga dinamicamente -->
         </div>
       </div>
     </div>
     <?php require_once 'views/sorteo/datos_personales/comprobante.php'; ?>
-    <button type="submit" class="btn-confirmar">CONFIRMAR</button>
+    <button type="submit" class="btn-confirmar" data-i18n="confirm">CONFIRMAR</button>
   </div>
 </div>
-
 
 <link rel="stylesheet" href="assets/css/buscar_boletos.css">
 <link rel="stylesheet" href="assets/css/datos_personales.css">
 
 <!-- // Este script genera un enlace de WhatsApp con los datos del cliente y los boletos comprados] -->
 <script>
-  function generarEnlaceWhatsApp(data, ticketsComprados) {
+  function generarEnlaceWhatsApp(data, ticketsComprados, nuw = "") {
 
     const nombre = data.nombre; // Reemplaza con el nombre del cliente
-    const cedula = data.cedula; // Reemplaza con la cédula del cliente   
     const celular = data.telefono; // Reemplaza con el número de celular del cliente
     const numeroTelefono = "14077329524"; // Numero de la empresa en WhatsApp
     const listaTickets = ticketsComprados.join(', '); // Convierte el array de tickets en una cadena separada por comas
 
-    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}s.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 120 horas para realizarlo. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCedula: ${cedula}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODO CON TURIFADIGITAL!`;
+    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
 
     const mensajeCodificado = encodeURIComponent(mensaje);
     const enlaceWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeCodificado}`;
@@ -246,27 +254,21 @@
     // Eliminar el enlace del DOM (opcional, pero buena práctica)
     document.body.removeChild(enlace);
   }
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
 
-    // Configuración global para Semantic UI Transitions
-    $.fn.transition.settings.silent = true;
-
+  document.addEventListener('DOMContentLoaded', async function() {
+    await i18n.init();
     const boletosSeleccionados = new Set();
-    const minBoletos = 2;
-    let cantidadSeleccion = 2;
-    const tasaUSD = 106.31;
-    let precioUnitarioUSD = 3;
+    const minBoletos = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
+    let cantidadSeleccion = "<?php echo $boletosMinimos ?>" == '' ? "0" : "<?php echo $boletosMinimos ?>";
+    let precioUnitarioUSD = "<?php echo $precioBoleto ?>" == '' ? "0" : "<?php echo $precioBoleto ?>";
     const todosLosBoletos = [];
     let cargandoBoletos = false;
-    const boletosPorPagina = 500;
-    const totalBoletos = 10000;
 
     // Referencias a elementos del DOM
     const boletosContainer = document.querySelector('.boletos-container');
     const boletosList = document.getElementById('boletosList');
     const loadingText = document.querySelector('.loading-text');
+    const miniregist = document.getElementById('regist');
     const buscador = document.getElementById('buscador');
     const btnRandomNumber = document.getElementById('btnRandomNumber');
     const numeroBoletosSpan = document.querySelector('.numero-boletos');
@@ -325,33 +327,96 @@
 
       await fetch('./api/get_tickets') // Petición al backend
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
           const boletos = data['data'];
           const success = data['success'];
 
           try {
             if (!success) {
               if (boletos.rifa_estado == 0) {
-                const nuevoBoleto = document.createElement('div');
-                boletosList.style.display = 'flex';
-                nuevoBoleto.classList.add('no-sort-activ');
-                nuevoBoleto.textContent = "Sin sorteos activos";
-                fragment.appendChild(nuevoBoleto);
-                return
+                // Hacer otra petición con parámetro wn=1
+                await fetch('./api/get_tickets?wn=1')
+                  .then(response => response.json())
+                  .then(dataWn => {
+                    const boletosWn = dataWn['data'];
+                    const boletosLen = dataWn['total'];
+                    const boletosSc = dataWn['success'];
+                    // Si tampoco hay ganadores recientes, mostrar solo ese mensaje
+                    if (boletosSc == false || boletosLen === 0) {
+                      const nuevoBoleto = document.createElement('div');
+                      boletosList.style.display = 'flex';
+                      nuevoBoleto.classList.add('no-sort-activ');
+                      nuevoBoleto.setAttribute('data-i18n', 'no_active_raffles');
+                      nuevoBoleto.textContent = i18n.t("no_active_raffles") !== "no_active_raffles" ?
+                        i18n.t("no_active_raffles") :
+                        "Sin sorteos activos, ni ganadores recientes";
+                      fragment.appendChild(nuevoBoleto);
+                    } else {
+
+                      boletosContainer.innerHTML = "";
+                      const nuevoBoleto = document.createElement('div');
+                      const msj = document.createElement('p');
+                      msj.textContent = i18n.t("last_winners_tickets");
+                      nuevoBoleto.id = "boletoContainer";
+                      boletosContainer.appendChild(msj);
+                      boletosContainer.appendChild(nuevoBoleto);
+
+                      // Validar que el elemento con id 'boletoContainer' exista antes de hacer el foreach
+                      setTimeout(() => {
+                        const container = document.getElementById('boletoContainer');
+                        if (container && Array.isArray(boletosWn)) {
+                          boletosWn.forEach(boleto => {
+                            // Llama a renderBoleto con los datos del boleto
+                            renderBoleto({
+                              items: {
+                                [`${i18n.t("ticket_name")}`]: boleto.cliente != null ? boleto.cliente + " " + boleto.a_cliente : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_phone")}`]: boleto.telefono != null ? boleto.telefono : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_price")}`]: boleto.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_state")}`]: boleto.estado != null ? boleto.estado : i18n.t("no_purchases"),
+                              },
+                              fecha_compra: boleto.fecha_compra || i18n.t("no_purchases"),
+                              numero: boleto.numero_boleto || "",
+                              id_boleto: boleto.id_boleto || "",
+                              id_rifa: boleto.id_rifa || "",
+                              ganador: true
+                            });
+                          });
+                        }
+                      }, 0);
+
+                      setTimeout(() => {
+                        animateProgressBar(10000, 10000)
+                      }, 1000);
+                    }
+                  })
+                  .catch(error => {
+                    console.error('Error al cargar los boletos ganadores:', error);
+                  });
+                return;
               }
             }
           } catch (error) {
             console.error('Error al cargar los boletos:', error);
           }
 
+          // Si no hay boletos, no hacer nada aquí porque ya se maneja arriba
+
           boletos.forEach(boleto => {
             const nuevoBoleto = document.createElement('div');
-            if (boleto.estado == "reservado") {
+            if (boleto.estado == "reservado" || boleto.estado == "vendido") {
               nuevoBoleto.classList.add('boleto', 'disabled');
+              boletosSeleccionados.delete(boleto.numero_boleto);
+
               comprados++;
             } else {
               nuevoBoleto.className = 'boleto';
               nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero_boleto);
+              // resalta boletos que esten seleccionados 
+              Array.from(boletosSeleccionados).sort().forEach(numero => {
+                if (numero == boleto.numero_boleto) {
+                  toggleBoleto(nuevoBoleto, numero, true);
+                }
+              });
             }
             nuevoBoleto.dataset.numero = boleto.numero_boleto;
             nuevoBoleto.textContent = boleto.numero_boleto;
@@ -363,6 +428,7 @@
             animateProgressBar(boletos.length, comprados) //Llama a la función de animación con el total y el número de boletos comprados
           }, 1000);
 
+          boletosList.innerHTML = "";
           boletosList.appendChild(fragment);
 
         })
@@ -377,7 +443,11 @@
     }
 
     // Cargar los primeros boletos
-    cargarMasBoletos();
+    await cargarMasBoletos();
+
+    setInterval(async () => {
+      await cargarMasBoletos();
+    }, 60000);
 
     // Inicializar el contador y total
     numeroBoletosSpan.textContent = cantidadSeleccion;
@@ -406,16 +476,9 @@
     // Función para actualizar el total en USD
     function actualizarTotal() {
       const totalUSD = cantidadSeleccion * precioUnitarioUSD;
-      const totalBS = totalUSD * tasaUSD;
 
       // Actualizar el total en USD en el contador
       totalUSDSpan.textContent = `${totalUSD} USD`;
-
-      // Actualizar el total en BS en el formulario de datos personales
-      const totalBSDisplay = document.getElementById('totalBSDisplay');
-      if (totalBSDisplay) {
-        totalBSDisplay.textContent = `${totalBS.toFixed(2)} BS`;
-      }
     }
 
     // Función para actualizar los chips de boletos seleccionados
@@ -466,7 +529,7 @@
     }
 
     // Función para alternar selección de boleto
-    function toggleBoleto(elemento, numero) {
+    function toggleBoleto(elemento, numero, aut = false) {
       if (elemento.classList.contains('selected')) {
         elemento.classList.remove('selected');
         boletosSeleccionados.delete(numero);
@@ -474,12 +537,15 @@
         elemento.classList.add('selected');
         boletosSeleccionados.add(numero);
       }
-      toggleSelectedContainer();
 
       actualizarContador();
       actualizarTotal();
       actualizarChipsBoletos();
-      // Ejemplo de cómo usar la función después de obtener los datos del fetch:
+      // verifica si ya se apreto el boton de continuar para no mostrar constantemente el selectedContainer
+      if (aut == true) {
+        return;
+      }
+      toggleSelectedContainer();
     }
 
     // Función para elegir boletos al azar
@@ -622,36 +688,8 @@
         return;
       }
 
-      const inputMapr = document.getElementById('mapr');
-      const tasaEx = document.getElementById('tasaEx');
-
-      // data de moneda
-      fetch('./api/exchange_rate') // Asumiendo que esta API te da las tasas
-        .then(response => response.json())
-        .then(data => {
-          // Ajusta estas líneas según la estructura de la respuesta de tu API
-          const tasaBS = data.data.VES.precio;
-          const tasaCOP = data.data.COP.precio;
-
-          const opcionesMonedaHTML = crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, boletosSeleccionados.size);
-
-          // Agrega la sección de opciones de moneda al elemento deseado en tu HTML
-          const contenedorOpciones = document.getElementById('currency-option-conten'); // Reemplaza con el ID de tu contenedor
-          if (contenedorOpciones) {
-            let dc = precioUnitarioUSD * boletosSeleccionados.size;
-            const valorConvertido = dc;
-
-            inputMapr.textContent = `${valorConvertido} $`;
-            tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaBS} BS`;
-            contenedorOpciones.innerHTML = "";
-            contenedorOpciones.appendChild(opcionesMonedaHTML);
-          }
-        })
-        .catch(error => {
-          console.error('Error al obtener las tasas de cambio:', error);
-        });
-
       document.querySelector('.btn.btn-continuar').disabled = true;
+
       fetch('./api/session_verfication', {
           method: 'POST',
           header: {
@@ -664,15 +702,47 @@
         .then(response => response.json())
         .then(data => {
           if (data.session) {
+            // data de moneda
+            const inputMapr = document.getElementById('mapr');
+            const tasaEx = document.getElementById('tasaEx');
+
+            fetch('./api/exchange_rate')
+              .then(response => response.json())
+              .then(data => {
+                const tasaBS = data.data.VES.precio;
+                const tasaCOP = data.data.COP.precio;
+                const opcionesMonedaHTML = crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, boletosSeleccionados.size);
+
+                // Agrega la sección de opciones de moneda al elemento deseado en tu HTML
+                const contenedorOpciones = document.getElementById('currency-option-conten'); // Reemplaza con el ID de tu contenedor
+                if (contenedorOpciones) {
+                  let dc = precioUnitarioUSD * boletosSeleccionados.size;
+                  const valorConvertido = dc;
+
+                  inputMapr.textContent = `${valorConvertido} $`;
+                  tasaEx.textContent = `${i18n.t("exchange_rate")}  1 USD`;
+                  contenedorOpciones.innerHTML = "";
+                  contenedorOpciones.appendChild(opcionesMonedaHTML);
+                }
+              })
+              .catch(error => {
+                console.error('Error al obtener las tasas de cambio:', error);
+              });
+
             document.getElementById('datosPersonales').style.display = 'block';
             this.parentElement.style.display = 'none';
+
           } else {
             // Si no hay sesión, redirigir al login
             let timerInterval;
+
+            let title = i18n.t('init_sesion');
+            let conten = `${i18n.t('redirex')} <b></b> milliseconds.`;
+
             Swal.fire({
-              title: "¡Inicia sesion para continuar!",
-              html: "redireccionando en <b></b> milliseconds.",
-              timer: 3000,
+              title: title,
+              html: conten,
+              timer: 5000,
               timerProgressBar: true,
               didOpen: () => {
                 Swal.showLoading();
@@ -691,129 +761,462 @@
                 console.log("I was closed by the timer");
               }
             });
-            // alert('No haz iniciado sesion, redireccionando...');
-            // setTimeout(() => {
-            //   window.location.href = '/login';
-            // }, 1000);
           }
         })
         .catch(error => {
           console.error('Error al verificar sesión:', error);
         });
     };
+
+    const getInputValue = (selector) => {
+      const element = document.querySelector(selector);
+      return element ? element.value.trim() : '';
+    };
+
 
     // Manejar el envío del formulario
-    document.querySelector('.btn-confirmar').onclick = async function(e) {
+    // Mejoras: 
+    // - Evita doble envío
+    // - Deshabilita botón durante proceso
+    // - Maneja errores inesperados
+    // - Limpia mensajes de SweetAlert correctamente
+
+    const btnConfirmar = document.querySelector('.btn-confirmar');
+    let procesandoCompra = false;
+
+    btnConfirmar.onclick = async function(e) {
       e.preventDefault();
 
-      await fetch('./api/session_verfication?t=1', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
+      if (procesandoCompra) return; // Evita doble envío
+      procesandoCompra = true;
+      let textoBot = btnConfirmar.innerHTML;
+      btnConfirmar.disabled = true;
+      btnConfirmar.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${i18n.t('processing')}`; // Cambia el texto del botón con spinner
 
-          if (!data.session) {
-            window.location.href = '/login';
-            return;
-          }
-
-          let value = data.user;
-          // Función auxiliar para obtener valor seguro
-          const getInputValue = (selector) => {
-            const element = document.querySelector(selector);
-            return element ? element.value.trim() : '';
-          };
-
-          // Obtener valores de forma segura
-          const formData = {
-            nombre: value.nombre + ' ' + value.apellido,
-            cedula: value.cedula,
-            telefono: value.telefono,
-            ubicacion: value.ubicacion,
-            id_usuario: value.id_usuario,
-            monto_pago: getInputValue('#monto_pagado'),
-            titular: getInputValue('#titular'),
-            referencia: getInputValue('#referencia'),
-            metodoPago: $('input[name="payment_method"]').val()
-          };
-
-          // Validar que todos los campos requeridos tengan valor
-          const camposRequeridos = [{
-              campo: 'titular',
-              mensaje: 'Titular'
-            },
-            {
-              campo: 'referencia',
-              mensaje: 'Referencia'
-            },
-            {
-              campo: 'metodoPago',
-              mensaje: 'Método de pago'
+      try {
+        await fetch('./api/session_verfication?t=1', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
             }
-          ];
+          })
+          .then(response => response.json())
+          .then(async data => {
 
-          const camposFaltantes = camposRequeridos
-            .filter(({
-              campo
-            }) => !formData[campo])
-            .map(({
-              mensaje
-            }) => mensaje);
+            if (!data.session) {
+              window.location.href = '/login';
+              return;
+            }
 
-          if (camposFaltantes.length > 0) {
-            alert(`Por favor complete los siguientes campos:\n${camposFaltantes.join('\n')}`);
-            return;
-          }
+            let value = data.user;
 
-          // const totalUSD = boletosSeleccionados.size * precioUnitarioUSD;
-          // const totalBS = totalUSD * tasaUSD;
-          const boletosCargar = Array.from(boletosSeleccionados)
-
-          try {
-            // Preparar datos de la compra
-            const datosCompra = {
-              boletos: boletosCargar,
-              ...formData,
-              // total: totalBS
+            // Obtener valores de forma segura
+            const formData = {
+              nombre: value.nombre + ' ' + value.apellido,
+              telefono: value.telefono,
+              ubicacion: value.ubicacion,
+              id_usuario: value.id_usuario,
+              monto_pago: getInputValue('#monto_pagado'),
+              titular: getInputValue('#titular'),
+              referencia: getInputValue('#referencia'),
+              metodoPago: $('input[name="payment_method"]').val()
             };
 
-            fetch('./api/process_purchase', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(datosCompra)
-              })
-              .then(response => response.json())
-              .then(dataCompra => {
-                if (dataCompra.success) {
+            // Validar que todos los campos requeridos tengan valor
+            const camposRequeridos = [{
+                campo: 'titular',
+                mensaje: 'comprobante_titular'
+              },
+              {
+                campo: 'referencia',
+                mensaje: 'comprobante_referencia'
+              },
+              {
+                campo: 'metodoPago',
+                mensaje: 'comprobante_metodo'
+              }
+            ];
 
-                  generarEnlaceWhatsApp({
-                    nombre: formData.nombre,
-                    cedula: formData.cedula,
-                    telefono: formData.telefono
-                  }, boletosCargar);
+            const camposFaltantes = camposRequeridos
+              .filter(({
+                campo
+              }) => !formData[campo])
+              .map(({
+                mensaje
+              }) => i18n.t(mensaje));
 
-                  alert('¡Compra procesada correctamente!');
-                }
-              })
-              .catch(error => {
-                alert(dataCompra.error || 'Error al procesar la compra');
-                console.error('Error al procesar la compra:', error);
-              });
+            if (camposFaltantes.length > 0) {
+              showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
+              return;
+            }
 
-          } catch (error) {
-            console.error('Error:', error);
-          }
+            const boletosCargar = Array.from(boletosSeleccionados);
 
-        })
-        .catch(error => {
-          console.error('Error al verificar sesión:', error);
-        });
+            try {
+              // Preparar datos de la compra
+              const datosCompra = {
+                boletos: boletosCargar,
+                ...formData,
+              };
+
+              await fetch('./api/process_purchase', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(datosCompra)
+                })
+                .then(response => response.json())
+                .then(async dataCompra => {
+                  if (dataCompra.success) {
+                    generarEnlaceWhatsApp({
+                      nombre: formData.nombre,
+                      telefono: formData.telefono
+                    }, boletosCargar);
+
+                    Swal.fire({
+                      title: '¡Compra procesada correctamente!',
+                      icon: 'success',
+                      confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+                      denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+                      showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+                    }).then((sid) => {
+                      if (sid.isConfirmed) {
+                        generarEnlaceWhatsApp({
+                          nombre: formData.nombre,
+                          telefono: formData.telefono
+                        }, boletosCargar);
+                      } else if (sid.isDenied) {
+                        window.location.href = '/sorteo';
+                      }
+                      window.location.href = '/sorteo';
+                    });
+                  } else {
+                    showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
+                  }
+                })
+                .catch(error => {
+                  showToast('error', 'Error', 'Error al procesar la compra');
+                  console.error('Error al procesar la compra:', error);
+                });
+
+            } catch (error) {
+              console.error('Error:', error);
+            }
+
+          })
+          .catch(error => {
+            console.error('Error al verificar sesión:', error);
+          });
+
+        // ++++++++++++++++++++++++++++++++++
+        // RESGITRO ESTRUCTURADO
+
+        // if (miniregist.value == "0") {
+        //   await fetch('./api/session_verfication?t=1', {
+        //       method: 'POST',
+        //       headers: {
+        //         'Content-Type': 'application/json'
+        //       }
+        //     })
+        //     .then(response => response.json())
+        //     .then(async data => {
+
+        //       if (!data.session) {
+        //         window.location.href = '/login';
+        //         return;
+        //       }
+
+        //       let value = data.user;
+
+        //       // Obtener valores de forma segura
+        //       const formData = {
+        //         nombre: value.nombre + ' ' + value.apellido,
+        //         telefono: value.telefono,
+        //         ubicacion: value.ubicacion,
+        //         id_usuario: value.id_usuario,
+        //         monto_pago: getInputValue('#monto_pagado'),
+        //         titular: getInputValue('#titular'),
+        //         referencia: getInputValue('#referencia'),
+        //         metodoPago: $('input[name="payment_method"]').val()
+        //       };
+
+        //       // Validar que todos los campos requeridos tengan valor
+        //       const camposRequeridos = [{
+        //           campo: 'titular',
+        //           mensaje: 'comprobante_titular'
+        //         },
+        //         {
+        //           campo: 'referencia',
+        //           mensaje: 'comprobante_referencia'
+        //         },
+        //         {
+        //           campo: 'metodoPago',
+        //           mensaje: 'comprobante_metodo'
+        //         }
+        //       ];
+
+        //       const camposFaltantes = camposRequeridos
+        //         .filter(({
+        //           campo
+        //         }) => !formData[campo])
+        //         .map(({
+        //           mensaje
+        //         }) => i18n.t(mensaje));
+
+        //       if (camposFaltantes.length > 0) {
+        //         showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
+        //         return;
+        //       }
+
+        //       const boletosCargar = Array.from(boletosSeleccionados);
+
+        //       try {
+        //         // Preparar datos de la compra
+        //         const datosCompra = {
+        //           boletos: boletosCargar,
+        //           ...formData,
+        //         };
+
+        //         await fetch('./api/process_purchase', {
+        //             method: 'POST',
+        //             headers: {
+        //               'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify(datosCompra)
+        //           })
+        //           .then(response => response.json())
+        //           .then(async dataCompra => {
+        //             if (dataCompra.success) {
+        //               generarEnlaceWhatsApp({
+        //                 nombre: formData.nombre,
+        //                 telefono: formData.telefono
+        //               }, boletosCargar);
+
+        //               Swal.fire({
+        //                 title: '¡Compra procesada correctamente!',
+        //                 icon: 'success',
+        //                 confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+        //                 denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+        //                 showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+        //               }).then((sid) => {
+        //                 if (sid.isConfirmed) {
+        //                   generarEnlaceWhatsApp({
+        //                     nombre: formData.nombre,
+        //                     telefono: formData.telefono
+        //                   }, boletosCargar);
+        //                 } else if (sid.isDenied) {
+        //                   window.location.href = '/sorteo';
+        //                 }
+        //                 window.location.href = '/sorteo';
+        //               });
+        //             } else {
+        //               showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
+        //             }
+        //           })
+        //           .catch(error => {
+        //             showToast('error', 'Error', 'Error al procesar la compra');
+        //             console.error('Error al procesar la compra:', error);
+        //           });
+
+        //       } catch (error) {
+        //         console.error('Error:', error);
+        //       }
+
+        //     })
+        //     .catch(error => {
+        //       console.error('Error al verificar sesión:', error);
+        //     });
+        // } else {
+        //   // Unificar validación de campos de usuario y de pago
+        //   const campos = [{
+        //       nombre: 'nombre',
+        //       label: 'Nombre',
+        //       value: getInputValue('#nombre')
+        //     },
+        //     {
+        //       nombre: 'apellido',
+        //       label: 'Apellido',
+        //       value: getInputValue('#apellido')
+        //     },
+        //     {
+        //       nombre: 'prefijo_pais',
+        //       label: 'Prefijo de país',
+        //       value: getInputValue('#prefijo_pais')
+        //     },
+        //     {
+        //       nombre: 'telefono',
+        //       label: 'Teléfono',
+        //       value: getInputValue('#telefono')
+        //     },
+        //     {
+        //       nombre: 'monto_pagado',
+        //       label: 'Monto pagado',
+        //       value: getInputValue('#monto_pagado')
+        //     },
+        //     {
+        //       nombre: 'titular',
+        //       label: 'Titular',
+        //       value: getInputValue('#titular')
+        //     },
+        //     {
+        //       nombre: 'referencia',
+        //       label: 'Referencia',
+        //       value: getInputValue('#referencia')
+        //     },
+        //     {
+        //       nombre: 'metodoPago',
+        //       label: 'Método de pago',
+        //       value: $('input[name="payment_method"]').val()
+        //     }
+        //   ];
+
+        //   const camposFaltantes = campos.filter(c => !c.value).map(c => c.label);
+
+        //   /*   if (camposFaltantes.length > 0) {
+        //     Swal.close();
+        //     Swal.fire({
+        //   title: i18n.t('incomplete_fields'),
+        //   text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
+        //   icon: 'warning',
+        //   confirmButtonText: i18n.t('incomplete_fields_confirm'),
+        //   customClass: {
+        //     confirmButton: 'swal2-confirm'
+        //   }
+        //     });
+        //     return;
+        //   } */
+
+        //   if (camposFaltantes.length > 0) {
+        //     showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
+        //     return;
+        //   }
+
+        //   const initData = {
+        //     nombre: campos[0].value,
+        //     apellido: campos[1].value,
+        //     prefijo_pais: campos[2].value,
+        //     telefono: campos[3].value
+        //   };
+
+        //   // CREAR USUARIO DINAMICAMENTE
+        //   await fetch('./api/riffle_singup', {
+        //       method: 'POST',
+        //       headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //       body: JSON.stringify(initData)
+        //     })
+        //     .then(response => response.json())
+        //     .then(async data => {
+
+        //       if (!data.success) {
+        //         showToast('error', 'Error', "Error: response riffle sinup");
+        //         return;
+        //       }
+
+        //       let idrio = data.id_usuario;
+
+        //       await fetch('./api/riffle_verfication?t=1', {
+        //           method: 'POST',
+        //           headers: {
+        //             'Content-Type': 'application/json'
+        //           },
+        //           body: JSON.stringify({
+        //             id_usuario: idrio
+        //           })
+        //         })
+        //         .then(response => response.json())
+        //         .then(async data => {
+
+        //           let value = data.user;
+
+        //           // Obtener valores de forma segura
+        //           const formData = {
+        //             nombre: value.nombre + ' ' + value.apellido,
+        //             telefono: value.telefono,
+        //             ubicacion: value.ubicacion,
+        //             id_usuario: value.id_usuario,
+        //             monto_pago: getInputValue('#monto_pagado'),
+        //             titular: getInputValue('#titular'),
+        //             referencia: getInputValue('#referencia'),
+        //             metodoPago: $('input[name="payment_method"]').val()
+        //           };
+
+        //           const boletosCargar = Array.from(boletosSeleccionados);
+
+        //           try {
+        //             // Preparar datos de la compra
+        //             const datosCompra = {
+        //               boletos: boletosCargar,
+        //               ...formData,
+        //             };
+
+        //             await fetch('./api/process_purchase', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                   'Content-Type': 'application/json'
+        //                 },
+        //                 body: JSON.stringify(datosCompra)
+        //               })
+        //               .then(response => response.json())
+        //               .then(async dataCompra => {
+        //                 if (dataCompra.success) {
+        //                   generarEnlaceWhatsApp({
+        //                     nombre: formData.nombre,
+        //                     telefono: formData.telefono
+        //                   }, boletosCargar);
+
+        //                   Swal.fire({
+        //                     title: '¡Compra procesada correctamente!',
+        //                     icon: 'success',
+        //                     confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+        //                     denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+        //                     showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+        //                   }).then((sid) => {
+        //                     if (sid.isConfirmed) {
+        //                       generarEnlaceWhatsApp({
+        //                         nombre: formData.nombre,
+        //                         telefono: formData.telefono
+        //                       }, boletosCargar);
+        //                     } else if (sid.isDenied) {
+        //                       window.location.href = '/sorteo';
+        //                     }
+        //                     window.location.href = '/sorteo';
+        //                   });
+        //                 } else {
+        //                   showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
+        //                 }
+        //               })
+        //               .catch(error => {
+        //                 showToast('error', 'Error', 'Error al procesar la compra');
+        //                 console.error('Error al procesar la compra:', error);
+        //               });
+
+        //           } catch (error) {
+        //             console.error('Error:', error);
+        //           }
+
+        //         })
+        //         .catch(error => {
+        //           console.error('Error al verificar sesión:', error);
+        //         });
+
+        //     })
+        //     .catch(error => {
+        //       console.error('Error al verificar sesión:', error);
+        //     });
+        // }
+      } catch (err) {
+        showToast('error', 'Error inesperado', 'Ha ocurrido un error inesperado. Intente de nuevo.');
+        console.error('Error inesperado:', err);
+      } finally {
+        procesandoCompra = false;
+        btnConfirmar.innerHTML = textoBot;
+        btnConfirmar.disabled = false;
+      }
     };
+
 
     // Actualizar estilos para el botón de remover en el chip
     const styles = document.createElement('style');
@@ -907,7 +1310,24 @@
     const valorConvertido = (dc * tasaCambio).toFixed(2);
 
     inputMapr.textContent = `${valorConvertido} ${moneda}`;
-    tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaCambio} ${moneda}`;
+    tasaEx.textContent = `${i18n.t("exchange_rate")} 1 USD = ${tasaCambio} ${moneda}`;
+  }
+
+  function showToast(type, title, message) {
+    switch (type) {
+      case 'success':
+        ToastPersonalizado.exito(title, message, 5000);
+        break;
+      case 'error':
+        ToastPersonalizado.error(title, message, 5000);
+        break;
+      case 'warning':
+        ToastPersonalizado.advertencia(title, message, 5000);
+        break;
+      case 'info':
+        ToastPersonalizado.info(title, message, 5000);
+        break;
+    }
   }
 
   function mostrarDatosDePago(metodo) {
@@ -917,38 +1337,37 @@
       case 'zelle':
         paymentTitle.textContent = 'ZELLE';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Número de teléfono: +1 4074287580</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('phone_account_pay')}: +1 4074287580</p>
           `;
         break;
 
       case 'paypal':
         paymentTitle.textContent = 'PAYPAL';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Nombre: Yorsin Cruz Osorio</p>
-            <p>Correo Electrónico: Yorsincruz1995@gmail.com</p>
-            <p>Usuario: @Yorsin0506</p>
-            <p>Número teléfono: +1 4074287580</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('name_account_pay')}: Yorsin Cruz Osorio</p>
+            <p>${i18n.t('user_account_pay')}: @Yorsin0506</p>
           `;
         break;
 
       case 'banco_venezuela':
         paymentTitle.textContent = 'BANCO DE VENEZUELA';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Nombre: Yorsin Cruz Osorio</p>
-            <p>Cédula de identidad: 28517267</p>
-            <p>numero de cuenta: 01021234567891234567</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('name_account_pay')}: Mailiny Cruz</p>
+            <p>${i18n.t('type_account_pay')}: Corriente</p>
+            <p>${i18n.t('ci_account_pay')}: V-28517267</p>
+            <p>${i18n.t('number_account_pay')}: 0102-0317-11-0000757793</p>
           `;
         break
 
       case 'davivienda':
         paymentTitle.textContent = 'DAVIVIENDA COLOMBIA';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Cédula de identidad: 123456789</p>
-            <p>numero de cuenta: 4884 5018 1679</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('type_account_pay')}: Ahorros</p>
+            <p>${i18n.t('number_account_pay')}: 4884 5018 1679</p>
 
           `;
         break;
@@ -956,19 +1375,11 @@
       case 'pago_movil':
         paymentTitle.textContent = 'PAGO MOVIL';
         paymentDetails.innerHTML = `
-              <p class="subtitle">Datos de la cuenta</p>
-              <p>Número de teléfono: 04124124923</p>
-              <p>Cédula de identidad: 28517267</p>
-              <p>Banco: 0102 - Banco de Venezuela</p>  
+              <p class="subtitle">${i18n.t('date_account_pay')}</p>
+              <p>${i18n.t('phone_account_pay')}: 04124124923</p>
+              <p>${i18n.t('ci_account_pay')}: V-28517267</p>
+              <p>${i18n.t('bank_account_pay')}: 0102 - Banco de Venezuela</p>  
             `;
-        break;
-      case 'bancolombia':
-        paymentTitle.textContent = 'BANCOLOMBIA';
-        paymentDetails.innerHTML = `
-              <p class="subtitle">Datos de la cuenta</p>
-              <p>Cédula de identidad: 28517267</p>
-              <p>numero de cuenta: 123456789</p>
-              `;
         break;
       default:
         paymentTitle.textContent = 'Seleccione un método de pago';

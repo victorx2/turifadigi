@@ -243,10 +243,11 @@
   color: #00BCD4;
   font-size: 20px;
   font-weight: bold;
-  margin: 50px 0;
+  margin: 20px auto;
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: center;
 }
 
 .form-section-title i {

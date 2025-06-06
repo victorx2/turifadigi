@@ -1,84 +1,89 @@
 $(document).ready(function () {
-  $(".ui.dropdown").each(function () {
-    const dropdown = $(this);
-    const input = dropdown.find("input.search");
-    const menu = dropdown.find(".menu");
-    const items = menu.find(".item");
-    const hiddenInput = dropdown.find('input[type="hidden"]');
-    const defaultText = dropdown.find(".default.text");
-
-    // Función para filtrar items
-    function filterItems(searchText) {
-      items.each(function () {
-        const item = $(this);
-        const text = item.text().toLowerCase();
-        item.toggle(text.includes(searchText.toLowerCase()));
-      });
-    }
-
-    // Manejar clic en el dropdown
-    dropdown.on("click", function (e) {
-      e.stopPropagation();
-
-      // Si ya está activo y se hace clic en el input, no hacer nada
-      if ($(e.target).is("input.search") && dropdown.hasClass("active")) {
-        return;
-      }
-
-      // Toggle dropdown
-      $(".ui.dropdown").not(this).removeClass("active");
-      dropdown.toggleClass("active");
-
-      if (dropdown.hasClass("active")) {
-        input.focus();
-        filterItems(""); // Mostrar todos los items al abrir
-      }
-    });
-
-    // Manejar búsqueda
-    input.on("input", function (e) {
-      e.stopPropagation();
-      filterItems(this.value);
-    });
-
-    // Manejar selección de item
-    items.on("click", function (e) {
-      e.stopPropagation();
-      const item = $(this);
-      const value = item.data("value");
-      const text = item.text();
-
-      // Actualizar texto visible y valor oculto
-      defaultText.text(text).removeClass("default");
-      hiddenInput.val(value);
-
-      // Actualizar estado visual
-      items.removeClass("selected");
-      item.addClass("selected");
-
-      // Cerrar dropdown y limpiar búsqueda
-      dropdown.removeClass("active");
-      input.val("");
-      filterItems("");
-
-      // Trigger change event
-      hiddenInput.trigger("change");
-    });
-
-    // Cerrar al hacer clic fuera
-    $(document).on("click", function (e) {
-      if (!$(e.target).closest(".ui.dropdown").length) {
-        dropdown.removeClass("active");
-        input.val("");
-        filterItems("");
-      }
-    });
-
-    // Prevenir que las teclas de navegación cierren el dropdown
-    input.on("keydown", function (e) {
-      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-        e.preventDefault();
-      }
-    });
+  // Delegación de eventos para abrir/cerrar el select
+  $(document).on("click", ".custom-language-button", function (e) {
+    e.stopPropagation();
+    $(".custom-language-select")
+      .not($(this).closest(".custom-language-select"))
+      .removeClass("open");
+    $(this).closest(".custom-language-select").toggleClass("open");
   });
+
+  // Delegación de eventos para seleccionar idioma
+  $(document).on("click", ".custom-language-option", function (e) {
+    e.stopPropagation();
+    const value = $(this).data("value");
+    const text = $(this).text();
+
+    // Actualizar todos los selects
+    $(".custom-language-select").each(function () {
+      $(this).find(".custom-language-option").removeClass("selected");
+      $(this)
+        .find(`.custom-language-option[data-value='${value}']`)
+        .addClass("selected");
+      $(this).find(".custom-language-selected").text(text);
+      $(this).find('input[name="language"]').val(value);
+      $(this).removeClass("open");
+    });
+
+    // Guardar y cambiar idioma
+    localStorage.setItem("selectedLanguage", value);
+    if (typeof i18n !== "undefined" && typeof i18n.changeLang === "function") {
+      i18n.changeLang(value);
+    }
+  });
+
+  // Cerrar al hacer clic fuera
+  $(document).on("click", function () {
+    $(".custom-language-select").removeClass("open");
+  });
+
+  // Inicializar selects con el idioma guardado
+  function setInitialLanguage() {
+    const saved = localStorage.getItem("selectedLanguage") || "es";
+    $(".custom-language-select").each(function () {
+      const initialOption = $(this).find(
+        `.custom-language-option[data-value='${saved}']`
+      );
+      if (initialOption.length) {
+        $(this).find(".custom-language-option").removeClass("selected");
+        initialOption.addClass("selected");
+        $(this).find(".custom-language-selected").text(initialOption.text());
+        $(this).find('input[name="language"]').val(saved);
+      }
+    });
+  }
+  setInitialLanguage();
+
+  // Sticky header: clona y elimina el select según el estado sticky
+  let lastStickyState = false;
+  function syncLanguageSelectToSticky() {
+    const $original = $("#custom-language-select").first();
+    const $stickyHeader = $(".stricky-header.stricked-menu.main-menu");
+    if ($stickyHeader.length) {
+      let $stickySelect = $stickyHeader.find("#custom-language-select");
+      if ($stickySelect.length === 0) {
+        $stickySelect = $original.clone();
+        $stickyHeader.find(".main-menu__right").prepend($stickySelect);
+        setInitialLanguage();
+      }
+    }
+  }
+  $(window).on("scroll", function () {
+    const isSticky = $(".stricky-header.stricked-menu.main-menu").hasClass(
+      "stricky-fixed"
+    );
+    if (isSticky && !lastStickyState) {
+      syncLanguageSelectToSticky();
+      lastStickyState = true;
+    } else if (!isSticky && lastStickyState) {
+      $(
+        ".stricky-header.stricked-menu.main-menu #custom-language-select"
+      ).remove();
+      lastStickyState = false;
+    }
+  });
+  if ($(".stricky-header.stricked-menu.main-menu").hasClass("stricky-fixed")) {
+    syncLanguageSelectToSticky();
+    lastStickyState = true;
+  }
 });

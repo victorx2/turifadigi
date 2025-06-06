@@ -13,7 +13,6 @@ class DatosPersonales
   const COLUMN_USER_ID = 'id_usuario';
   const COLUMN_NAME = 'nombre';
   const COLUMN_LASTNAME = 'apellido';
-  const COLUMN_IDENT = 'cedula';
   const COLUMN_PHONE = 'telefono';
   const COLUMN_LOCATION = 'ubicacion';
   const COLUMN_DATE = 'fecha_registro';
@@ -31,17 +30,22 @@ class DatosPersonales
   /**
    * Inserta datos personales para un usuario
    * @param int $id_usuario - ID del usuario
-   * @param array $datos - Datos personales (nombre, apellido, cedula, telefono, ubicacion)
+   * @param array $datos - Datos personales (nombre, apellido, telefono, ubicacion)
    * @return bool - true si se insertó correctamente, false en caso contrario
    */
   public function insert(int $id_usuario, array $datos): bool
   {
     try {
       // Validar datos requeridos
+      // Sanitizar datos
+      $datos['nombre'] = htmlspecialchars(strip_tags($datos['nombre']));
+      $datos['apellido'] = htmlspecialchars(strip_tags($datos['apellido']));
+      $datos['telefono'] = htmlspecialchars(strip_tags($datos['telefono']));
+      $datos['ubicacion'] = htmlspecialchars(strip_tags($datos['ubicacion']));
+
       if (
         empty($datos['nombre']) || empty($datos['apellido']) ||
-        empty($datos['cedula']) || empty($datos['telefono']) ||
-        empty($datos['ubicacion'])
+        empty($datos['telefono']) || empty($datos['ubicacion'])
       ) {
         error_log("Error en DatosPersonales::insert: Datos requeridos faltantes");
         return false;
@@ -49,14 +53,13 @@ class DatosPersonales
 
       // Insertar datos personales
       $sql = "INSERT INTO " . self::TABLE_NAME . " 
-             (id_usuario, nombre, apellido, cedula, telefono, ubicacion) 
-             VALUES (:id_usuario, :nombre, :apellido, :cedula, :telefono, :ubicacion)";
+             (id_usuario, nombre, apellido, telefono, ubicacion) 
+             VALUES (:id_usuario, :nombre, :apellido, :telefono, :ubicacion)";
 
       $this->db->ejecutar($sql, [
         ':id_usuario' => $id_usuario,
         ':nombre' => $datos['nombre'],
         ':apellido' => $datos['apellido'],
-        ':cedula' => $datos['cedula'],
         ':telefono' => $datos['telefono'],
         ':ubicacion' => $datos['ubicacion']
       ]);
@@ -71,7 +74,7 @@ class DatosPersonales
   /**
    * Actualiza los datos personales de un usuario
    * @param int $id_usuario - ID del usuario
-   * @param array $datos - Datos personales (nombre, apellido, cedula, telefono, ubicacion)
+   * @param array $datos - Datos personales (nombre, apellido, telefono, ubicacion)
    * @return bool - true si se actualizó correctamente, false en caso contrario
    */
   public function update(int $id_usuario, array $datos): bool
@@ -80,8 +83,7 @@ class DatosPersonales
       // Validar datos requeridos
       if (
         empty($datos['nombre']) || empty($datos['apellido']) ||
-        empty($datos['cedula']) || empty($datos['telefono']) ||
-        empty($datos['ubicacion'])
+        empty($datos['telefono']) || empty($datos['ubicacion'])
       ) {
         return false;
       }
@@ -90,7 +92,6 @@ class DatosPersonales
       $sql = "UPDATE " . self::TABLE_NAME . " SET 
              nombre = :nombre, 
              apellido = :apellido, 
-             cedula = :cedula, 
              telefono = :telefono, 
              ubicacion = :ubicacion 
              WHERE id_usuario = :id_usuario";
@@ -99,7 +100,6 @@ class DatosPersonales
         ':id_usuario' => $id_usuario,
         ':nombre' => $datos['nombre'],
         ':apellido' => $datos['apellido'],
-        ':cedula' => $datos['cedula'],
         ':telefono' => $datos['telefono'],
         ':ubicacion' => $datos['ubicacion']
       ]);
